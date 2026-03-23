@@ -26,7 +26,7 @@ const items: NavigationMenuItem[] = [
 
 <template>
   <div
-    class="flex flex-1"
+    class="flex flex-1 h-screen"
     :class="[
       variant === 'inset' && 'bg-neutral-50 dark:bg-neutral-950',
       side === 'right' && 'flex-row-reverse'

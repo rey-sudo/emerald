@@ -1,13 +1,9 @@
 <template>
-    <div>
-page
-    </div>
+  <PageBlock />
 </template>
 
 <script setup>
-
+import PageBlock from "./PageBlock.vue";
 </script>
 
-<style lang="css" scoped>
-
-</style>
+<style lang="css" scoped></style>
