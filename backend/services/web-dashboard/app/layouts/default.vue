@@ -25,37 +25,72 @@ const navItems: NavigationMenuItem[] = [
     to: "/blocks",
     children: [
       {
-        label: "Acuerdo 001 de 2024",
+        label: "Aduanero",
         icon: "i-lucide-folder",
         description: "Define shortcuts for your application.",
         tooltip: {
           text: "Acuerdo 001 de 2024",
         },
-        to: "/",
+        to: "/blocks",
         children: [
           {
-            label: "1.2.4 Terms",
+            label: "Acuerdo 001 de 2024",
             icon: "i-lucide-file",
             description: "Define shortcuts for your application.",
-            to: "/",
+            to: "/blocks",
+
+            children: [
+              {
+                label: "1.2.6 Normativa",
+                icon: "i-lucide-dot",
+                description: "Define shortcuts for your application.",
+                to: "/blocks",
+              },
+              {
+                label: "1.2.3 Normativa",
+                icon: "i-lucide-dot",
+                description: "Define shortcuts for your application.",
+                to: "/blocks",
+              },
+              {
+                label: "1.2.8 Normativa",
+                icon: "i-lucide-dot",
+                description: "Define shortcuts for your application.",
+                to: "/blocks",
+              },
+            ],
           },
+        ],
+      },
+
+      {
+        label: "Gestion Documental",
+        icon: "i-lucide-folder",
+        description: "Define shortcuts for your application.",
+        tooltip: {
+          text: "Acuerdo 001 de 2024",
+        },
+        to: "/blocks",
+        children: [
           {
-            label: "1.2.6 Normativa",
+            label: "Acuerdo 001 de 2024",
             icon: "i-lucide-file",
             description: "Define shortcuts for your application.",
             to: "/",
+
+            children: [
+              {
+                label: "1.2.6 Normativa",
+                icon: "i-lucide-file",
+                description: "Define shortcuts for your application.",
+                to: "/",
+              },
+            ],
           },
         ],
       },
     ],
-  },
-  {
-    label: "Contacts",
-    icon: "i-lucide-users",
-    tooltip: {
-      text: "Contacts",
-    },
-  },
+  }
 ];
 </script>
 

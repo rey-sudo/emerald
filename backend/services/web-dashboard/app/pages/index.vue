@@ -20,7 +20,7 @@ const contextItems: ContextMenuItem[][] = [
   [
     {
       label: "File upload",
-      icon: "i-lucide-file-up",
+      icon: "i-lucide-file-up", //<
     },
     {
       label: "Folder upload",
@@ -47,11 +47,7 @@ const contextItems: ContextMenuItem[][] = [
 
     <UContextMenu :items="contextItems" :ui="{ content: 'w-60' }">
       <div class="index-page-content">
-        <UEmpty
-          icon="i-lucide-file"
-          title="No projects found"
-          description="It looks like you haven't added any projects. Create one to get started."
-        />
+        <HomeEmptyFolders />
       </div>
     </UContextMenu>
   </div>
