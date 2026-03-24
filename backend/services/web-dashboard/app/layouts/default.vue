@@ -28,16 +28,14 @@ const navItems: NavigationMenuItem[] = [
         label: "Aduanero",
         icon: "i-lucide-folder",
         description: "Define shortcuts for your application.",
-
         tooltip: {
           text: "Acuerdo 001 de 2024",
         },
         children: [
           {
             label: "Acuerdo 001 de 2024",
-            icon: "i-lucide-file",
+            icon: "i-lucide-file-text",
             description: "Define shortcuts for your application.",
-            slot: "widgets" as const,
             children: [
               {
                 label: "1.2.6 Normativa",
@@ -73,9 +71,8 @@ const navItems: NavigationMenuItem[] = [
         children: [
           {
             label: "Acuerdo 001 de 2024",
-            icon: "i-lucide-file",
+            icon: "i-lucide-file-text",
             description: "Define shortcuts for your application.",
-            slot: "widgets" as const,
             children: [
               {
                 label: "1.2.6 Normativa",
@@ -123,7 +120,7 @@ const navItems: NavigationMenuItem[] = [
         }"
       >
         <template #widgets-trailing>
-          <UBadge label="20+" color="neutral" variant="subtle" size="sm" />
+          <UBadge label="10+" color="neutral" variant="subtle" size="sm" />
         </template>
       </UNavigationMenu>
     </USidebar>
