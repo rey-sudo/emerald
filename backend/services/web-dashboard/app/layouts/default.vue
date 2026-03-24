@@ -17,29 +17,35 @@ const navItems: NavigationMenuItem[] = [
   {
     label: "Blocks",
     icon: "i-lucide-box",
-    to: "/blocks",
+
     tooltip: {
       text: "Blocks",
     },
     defaultOpen: true,
+    to: "/blocks",
     children: [
       {
-        label: "1.2.3 Terms",
+        label: "Acuerdo 001 de 2024",
         icon: "i-lucide-file",
         description: "Define shortcuts for your application.",
+        tooltip: {
+          text: "Acuerdo 001 de 2024",
+        },
         to: "/",
-      },
-      {
-        label: "1.2.4 Terms",
-        icon: "i-lucide-file",
-        description: "Define shortcuts for your application.",
-        to: "/",
-      },
-      {
-        label: "1.2.6 Terms",
-        icon: "i-lucide-file",
-        description: "Define shortcuts for your application.",
-        to: "/",
+        children: [
+          {
+            label: "1.2.4 Terms",
+            icon: "i-lucide-file",
+            description: "Define shortcuts for your application.",
+            to: "/",
+          },
+          {
+            label: "1.2.6 Terms",
+            icon: "i-lucide-file",
+            description: "Define shortcuts for your application.",
+            to: "/",
+          },
+        ],
       },
     ],
   },
