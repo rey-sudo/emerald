@@ -18,17 +18,22 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
-const buttons = ref([
+const buttons: any = ref([
   {
     label: "All",
     color: "neutral",
     icon: "i-lucide-menu",
   },
   {
-    label: "Quiz Question",
+    label: "",
+    color: "neutral",
+    icon: "i-lucide-settings",
+  },
+  {
+    label: "Quiz Questions",
     color: "success",
     icon: "i-lucide-book-open-check",
   },
@@ -37,12 +42,14 @@ const buttons = ref([
     color: "error",
     icon: "i-lucide-lightbulb",
   },
-    {
+  {
     label: "Mind Map",
     color: "warning",
     icon: "i-lucide-brain",
   },
 ]);
+
+function setArtifact(name: string) {}
 </script>
 
 <style lang="css" scoped>
