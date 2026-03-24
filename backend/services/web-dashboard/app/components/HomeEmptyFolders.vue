@@ -1,5 +1,6 @@
 <template>
   <UEmpty
+    size="lg"
     icon="i-lucide-folders"
     title="No folders found"
     description="It looks like you haven't added any projects. Create one to get started."
