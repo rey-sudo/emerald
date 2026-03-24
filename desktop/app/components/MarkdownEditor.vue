@@ -120,7 +120,7 @@ const editorProps: any = {
     :extensions="extensions"
     :handlers="customHandlers"
     content-type="markdown"
-    :ui="{ base: 'p-6 pt-4 sm:px-16' }"
+    :ui="{ base: 'p-6 pt-8 sm:px-16' }"
     class="w-full min-h-74"
   >
     <UEditorToolbar

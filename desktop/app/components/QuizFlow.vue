@@ -4,7 +4,7 @@ import type { UserProps } from "@nuxt/ui";
 const members: UserProps[] = [
   {
     name: "Easy",
-    description: "Introduction",
+    description: "Intro",
     to: "https://github.com/danielroe",
     target: "_blank",
     avatar: {
@@ -21,17 +21,6 @@ const members: UserProps[] = [
     avatar: {
       icon: "i-lucide-school",
       alt: "pi0",
-      loading: "lazy" as const,
-    },
-  },
-  {
-    name: "Hard",
-    description: "University",
-    to: "https://github.com/atinux",
-    target: "_blank",
-    avatar: {
-      icon: "i-lucide-graduation-cap",
-      alt: "atinux",
       loading: "lazy" as const,
     },
   },
