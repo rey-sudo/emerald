@@ -38,7 +38,7 @@ const buttons = ref([
     icon: "i-lucide-lightbulb",
   },
     {
-    label: "Mental Map",
+    label: "Mind Map",
     color: "warning",
     icon: "i-lucide-brain",
   },

@@ -15,7 +15,7 @@ const members: UserProps[] = [
   },
   {
     name: "Mid",
-    description: "school",
+    description: "School",
     to: "https://github.com/pi0",
     target: "_blank",
     avatar: {
@@ -26,7 +26,7 @@ const members: UserProps[] = [
   },
   {
     name: "Hard",
-    description: "atinux",
+    description: "University",
     to: "https://github.com/atinux",
     target: "_blank",
     avatar: {
@@ -37,6 +37,7 @@ const members: UserProps[] = [
   },
   {
     name: "Academic",
+    description: "Pro",
     to: "https://github.com/benjamincanac",
     target: "_blank",
     avatar: {
@@ -68,8 +69,8 @@ const actions: any = [
 
 <template>
   <UEmpty
-    title="Create a quiz question"
-    description="Invite your team to collaborate on this project."
+    title="Create quiz questions"
+    description="Create a list of questions for each item or idea."
     variant="naked"
   >
     <template #leading>
