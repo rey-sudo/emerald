@@ -14,18 +14,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from fastapi import FastAPI
 from config import get_settings
+from fastapi import FastAPI
 from application import api
 from infrastructure import setup_logger, logger
 from contextlib import asynccontextmanager
-
+import asyncpg
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     setup_logger()
+    app.state.logger = logger
+    
+    app.state.pool = await asyncpg.create_pool(
+        dsn=get_settings().db_url,
+        min_size=5,  # Minimum number of open connections
+        max_size=20, # Maximum number of concurrent connections
+        command_timeout=60
+    )
+    
     logger.info("Running service")
     yield
+    await app.state.pool.close()
     logger.info("Stopping service")
     
 app = FastAPI(

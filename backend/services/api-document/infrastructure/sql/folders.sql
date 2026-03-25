@@ -6,10 +6,10 @@ CREATE TABLE
         name VARCHAR(100) NOT NULL,
         storage_path TEXT NOT NULL,
         
-        created_at TIMESTAMP DEFAULT NULL,
-        readed_at TIMESTAMP DEFAULT NULL,
-        updated_at TIMESTAMP DEFAULT NULL,
-        deleted_at TIMESTAMP DEFAULT NULL,
+        created_at BIGINT DEFAULT NULL,
+        readed_at BIGINT DEFAULT NULL,
+        updated_at BIGINT DEFAULT NULL,
+        deleted_at BIGINT DEFAULT NULL,
         v BIGINT NOT NULL
     );
 
