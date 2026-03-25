@@ -19,4 +19,8 @@ echo "🌐 Server: http://$APP_HOST:$APP_PORT"
 exec uvicorn main:app \
   --host "$APP_HOST" \
   --port "$APP_PORT" \
-  --reload
+  --reload 
+
+
+
+
