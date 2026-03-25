@@ -9,10 +9,41 @@ const navItems: NavigationMenuItem[] = [
   {
     label: "Home",
     icon: "i-lucide-house",
-    to: "/",
     tooltip: {
       text: "Home",
     },
+    to: "/",
+    defaultOpen: false,
+    children: [
+      {
+        label: "Shared",
+        icon: "i-lucide-users",
+        tooltip: {
+          text: "Acuerdo 001 de 2024",
+        },
+      },
+      {
+        label: "Recents",
+        icon: "i-lucide-clock",
+        tooltip: {
+          text: "Acuerdo 001 de 2024",
+        },
+      },
+      {
+        label: "Favorites",
+        icon: "i-lucide-star",
+        tooltip: {
+          text: "Acuerdo 001 de 2024",
+        },
+      },
+      {
+        label: "Trash",
+        icon: "i-lucide-trash",
+        tooltip: {
+          text: "Acuerdo 001 de 2024",
+        },
+      },
+    ],
   },
   {
     label: "Blocks",
@@ -119,9 +150,7 @@ const navItems: NavigationMenuItem[] = [
           link: 'p-1.5 overflow-hidden',
         }"
       >
-        <template #widgets-trailing>
-          <UBadge label="10+" color="neutral" variant="subtle" size="sm" />
-        </template>
+
       </UNavigationMenu>
     </USidebar>
 

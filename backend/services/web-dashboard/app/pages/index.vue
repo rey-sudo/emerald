@@ -46,9 +46,7 @@ const contextItems: ContextMenuItem[][] = [
     </div>
 
     <UContextMenu :items="contextItems" :ui="{ content: 'w-60' }">
-      <div class="index-page-content">
-        <HomeEmptyFolders />
-      </div>
+      <HomeFolderGrid />
     </UContextMenu>
   </div>
 </template>
@@ -66,13 +64,5 @@ const contextItems: ContextMenuItem[][] = [
   padding: 1rem;
   display: flex;
   height: 3rem;
-}
-
-.index-page-content {
-  justify-content: center;
-  align-items: center;
-  height: inherit;
-  width: inherit;
-  display: flex;
 }
 </style>
