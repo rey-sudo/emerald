@@ -1,12 +1,14 @@
 CREATE TABLE
     IF NOT EXISTS folders (
         id UUID PRIMARY KEY,
-        status VARCHAR(20)
         user_id UUID NOT NULL,
+        status VARCHAR(20),
         name VARCHAR(100) NOT NULL,
         storage_path TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        
+        created_at TIMESTAMP DEFAULT NULL,
+        readed_at TIMESTAMP DEFAULT NULL,
+        updated_at TIMESTAMP DEFAULT NULL,
         deleted_at TIMESTAMP DEFAULT NULL,
         v BIGINT NOT NULL
     );
