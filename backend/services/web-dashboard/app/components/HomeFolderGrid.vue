@@ -15,7 +15,7 @@
         <UInput
           v-model="search"
           icon="i-lucide-search"
-          size="lg"
+          size="md"
           variant="outline"
           color="secondary"
           placeholder="Search..."

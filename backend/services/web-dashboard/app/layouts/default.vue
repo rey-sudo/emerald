@@ -117,6 +117,16 @@ const navItems: NavigationMenuItem[] = [
       },
     ],
   },
+
+  {
+    label: "Outputs",
+    icon: "i-lucide-shapes",
+    tooltip: {
+      text: "Outputs",
+    },
+    to: "/outputs",
+    defaultOpen: false,
+  },
 ];
 </script>
 
