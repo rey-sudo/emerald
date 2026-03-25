@@ -1,35 +1,50 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
-import os
+# Emerald
+# Copyright (C) 2026 Juan José Caballero Rey
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-ENV = os.getenv("ENV", "dev")
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from functools import lru_cache
 
 class Settings(BaseSettings):
+    env: str = "dev"
+
     # App
-    app_name: str = Field(default="api-document", alias="NAME")
-    debug: bool = Field(default=False, alias="DEBUG")
-    version: str = Field(default="1.0.0", alias="VERSION")
+    app_name: str = "api-document"
+    debug: bool = False
+    version: str = "1.0.0"
 
     # Server
-    host: str = Field(default="0.0.0.0", alias="HOST")
-    port: int = Field(default=8000, alias="PORT")
-    workers: int = Field(default=1, alias="WORKERS")
+    host: str = "0.0.0.0"
+    port: int = 8001
+    workers: int = 1
 
     # Gunicorn
-    timeout: int = Field(default=120, alias="TIMEOUT")
-    graceful_timeout: int = Field(default=30, alias="GRACEFUL_TIMEOUT")
-    keep_alive: int = Field(default=5, alias="KEEP_ALIVE")
-    
-    db_url: str = Field(default="localhost", alias="DB_URL")
- 
+    timeout: int = 120
+    graceful_timeout: int = 30
+    keep_alive: int = 5
+
+    # DB
+    db_url: str
+
     model_config = SettingsConfigDict(
-        env_file=f".env.{ENV}",   # (.env.dev, .env.prod)
-        env_prefix="APP_",        # k8s
+        env_file=".env",
+        env_prefix="APP_",
         case_sensitive=False,
         extra="ignore"
     )
 
-settings = Settings()
-
+@lru_cache
 def get_settings() -> Settings:
-    return settings
+    return Settings()

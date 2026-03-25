@@ -4,11 +4,6 @@ set -e
 
 echo "Running DEV env"
 
-python -m venv .venv
-source .venv/bin/activate
-
-pip install --no-cache-dir -r requirements.txt
-
 if [ -f ".env.dev" ]; then
   echo "Loading .env.dev"
   export $(grep -v '^#' .env.dev | xargs)
