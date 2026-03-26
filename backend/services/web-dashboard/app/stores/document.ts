@@ -35,11 +35,27 @@ export const useDocumentStore = defineStore("document", () => {
     },
   ];
 
+
   const folders = ref(fakeFolders);
+  const pending = ref(false)
+  const error = ref(null)
 
   const filteredFolders = computed(() =>
     folders.value.filter((folder) => folder.status === "created"),
   );
 
-  return { folders, filteredFolders };
+  async function getFolders() {
+    pending.value = true;
+    error.value = null;
+
+    try {
+      folders.value = await $fetch("/api/document/get-folders");
+    } catch (e: any) {
+      error.value = e;
+    } finally {
+      pending.value = false;
+    }
+  }
+
+  return { folders, pending, error, filteredFolders, getFolders };
 });

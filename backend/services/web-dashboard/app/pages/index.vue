@@ -2,6 +2,10 @@
 import type { ContextMenuItem } from "@nuxt/ui";
 import type { BreadcrumbItem } from "@nuxt/ui";
 
+const documentStore = useDocumentStore();
+
+await documentStore.getFolders();
+
 const breadItems: BreadcrumbItem[] = [
   {
     label: "Home",
@@ -16,8 +20,9 @@ const contextItems: ContextMenuItem[][] = [
       label: "New folder",
       icon: "i-lucide-folder-plus",
     },
-  ]
+  ],
 ];
+
 </script>
 
 <template>
