@@ -1,11 +1,8 @@
 <template>
   <div class="drive-shell">
-    <!-- ════════════════════════════════════════════════
-         TOP BAR
-    ════════════════════════════════════════════════ -->
+
     <header class="topbar" oncontextmenu="return false;">
       <label class="topbar-search">
-        <IconSearch class="ico-search" :size="15" />
         <UInput
           v-model="search"
           icon="i-lucide-search"
@@ -143,8 +140,8 @@
             :key="folder.id"
             :folder="folder"
             :selected="selectedId === folder.id"
-            @click.stop="selectedId = toggle(selectedId, folder.id)"
-            @dblclick=""
+            @click.stop="selectedId = folder.id"
+            @dblclick="onFolderOpen(folder.id)"
             @menu="(e) => console.log(e)"
           />
         </div>
@@ -158,7 +155,7 @@
             :key="folder.id"
             :folder="folder"
             :selected="selectedId === folder.id"
-            @click.stop="selectedId = toggle(selectedId, folder.id)"
+            @click.stop="selectedId = folder.id"
             @dblclick=""
             @menu="(e) => console.log(e)"
           />
@@ -173,7 +170,6 @@
 <script setup>
 import {
   ref,
-  reactive,
   computed,
   watch,
   nextTick,
@@ -183,9 +179,11 @@ import {
   h,
 } from "vue";
 import Sortable from "sortablejs";
+const router = useRouter()
 
 const documentStore = useDocumentStore();
 
+const newFolderDialog = ref(false);
 const newFolderName = ref("Untitled folder");
 const newFolderColor = ref("#e0a84b");
 
@@ -211,7 +209,9 @@ const breadItems = [
   },
 ];
 
-const newFolderDialog = ref(false);
+const onFolderOpen = (folderId) => {
+   router.push(`/folder/${folderId}`)
+};
 
 const FOLDER_COLORS = [
   "#d97845",
@@ -222,102 +222,6 @@ const FOLDER_COLORS = [
   "#e0a84b",
   "#5e9ec9",
 ];
-
-const NAV_ITEMS = [
-  {
-    label: "Mi unidad",
-    icon: "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z",
-  },
-  {
-    label: "Compartidos",
-    icon: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
-  },
-  {
-    label: "Recientes",
-    icon: "M12 2a10 10 0 100 20A10 10 0 0012 2zM12 6v6l4 2",
-  },
-  {
-    label: "Destacados",
-    icon: "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z",
-  },
-  { label: "Papelera", icon: "M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" },
-];
-
-const SEED_FOLDERS = [
-  ["Proyectos 2025", "#d97845"],
-  ["Diseño UI", "#5b7fa6"],
-  ["Facturas", "#6aab8e"],
-  ["Recursos compartidos", "#9b7dc8"],
-  ["Clientes", "#c95e6e"],
-  ["Archivos de audio", "#e0a84b"],
-  ["Fotos del viaje", "#5e9ec9"],
-  ["Documentos legales", "#d97845"],
-  ["Plantillas", "#6aab8e"],
-  ["Datos de analytics", "#5b7fa6"],
-  ["Presentaciones", "#9b7dc8"],
-  ["Backups", "#c95e6e"],
-];
-
-// ─────────────────────────────────────────────────────────────
-// UTILS
-// ─────────────────────────────────────────────────────────────
-
-let _uid = 1;
-const uid = () => _uid++;
-const rndOf = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const rndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const rndDate = () =>
-  new Date(Date.now() - Math.random() * 1e10).toLocaleDateString("es-CO", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
-/** Toggle a selection: deselects if same id, selects otherwise */
-const toggle = (current, id) => (current === id ? null : id);
-
-function makeFolder(name, color) {
-  return {
-    id: uid(),
-    name,
-    color: color ?? rndOf(FOLDER_COLORS),
-    items: rndInt(1, 60),
-    modified: rndDate(),
-  };
-}
-
-// ─────────────────────────────────────────────────────────────
-// COMPOSABLES
-// ─────────────────────────────────────────────────────────────
-
-/** useFolders — all CRUD operations on the folder list */
-function useFolders() {
-  const folders = ref(
-    SEED_FOLDERS.map(([name, color]) => makeFolder(name, color)),
-  );
-
-  const add = (name) => folders.value.unshift(makeFolder(name));
-  const rename = (id, name) => {
-    const f = byId(id);
-    if (f) f.name = name;
-  };
-  const remove = (id) => {
-    folders.value = folders.value.filter((f) => f.id !== id);
-  };
-  const duplicate = (id) => {
-    const f = byId(id);
-    if (!f) return;
-    const idx = folders.value.indexOf(f);
-    folders.value.splice(idx + 1, 0, makeFolder(`${f.name} (copia)`, f.color));
-  };
-  const move = (from, to) => {
-    const moved = folders.value.splice(from, 1)[0];
-    folders.value.splice(to, 0, moved);
-  };
-  const byId = (id) => folders.value.find((f) => f.id === id);
-
-  return { folders, add, rename, remove, duplicate, move, byId };
-}
 
 /** useSortable — attach/detach Sortable.js to a container ref */
 function useSortable(containerRef, onEnd) {
@@ -343,32 +247,11 @@ function useSortable(containerRef, onEnd) {
   return { init, destroy };
 }
 
-/** useKeyboard — global keyboard shortcuts */
-function useKeyboard(handlers) {
-  const onKeydown = (e) => handlers[e.key]?.();
-  onMounted(() => window.addEventListener("keydown", onKeydown));
-  onUnmounted(() => window.removeEventListener("keydown", onKeydown));
-}
-
-// ─────────────────────────────────────────────────────────────
-// ROOT STATE (wires composables together)
-// ─────────────────────────────────────────────────────────────
-
-const { folders, add, rename, remove, duplicate, move } = useFolders();
-
 const view = ref("grid"); // 'grid' | 'list'
 const search = ref("");
 const selectedId = ref(null);
-const activeNav = ref("Mi unidad");
 
-const filteredFolders = computed(() => {
-  const q = search.value.trim().toLowerCase();
-  return q
-    ? folders.value.filter((f) => f.name.toLowerCase().includes(q))
-    : folders.value;
-});
 
-// ─── Sortable setup ──────────────────────────────────────────
 const gridRef = ref(null);
 const listRef = ref(null);
 
@@ -389,115 +272,8 @@ onMounted(async () => {
   await nextTick();
   initSort(gridRef.value);
 });
+
 onUnmounted(destroySort);
-
-// ─────────────────────────────────────────────────────────────
-// INLINE SUB-COMPONENTS  (single-file, no extra imports needed)
-// ─────────────────────────────────────────────────────────────
-
-const IconSearch = defineComponent({
-  props: { size: { type: Number, default: 15 } },
-  setup(props) {
-    return () =>
-      h(
-        "svg",
-        {
-          width: props.size,
-          height: props.size,
-          viewBox: "0 0 24 24",
-          fill: "none",
-          stroke: "currentColor",
-          "stroke-width": 2,
-          "stroke-linecap": "round",
-        },
-        [
-          h("circle", { cx: 11, cy: 11, r: 8 }),
-          h("line", { x1: 21, y1: 21, x2: 16.65, y2: 16.65 }),
-        ],
-      );
-  },
-});
-
-/** Folder SVG icon (used in cards & rows) */
-const FolderIcon = defineComponent({
-  props: { color: String, size: { type: Number, default: 60 } },
-  setup(props) {
-    const s = computed(() => props.size);
-    return () =>
-      h(
-        "svg",
-        { viewBox: "0 0 56 56", width: s.value, height: s.value, fill: "none" },
-        [
-          h("path", {
-            d: "M4 16C4 12.686 6.686 10 10 10H22L28 18H46C49.314 18 52 20.686 52 24V42C52 45.314 49.314 48 46 48H10C6.686 48 4 45.314 4 42V16Z",
-            fill: props.color,
-            opacity: ".2",
-          }),
-          h("path", {
-            d: "M4 24C4 20.686 6.686 18 10 18H46C49.314 18 52 20.686 52 24V42C52 45.314 49.314 48 46 48H10C6.686 48 4 45.314 4 42V24Z",
-            fill: props.color,
-            opacity: ".75",
-          }),
-          h("path", {
-            d: "M4 24C4 20.686 6.686 18 10 18H22L28 10H10C6.686 10 4 12.686 4 16V24Z",
-            fill: props.color,
-          }),
-        ],
-      );
-  },
-});
-
-const FolderIconSmall = defineComponent({
-  props: { color: String },
-  setup(props) {
-    return () =>
-      h("svg", { viewBox: "0 0 28 28", width: 28, height: 28, fill: "none" }, [
-        h("path", {
-          d: "M2 8C2 6.343 3.343 5 5 5H11L14 9H23C24.657 9 26 10.343 26 12V21C26 22.657 24.657 24 23 24H5C3.343 24 2 22.657 2 21V8Z",
-          fill: props.color,
-          opacity: ".25",
-        }),
-        h("path", {
-          d: "M2 12C2 10.343 3.343 9 5 9H23C24.657 9 26 10.343 26 12V21C26 22.657 24.657 24 23 24H5C3.343 24 2 22.657 2 21V12Z",
-          fill: props.color,
-        }),
-      ]);
-  },
-});
-
-/** Dots menu button (shared between card and row) */
-const MenuDots = defineComponent({
-  emits: ["click"],
-  setup(_, { emit }) {
-    return () =>
-      h(
-        "button",
-        {
-          class: "card-menu js-no-drag",
-          onClick: (e) => {
-            e.stopPropagation();
-            emit("click", e);
-          },
-        },
-        [
-          h(
-            "svg",
-            {
-              width: 16,
-              height: 16,
-              viewBox: "0 0 24 24",
-              fill: "currentColor",
-            },
-            [
-              h("circle", { cx: 12, cy: 5, r: 1.8 }),
-              h("circle", { cx: 12, cy: 12, r: 1.8 }),
-              h("circle", { cx: 12, cy: 19, r: 1.8 }),
-            ],
-          ),
-        ],
-      );
-  },
-});
 
 /** ListHeader */
 const ListHeader = defineComponent({
@@ -513,35 +289,6 @@ const ListHeader = defineComponent({
   },
 });
 
-/** FolderRow (list mode) */
-const FolderRow = defineComponent({
-  props: { folder: Object, selected: Boolean },
-  emits: ["click", "dblclick", "contextmenu", "menu"],
-  setup(props, { emit }) {
-    return () =>
-      h(
-        "div",
-        {
-          class: ["folder-row", props.selected && "selected"],
-          "data-id": props.folder.id,
-          onClick: (e) => emit("click", e),
-          onDblclick: (e) => emit("dblclick", e),
-          onContextmenu: (e) => emit("contextmenu", e),
-        },
-        [
-          h(
-            "div",
-            { class: "row-icon" },
-            h(FolderIconSmall, { color: props.folder.color }),
-          ),
-          h("span", { class: "row-name" }, props.folder.name),
-          h("span", { class: "row-type" }, "Carpeta"),
-          h("span", { class: "row-date" }, props.folder.modified),
-          h(MenuDots, { onMenuClick: (e) => emit("menu", e) }),
-        ],
-      );
-  },
-});
 
 function openNewFolderDialog() {
   newFolderDialog.value = true;
@@ -552,9 +299,6 @@ defineExpose({
 });
 </script>
 
-<!-- ══════════════════════════════════════════════════════════════
-     STYLES  (scoped to component)
-══════════════════════════════════════════════════════════════ -->
 <style scoped>
 /* ── Design Tokens ──────────────────────────────────────────── */
 .drive-shell {
@@ -635,68 +379,10 @@ defineExpose({
   gap: 8px;
 }
 
-/* ── ViewToggle ─────────────────────────────────────────────── */
-:deep(.view-toggle) {
-  display: flex;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-:deep(.vt-btn) {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 7px 12px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  transition:
-    background var(--ease),
-    color var(--ease);
-}
-:deep(.vt-btn.active) {
-  background: var(--accent);
-  color: #fff;
-}
-:deep(.vt-btn:hover:not(.active)) {
-  background: var(--border);
-  color: var(--text);
-}
-
 /* ── Layout ─────────────────────────────────────────────────── */
 .main {
   display: flex;
   flex: 1;
-}
-
-/* ── Sidebar ────────────────────────────────────────────────── */
-
-:deep(.storage-block) {
-  margin-top: auto;
-  padding: 12px;
-}
-:deep(.storage-label) {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-:deep(.storage-bar) {
-  height: 4px;
-  background: var(--border);
-  border-radius: 99px;
-  overflow: hidden;
-}
-:deep(.storage-fill) {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 99px;
-  transition: width 0.4s ease;
-}
-:deep(.storage-info) {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 6px;
 }
 
 /* ── Content ────────────────────────────────────────────────── */
@@ -757,22 +443,6 @@ defineExpose({
 :deep(.card-icon) {
   width: 60px;
   height: 60px;
-}
-:deep(.card-name) {
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-  color: var(--text);
-  line-height: 1.3;
-  word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-:deep(.card-meta) {
-  font-size: 11px;
-  color: var(--muted);
 }
 
 /* ── Folder Row ─────────────────────────────────────────────── */
@@ -857,9 +527,6 @@ defineExpose({
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
   .content {
     padding: 20px 16px;
   }
