@@ -70,19 +70,19 @@ const navItems: NavigationMenuItem[] = [
             children: [
               {
                 label: "1.2.6 Normativa",
-                icon: "i-lucide-dot",
+                icon: "i-lucide-file",
                 description: "Define shortcuts for your application.",
                 to: "/blocks",
               },
               {
                 label: "1.2.3 Normativa",
-                icon: "i-lucide-dot",
+                icon: "i-lucide-file",
                 description: "Define shortcuts for your application.",
                 to: "/blocks",
               },
               {
                 label: "1.2.8 Normativa",
-                icon: "i-lucide-dot",
+                icon: "i-lucide-file",
                 description: "Define shortcuts for your application.",
                 to: "/blocks",
               },

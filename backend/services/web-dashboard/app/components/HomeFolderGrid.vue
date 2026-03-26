@@ -38,14 +38,44 @@
           />
         </UFieldGroup>
 
-        <UButton
-          color="primary"
-          variant="outline"
-          icon="i-lucide-plus"
-          label="New folder"
-          size="md"
-          @click.stop="modal.openCreate()"
-        />
+        <UModal
+          title="New folder"
+          :ui="{
+            content: 'w-auto max-w-fit',
+            body: 'p-4 sm:p-6',
+            footer: 'justify-end',
+          }"
+        >
+          <UButton
+            color="primary"
+            variant="outline"
+            icon="i-lucide-plus"
+            label="New folder"
+            size="md"
+          />
+
+          <template #body>
+            <div>
+              <UInput
+                v-model="newFolderName"
+                class="w-full"
+                placeholder="Untitled folder"
+                size="lg"
+                :maxlength="100"
+                autofocus
+              />
+            </div>
+          </template>
+          <template #footer="{ close }">
+            <UButton
+              label="Cancel"
+              color="neutral"
+              variant="outline"
+              @click="close"
+            />
+            <UButton label="Create" color="neutral" />
+          </template>
+        </UModal>
       </div>
     </header>
 
@@ -110,15 +140,6 @@
       @close="ctxMenu.close()"
     />
 
-    <!-- Modal -->
-    <FolderModal
-      v-if="modal.state.open"
-      :mode="modal.state.mode"
-      :initial-name="modal.state.name"
-      @confirm="modal.confirm"
-      @cancel="modal.close()"
-    />
-
     <!-- Toasts -->
     <ToastStack :toasts="toasts" />
   </div>
@@ -140,6 +161,8 @@ import {
   h,
 } from "vue";
 import Sortable from "sortablejs";
+
+const newFolderName = ref("Untitled folder")
 
 const FOLDER_COLORS = [
   "#d97845",
@@ -285,53 +308,6 @@ function useContextMenu() {
   return { state, open, close };
 }
 
-/** useModal — create / rename dialog state + confirm logic */
-function useModal(folders, toast) {
-  const state = reactive({
-    open: false,
-    mode: "create",
-    name: "",
-    targetId: null,
-  });
-  const inputRef = ref(null);
-
-  function openCreate() {
-    Object.assign(state, {
-      open: true,
-      mode: "create",
-      name: "",
-      targetId: null,
-    });
-    nextTick(() => inputRef.value?.focus());
-  }
-  function openRename(folder) {
-    Object.assign(state, {
-      open: true,
-      mode: "rename",
-      name: folder.name,
-      targetId: folder.id,
-    });
-    nextTick(() => inputRef.value?.focus());
-  }
-  function close() {
-    state.open = false;
-  }
-
-  function confirm({ name }) {
-    if (!name.trim()) return;
-    if (state.mode === "rename") {
-      folders.rename(state.targetId, name.trim());
-      toast("Carpeta renombrada");
-    } else {
-      folders.add(name.trim());
-      toast(`Carpeta «${name.trim()}» creada`);
-    }
-    close();
-  }
-
-  return { state, inputRef, openCreate, openRename, close, confirm };
-}
-
 /** useSortable — attach/detach Sortable.js to a container ref */
 function useSortable(containerRef, onEnd) {
   let instance = null;
@@ -370,7 +346,6 @@ function useKeyboard(handlers) {
 const { folders, add, rename, remove, duplicate, move } = useFolders();
 const { toasts, toast } = useToast();
 const ctxMenu = useContextMenu();
-const modal = useModal({ rename, add }, toast);
 
 const view = ref("grid"); // 'grid' | 'list'
 const search = ref("");
@@ -412,7 +387,6 @@ onUnmounted(destroySort);
 useKeyboard({
   Escape: () => {
     ctxMenu.close();
-    modal.close();
   },
 });
 
@@ -422,7 +396,6 @@ function handleCtxOpen() {
   ctxMenu.close();
 }
 function handleCtxRename() {
-  modal.openRename(ctxMenu.state.folder);
   ctxMenu.close();
 }
 function handleCtxDuplicate() {
@@ -765,54 +738,6 @@ const ContextMenu = defineComponent({
           ),
         ],
       );
-  },
-});
-
-/** FolderModal */
-const FolderModal = defineComponent({
-  props: { mode: String, initialName: { type: String, default: "" } },
-  emits: ["confirm", "cancel"],
-  setup(props, { emit }) {
-    const name = ref(props.initialName);
-    const input = ref(null);
-    const label = computed(() =>
-      props.mode === "rename" ? "Renombrar carpeta" : "Nueva carpeta",
-    );
-    const btn = computed(() => (props.mode === "rename" ? "Guardar" : "Crear"));
-
-    onMounted(() => nextTick(() => input.value?.focus()));
-
-    return () =>
-      h("div", { class: "modal-overlay", onClick: () => emit("cancel") }, [
-        h("div", { class: "modal", onClick: (e) => e.stopPropagation() }, [
-          h("h3", {}, label.value),
-          h("input", {
-            ref: input,
-            value: name.value,
-            placeholder: "Nombre de la carpeta",
-            onInput: (e) => (name.value = e.target.value),
-            onKeyup: (e) => {
-              if (e.key === "Enter") emit("confirm", { name: name.value });
-              if (e.key === "Escape") emit("cancel");
-            },
-          }),
-          h("div", { class: "modal-actions" }, [
-            h(
-              "button",
-              { class: "btn-cancel", onClick: () => emit("cancel") },
-              "Cancelar",
-            ),
-            h(
-              "button",
-              {
-                class: "btn-create",
-                onClick: () => emit("confirm", { name: name.value }),
-              },
-              btn.value,
-            ),
-          ]),
-        ]),
-      ]);
   },
 });
 
@@ -1260,51 +1185,6 @@ const ToastStack = defineComponent({
   margin: 4px 0;
 }
 
-/* ── Modal ──────────────────────────────────────────────────── */
-:deep(.modal-overlay) {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-:deep(.modal) {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 28px;
-  width: 340px;
-  max-width: calc(100vw - 32px);
-  box-shadow: var(--shadow-md);
-}
-:deep(.modal h3) {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  margin-bottom: 16px;
-}
-:deep(.modal input) {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-family: var(--font-ui);
-  font-size: 14px;
-  color: var(--text);
-  outline: none;
-  margin-bottom: 16px;
-  transition: border-color var(--ease);
-}
-:deep(.modal input:focus) {
-  border-color: var(--accent);
-}
-:deep(.modal-actions) {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
 :deep(.btn-cancel) {
   background: var(--bg);
   border: 1px solid var(--border);
