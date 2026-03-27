@@ -75,5 +75,39 @@ export const useDocumentStore = defineStore("document", () => {
     }
   }
 
-  return { folders, pending, error, filteredFolders, getFolders, createFolder };
+  async function uploadFile(file: File) {
+    pending.value = true;
+    error.value = null;
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/document/upload-document", {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log(response);
+
+      if (!response.ok) throw new Error("upload failed");
+
+      return await response.json();
+    } catch (e: any) {
+      error.value = e;
+      console.error("Error:", e);
+    } finally {
+      pending.value = false;
+    }
+  }
+
+  return {
+    folders,
+    pending,
+    error,
+    filteredFolders,
+    getFolders,
+    createFolder,
+    uploadFile,
+  };
 });

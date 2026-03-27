@@ -33,7 +33,7 @@
         </UFieldGroup>
         <UModal
           v-model:open="fileUploadDialog"
-          title="New folder"
+          title="File upload"
           :ui="{
             content: 'w-auto max-w-fit',
             body: 'p-4 sm:p-6',
@@ -51,53 +51,16 @@
 
           <template #body>
             <div class="space-y-4">
-              <div class="space-x-4">
-                <UPopover>
-                  <UButton
-                    label="Color"
-                    color="neutral"
-                    variant="outline"
-                    size="md"
-                  >
-                    <template #leading>
-                      <span
-                        :style="newFolderColorChip"
-                        class="size-3 rounded-full"
-                      />
-                    </template>
-                  </UButton>
-
-                  <template #content>
-                    <UColorPicker
-                      v-model="newFolderColor"
-                      class="p-2"
-                      format="hex"
-                    />
-                  </template>
-                </UPopover>
-
-                <UFieldGroup orientation="horizontal" size="md">
-                  <UButton
-                    v-for="color in FOLDER_COLORS"
-                    color="neutral"
-                    variant="ghost"
-                    @click="newFolderColor = color"
-                  >
-                    <span
-                      :style="{ backgroundColor: color }"
-                      class="size-3 rounded-full"
-                    />
-                  </UButton>
-                </UFieldGroup>
-              </div>
-
-              <UInput
-                v-model="newFolderName"
-                class="w-full"
-                placeholder="Untitled folder"
-                size="lg"
-                :maxlength="100"
-                autofocus
+              <UFileUpload
+                v-model="filesToUpload"
+                layout="list"
+                multiple
+                label="Drop your files here"
+                description="PDF, DOCX, MD or TXT (max. 200MB)"
+                class="w-96"
+                :ui="{
+                  base: 'min-h-48',
+                }"
               />
             </div>
           </template>
@@ -108,11 +71,7 @@
               variant="outline"
               @click="close"
             />
-            <UButton
-              label="Create"
-              color="neutral"
-              @click="onCreateFolder(close)"
-            />
+            <UButton label="Upload" color="neutral" @click="onSubmit(close)" />
           </template>
         </UModal>
       </div>
@@ -198,20 +157,25 @@ const router = useRouter();
 const documentStore = useDocumentStore();
 
 const fileUploadDialog = ref(false);
-const newFolderName = ref("Untitled folder");
-const newFolderColor = ref("#e0a84b");
+const filesToUpload = ref([]);
 
-const newFolderColorChip = computed(() => ({
-  backgroundColor: newFolderColor.value,
-}));
+watch(filesToUpload, (e) => {
+  console.log(e);
+});
 
-const onCreateFolder = async (close) => {
+const onSubmit = async (close) => {
   try {
-    await documentStore.createFolder(newFolderName.value, newFolderColor.value);
+    for (let i = filesToUpload.value.length - 1; i >= 0; i--) {
+      const file = filesToUpload.value[i];
+
+      await documentStore.uploadFile(file);
+
+      filesToUpload.value.splice(i, 1);
+    }
   } catch (e) {
     console.error(e); //TODO: TOAST
   } finally {
-    close();
+    //close();
   }
 };
 
