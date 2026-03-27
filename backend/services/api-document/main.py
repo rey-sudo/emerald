@@ -19,31 +19,43 @@ from fastapi import FastAPI
 from application import api
 from infrastructure import setup_logger, logger
 from contextlib import asynccontextmanager
+from infrastructure import S3Service
 import asyncpg
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    settings = get_settings()
+    
     setup_logger()
+    
+    app.state.settings = settings
     app.state.logger = logger
     
     app.state.pool = await asyncpg.create_pool(
-        dsn=get_settings().db_url,
+        dsn=settings.db_url,
         min_size=5,  # Minimum number of open connections
         max_size=20, # Maximum number of concurrent connections
         command_timeout=60
     )
+
+    app.state.s3 = S3Service(
+        endpoint=settings.seaweed_endpoint,
+        access_key=settings.seaweed_access_key,
+        secret_key=settings.seaweed_secret_key,
+        bucket=settings.seaweed_bucket,
+    )    
     
     logger.info("Running service")
     yield
     await app.state.pool.close()
     logger.info("Stopping service")
-    
+
 app = FastAPI(
     title=get_settings().app_name,
     version=get_settings().version,
     debug=get_settings().debug,
     lifespan=lifespan,
-    #
+    ##
     docs_url=None,
     redoc_url=None,
     openapi_url=None,

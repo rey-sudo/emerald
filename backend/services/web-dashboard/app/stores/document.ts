@@ -83,19 +83,19 @@ export const useDocumentStore = defineStore("document", () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await fetch("/api/document/upload-document", {
+      const response = await $fetch("/api/document/upload-document", {
         method: "POST",
         body: formData,
+        // headers: { Authorization: `Bearer ${token}` }
       });
 
-      console.log(response);
+      console.log("Server response:", response);
 
-      if (!response.ok) throw new Error("upload failed");
-
-      return await response.json();
+      return response;
     } catch (e: any) {
-      error.value = e;
-      console.error("Error:", e);
+      error.value = e.data || e.message;
+      console.error("Upload failed:", e);
+      throw e;
     } finally {
       pending.value = false;
     }

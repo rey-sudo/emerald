@@ -6,10 +6,12 @@ CREATE TABLE
         original_name VARCHAR(255) NOT NULL,
         internal_name VARCHAR(255) NOT NULL,
         content_type VARCHAR(100) NOT NULL,
-        file_size BIGINT NOT NULL CHECK (file_size >= 0),
-        checksum BYTEA NOT NULL,
+        mime_type VARCHAR(100) NOT NULL,
+        size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
+        storage_path TEXT NOT NULL,
+        checksum BYTEA DEFAULT NULL,
         metadata JSONB DEFAULT NULL,
-        
+     
         created_at BIGINT DEFAULT NULL,
         readed_at BIGINT DEFAULT NULL,
         updated_at BIGINT DEFAULT NULL,
@@ -17,6 +19,5 @@ CREATE TABLE
         v BIGINT NOT NULL
     );
 
-CREATE INDEX idx_documents_user_id ON documents (user_id);
 CREATE INDEX idx_documents_folder_id ON documents (folder_id);
 CREATE INDEX idx_documents_user_folder ON documents (user_id, folder_id);

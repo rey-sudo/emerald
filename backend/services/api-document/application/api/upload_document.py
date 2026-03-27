@@ -1,8 +1,6 @@
-import asyncio
+
 import logging
 import time
-import boto3
-from botocore.client import Config
 from uuid6 import uuid7
 from asyncpg import Pool
 from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
@@ -10,6 +8,7 @@ from fastapi import Depends, File, Form, HTTPException, Request, UploadFile, sta
 from pydantic import BaseModel
 from .router import router
 from fastapi import UploadFile, HTTPException, status
+from infrastructure import S3Service
 
 ALLOWED_MIME_TYPES: dict[str, str] = {
     "application/pdf": "pdf",
@@ -23,11 +22,8 @@ MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  # 50 MB
 
 async def validate_file(file: UploadFile) -> tuple[bytes, str, str]:
     """
-    Reads and validates an uploaded file.
-
     Returns:
         (contents, mime_type, extension)
-
     Raises:
         HTTPException 415 — unsupported type
         HTTPException 400 — empty file
@@ -58,60 +54,6 @@ async def validate_file(file: UploadFile) -> tuple[bytes, str, str]:
 
     return contents, file.content_type, ALLOWED_MIME_TYPES[file.content_type]
 
-# ── S3Service ─────────────────────────────────────────────────
-
-class S3Service:
-    """
-    Async wrapper around a synchronous boto3 S3 client.
-    Instantiate once at startup and store in app.state.s3.
-    """
-
-    def __init__(self, endpoint: str, access_key: str, secret_key: str, bucket: str) -> None:
-        self.bucket = bucket
-        self._client = boto3.client(
-            "s3",
-            endpoint_url=endpoint,
-            aws_access_key_id=access_key,
-            aws_secret_access_key=secret_key,
-            config=Config(
-                signature_version="s3v4",
-                s3={"addressing_style": "path"},
-            ),
-        )
-
-    async def put(self, key: str, body: bytes, content_type: str, metadata: dict) -> None:
-        loop = asyncio.get_running_loop()
-        await loop.run_in_executor(
-            None,
-            lambda: self._client.put_object(
-                Bucket=self.bucket,
-                Key=key,
-                Body=body,
-                ContentType=content_type,
-                Metadata=metadata,
-            ),
-        )
-
-    async def delete(self, key: str) -> None:
-        loop = asyncio.get_running_loop()
-        await loop.run_in_executor(
-            None,
-            lambda: self._client.delete_object(Bucket=self.bucket, Key=key),
-        )
-
-    async def compensate(self, key: str, logger: logging.Logger) -> None:
-        """
-        Best-effort delete used as compensating action.
-        Swallows exceptions — the caller is already handling one.
-        Orphaned objects are reconciled by the storage cleanup job.
-        """
-        try:
-            await self.delete(key)
-            logger.info(f"[S3Service] Compensating DELETE succeeded: {key}")
-        except Exception as e:
-            logger.error(f"[S3Service] Compensating DELETE failed for '{key}': {e}")
-
-
 # ── Dependency providers ──────────────────────────────────────
 
 def get_pool(request: Request) -> Pool:
@@ -129,11 +71,13 @@ def get_logger(request: Request) -> logging.Logger:
 class DocumentResponse(BaseModel):
     id: str
     folder_id: str
-    name: str
-    status: str
-    storage_path: str
+    original_name: str
+    internal_name: str
+    content_type: str
     mime_type: str
     size_bytes: int
+    storage_path: str
+    checksum: str          # hex string del SHA-256
     created_at: int
 
 
@@ -141,17 +85,56 @@ class DocumentResponse(BaseModel):
 
 _INSERT = """
 INSERT INTO documents (
-    id, folder_id, user_id, name, status,
-    storage_path, mime_type, size_bytes, created_at, v
-) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-RETURNING id, folder_id, name, status, storage_path, mime_type, size_bytes, created_at;
+    id, user_id, folder_id,
+    original_name, internal_name,
+    content_type, mime_type,
+    size_bytes, storage_path,
+    checksum, metadata,
+    created_at, readed_at, updated_at, deleted_at,
+    v
+) VALUES (
+    $1,  $2,  $3,
+    $4,  $5,
+    $6,  $7,
+    $8,  $9,
+    $10, $11,
+    $12, NULL, NULL, NULL,
+    $13
+)
+RETURNING
+    id, folder_id,
+    original_name, internal_name,
+    content_type, mime_type,
+    size_bytes, storage_path,
+    checksum, created_at;
 """
 
 
-# ── Helper ────────────────────────────────────────────────────
+def _storage_key(user_id: str, folder_id: str, internal_name: str) -> str:
+    """
+    S3 object key structure: {user_id}/{folder_id}/{internal_name}
+    e.g. "019d2612-.../aef1bc72-....pdf"
+    """
+    return f"{user_id}/{folder_id}/{internal_name}"
 
-def _storage_key(user_id: str, folder_id: str, doc_id, ext: str) -> str:
-    return f"{user_id}/{folder_id}/{doc_id}.{ext}"
+
+def _checksum(contents: bytes) -> bytes:
+    """SHA-256 digest stored as BYTEA in Postgres."""
+    return hashlib.sha256(contents).digest()
+
+
+def _build_metadata(original_name: str, size_bytes: int, folder_id: str) -> str:
+    """
+    JSONB metadata stored alongside the document record.
+    Extend freely — this column is the right place for future
+    fields (page count, language, virus-scan result, etc.)
+    without requiring schema migrations.
+    """
+    return json.dumps({
+        "original_name": original_name,
+        "size_bytes":    size_bytes,
+        "folder_id":     folder_id,
+    })
 
 
 # ── Endpoint ──────────────────────────────────────────────────
@@ -173,28 +156,39 @@ async def upload_document(
       1. Upload to SeaweedFS  →  if it fails, DB is untouched.
       2. INSERT into DB       →  if it fails, compensate by deleting from S3.
     """
-    contents, mime_type, ext = await validate_file(file)
+    contents, raw_content_type, ext = await validate_file(file)
 
-    user_id    = "019d2612-a01d-734c-ab63-917106f31187"  # TODO: authentication
-    doc_id     = uuid7()
-    key        = _storage_key(user_id, folder_id, doc_id, ext)
-    name       = file.filename or f"document.{ext}"
-    created_at = int(time.time() * 1000)
+    user_id       = "019d2612-a01d-734c-ab63-917106f31187"  # TODO: authentication
+    doc_id        = uuid7()
+    original_name = file.filename or f"document.{ext}"
+    internal_name = f"{doc_id}.{ext}"
+    storage_key   = _storage_key(user_id, folder_id, internal_name)
+    created_at    = int(time.time() * 1000)
+    checksum      = _checksum(contents)
+    metadata      = _build_metadata(original_name, len(contents), folder_id)
+
+    # content_type  → raw HTTP header value, may include params
+    #                 e.g. "application/pdf; name=report.pdf"
+    # mime_type     → clean MIME type, no params
+    #                 e.g. "application/pdf"
+    content_type = raw_content_type
+    mime_type    = raw_content_type.split(";")[0].strip()
 
     # ── Phase 1: upload binary ────────────────────────────────
     try:
         await s3.put(
-            key=key,
+            key=storage_key,
             body=contents,
             content_type=mime_type,
             metadata={
                 "document-id":   str(doc_id),
                 "folder-id":     folder_id,
                 "user-id":       user_id,
-                "original-name": name,
+                "original-name": original_name,
+                "internal-name": internal_name,
             },
         )
-        logger.info(f"[upload-document] S3 object written: {key}")
+        logger.info(f"[upload-document] S3 object written: {storage_key}")
     except Exception as e:
         logger.error(f"[upload-document] SeaweedFS upload failed: {e}")
         raise HTTPException(status.HTTP_502_BAD_GATEWAY, "Error al subir el archivo.")
@@ -205,18 +199,29 @@ async def upload_document(
             async with conn.transaction():
                 row = await conn.fetchrow(
                     _INSERT,
-                    doc_id, folder_id, user_id, name,
-                    "active", key, mime_type, len(contents), created_at, 0,
+                    doc_id,        # $1  id
+                    user_id,       # $2  user_id
+                    folder_id,     # $3  folder_id
+                    original_name, # $4  original_name
+                    internal_name, # $5  internal_name
+                    content_type,  # $6  content_type
+                    mime_type,     # $7  mime_type
+                    len(contents), # $8  size_bytes
+                    storage_key,   # $9  storage_path
+                    checksum,      # $10 checksum (bytes → BYTEA)
+                    metadata,      # $11 metadata  (str  → JSONB)
+                    created_at,    # $12 created_at
+                    0,             # $13 v
                 )
                 if not row:
                     raise RuntimeError("INSERT RETURNING returned empty.")
 
         except ForeignKeyViolationError:
-            await s3.compensate(key, logger)
+            await s3.compensate(storage_key, logger)
             raise HTTPException(status.HTTP_404_NOT_FOUND, f"La carpeta '{folder_id}' no existe.")
 
         except UniqueViolationError:
-            await s3.compensate(key, logger)
+            await s3.compensate(storage_key, logger)
             raise HTTPException(status.HTTP_409_CONFLICT, "Ya existe un documento con ese identificador.")
 
         except HTTPException:
@@ -224,9 +229,12 @@ async def upload_document(
 
         except Exception as e:
             logger.error(f"[upload-document] DB insert failed: {e}")
-            await s3.compensate(key, logger)
+            await s3.compensate(storage_key, logger)
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Error al registrar el documento.")
 
     # TODO: Dispatch Pub/Sub event
 
-    return DocumentResponse(**dict(row))
+    # checksum viene como bytes desde Postgres; se expone como hex en la respuesta
+    result = dict(row)
+    result["checksum"] = result["checksum"].hex()
+    return DocumentResponse(**result)
