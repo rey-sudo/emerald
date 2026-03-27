@@ -138,8 +138,8 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 }
 
 .folder-card.selected {
-  border-color: var(--accent2, #5b7fa6);
-  box-shadow: 0 0 0 2px var(--accent2, #5b7fa6);
+  border-color: var(--ui-secondary, #5b7fa6);
+ 
 }
 
 /* Sortable states */

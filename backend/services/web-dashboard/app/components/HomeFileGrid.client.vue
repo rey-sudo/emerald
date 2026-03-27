@@ -349,7 +349,7 @@ defineExpose({
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   height: 60px;
-  padding: 0 24px;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -412,8 +412,8 @@ defineExpose({
 .folder-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-  margin-top: 1rem;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 /* ── List ───────────────────────────────────────────────────── */

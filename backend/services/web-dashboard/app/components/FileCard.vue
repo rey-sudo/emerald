@@ -39,7 +39,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 .folder-card {
   background: var(--card, #fff);
   background: transparent;
-  border: 1px solid var(--ui-border, #e2ddd8);
+  border: 1px solid transparent;
   border-radius: var(--radius, 12px);
   padding: 20px 14px 14px;
   display: flex;
