@@ -12,6 +12,6 @@ CREATE TABLE events (
 );
 
 CREATE INDEX idx_events_created_at     ON events (created_at);
-CREATE INDEX idx_events_aggregate      ON events (entity_type, entity_id);
+CREATE INDEX idx_events_entity         ON events (entity_type, entity_id);
 CREATE INDEX idx_events_type           ON events (type, created_at);
 
