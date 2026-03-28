@@ -124,10 +124,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   cursor: pointer;
   position: relative;
   user-select: none;
-  transition:
-    box-shadow 160ms ease,
-    transform 160ms ease,
-    border-color 160ms ease;
+  transition: 0.3s ease
 }
 
 .folder-card:hover {

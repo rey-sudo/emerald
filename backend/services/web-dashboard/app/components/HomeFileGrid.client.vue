@@ -72,10 +72,9 @@
               @click="close"
             />
             <UButton
-              class="cursor-pointer"
               label="Upload"
-              color="neutral"
-              :loading="onSubmiting"
+              color="primary"
+              :loading="isSubmiting"
               @click="onSubmit(close)"
             />
           </template>
@@ -159,6 +158,8 @@ const props = defineProps({
   },
 });
 
+const toast = useToast();
+
 const router = useRouter();
 
 const documentStore = useDocumentStore();
@@ -166,12 +167,10 @@ const documentStore = useDocumentStore();
 const fileUploadDialog = ref(false);
 const filesToUpload = ref([]);
 
-const toast = useToast();
-
-const onSubmiting = ref(false);
+const isSubmiting = ref(false);
 
 const onSubmit = async (_close) => {
-  onSubmiting.value = true;
+  isSubmiting.value = true;
 
   for (let i = filesToUpload.value.length - 1; i >= 0; i--) {
     const file = filesToUpload.value[i];
@@ -201,7 +200,7 @@ const onSubmit = async (_close) => {
   }
 
   filesToUpload.value = [];
-  onSubmiting.value = false;
+  isSubmiting.value = false;
 };
 
 const breadItems = [

@@ -110,7 +110,8 @@
             />
             <UButton
               label="Create"
-              color="neutral"
+              color="primary"
+              :loading="isSubmiting"
               @click="onCreateFolder(close)"
             />
           </template>
@@ -179,8 +180,12 @@ import {
   defineComponent,
   h,
 } from "vue";
+import { promiseTimeout } from "@vueuse/core";
 import Sortable from "sortablejs";
-const router = useRouter()
+
+const toast = useToast();
+
+const router = useRouter();
 
 const documentStore = useDocumentStore();
 
@@ -192,12 +197,31 @@ const newFolderColorChip = computed(() => ({
   backgroundColor: newFolderColor.value,
 }));
 
+const isSubmiting = ref(false);
+
 const onCreateFolder = async (close) => {
   try {
+    isSubmiting.value = true;
+
     await documentStore.createFolder(newFolderName.value, newFolderColor.value);
+
+    toast.add({
+      title: `Folder created`,
+      icon: "i-lucide-circle-check",
+      duration: 1_000,
+      progress: false,
+    });
   } catch (e) {
-    console.error(e); //TODO: TOAST
+    toast.add({
+      title: `Something is wrong`,
+      icon: "i-lucide-x",
+      duration: 1_000,
+      color: "error",
+      progress: false,
+    });
   } finally {
+    await promiseTimeout(1_000);
+    isSubmiting.value = false;
     close();
   }
 };
@@ -215,8 +239,8 @@ const onFolderOpen = (folderId, folderName) => {
     path: `/folder/${folderId}`,
     query: {
       folderName,
-    }
-  })
+    },
+  });
 };
 
 const FOLDER_COLORS = [
@@ -257,7 +281,6 @@ const view = ref("grid"); // 'grid' | 'list'
 const search = ref("");
 const selectedId = ref(null);
 
-
 const gridRef = ref(null);
 const listRef = ref(null);
 
@@ -294,7 +317,6 @@ const ListHeader = defineComponent({
       ]);
   },
 });
-
 
 function openNewFolderDialog() {
   newFolderDialog.value = true;
