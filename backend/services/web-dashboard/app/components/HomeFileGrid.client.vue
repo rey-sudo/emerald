@@ -71,7 +71,13 @@
               variant="outline"
               @click="close"
             />
-            <UButton label="Upload" color="neutral" @click="onSubmit(close)" />
+            <UButton
+              class="cursor-pointer"
+              label="Upload"
+              color="neutral"
+              :loading="onSubmiting"
+              @click="onSubmit(close)"
+            />
           </template>
         </UModal>
       </div>
@@ -138,6 +144,7 @@ import {
   defineComponent,
   h,
 } from "vue";
+import { promiseTimeout } from "@vueuse/core";
 import Sortable from "sortablejs";
 
 const props = defineProps({
@@ -159,20 +166,42 @@ const documentStore = useDocumentStore();
 const fileUploadDialog = ref(false);
 const filesToUpload = ref([]);
 
-const onSubmit = async (close) => {
-  try {
-    for (let i = filesToUpload.value.length - 1; i >= 0; i--) {
-      const file = filesToUpload.value[i];
+const toast = useToast();
 
+const onSubmiting = ref(false);
+
+const onSubmit = async (_close) => {
+  onSubmiting.value = true;
+
+  for (let i = filesToUpload.value.length - 1; i >= 0; i--) {
+    const file = filesToUpload.value[i];
+
+    try {
       await documentStore.uploadFile(file, props.folderId);
 
+      toast.add({
+        id: i.toString(),
+        title: `File uploaded: ${file.name}`,
+        icon: "i-lucide-circle-check",
+        duration: 1_000,
+      });
+    } catch (e) {
+      toast.add({
+        id: i.toString(),
+        title: `Upload failed: ${file.name}`,
+        icon: "i-lucide-x",
+        duration: 3_000,
+        color: "error",
+        progress: false,
+      });
+    } finally {
+      await promiseTimeout(1_000);
       filesToUpload.value.splice(i, 1);
     }
-  } catch (e) {
-    console.error(e); //TODO: TOAST
-  } finally {
-    //close();
   }
+
+  filesToUpload.value = [];
+  onSubmiting.value = false;
 };
 
 const breadItems = [

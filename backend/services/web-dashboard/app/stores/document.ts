@@ -37,7 +37,6 @@ export const useDocumentStore = defineStore("document", () => {
 
   const folders = ref(fakeFolders);
   const pending = ref(false);
-  const error = ref(null);
 
   const filteredFolders = computed(() =>
     folders.value.filter((folder) => folder.status === "created"),
@@ -45,12 +44,10 @@ export const useDocumentStore = defineStore("document", () => {
 
   async function getFolders() {
     pending.value = true;
-    error.value = null;
-
     try {
       folders.value = await $fetch("/api/document/get-folders");
     } catch (e: any) {
-      error.value = e;
+      throw e;
     } finally {
       pending.value = false;
     }
@@ -58,8 +55,6 @@ export const useDocumentStore = defineStore("document", () => {
 
   async function createFolder(name: string, color: string) {
     pending.value = true;
-    error.value = null;
-
     try {
       const response = await $fetch("/api/document/create-folder", {
         method: "POST",
@@ -69,7 +64,7 @@ export const useDocumentStore = defineStore("document", () => {
       await getFolders();
       return response;
     } catch (e: any) {
-      error.value = e;
+      throw e;
     } finally {
       pending.value = false;
     }
@@ -77,7 +72,6 @@ export const useDocumentStore = defineStore("document", () => {
 
   async function uploadFile(file: File, folderId: string) {
     pending.value = true;
-    error.value = null;
 
     const formData = new FormData();
     formData.append("file", file);
@@ -92,7 +86,6 @@ export const useDocumentStore = defineStore("document", () => {
 
       return response;
     } catch (e: any) {
-      error.value = e.data?.statusMessage ?? e.message ?? "Error desconocido";
       throw e;
     } finally {
       pending.value = false;
@@ -102,7 +95,6 @@ export const useDocumentStore = defineStore("document", () => {
   return {
     folders,
     pending,
-    error,
     filteredFolders,
     getFolders,
     createFolder,

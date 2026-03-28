@@ -1,3 +1,5 @@
+import type { FetchError } from 'ofetch'
+
 export default defineEventHandler(async (event) => {
   const parts = await readMultipartFormData(event);
 
@@ -34,8 +36,23 @@ export default defineEventHandler(async (event) => {
 
   const config = useRuntimeConfig();
 
-  return $fetch("http://localhost:8001/api/document/upload-file", {
-    method: "POST",
-    body: form,
-  });
+  try {
+    const response = await $fetch(
+      "http://localhost:8001/api/document/upload-file",
+      {
+        method: "POST",
+        body: form,
+      },
+    );
+
+    return response;
+  } catch (err: any) {
+    const error = err as FetchError
+
+    throw createError({
+      statusCode: error.status || 500,
+      statusMessage: error.message || 'Internal Server Error',
+      data: error.data || { message: "No details" },
+    });
+  }
 });
