@@ -22,14 +22,6 @@ docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
   persistent://public/document/document \
   --partitions 8
 
-###########
-
-docker exec -it broker bin/pulsar-admin topics create-partitioned-topic \
-  persistent://public/document/history-topic --partitions 1
-
-docker exec -it broker bin/pulsar-admin topics create-partitioned-topic \
-  persistent://public/document/offset-topic --partitions 1
-
 $COMMAND up -d
 
 echo "Pulsar launched"

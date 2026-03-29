@@ -1,0 +1,23 @@
+services:
+  db-document:
+    image: postgres:15-alpine
+    container_name: postgres-document
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=api_document
+    ports:
+      - "5432:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"           # Debezium
+      - "-c"
+      - "max_replication_slots=10"
+      - "-c"
+      - "max_wal_senders=10"
+    volumes:
+      - postgres_document_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_document_data:
