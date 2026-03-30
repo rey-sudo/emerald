@@ -1,0 +1,13 @@
+[package]
+name = "event_consumer"
+version = "0.1.0"
+edition = "2024"
+authors = ["Juan José Caballero Rey <sudo.delete.evil@gmail.com>"]
+description = "Agnostic event consumer for outbox pattern"
+license = "GPL-3.0"
+repository = "https://github.com/rey-sudo/emerald"
+readme = "README.md"
+keywords = ["pulsar", "sqlx", "events", "worker"]
+categories = ["database", "asynchronous"]
+
+[dependencies]
