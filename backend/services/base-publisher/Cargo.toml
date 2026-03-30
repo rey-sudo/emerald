@@ -11,10 +11,8 @@ keywords = ["pulsar", "sqlx", "events", "worker"]
 categories = ["database", "asynchronous"]
 
 [dependencies]
-# Async runtime
 tokio = { version = "1.50.0", features = ["full"] }
 
-# PostgreSQL — maneja reconexión automática via pool
 sqlx = { version = "0.8.6", features = [
     "runtime-tokio-native-tls",
     "postgres",
