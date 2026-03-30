@@ -4,9 +4,13 @@ set -e
 
 echo "Running DEV env"
 
-if [ -f ".env.dev" ]; then
-  echo "Loading .env.dev"
-  export $(grep -v '^#' .env.dev | xargs)
+env_file=".env"
+
+if [ -f "$env_file" ]; then
+  echo "Loading env file: $env_file"
+  export $(grep -v '^#' "$env_file" | xargs)
+else
+  echo "Error: $env_file not found."
 fi
 
 if [ -d ".venv" ]; then

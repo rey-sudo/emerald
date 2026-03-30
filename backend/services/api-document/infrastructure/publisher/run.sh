@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export $(grep -v '^#' ./infrastructure/publisher/.env.dev | xargs)
+export $(grep -v '^#' ./infrastructure/publisher/.env | xargs)
 
 if ! command -v event_publisher &> /dev/null; then
     echo "📦 Installing event_publisher from crates.io..."
