@@ -20,8 +20,10 @@ pub async fn run() -> Result<Arc<AppState>> {
     // Enables info!, warn!, error! logs across the entire service.
     tracing_subscriber::fmt::init();
 
+    // Returns an error if any required variables are missing or malformed.
     let config: Config = Config::from_env()?;
 
+    // Initialize a connection pool to PostgreSQL with maximum concurrency and acquisition timeout limits.
     let pool: sqlx::Pool<sqlx::Postgres> = PgPoolOptions::new()
         .max_connections(config.pg_max_connections)
         .acquire_timeout(Duration::from_secs(config.pg_acquire_timeout_secs))

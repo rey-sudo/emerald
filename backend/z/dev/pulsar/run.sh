@@ -14,14 +14,6 @@ sudo chown -R 10000 data
 docker exec -it broker bash bin/pulsar-admin namespaces create public/default
 docker exec -it broker bash bin/pulsar-admin namespaces list public
 
-docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
-  persistent://public/default/api-documents.folders \
-  --partitions 8
-
-docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
-  persistent://public/default/api-documents.documents \
-  --partitions 8
-
 
 $COMMAND up -d
 
