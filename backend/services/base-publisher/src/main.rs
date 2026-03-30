@@ -1,5 +1,5 @@
 use anyhow::Result;
-use publisher::{
+use event_publisher::{
     application,
     infrastructure::bootstrap::{self, AppState},
 };

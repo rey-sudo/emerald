@@ -11,27 +11,28 @@ use tracing::{error, info};
 pub type ProducerCache = HashMap<String, Producer<TokioExecutor>>;
 
 pub async fn run(state: Arc<AppState>) -> Result<()> {
-    info!("Starting event publisher worker...");
+    info!("Starting worker...");
 
+    // Initialize the Pulsar client using the configured URL and the Tokio async executor.
     let pulsar: Pulsar<_> = Pulsar::builder(&state.config.pulsar_url, TokioExecutor)
         .build()
         .await
         .context("Failed to create Pulsar client")?;
 
+    // Initialize an in-memory cache to reuse Pulsar producers and avoid redundant handshakes.
     let mut producers: ProducerCache = HashMap::new();
-
+   
     loop {
         match publish_pending_events(&state, &pulsar, &mut producers).await {
             Ok(count) if count > 0 => {
                 info!("Published {} events", count);
             }
             Ok(_) => {
-                // No hay eventos, esperamos al siguiente intervalo definido en config
                 sleep(state.config.poll_interval).await;
             }
             Err(e) => {
-                error!("Error in publisher loop: {:?}", e);
-                sleep(Duration::from_secs(5)).await; // Espera de seguridad tras error
+                error!("Error in application loop: {:?}", e);
+                sleep(Duration::from_secs(5)).await; 
             }
         }
     }

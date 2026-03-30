@@ -1,17 +1,34 @@
 use anyhow::{Context, Result};
 use std::time::Duration;
+use validator::Validate;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Validate)]
 pub struct Config {
+    #[validate(url(message = "DATABASE_URL must be a valid URL"))]
     pub db_url: String,
+
+    #[validate(url(message = "PULSAR_URL must be a valid URL"))]
     pub pulsar_url: String,
+
+    #[validate(range(min = 1, max = 10000))]
     pub batch_size: i64,
+    
     pub poll_interval: Duration,
     pub pulsar_reconnect_delay: Duration,
+
+    #[validate(range(min = 0, max = 100))]
     pub pulsar_max_retries: u32,
+
+    #[validate(length(min = 1, message = "TOPIC_LIST cannot be empty"))]
     pub topics: Vec<String>,
+
+    #[validate(range(min = 1, max = 500))]
     pub pg_max_connections: u32,
+
+    #[validate(range(min = 1, max = 300))]
     pub pg_acquire_timeout_secs: u64,
+
+    #[validate(range(min = 1, max = 5000))]
     pub pulsar_batch_size: u32,
 }
 
@@ -67,7 +84,7 @@ impl Config {
             .parse::<u32>()
             .map_err(|_| anyhow::anyhow!("PULSAR_BATCH_SIZE must be a valid integer"))?;
 
-        Ok(Self {
+        let config: Config = Self {
             db_url,
             pulsar_url,
             batch_size,
@@ -78,12 +95,12 @@ impl Config {
             pg_max_connections,
             pg_acquire_timeout_secs,
             pulsar_batch_size,
-        })
+        };
+
+        config
+            .validate()
+            .context("Configuration validation failed")?;
+
+        Ok(config)
     }
-}
-
-pub fn get_config() -> Result<Config> {
-    let config: Config = Config::from_env()?;
-
-    Ok(config)
 }

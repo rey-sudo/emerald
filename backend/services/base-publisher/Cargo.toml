@@ -1,14 +1,21 @@
 [package]
-name = "publisher"
+name = "event_publisher"
 version = "0.1.0"
 edition = "2024"
+authors = ["Juan José Caballero Rey <sudo.delete.evil@gmail.com>"]
+description = "Agnostic event publisher for outbox pattern"
+license = "GPL-3.0"
+repository = "https://github.com/rey-sudo/emerald"
+readme = "README.md"
+keywords = ["pulsar", "sqlx", "events", "worker"]
+categories = ["database", "asynchronous"]
 
 [dependencies]
 # Async runtime
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1.50.0", features = ["full"] }
 
 # PostgreSQL — maneja reconexión automática via pool
-sqlx = { version = "0.7", features = [
+sqlx = { version = "0.8.6", features = [
     "runtime-tokio-native-tls",
     "postgres",
     "uuid",
@@ -16,23 +23,22 @@ sqlx = { version = "0.7", features = [
     "json",
 ] }
 
-# Apache Pulsar
-pulsar = { version = "6", default-features = false, features = ["tokio-runtime"] }
 
-# Serialización
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-uuid = { version = "1", features = ["serde"] }
-chrono = { version = "0.4", features = ["serde"] }
+pulsar = { version = "6.7.2", default-features = false, features = ["tokio-runtime"] }
 
-# Logging estructurado
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
 
-# Manejo de errores
-anyhow = "1"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+uuid = { version = "1.23.0", features = ["serde"] }
+chrono = { version = "0.4.44", features = ["serde"] }
+
+
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter", "fmt"] }
+
+anyhow = "1.0.102"
 dotenvy = "0.15.7"
-validator = "0.20.0"
+validator = { version = "0.20.0", features = ["derive"] }
 
 [profile.release]
 opt-level = 3
