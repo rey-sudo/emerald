@@ -14,8 +14,9 @@ if [ -d ".venv" ]; then
   source .venv/bin/activate
 fi
 
-echo "🌐 Server: http://$APP_HOST:$APP_PORT"
+./infrastructure/publisher/run.sh &
 
+echo "🌐 Server: http://$APP_HOST:$APP_PORT"
 exec uvicorn main:app \
   --host "$APP_HOST" \
   --port "$APP_PORT" \
