@@ -4,8 +4,7 @@ CREATE TABLE processed (
     event_id UUID NOT NULL,
     processed_at BIGINT NOT NULL,
     status VARCHAR(50) NOT NULL,
-    error_details JSONB,
-    
+
     CONSTRAINT unique_event_per_consumer UNIQUE (consumer_group, event_id)
 );
 
