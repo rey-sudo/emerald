@@ -1,6 +1,7 @@
 use crate::{application::ProducerCache, infrastructure::bootstrap::AppState};
 use anyhow::Result;
 use pulsar::{Pulsar, TokioExecutor};
+use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tracing::{error, info};
 use uuid::Uuid;
@@ -16,6 +17,14 @@ struct EventRow {
     //pub source: String,
     //pub specversion: i64,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct EventEnvelope {
+    pub event_id: String,
+    pub entity_type: String,
+    pub data: serde_json::Value,
+}
+
 pub async fn publish_pending_events(
     state: &Arc<AppState>,
     pulsar: &Pulsar<TokioExecutor>,
@@ -23,7 +32,7 @@ pub async fn publish_pending_events(
 ) -> Result<usize> {
     // 1. Fetch unpublished events with a row-level lock, skipping already locked rows.
     let rows: Vec<EventRow> = sqlx::query_as::<_, EventRow>(
-        "SELECT id, entity_type, data FROM events 
+        "SELECT id, entity_type, entity_id, data FROM events 
          WHERE published = FALSE 
          ORDER BY time ASC 
          LIMIT $1 FOR UPDATE SKIP LOCKED",
@@ -60,15 +69,17 @@ pub async fn publish_pending_events(
         let producer: &mut pulsar::Producer<TokioExecutor> =
             producers.get_mut(target_topic).unwrap();
 
-        let payload: Vec<u8> = serde_json::to_vec(&serde_json::json!({
-            "event_id":    row.id,
-            "entity_type": row.entity_type,
-            "data":        row.data,
-        }))?;
+        let envelope: EventEnvelope = EventEnvelope {
+            event_id: row.id.clone().to_string(),
+            entity_type: row.entity_type.clone(),
+            data: row.data.clone(),
+        };
+
+        let payload: Vec<u8> = serde_json::to_vec(&envelope)?;
 
         let message: pulsar::producer::Message = pulsar::producer::Message {
             payload,
-            partition_key: Some(row.entity_id.to_string()), 
+            partition_key: Some(row.entity_id.to_string()),
             ..Default::default()
         };
 
@@ -81,7 +92,7 @@ pub async fn publish_pending_events(
                     .await?;
 
                 published_count += 1;
-                info!("Event send {} - {}", target_topic, row.entity_type);
+                info!("Event send {} - {}", target_topic, row.entity_type.clone());
             }
             Err(e) => error!("Failed to send event {} to pulsar: {:?}", row.id, e),
         }

@@ -91,7 +91,7 @@ impl Config {
             .map_err(|_| anyhow::anyhow!("PULSAR_BATCH_SIZE must be a valid integer"))?;
         
 
-        let consumer_group: String = "api-document-consumer-group";
+        let consumer_group: String = "api-document-consumer-group".to_string();
 
         let consumer_prefix: String = "api-document-consumer".to_string();
 

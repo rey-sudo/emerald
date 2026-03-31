@@ -1,22 +1,25 @@
 use crate::infrastructure::bootstrap::AppState;
 use anyhow::{Context, Result};
 use futures::TryStreamExt;
-use pulsar::{Consumer, DeserializeMessage, Payload, Pulsar, SubType, TokioExecutor};
+use pulsar::{
+    Consumer, DeserializeMessage, Payload, Pulsar, SubType, TokioExecutor,
+    consumer::DeadLetterPolicy,
+};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tracing::{error, info, warn};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct EventPayload {
-    pub event_id: Uuid,
+pub struct EventEnveloped {
+    pub event_id: String,
     pub entity_type: String,
     pub data: serde_json::Value,
 }
 
-/// Implementation of the `DeserializeMessage` trait to transform Pulsar messages into `EventPayload`.
-impl DeserializeMessage for EventPayload {
-    type Output = Result<EventPayload, serde_json::Error>;
+/// Implementation of the `DeserializeMessage` trait to transform Pulsar messages into `EventEnveloped`.
+impl DeserializeMessage for EventEnveloped {
+    type Output = Result<EventEnveloped, serde_json::Error>;
 
     fn deserialize_message(payload: &Payload) -> Self::Output {
         serde_json::from_slice(&payload.data)
@@ -26,39 +29,50 @@ impl DeserializeMessage for EventPayload {
 pub async fn run(state: Arc<AppState>) -> Result<()> {
     info!("Starting consumer for topics: {:?}", state.config.topics);
 
-    // 1. Initialize the Pulsar client gateway.
+    // Initialize the Pulsar client gateway.
     let pulsar: Pulsar<_> = Pulsar::builder(&state.config.pulsar_url, TokioExecutor)
         .build()
         .await
         .context("Failed to create Pulsar client")?;
 
+    // Clone the consumer group name to obtain an owned String.
     let consumer_group: String = state.config.consumer_group.clone();
 
-    let unique_consumer_name: String = format!(
+    // Create a unique name for this consumer.
+    let consumer_name: String = format!(
         "{}-{}",
         state.config.consumer_prefix, state.config.consumer_suffix
     );
 
-    // 1. Initialize the consumer builder for EventPayload.
-    // 2. Subscribe to all topics defined in the configuration.
-    // 3. Assign a unique name to this specific instance for tracking.
-    // 4. Join the shared subscription group to distribute the workload.
-    // 5. Use KeyShared to ensure ordered processing by entity ID.
-    let mut consumer: Consumer<EventPayload, TokioExecutor> = pulsar
+    let dlq_topic_name: String = format!("{}-{}-DLQ", "api-document-consumer", consumer_group);
+
+    let dlq_policy: DeadLetterPolicy = DeadLetterPolicy {
+        max_redeliver_count: 5,
+        dead_letter_topic: dlq_topic_name,
+    };
+
+    // consumer_name : Assign a unique name to this specific instance for tracking.
+    // consumer_group: Join the shared subscription group to distribute the workload.
+    // KeyShared: to ensure ordered processing by entity ID.
+    let mut consumer: Consumer<EventEnveloped, TokioExecutor> = pulsar
         .consumer()
         .with_topics(state.config.topics.clone())
-        .with_consumer_name(unique_consumer_name)
+        .with_consumer_name(consumer_name)
         .with_subscription(&consumer_group)
         .with_subscription_type(SubType::KeyShared)
+        .with_dead_letter_policy(dlq_policy)
         .build()
         .await?;
 
     while let Some(msg) = consumer.try_next().await? {
-        let data: EventPayload = match msg.deserialize() {
+        let data_str = String::from_utf8_lossy(&msg.payload.data);
+        info!("Raw payload string: {}", data_str);
+
+        // Deserialize the payload acknowledging malformed messages to prevent queue blocking.
+        let data: EventEnveloped = match msg.deserialize() {
             Ok(data) => data,
             Err(e) => {
                 error!("Could not deserialize message: {:?}", e);
-                // TODO: DLQ
                 consumer.ack(&msg).await?;
                 continue;
             }
@@ -86,7 +100,7 @@ pub async fn run(state: Arc<AppState>) -> Result<()> {
 
 async fn process_and_record(
     state: &Arc<AppState>,
-    event: &EventPayload,
+    event: &EventEnveloped,
     group: &str,
 ) -> Result<bool> {
     // 1. Iniciamos la transacción
@@ -98,6 +112,8 @@ async fn process_and_record(
 
     let now: i64 = chrono::Utc::now().timestamp();
 
+    let event_uuid: Uuid = Uuid::parse_str(&event.event_id)?;
+
     // 2. Intentamos insertar el registro de control de duplicados
     // Usamos &mut *tx para ejecutar la consulta dentro de la transacción
     let result = sqlx::query(
@@ -107,7 +123,7 @@ async fn process_and_record(
     )
     .bind(Uuid::now_v7())
     .bind(group)
-    .bind(event.event_id)
+    .bind(event_uuid)
     .bind(now)
     .bind("SUCCESS")
     .execute(&mut *tx) // <--- Ejecución en la transacción
@@ -141,13 +157,9 @@ async fn process_and_record(
 // Ejemplo de función de negocio que también escribe en la DB
 async fn execute_business_logic(
     tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
-    event: &EventPayload,
+    event: &EventEnveloped,
 ) -> Result<()> {
     // Ejemplo: Actualizar el stock, crear una orden, etc.
-    sqlx::query("UPDATE inventory SET stock = stock - 1 WHERE item_id = $1")
-        .bind(&event.entity_type) // Supongamos que aquí está el ID del item
-        .execute(&mut **tx)
-        .await?;
 
     Ok(())
 }
