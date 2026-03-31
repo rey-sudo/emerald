@@ -3,25 +3,38 @@ use anyhow::{Context, Result};
 use async_trait::async_trait;
 use sqlx::{Postgres, Transaction};
 use std::sync::Arc;
-use tracing::{error};
+use tracing::error;
 
+/// This contract trait must be implemented by any component that wishes to process
+/// incoming events. It is designed to be thread-safe (`Send + Sync`) and
+/// supports asynchronous execution via the `#[async_trait]` macro.
 #[async_trait]
-pub trait EventHandlerLogic: Send + Sync {
-    // Nuevo: El motor llamará a esto para saber si el handler está interesado
+pub trait MultiHandler: Send + Sync {
+    /// Predicate used by the consumer engine to determine if this handler
+    /// is capable of processing a specific entity_type.
     fn can_handle(&self, entity_type: &str) -> bool;
 
+    /// Main entry point for business logic execution.
+    /// This method receives a mutable reference to an active SQL transaction.
+    /// Any database operations performed within this method are part of a
+    /// larger atomic unit managed by the engine.
+    ///
+    /// # Error Handling
+    /// Returning an `Err` will trigger a transaction rollback and signal
+    /// the engine to NACK (Negative Acknowledge) the message for a retry.
     async fn handle<'a>(
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
     ) -> Result<()>;
 
-    // Ya no es estrictamente necesario si usamos can_handle, 
-    // pero podemos dejarlo para logging/identificación.
+    /// Provides a human-readable identifier for the handler.
+    /// Useful for telemetry, structured logging, and identifying which
+    /// specific logic failed during a crash or error state.
     fn name(&self) -> &str;
 }
 
-pub async fn process_event_with_handler<L: EventHandlerLogic>(
+pub async fn process_event_with_handler<L: MultiHandler>(
     state: &Arc<AppState>,
     event: &EventEnveloped,
     group: &str,

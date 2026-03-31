@@ -1,6 +1,6 @@
 pub mod consumer;
 use crate::{
-    application::consumer::{EventHandlerLogic, process_event_with_handler},
+    application::consumer::{MultiHandler, process_event_with_handler},
     infrastructure::bootstrap::AppState,
 };
 use anyhow::{Context, Result};
@@ -32,7 +32,7 @@ impl DeserializeMessage for EventEnveloped {
 
 pub async fn run<L>(state: Arc<AppState>, logic: L) -> Result<()>
 where
-    L: EventHandlerLogic + 'static,
+    L: MultiHandler + 'static,
 {
     info!("Starting consumer for topics: {:?}", state.config.topics);
 
