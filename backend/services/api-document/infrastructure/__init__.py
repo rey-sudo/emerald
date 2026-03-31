@@ -1,2 +1,2 @@
 from .logging import *
-from .s3 import *
+from .seaweed import *
