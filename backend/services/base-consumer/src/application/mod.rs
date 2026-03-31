@@ -17,6 +17,7 @@ use uuid::Uuid;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct EventEnveloped {
     pub event_id: Uuid,
+    pub event_type: String,
     pub entity_type: String,
     pub data: serde_json::Value,
 }

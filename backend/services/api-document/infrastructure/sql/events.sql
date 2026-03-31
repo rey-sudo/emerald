@@ -1,7 +1,7 @@
 CREATE TABLE
     events (
         specversion BIGINT NOT NULL,
-        type VARCHAR(255) NOT NULL,
+        event_type VARCHAR(255) NOT NULL,
         source VARCHAR(255) NOT NULL,
         id UUID PRIMARY KEY,
         time BIGINT NOT NULL,
@@ -18,4 +18,4 @@ WHERE
 
 CREATE INDEX idx_events_entity ON events (entity_type, entity_id);
 
-CREATE INDEX idx_events_type ON events (type, time);
+CREATE INDEX idx_events_type ON events (event_type, time);

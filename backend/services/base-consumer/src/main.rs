@@ -31,10 +31,28 @@ impl MultiHandler for FolderHandler {
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
     ) -> Result<()> {
-        //
-        // HANDLER LOGIC IMPLEMENTATION
-        //
-        Ok(())
+        match event.event_type.as_str() {
+            "folder.created" => {
+                info!("Handling folder creation for ID: {}", event.event_id);
+                // self.on_created(tx, event).await
+                Ok(())
+            }
+            "folder.updated" => {
+                info!("Handling folder update for ID: {}", event.event_id);
+                // self.on_updated(tx, event).await
+                Ok(())
+            }
+            "folder.deleted" => {
+                info!("Handling folder deletion for ID: {}", event.event_id);
+                // self.on_deleted(tx, event).await
+                Ok(())
+            }
+            _ => {
+                // If we don't care about this specific action, we ACK and move on
+                warn!("No specific logic for event_type: {}", event.event_type);
+                Ok(())
+            }
+        }
     }
 }
 

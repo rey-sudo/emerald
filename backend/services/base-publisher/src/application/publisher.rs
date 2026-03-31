@@ -8,19 +8,17 @@ use uuid::Uuid;
 
 #[derive(sqlx::FromRow, Debug)]
 struct EventRow {
+    pub event_type: String,
     pub id: Uuid,
     pub entity_type: String,
     pub entity_id: String,
     pub data: serde_json::Value,
-    //pub time: i64,
-    //pub type_: String,
-    //pub source: String,
-    //pub specversion: i64,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct EventEnvelope {
     pub event_id: Uuid,
+    pub event_type: String,
     pub entity_type: String,
     pub data: serde_json::Value,
 }
@@ -32,7 +30,7 @@ pub async fn publish_pending_events(
 ) -> Result<usize> {
     // 1. Fetch unpublished events with a row-level lock, skipping already locked rows.
     let rows: Vec<EventRow> = sqlx::query_as::<_, EventRow>(
-        "SELECT id, entity_type, entity_id, data FROM events 
+        "SELECT event_type, id, entity_type, entity_id, data FROM events 
          WHERE published = FALSE 
          ORDER BY time ASC 
          LIMIT $1 FOR UPDATE SKIP LOCKED",
@@ -71,6 +69,7 @@ pub async fn publish_pending_events(
 
         let envelope: EventEnvelope = EventEnvelope {
             event_id: row.id.clone(),
+            event_type: row.event_type.clone(),
             entity_type: row.entity_type.clone(),
             data: row.data.clone(),
         };

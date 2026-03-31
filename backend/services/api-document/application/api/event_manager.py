@@ -22,7 +22,7 @@ async def emit_event(
     
     _SQL_QUERY = """
     INSERT INTO events (
-        specversion, type, source, id, time, 
+        specversion, event_type, source, id, time, 
         entity_type, entity_id, data, metadata
     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     """
