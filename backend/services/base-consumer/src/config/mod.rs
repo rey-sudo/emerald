@@ -12,7 +12,7 @@ pub struct Config {
 
     #[validate(range(min = 1, max = 10000))]
     pub batch_size: i64,
-    
+
     pub poll_interval: Duration,
     pub pulsar_reconnect_delay: Duration,
 
@@ -30,6 +30,12 @@ pub struct Config {
 
     #[validate(range(min = 1, max = 5000))]
     pub pulsar_batch_size: u32,
+
+    pub consumer_group: String,
+
+    pub consumer_prefix: String,
+
+    pub consumer_suffix: String,
 }
 
 impl Config {
@@ -83,6 +89,13 @@ impl Config {
             .context("PULSAR_BATCH_SIZE is not set")?
             .parse::<u32>()
             .map_err(|_| anyhow::anyhow!("PULSAR_BATCH_SIZE must be a valid integer"))?;
+        
+
+        let consumer_group: String = "api-document-consumer-group";
+
+        let consumer_prefix: String = "api-document-consumer".to_string();
+
+        let consumer_suffix: String = "1".to_string();
 
         let config: Config = Self {
             db_url,
@@ -95,6 +108,9 @@ impl Config {
             pg_max_connections,
             pg_acquire_timeout_secs,
             pulsar_batch_size,
+            consumer_group,
+            consumer_prefix,
+            consumer_suffix,
         };
 
         config
