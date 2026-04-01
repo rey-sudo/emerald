@@ -9,3 +9,14 @@ services:
     env_file:
       - ./infrastructure/consumer/.env
     network_mode: "host"
+
+  api-document-publisher:
+    container_name: api_document_publisher
+    build:
+      context: ./infrastructure/publisher
+      dockerfile: Dockerfile
+    image: rey-sudo/api-document-publisher:latest
+    restart: always
+    env_file:
+      - ./infrastructure/publisher/.env
+    network_mode: "host"    

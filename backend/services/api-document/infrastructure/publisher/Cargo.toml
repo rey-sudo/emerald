@@ -1,0 +1,8 @@
+[package]
+name = "publisher"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+event_publisher = "0.2.4"
+tokio = "1.50.0"
