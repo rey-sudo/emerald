@@ -148,7 +148,15 @@ const navItems: NavigationMenuItem[] = [
       }"
     >
       <template #header>
-        <Logo />
+        <UButton
+          :icon="
+            side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
+          "
+          color="neutral"
+          variant="ghost"
+          aria-label="Toggle sidebar"
+          @click="open = !open"
+        />
       </template>
 
       <UNavigationMenu
@@ -174,16 +182,11 @@ const navItems: NavigationMenuItem[] = [
         ]"
       >
         <UButton
-          :icon="
-            side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
-          "
-          color="neutral"
+          icon="i-lucide-bolt"
           variant="ghost"
-          aria-label="Toggle sidebar"
-          @click="open = !open"
+          color="neutral"
+          class="ml-auto"
         />
-
-        <UButton icon="i-lucide-bolt" variant="ghost" color="neutral"  class="ml-auto" />
       </div>
 
       <div class="flex-1">

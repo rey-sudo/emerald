@@ -1,6 +1,30 @@
 <template>
-  <div class="editor-container">
-    <editor-content :editor="editor" class="tiptap-viewport" />
+  <div class="editor-layout">
+    <div v-if="editor" class="editor-header">
+      <UButton
+        :class="{ 'is-active': editor.isActive('bold') }"
+        icon="i-lucide-bold"
+        size="sm"
+        color="primary"
+        :variant="editor.isActive('bold') ? 'solid' : 'outline'"
+        @click="editor.chain().focus().toggleBold().run()"
+      />
+
+      <UButton
+        :class="{ 'is-active': editor.isActive('italic') }"
+        icon="i-lucide-italic"
+        size="sm"
+        color="primary"
+        :variant="editor.isActive('italic') ? 'solid' : 'outline'"
+        @click="editor.chain().focus().toggleItalic().run()"
+      />
+
+      <span class="doc-info">100/600 páginas</span>
+    </div>
+
+    <div class="editor-container">
+      <editor-content :editor="editor" class="tiptap-viewport" />
+    </div>
   </div>
 </template>
 
@@ -78,12 +102,35 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+/* Contenedor principal para organizar Header y Editor */
+.editor-layout {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 3rem); /* Ocupa todo el alto de la ventana */
+  overflow: hidden; /* Evita scroll doble */
+  background: var(--ui-bg);
+}
+
+/* El Header */
+.editor-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--ui-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 10; /* Siempre por encima del contenido */
+}
+
+.doc-info {
+  font-size: 12px;
+  color: #888;
+  margin-left: auto; /* Empuja la info a la derecha */
+}
+
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
 .editor-container {
-  /* Establece cuánto espacio quieres que ocupe el editor en pantalla */
-  height: calc(100vh - 3rem); /* Ocupa todo el alto de la ventana */
   overflow-y: auto; /* Activa el scroll vertical cuando el contenido sea mayor a 100vh */
-  background: var(--ui-bg);
 }
 
 /* 2. Motores WebKit (Chrome, Safari, Edge) */

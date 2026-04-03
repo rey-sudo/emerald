@@ -11,7 +11,7 @@
         >{{ btn.label }}</UButton
       >
     </div>
-
+    <USeparator />
     <div class="preview-content">
       <Quiz
         :questions="questions"
@@ -32,6 +32,11 @@ const buttons = ref([
     label: "",
     color: "neutral",
     icon: "i-lucide-layout-grid",
+  },
+  {
+    label: "Prompt",
+    color: "neutral",
+    icon: "i-lucide-message-circle-more",
   },
   {
     label: "Quiz",
