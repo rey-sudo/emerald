@@ -6,5 +6,5 @@ opendataloader_pdf.convert(
     output_dir="output/",
     image_output="off",
     html_page_separator="<div data-type='page' data-number='%page-number%' id='page-%page-number%' class='page-virtual'></div>",
-    format="html",
+    format="html,markdown",
 )
