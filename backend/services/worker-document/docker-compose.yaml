@@ -1,0 +1,11 @@
+services:
+  worker-document-consumer:
+    container_name: worker_document_consumer
+    build:
+      context: ./infrastructure/consumer
+      dockerfile: Dockerfile
+    image: rey-sudo/worker-document-consumer:latest
+    restart: always
+    env_file:
+      - ./infrastructure/consumer/.env
+    network_mode: "host"
