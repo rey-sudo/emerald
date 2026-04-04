@@ -52,7 +52,8 @@ def process_pdf_document(
         "id='page-%page-number%' class='page-virtual'></div>"
     )
 
-    try:     
+    try:
+        #OpenDataLoader PDF includes a built-in sanitizer designed to protect privacy      
         opendataloader_pdf.convert(
             input_path=file_path,
             output_dir=output_path,
