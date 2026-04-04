@@ -1,52 +1,79 @@
-from pathlib import Path
-from tools import process_pdf_document,format_html, extract_md_chunk, get_context_from_text, extraer_keywords_md, detect_word_language
+import asyncio
+import os
+import signal
+from dotenv import load_dotenv
+load_dotenv()
+from loguru import logger
+from bullmq import Worker
 
-INPUT_PATH = "input"
-OUTPUT_PATH = "output"
+logger.add("worker.log", rotation="10 MB", retention="10 days", level="INFO")
 
-user_id = "019d2612-a01d-734c-ab63-917106f31187" 
+async def process_document(job, job_token):
+    """
+    Función procesadora con logs detallados.
+    """
+    # Usamos contextualización para que cada log de este job incluya su ID
+    with logger.contextualize(job_id=job.id):
+        try:
+            logger.info("Iniciando procesamiento de trabajo")
+            logger.info(f"Iniciando procesamiento de: {job.name}")
+            logger.debug(f"Datos recibidos: {job.data}")
+            
+            # Simulación de tarea (sustituir por tu lógica real)
+            await asyncio.sleep(2) 
+            
+            resultado = {"status": "success", "processed_at": "ahora"}
+            
+            logger.success("Trabajo finalizado con éxito")
+            return resultado
 
-file_name = "019d35cd-3578-7f69-835a-7ad7f2bbe8ec.pdf"
+        except Exception as e:
+            # .exception() guarda el stack trace completo automáticamente
+            logger.exception(f"Fallo crítico en el trabajo {job.id}: {e}")
+            raise e
 
-mime_type = 'application/pdf'
+async def main():
+    REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+    REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+    QUEUE_NAME = os.getenv("QUEUE_NAME", "documentQueue")
 
-file_path = Path(INPUT_PATH) / user_id / file_name
-output_path = Path(OUTPUT_PATH) / user_id 
-
-
-def process_pdf() -> bool:
+    # Define Redis connection settings (Host/Port for the local container)
+    connection_config = {"connection": {"host": REDIS_HOST, "port": REDIS_PORT }}
     
-    html_path, md_path = process_pdf_document(file_path= file_path, output_path=output_path, file_name=file_name)
+    # Initialize the Worker for the 'documentQueue' queue
+    worker = Worker(QUEUE_NAME, process_document, connection_config)
+
+    logger.info("Worker started. Waiting for new documents...")
     
-    format_html(file_path=html_path, output_path=html_path)
-    
-    return True
+    # Create an event to manage the graceful shutdown process
+    stop_event = asyncio.Event()
+    loop = asyncio.get_running_loop()
 
+    def handle_exit():
+        # Triggered when a termination signal is received
+        logger.warning("Shutdown signal received (SIGINT/SIGTERM)")
+        stop_event.set()
 
-def process_document():
-    match mime_type:
-        case "application/pdf":
-            return process_pdf()
-        case "text/markdown":
-            return "Apagando todo."
-        case _:  
-            return "Comando no reconocido."
-    
+    # Register signal handlers for clean exit on Ctrl+C or Docker stop
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        loop.add_signal_handler(sig, handle_exit)
 
+    try:
+        # Keep the script alive while the worker processes jobs in the background
+        await stop_event.wait()
+    except Exception as e:
+        logger.error(f"Unexpected error in the main loop: {e}")
+    finally:
+        logger.info("Starting resource cleanup...")
+        try:
+            await worker.close()
+            logger.info("Worker stopped successfully.")
+        except Exception as e:
+            logger.error(f"Error during cleanup: {e}")
 
-process_document()
-
-
-#
-
-#md_path = Path('output/019d2612-a01d-734c-ab63-917106f31187/019d35cd-3578-7f69-835a-7ad7f2bbe8ec.md')
-        
-
-
-#keywords = extraer_keywords_md(md_path, top_n=200)
-
-#language = detect_word_language(keywords)
-
-#context_chunk = extract_md_chunk(md_path, 500)
-
-# context = get_context_from_text(context_chunk)
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        # Silently handle Ctrl+C at the top level
+        pass
