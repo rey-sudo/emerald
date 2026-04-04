@@ -18,6 +18,12 @@ if [ -d ".venv" ]; then
   source .venv/bin/activate
 fi
 
+if [[ "$1" == "-c" ]]; then
+  docker compose up --build -d
+else
+  docker compose down
+fi
+
 docker compose up --build -d
 
 echo "🌐 Server: http://$APP_HOST:$APP_PORT"

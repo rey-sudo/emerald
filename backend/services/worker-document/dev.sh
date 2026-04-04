@@ -4,6 +4,8 @@ set -e
 
 echo "Running DEV env"
 
+WORKDIR=$(pwd)
+
 env_file=".env"
 
 if [ -f "$env_file" ]; then
@@ -27,7 +29,6 @@ fi
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
-
 cleanup() {
     echo "Stopping dev..."
     kill $(jobs -p)
@@ -37,7 +38,14 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Running dev"
+
+cd "infrastructure/consumer"
+
+deno run -A ./server/main.ts &
+cargo run &
+
+cd $WORKDIR
+
 python -u main.py &
-deno run -A ./infrastructure/consumer/server/main.ts &
 
 wait
