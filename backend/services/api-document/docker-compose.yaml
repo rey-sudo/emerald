@@ -1,15 +1,4 @@
 services:
-  api-document-consumer:
-    container_name: api_document_consumer
-    build:
-      context: ./infrastructure/consumer
-      dockerfile: Dockerfile
-    image: rey-sudo/api-document-consumer:latest
-    restart: always
-    env_file:
-      - ./infrastructure/consumer/.env
-    network_mode: "host"
-
   api-document-publisher:
     container_name: api_document_publisher
     build:

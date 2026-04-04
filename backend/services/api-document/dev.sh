@@ -18,6 +18,8 @@ if [ -d ".venv" ]; then
   source .venv/bin/activate
 fi
 
+docker compose up --build -d
+
 echo "🌐 Server: http://$APP_HOST:$APP_PORT"
 exec uvicorn main:app \
   --host "$APP_HOST" \
