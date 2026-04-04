@@ -10,6 +10,8 @@ CREATE TABLE
         size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
         storage_path TEXT NOT NULL,
         checksum VARCHAR(255) DEFAULT NULL,
+        context TEXT DEFAULT NULL,
+        keywords TEXT DEFAULT NULL,
         metadata JSONB DEFAULT NULL,
      
         created_at BIGINT DEFAULT NULL,

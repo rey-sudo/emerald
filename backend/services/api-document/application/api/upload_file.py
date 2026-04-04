@@ -147,12 +147,7 @@ async def upload_file(
         $11, NULL, NULL, NULL,
         $12
     )
-    RETURNING
-        id, folder_id,
-        original_name, internal_name,
-        content_type, mime_type,
-        size_bytes, storage_path,
-        created_at;
+    RETURNING *;
     """
 
     # ── Phase 1: upload binary ────────────────────────────────
