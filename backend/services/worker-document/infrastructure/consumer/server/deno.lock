@@ -2,11 +2,16 @@
   "version": "5",
   "specifiers": {
     "jsr:@hono/hono@*": "4.12.10",
-    "npm:bullmq@*": "5.73.0"
+    "jsr:@std/dotenv@*": "0.225.6",
+    "npm:bullmq@*": "5.73.0",
+    "npm:zod@*": "4.3.6"
   },
   "jsr": {
     "@hono/hono@4.12.10": {
       "integrity": "6e608e50bb13fd0933e86fda95d31c1ff57d1c8774ed585d6a8b8fc1bdd82c82"
+    },
+    "@std/dotenv@0.225.6": {
+      "integrity": "1d6f9db72f565bd26790fa034c26e45ecb260b5245417be76c2279e5734c421b"
     }
   },
   "npm": {
@@ -156,6 +161,9 @@
     "uuid@11.1.0": {
       "integrity": "sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==",
       "bin": true
+    },
+    "zod@4.3.6": {
+      "integrity": "sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg=="
     }
   },
   "workspace": {
