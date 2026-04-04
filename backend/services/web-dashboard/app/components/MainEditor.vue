@@ -114,7 +114,6 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 45%);
   z-index: 10; /* Siempre por encima del contenido */
 }
 
@@ -167,7 +166,6 @@ onBeforeUnmount(() => {
   /* Evita que el scrollbar "tiemble". Ajusta 1100px a la altura real de tu página */
   contain-intrinsic-size: 1px 1100px;
 
-  margin-bottom: 40px;
   padding: 60px 80px;
   position: relative;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
