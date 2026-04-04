@@ -1,57 +1,59 @@
-from bs4 import BeautifulSoup, NavigableString
+from bs4 import BeautifulSoup
+from loguru import logger
 from pathlib import Path
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+import os
 
-def format_html(file_path: Path, output_path: Path) -> str:
-    print(file_path)
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(min=1, max=8),
+    retry=retry_if_exception_type(RuntimeError),
+    before_sleep=lambda retry_state: logger.warning(
+        f"Attempt {retry_state.attempt_number} failed — retrying in {retry_state.next_action.sleep:.1f}s"
+    )
+)
+def format_html(file_path: Path, output_path: Path) -> None:
+    """
+    Restructures an HTML file so that all content between page-divider elements
+    is nested inside its corresponding page div.
+
+    The input HTML is expected to have empty <div data-type="page"> elements
+    acting as page separators, with content sitting as siblings after each one.
+    This function moves that sibling content inside the preceding page div.
+
+    Args:
+        file_path:   Path to the source HTML file.
+        output_path: Path where the restructured HTML will be written.
+                     Output contains no <html>, <head>, or <body> tags.
+    """    
     
-    html_plano = file_path.read_text(encoding='utf-8')
-
-    print(html_plano)
+    if not file_path.exists():
+        raise FileNotFoundError(f"Input file not found: {file_path}")
+    if not file_path.is_file():
+        raise ValueError(f"Input path is not a file: {file_path}")
+    if not os.access(file_path, os.R_OK):
+        raise PermissionError(f"Input file is not readable: {file_path}")
+    if not output_path.parent.exists():
+        raise ValueError(f"Output directory does not exist: {output_path.parent}")
+    if not os.access(output_path.parent, os.W_OK):
+        raise PermissionError(f"Output directory is not writable: {output_path.parent}")
     
-    soup = BeautifulSoup(html_plano, 'html.parser')
-    contenedor = soup.body if soup.body else soup
+    soup = BeautifulSoup(file_path.read_text(encoding='utf-8'), 'html.parser')
 
-    # ── 1. Contenido huérfano antes de la primera página ──────────────────────
-    primera_pagina = contenedor.find('div', attrs={'data-type': 'page'})
-
-    if primera_pagina:
-        nodos_huerfanos = []
-        nodo = primera_pagina.previous_sibling
-        while nodo:
-            nodos_huerfanos.insert(0, nodo)
-            nodo = nodo.previous_sibling
-
-        # Solo crear página-0 si hay contenido real (no solo espacios en blanco)
-        hay_contenido = any(
-            not (isinstance(n, NavigableString) and not n.strip())
-            for n in nodos_huerfanos
-        )
-
-        if hay_contenido:
-            pagina_cero = soup.new_tag('div', attrs={
-                'data-type':  'page',
-                'data-number': '0',
-                'id':          'page-0',
-                'class':       'page-virtual',
-            })
-            primera_pagina.insert_before(pagina_cero)
-            for nodo in nodos_huerfanos:
-                pagina_cero.append(nodo)
-
-    # ── 2. Empaquetar contenido en cada página ─────────────────────────────────
-    for div_pagina in contenedor.find_all('div', attrs={'data-type': 'page'}):
-        hermano = div_pagina.next_sibling
-
-        while hermano:
-            # Parar al encontrar el siguiente divisor de página
-            if hermano.name == 'div' and hermano.get('data-type') == 'page':
+    for div_page in soup.body.find_all('div', attrs={'data-type': 'page'}):
+        # Start from the first sibling after the page div
+        brother = div_page.next_sibling
+        while brother:
+            # Stop when the next page separator is reached
+            if brother.name == 'div' and brother.get('data-type') == 'page':
                 break
-
-            siguiente = hermano.next_sibling
-            div_pagina.append(hermano)
-            hermano = siguiente
-
-    html_procesado = contenedor.decode_contents()
-  
-    output_path.write_text(html_procesado, encoding='utf-8')
-
+            
+            # Save next sibling before appending, since append() detaches the
+            # node from its current position, making next_sibling unreliable
+            next_ = brother.next_sibling
+            div_page.append(brother)
+            brother = next_
+            
+    # decode_contents() serializes only the inner HTML of <body>,
+    # stripping the <html>, <head>, and <body> wrapper tags
+    output_path.write_text(soup.body.decode_contents(), encoding='utf-8')
