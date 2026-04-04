@@ -18,6 +18,26 @@ if [ -d ".venv" ]; then
   source .venv/bin/activate
 fi
 
-docker compose up --build -d
+if [[ "$1" == "-c" ]]; then
+  docker compose up --build -d
+else
+  docker compose down
+fi
 
-python main.py
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+
+cleanup() {
+    echo "Stopping dev..."
+    kill $(jobs -p)
+    exit
+}
+
+trap cleanup SIGINT
+
+echo "Running dev"
+python -u main.py &
+deno run -A ./infrastructure/consumer/server/main.ts &
+
+wait

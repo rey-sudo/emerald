@@ -1,9 +1,10 @@
 use event_consumer::{
-    application::{self, consumer::MultiHandler, EventEnveloped},
+    Result,
+    application::{self, EventEnveloped, consumer::MultiHandler},
     async_trait, error, info,
     infrastructure::bootstrap::{self, AppState},
     sqlx::{Postgres, Transaction},
-    warn, Result,
+    warn,
 };
 
 /// A specific handler implementation for document-related events.
@@ -32,9 +33,47 @@ impl MultiHandler for DocumentHandler {
     ) -> Result<()> {
         match event.event_type.as_str() {
             "document.created" => {
+                info!("{:?}", event.data["id"]);
                 info!("{:?}", event.data["mime_type"]);
-                
-                //UPDATE event
+                info!("{:?}", event.data["user_id"]);
+                info!("{:?}", event.data["internal_name"]);
+                info!("{:?}", event.data["storage_path"]);
+                info!("{:?}", event.data["folder_id"]);
+
+                let client: reqwest::Client = reqwest::Client::new();
+
+                let payload: serde_json::Value = serde_json::json!({
+                    "event_type": "document.created",
+                        "data": {
+                        "id": event.data["id"],
+                        "mime_type": event.data["mime_type"],
+                        "user_id": event.data["user_id"],
+                        "internal_name": event.data["internal_name"],
+                        "storage_path": event.data["storage_path"],
+                        "folder_id": event.data["folder_id"],
+                    }
+                });
+
+                let response = client
+                    .post("http://localhost:3005/create-job")
+                    .json(&payload)
+                    .send()
+                    .await?;
+
+                if response.status().is_success() {
+                    let res_json: serde_json::Value = response.json().await?;
+                    // to_string_pretty lo hace legible con saltos de línea y sangrías
+                    info!(
+                        "JSON recibido:\n{}",
+                        serde_json::to_string_pretty(&res_json).unwrap()
+                    );
+                } else {
+                    warn!("Status de error: {}", response.status());
+                    let error_body = response.text().await?;
+                    error!("Cuerpo del error: {}", error_body);
+                }
+
+                //UPDATE version event
                 Ok(())
             }
             "document.updated" => {

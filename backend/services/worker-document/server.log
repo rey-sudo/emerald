@@ -1,0 +1,24 @@
+[0m[1m[31merror[0m: Uncaught (in promise) AddrInUse: Address already in use (os error 98)
+Deno.serve({ port: 3000 }, app.fetch);
+[0m[31m     ^[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mlisten[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_net/01_net.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m605[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m35[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mserveInner[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_http/00_serve.ts[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m713[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m16[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mObject.serve[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_http/00_serve.ts[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m629[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m10[0m[0m[2m[38;5;245m)[0m
+    at [0m[2m[38;5;245mfile:///home/debian/Documents/GitHub/emerald/backend/services/worker-document/[0m[0m[36minfrastructure/consumer/server/main.ts[0m:[0m[33m20[0m:[0m[33m6[0m
+[0m[1m[31merror[0m: Uncaught (in promise) AddrInUse: Address already in use (os error 98)
+Deno.serve({ port: 3000 }, app.fetch);
+[0m[31m     ^[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mlisten[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_net/01_net.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m605[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m35[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mserveInner[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_http/00_serve.ts[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m713[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m16[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mObject.serve[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_http/00_serve.ts[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m629[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m10[0m[0m[2m[38;5;245m)[0m
+    at [0m[2m[38;5;245mfile:///home/debian/Documents/GitHub/emerald/backend/services/worker-document/[0m[0m[36minfrastructure/consumer/server/main.ts[0m:[0m[33m20[0m:[0m[33m6[0m
+Listening on http://0.0.0.0:3000/ (http://localhost:3000/)
+🚀 Server corriendo en http://localhost:3000
+[0m[1m[31merror[0m: Uncaught (in promise) AddrInUse: Address already in use (os error 98)
+Deno.serve({ port: 3000 }, app.fetch);
+[0m[31m     ^[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mlisten[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_net/01_net.js[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m605[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m35[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mserveInner[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_http/00_serve.ts[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m713[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m16[0m[0m[2m[38;5;245m)[0m
+    [0m[2m[38;5;245mat [0m[0m[2m[38;5;245mObject.serve[0m[0m[2m[38;5;245m ([0m[0m[2m[38;5;245mext:deno_http/00_serve.ts[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m629[0m[0m[2m[38;5;245m:[0m[0m[2m[38;5;245m10[0m[0m[2m[38;5;245m)[0m
+    at [0m[2m[38;5;245mfile:///home/debian/Documents/GitHub/emerald/backend/services/worker-document/[0m[0m[36minfrastructure/consumer/server/main.ts[0m:[0m[33m20[0m:[0m[33m6[0m
+./dev.sh: line 32: /main.ts: No such file or directory
