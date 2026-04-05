@@ -7,5 +7,5 @@ services:
     image: rey-sudo/worker-document-consumer:latest
     restart: always
     env_file:
-      - ./infrastructure/consumer/.env
+      - .env
     network_mode: "host"

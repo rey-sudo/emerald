@@ -31,49 +31,42 @@ impl MultiHandler for DocumentHandler {
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
     ) -> Result<()> {
+        let port: u16 = std::env::var("CONSUMER_SERVER_PORT")
+            .unwrap_or_else(|_| "7080".to_string())
+            .parse()
+            .expect("Port error");
+
         match event.event_type.as_str() {
             "document.created" => {
-                info!("{:?}", event.data["id"]);
-                info!("{:?}", event.data["mime_type"]);
-                info!("{:?}", event.data["user_id"]);
-                info!("{:?}", event.data["internal_name"]);
-                info!("{:?}", event.data["storage_path"]);
-                info!("{:?}", event.data["folder_id"]);
-
-                let client: reqwest::Client = reqwest::Client::new();
-
                 let payload: serde_json::Value = serde_json::json!({
-                    "event_type": "document.created",
-                        "data": {
-                        "id": event.data["id"],
-                        "mime_type": event.data["mime_type"],
-                        "user_id": event.data["user_id"],
-                        "internal_name": event.data["internal_name"],
-                        "storage_path": event.data["storage_path"],
-                        "folder_id": event.data["folder_id"],
-                    }
+                    "event_type": event.event_type,
+                    "data": event.data
                 });
 
-                let response = client
-                    .post("http://localhost:3005/create-job")
-                    .json(&payload)
-                    .send()
-                    .await?;
+                let mut response: ureq::http::Response<ureq::Body> =
+                    ureq::post(format!("http://localhost:{}/create-job", port))
+                        .send_json(&payload)?;
 
-                if response.status().is_success() {
-                    let res_json: serde_json::Value = response.json().await?;
-                    // to_string_pretty lo hace legible con saltos de línea y sangrías
-                    info!(
-                        "JSON recibido:\n{}",
-                        serde_json::to_string_pretty(&res_json).unwrap()
-                    );
-                } else {
-                    warn!("Status de error: {}", response.status());
-                    let error_body = response.text().await?;
-                    error!("Cuerpo del error: {}", error_body);
+                match response.status().is_success() {
+                    true => {
+                        let res_json: serde_json::Value = response.body_mut().read_json()?;
+                        info!(
+                            "Response:\n{}",
+                            serde_json::to_string_pretty(&res_json).unwrap()
+                        );
+                    }
+                    false => {
+                        let status: ureq::http::StatusCode = response.status();
+                        let body: String = response.body_mut().read_to_string()?;
+                        error!("create-job failed — status: {}, body: {}", status, body);
+                        return Err(anyhow::anyhow!(
+                            "create-job failed with status {}: {}",
+                            status,
+                            body
+                        ));
+                    }
                 }
 
-                //UPDATE version event
                 Ok(())
             }
             "document.updated" => {

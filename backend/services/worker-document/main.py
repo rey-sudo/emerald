@@ -17,7 +17,7 @@ async def process_document(job, job_token):
         try:
             logger.info("Iniciando procesamiento de trabajo")
             logger.info(f"Iniciando procesamiento de: {job.name}")
-            logger.debug(f"Datos recibidos: {job.data}")
+            logger.info(f"Datos recibidos: {job.data}")
             
             # Simulación de tarea (sustituir por tu lógica real)
             await asyncio.sleep(2) 

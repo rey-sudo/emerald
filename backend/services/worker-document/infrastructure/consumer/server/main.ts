@@ -8,7 +8,7 @@ function envInt(name: string, fallback: number): number {
   return value;
 }
 
-const PORT = envInt("PORT", 3005);
+const PORT = envInt("CONSUMER_SERVER_PORT", 7080);
 if (PORT < 1 || PORT > 65535) throw new Error(`Invalid PORT: ${PORT}`);
 
 // ---------------------------------------------------------------------------
