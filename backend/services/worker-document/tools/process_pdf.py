@@ -49,6 +49,11 @@ async def process_pdf(payload):
     html_path, md_path = process_pdf_document(file_path= file_path, output_path=output_path, file_name=file_name)
     
     format_html(file_path=html_path, output_path=html_path)
+    
+    
+    
+    
+    #UPDATE documents AND insert EVENT
 
 """    
     
