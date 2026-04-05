@@ -2,3 +2,6 @@ __pycache__
 *.log
 .venv
 .env
+*.pdf
+*.md
+*.html

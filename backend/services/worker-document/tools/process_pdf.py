@@ -1,13 +1,31 @@
+# Emerald
+# Copyright (C) 2026 Juan José Caballero Rey
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 from pathlib import Path
 from typing import Any
-#from tools import process_pdf_document,format_html, extract_md_chunk, get_context_from_text, extraer_keywords_md, detect_word_language
 from loguru import logger
 from mypy_boto3_s3 import S3Client
 from .process_pdf_document import *
 from .format_html import *
+import asyncpg
+import uuid
 
-async def process_pdf(s3: S3Client, input_path: Path, output_path: Path, payload: Any):  
+async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output_path: Path, payload: Any):  
     bucket = 'documents'
+    document_id = payload['id']
     user_id = payload['user_id']
     internal_name = payload['internal_name']
     storage_path = payload['storage_path']
@@ -18,16 +36,17 @@ async def process_pdf(s3: S3Client, input_path: Path, output_path: Path, payload
     tmp_input_file_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_output_file_path.parent.mkdir(parents=True, exist_ok=True)
     
+    #1. Download the original .pdf file
     s3.download_file(
         Bucket=bucket,
         Key=storage_path,     
         Filename=tmp_input_file_path
     )
     
-    #Converts original .pdf file to .md and .html
+    #2. Converts the original .pdf file to .md .html
     md_path, html_path = process_pdf_document(file_path=tmp_input_file_path, output_path=tmp_output_file_path, file_name=internal_name)
     
-    #Formats the final .html
+    #3. Formats the final .html
     format_html(file_path=html_path, output_path=html_path)
     
     #S3 logic ubications
@@ -66,8 +85,25 @@ async def process_pdf(s3: S3Client, input_path: Path, output_path: Path, payload
                 }
     )
     
-    #UPDATE documents AND insert EVENT         
-
+    async with pool.acquire() as conn:
+        async with conn.transaction():
+            await conn.fetchrow(
+                """
+                UPDATE documents
+                SET
+                    status     = 'processed',
+                    v          = v + 1,
+                    updated_at = (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT
+                WHERE
+                    id         = $1
+                    AND deleted_at IS NULL
+                RETURNING *
+                """,
+                document_id
+            ) 
+            
+            #EVENT   
+    
     resultado = {"status": "success", "processed_at": "ahora"}
             
     logger.success("Trabajo finalizado con éxito")   
@@ -78,12 +114,6 @@ async def process_pdf(s3: S3Client, input_path: Path, output_path: Path, payload
 
     
    
-
-
-
-
-
-
 
 
 
