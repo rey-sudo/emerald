@@ -20,8 +20,10 @@ from loguru import logger
 from mypy_boto3_s3 import S3Client
 from .process_pdf_document import *
 from .format_html import *
+from uuid6 import uuid7
 import asyncpg
-import uuid
+import json
+import time
 
 async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output_path: Path, payload: Any):  
     bucket = 'documents'
@@ -87,8 +89,7 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output
     
     async with pool.acquire() as conn:
         async with conn.transaction():
-            await conn.fetchrow(
-                """
+            _DOCUMENT_QUERY = """
                 UPDATE documents
                 SET
                     status     = 'processed',
@@ -98,11 +99,38 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output
                     id         = $1
                     AND deleted_at IS NULL
                 RETURNING *
-                """,
+            """
+            
+            row = await conn.fetchrow(
+                _DOCUMENT_QUERY,
                 document_id
             ) 
             
-            #EVENT   
+            if not row:
+                raise RuntimeError("UPDATE RETURNING returned empty.")    
+            
+            _EVENT_QUERY = """
+                INSERT INTO events (
+                    specversion, event_type, source, id, time, 
+                    entity_type, entity_id, data, metadata
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            """
+            
+            data_json = json.dumps(dict(row), default=str)
+            meta_json = json.dumps({}, default=str)
+            
+            await conn.execute(
+                _EVENT_QUERY,
+                0,              
+                'document.updated',                
+                'worker-document',            
+                uuid7(),               
+                int(time.time() * 1000),        
+                "document",              
+                document_id,                
+                data_json,
+                meta_json
+            )               
     
     resultado = {"status": "success", "processed_at": "ahora"}
             

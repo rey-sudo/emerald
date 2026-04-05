@@ -31,7 +31,7 @@ async def emit_event(
         _SQL_QUERY,
         specversion,              
         event_type,                
-        'api-documents',            
+        'api-document',            
         event_id,               
         now_ms,        
         entity_type,              
