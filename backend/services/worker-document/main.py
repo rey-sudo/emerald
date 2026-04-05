@@ -1,32 +1,43 @@
 import asyncio
 import os
+from pathlib import Path
 import signal
 from dotenv import load_dotenv
 load_dotenv()
 from loguru import logger
 from bullmq import Worker
+import boto3
+from botocore.client import Config
+from tools import process_pdf
 
 logger.add("worker.log", rotation="10 MB", retention="10 days", level="INFO")
+
+s3 = boto3.client(
+    's3',
+    endpoint_url=os.environ['AWS_ENDPOINT'],
+    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+    region_name=os.environ['AWS_REGION'],
+    config=Config(
+        signature_version="s3v4",
+        s3={"addressing_style": "path"},
+    )
+)
 
 async def process_document(job, job_token):
     """
     Función procesadora con logs detallados.
     """
-    # Usamos contextualización para que cada log de este job incluya su ID
     with logger.contextualize(job_id=job.id):
         try:
-            logger.info("Iniciando procesamiento de trabajo")
-            logger.info(f"Iniciando procesamiento de: {job.name}")
-            logger.info(f"Datos recibidos: {job.data}")
+            payload = job.data
             
-            # Simulación de tarea (sustituir por tu lógica real)
-            await asyncio.sleep(2) 
-            
-            resultado = {"status": "success", "processed_at": "ahora"}
-            
-            logger.success("Trabajo finalizado con éxito")
-            return resultado
-
+            match payload['mime_type']:
+                case "application/pdf":
+                    return await process_pdf(payload)
+                case _:  
+                    return "e"
+         
         except Exception as e:
             # .exception() guarda el stack trace completo automáticamente
             logger.exception(f"Fallo crítico en el trabajo {job.id}: {e}")

@@ -31,8 +31,17 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 cleanup() {
     echo "Stopping dev..."
-    kill $(jobs -p)
-    exit
+
+    trap - SIGINT SIGTERM
+    
+    kill $(jobs -p) 2>/dev/null || true
+    
+    pkill -f "infrastructure/consumer/target/debug" || true
+    pkill -f "deno run" || true
+    pkill -f "python -u main.py" || true
+    pkill -9 -f target/debug/consumer || true
+
+    exit 0
 }
 
 trap cleanup SIGINT
@@ -40,6 +49,7 @@ trap cleanup SIGINT
 echo "Running dev"
 
 cd "infrastructure/consumer"
+
 
 deno run -A ./server/main.ts &
 cargo run &
