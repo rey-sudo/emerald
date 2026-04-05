@@ -8,16 +8,29 @@ from .format_html import *
 
 async def process_pdf(s3: S3Client, input_path: Path, output_path: Path, payload: Any):  
     bucket = 'documents'
-    user_id = "019d2612-a01d-734c-ab63-917106f31187" 
-    file_name = "019d35cd-3578-7f69-835a-7ad7f2bbe8ec.pdf"
-    file_path = input_path / user_id / file_name
-    output_path = output_path / user_id 
-    storage_path = "019d2612-a01d-734c-ab63-917106f31187/019d5911-36f6-7c0b-aa00-a58c7aec289f/019d5b40-389f-70cb-a798-fbe85503da8c.pdf"
+    user_id = payload['user_id']
+    internal_name = payload['internal_name']
+    storage_path = payload['storage_path']
     
-    md_path, html_path = process_pdf_document(file_path= file_path, output_path=output_path, file_name=file_name)
+    tmp_input_file_path = input_path / user_id / internal_name
+    tmp_output_file_path = output_path / user_id 
     
+    tmp_input_file_path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_output_file_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    s3.download_file(
+        Bucket=bucket,
+        Key=storage_path,     
+        Filename=tmp_input_file_path
+    )
+    
+    #Converts original .pdf file to .md and .html
+    md_path, html_path = process_pdf_document(file_path=tmp_input_file_path, output_path=tmp_output_file_path, file_name=internal_name)
+    
+    #Formats the final .html
     format_html(file_path=html_path, output_path=html_path)
     
+    #S3 logic ubications
     md_storage = storage_path.replace(".pdf", ".md")
     html_storage = storage_path.replace(".pdf", ".html")
     
@@ -36,6 +49,7 @@ async def process_pdf(s3: S3Client, input_path: Path, output_path: Path, payload
                     'ContentDisposition': 'inline', 
                 }
     )
+    
     #HTML upload    
     s3.upload_file(
                 Filename=html_path, 
