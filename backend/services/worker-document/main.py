@@ -40,7 +40,7 @@ async def process_document(job, job_token):
             
             match payload['mime_type']:
                 case "application/pdf":
-                    return await process_pdf(s3, INPUT_PATH, OUTPUT_PATH)
+                    return await process_pdf(s3, INPUT_PATH, OUTPUT_PATH, payload)
                 case _:  
                     return "e"
          

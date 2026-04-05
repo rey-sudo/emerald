@@ -67,7 +67,7 @@ def process_pdf_document(
         html_path = output_path / f"{file_stem}.html"
         md_path   = output_path / f"{file_stem}.md"
           
-        return html_path, md_path
+        return md_path, html_path
         
     except Exception as e:
         raise RuntimeError(f"Failed to convert '{file_name}': {e}") from e
