@@ -9,11 +9,11 @@ CREATE TABLE
         mime_type VARCHAR(100) NOT NULL,
         size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
         storage_path TEXT NOT NULL,
+        status VARCHAR(30) DEFAULT 'pending' NOT NULL,
         checksum VARCHAR(255) DEFAULT NULL,
         context TEXT DEFAULT NULL,
         keywords TEXT DEFAULT NULL,
         metadata JSONB DEFAULT NULL,
-     
         created_at BIGINT DEFAULT NULL,
         readed_at BIGINT DEFAULT NULL,
         updated_at BIGINT DEFAULT NULL,
@@ -21,5 +21,14 @@ CREATE TABLE
         v BIGINT NOT NULL
     );
 
-CREATE INDEX idx_documents_folder_id ON documents (folder_id);
-CREATE INDEX idx_documents_user_folder ON documents (user_id, folder_id);
+CREATE INDEX idx_documents_folder_id ON documents (folder_id)
+WHERE
+    deleted_at IS NULL;
+
+CREATE INDEX idx_documents_active_records ON documents (user_id, folder_id)
+WHERE
+    deleted_at IS NULL;
+
+CREATE INDEX idx_documents_pending ON documents (user_id)
+WHERE
+    status = 'pending';
