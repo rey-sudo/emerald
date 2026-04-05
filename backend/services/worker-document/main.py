@@ -1,16 +1,22 @@
-import asyncio
-import os
 from pathlib import Path
-import signal
 from dotenv import load_dotenv
 load_dotenv()
+import os
+import signal
+import asyncio
+import boto3
 from loguru import logger
 from bullmq import Worker
-import boto3
 from botocore.client import Config
 from tools import process_pdf
 
 logger.add("worker.log", rotation="10 MB", retention="10 days", level="INFO")
+
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+QUEUE_NAME = os.getenv("QUEUE_NAME", "documentQueue")
+INPUT_PATH = Path("tmp/input")
+OUTPUT_PATH =Path("tmp/output")
 
 s3 = boto3.client(
     's3',
@@ -34,7 +40,7 @@ async def process_document(job, job_token):
             
             match payload['mime_type']:
                 case "application/pdf":
-                    return await process_pdf(payload)
+                    return await process_pdf(s3, INPUT_PATH, OUTPUT_PATH)
                 case _:  
                     return "e"
          
@@ -44,10 +50,6 @@ async def process_document(job, job_token):
             raise e
 
 async def main():
-    REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-    REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-    QUEUE_NAME = os.getenv("QUEUE_NAME", "documentQueue")
-
     # Define Redis connection settings (Host/Port for the local container)
     connection_config = {"connection": {"host": REDIS_HOST, "port": REDIS_PORT }}
     
