@@ -32,6 +32,8 @@ def make_processor(pool: asyncpg.Pool, s3: S3Client):
             try:
                 payload = job.data
                 
+                logger.success(payload['storage_path'])
+                
                 match payload['mime_type']:
                     case "application/pdf":
                         return await process_pdf(pool, s3, BUCKET, INPUT_PATH, OUTPUT_PATH, payload)

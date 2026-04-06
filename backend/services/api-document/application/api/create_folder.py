@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+import json
 import time
 from uuid6 import uuid7
 from pydantic import BaseModel, Field
 from fastapi import Request, HTTPException, status
 from .router import router
-from .event_manager import emit_event
 
 class FolderCreate(BaseModel):
     name: str = Field(..., max_length=100)
@@ -75,18 +75,29 @@ async def create_folder_endpoint(params: FolderCreate, request: Request): #TODO:
                 
                 print(dict(row))
                 
-                await emit_event(
-                    connection=connection,
-                    specversion=0,
-                    entity_type='folder',
-                    entity_id=str(row["id"]),
-                    event_type='folder.created',
-                    data=dict(row),
-                    metadata={
-                        "user_id": user_id
-                    }
-                )
+                data_json = json.dumps(dict(row), default=str)
+                metadata = { "user_id": user_id }
+                meta_json = json.dumps(metadata or {}, default=str)
+                    
+                _EVENT_QUERY = """
+                INSERT INTO events (
+                    specversion, event_type, source, id, time, 
+                    entity_type, entity_id, data, metadata
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                """
                 
+                await connection.execute(
+                    _EVENT_QUERY,
+                    0,  
+                    'folder.created',                           
+                    'api-document', 
+                    uuid7(),                   
+                    int(time.time() * 1000),        
+                    'folder',              
+                    str(row["id"]),                
+                    data_json,                  
+                    meta_json                 
+                )                
             
                 # TODO: Dispatch Pub/Sub event for downstream services
                 

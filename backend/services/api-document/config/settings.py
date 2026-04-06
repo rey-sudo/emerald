@@ -30,11 +30,6 @@ class Settings(BaseSettings):
     port: int = 8001
     workers: int = 1
 
-    # Gunicorn
-    timeout: int = 120
-    graceful_timeout: int = 30
-    keep_alive: int = 5
-
     # DB
     db_url: str
     

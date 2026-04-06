@@ -7,7 +7,6 @@ from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from fastapi import File, Form, HTTPException, Request, status, UploadFile
 from pydantic import BaseModel
 from .router import router
-from .event_manager import emit_event
 
 # Map of supported MIME types to their corresponding file extensions
 ALLOWED_MIME_TYPES: dict[str, str] = {
@@ -192,17 +191,29 @@ async def upload_file(
                 if not row:
                     raise RuntimeError("INSERT RETURNING returned empty.")
 
-                await emit_event(
-                    connection=connection,
-                    specversion=0,
-                    entity_type='document',
-                    entity_id=str(row["id"]),
-                    event_type='document.created',
-                    data=dict(row),
-                    metadata={
-                        "user_id": user_id
-                    }
-                )
+                data_json = json.dumps(dict(row), default=str)
+                metadata = { "user_id": user_id }
+                meta_json = json.dumps(metadata or {}, default=str)
+                    
+                _EVENT_QUERY = """
+                INSERT INTO events (
+                    specversion, event_type, source, id, time, 
+                    entity_type, entity_id, data, metadata
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                """
+                
+                await connection.execute(
+                    _EVENT_QUERY,
+                    0, 
+                    'document.created',             
+                    'api-document', 
+                    uuid7(),                   
+                    int(time.time() * 1000),        
+                    'document',              
+                    str(row["id"]),                
+                    data_json,                  
+                    meta_json                 
+                ) 
                 
         except ForeignKeyViolationError:
             await s3.compensate(storage_key, logger)

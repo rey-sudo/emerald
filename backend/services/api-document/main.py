@@ -17,16 +17,14 @@
 from config import get_settings
 from fastapi import FastAPI
 from application import api
-from infrastructure import setup_logger
 from contextlib import asynccontextmanager
 from infrastructure import S3Service
+from loguru import logger
 import asyncpg
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
-    
-    logger = setup_logger(settings.app_name, settings.env)
     
     app.state.settings = settings
     app.state.logger = logger
