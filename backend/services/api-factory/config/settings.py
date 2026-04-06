@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     env: str = "dev"
 
     # App
-    app_name: str = "api-document"
+    app_name: str = "api-factory"
     debug: bool = False
     version: str = "1.0.0"
 
@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     workers: int = 1
 
     # DB
-    db_url: str
+    database_url: str
     
     s3_endpoint: str 
     s3_access_key: str

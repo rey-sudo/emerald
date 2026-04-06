@@ -1,11 +1,11 @@
 services:
-  api-document-publisher:
-    container_name: api_document_publisher
+  api-factory-consumer:
+    container_name: api_factory_consumer
     build:
-      context: ./infrastructure/publisher
+      context: ./infrastructure/consumer
       dockerfile: Dockerfile
-    image: rey-sudo/api-document-publisher:latest
+    image: rey-sudo/api-factory-consumer:latest
     restart: always
     env_file:
       - .env
-    network_mode: "host"    
+    network_mode: "host" 

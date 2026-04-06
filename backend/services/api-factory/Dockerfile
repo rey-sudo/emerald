@@ -7,11 +7,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8001
+EXPOSE 8002
 
 CMD ["sh", "-c", "uvicorn main:app \
 --host ${HOST:-0.0.0.0} \
---port ${PORT:-8001} \
+--port ${PORT:-8002} \
 --workers ${WORKERS:-1} \
 --timeout-keep-alive ${KEEP_ALIVE:-5} \
 --log-level info"]

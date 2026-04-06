@@ -32,9 +32,12 @@ cleanup() {
     trap - SIGINT SIGTERM
     
     kill $(jobs -p) 2>/dev/null || true
-    
-    pkill -f "infrastructure/publisher/target/debug" || true
-    pkill -9 -f target/debug/publisher || true
+
+    sleep 1
+    pkill -P $$
+
+    pkill -f "infrastructure/consumer/target/debug" || true
+    pkill -9 -f target/debug/consumer || true
 
     exit 0
 }
@@ -43,7 +46,7 @@ trap cleanup SIGINT
 
 echo "Running dev"
 
-cd "infrastructure/publisher"
+cd "infrastructure/consumer"
 
 cargo run &
 
