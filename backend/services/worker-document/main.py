@@ -26,7 +26,7 @@ OUTPUT_PATH =Path("tmp/output")
 def make_processor(pool: asyncpg.Pool, s3: S3Client):
     async def process_document(job, job_token):
         """
-        Función procesadora con logs detallados.
+        Processor function with detailed logging.
         """
         with logger.contextualize(job_id=job.id):
             try:
@@ -36,12 +36,12 @@ def make_processor(pool: asyncpg.Pool, s3: S3Client):
                     case "application/pdf":
                         return await process_pdf(pool, s3, BUCKET, INPUT_PATH, OUTPUT_PATH, payload)
                     case _:  
-                        logger.warning(f"Tipo MIME no soportado: {payload['mime_type']}")
+                        logger.warning(f"Unsupported MIME type: {payload['mime_type']}")
                         raise ValueError(f"Unsupported MIME type: {payload['mime_type']}")
             
             except Exception as e:
-                logger.exception(f"Fallo crítico en el trabajo {job.id}: {e}")
-                raise  # ← preserva el traceback original
+                logger.exception(f"Critical failure in job {job.id}: {e}")
+                raise  # ← preserves the original traceback
             
     return process_document
 
