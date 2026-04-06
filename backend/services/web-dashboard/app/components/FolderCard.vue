@@ -91,7 +91,7 @@
           rx="4.3542"
           ry="4.2672"
           fill="url(#linearGradient946)"
-          opacity=".1"
+          opacity="4%"
         />
       </svg>
     </div>
