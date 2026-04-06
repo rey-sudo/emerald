@@ -32,6 +32,9 @@ cleanup() {
     trap - SIGINT SIGTERM
     
     kill $(jobs -p) 2>/dev/null || true
+
+    sleep 1
+    pkill -P $$
     
     pkill -f "infrastructure/publisher/target/debug" || true
     pkill -9 -f target/debug/publisher || true

@@ -31,7 +31,7 @@ async def lifespan(app: FastAPI):
     app.state.logger = logger
     
     app.state.pool = await asyncpg.create_pool(
-        dsn=settings.db_url,
+        dsn=settings.database_url,
         min_size=5,  # Minimum number of open connections
         max_size=20, # Maximum number of concurrent connections
         command_timeout=60
