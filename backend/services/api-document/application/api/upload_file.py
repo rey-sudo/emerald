@@ -1,10 +1,13 @@
 
+import asyncio
 import json
 import time
 from uuid import UUID
 from uuid6 import uuid7
 from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from fastapi import File, Form, HTTPException, Request, status, UploadFile
+from loguru._logger import Logger
+from mypy_boto3_s3 import S3Client
 from pydantic import BaseModel
 from .router import router
 
@@ -57,7 +60,19 @@ async def validate_file(file: UploadFile) -> tuple[bytes, str, str]:
     # 5. Return validated data, MIME type, and the mapped extension
     return contents, file.content_type, ALLOWED_MIME_TYPES[file.content_type]
 
-
+async def delete_s3_object(s3: S3Client, key: str, bucket: str, logger: Logger) -> None:
+    try:
+        loop = asyncio.get_running_loop()
+        await loop.run_in_executor(
+            None,
+            lambda: s3.delete_object(Bucket=bucket, Key=key),
+        )     
+        
+        logger.info(f"[S3Service] Compensating DELETE succeeded: {key}")
+    except Exception as e:
+        logger.error(f"[S3Service] Compensating DELETE failed for '{key}': {e}")
+    
+  
 # Response schema
 class DocumentResponse(BaseModel):
     id: UUID
@@ -103,7 +118,8 @@ async def upload_file(
     """
     logger = request.app.state.logger
     s3 = request.app.state.s3
-    pool = request.app.state.pool
+    pool = request.app.state.pool  
+    bucket = request.app.state.settings.s3_bucket
 
     logger.info(f"filename={file.filename!r}")
     logger.info(f"content_type={file.content_type!r}")
@@ -151,18 +167,24 @@ async def upload_file(
 
     # ── Phase 1: upload binary ────────────────────────────────
     try:
-        await s3.put(
-            key=storage_key,
-            body=contents,
-            content_type=mime_type,
-            metadata={
+        loop = asyncio.get_running_loop()
+        await loop.run_in_executor(
+            None,
+            lambda: s3.put_object(
+                Bucket=bucket,
+                Key=storage_key,
+                Body=contents,
+                ContentType=mime_type,
+                Metadata={
                 "document-id":   str(doc_id),
                 "folder-id":     folder_id,
                 "user-id":       user_id,
                 "original-name": original_name,
                 "internal-name": internal_name,
-            },
+                }
+            ),
         )
+                
         logger.info(f"[upload-document] S3 object written: {storage_key}")
     except Exception as e:
         logger.error(f"[upload-document] SeaweedFS upload failed: {e}")
@@ -216,11 +238,11 @@ async def upload_file(
                 ) 
                 
         except ForeignKeyViolationError:
-            await s3.compensate(storage_key, logger)
+            await delete_s3_object(s3, storage_key, bucket, logger)
             raise HTTPException(status.HTTP_404_NOT_FOUND, f"The folder '{folder_id}' does not exist.")
 
         except UniqueViolationError:
-            await s3.compensate(storage_key, logger)
+            await delete_s3_object(s3, storage_key, bucket, logger)
             raise HTTPException(status.HTTP_409_CONFLICT, "A document with that identifier already exists.")
 
         except HTTPException:
@@ -228,10 +250,9 @@ async def upload_file(
 
         except Exception as e:
             logger.error(f"[upload-document] DB insert failed: {e}")
-            await s3.compensate(storage_key, logger)
+            await delete_s3_object(s3, storage_key, bucket, logger)
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "Error registering the document.")
 
     # TODO: Dispatch Pub/Sub event
-
 
     return DocumentResponse(**dict(row))

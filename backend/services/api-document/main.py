@@ -18,9 +18,10 @@ from config import get_settings
 from fastapi import FastAPI
 from application import api
 from contextlib import asynccontextmanager
-from infrastructure import S3Service
+from botocore.client import Config
 from loguru import logger
 import asyncpg
+import boto3
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -35,13 +36,17 @@ async def lifespan(app: FastAPI):
         max_size=20, # Maximum number of concurrent connections
         command_timeout=60
     )
-
-    app.state.s3 = S3Service(
-        endpoint=settings.seaweed_endpoint,
-        access_key=settings.seaweed_access_key,
-        secret_key=settings.seaweed_secret_key,
-        bucket=settings.seaweed_bucket,
-    )    
+      
+    app.state.s3 = boto3.client(
+        "s3",
+        endpoint_url=settings.s3_endpoint,
+        aws_access_key_id=settings.s3_access_key,
+        aws_secret_access_key=settings.s3_secret_key,
+        config=Config(
+            signature_version="s3v4",
+            s3={"addressing_style": "path"},
+        )
+    )
     
     logger.info("Running service")
     yield

@@ -5,3 +5,4 @@ python-dotenv
 asyncpg
 pydantic
 loguru
+boto3-stubs[s3]
