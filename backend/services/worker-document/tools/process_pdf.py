@@ -40,8 +40,7 @@ def _upload(s3, filename, bucket, key, content_type):
         }
     )
 
-async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output_path: Path, payload: Any):  
-    bucket = 'documents'
+async def process_pdf(pool: asyncpg.Pool, s3: S3Client, bucket: str, input_path: Path, output_path: Path, payload: Any):  
     document_id = payload['id']
     user_id = payload['user_id']
     internal_name = payload['internal_name']
@@ -139,7 +138,7 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output
             
     resultado = {"status": "success", "processed_at": int(time.time() * 1000)}
             
-    logger.success("Trabajo finalizado con éxito")   
+    logger.success("Job completed successfully")   
     
     return resultado 
      

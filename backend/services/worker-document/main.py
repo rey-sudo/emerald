@@ -18,6 +18,7 @@ REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 QUEUE_NAME = os.getenv("QUEUE_NAME", "documentQueue")
 DATABASE_URL = os.getenv("DATABASE_URL", "localhost")
+BUCKET = os.getenv("S3_BUCKET", "documents")
 
 INPUT_PATH = Path("tmp/input")
 OUTPUT_PATH =Path("tmp/output")
@@ -33,14 +34,14 @@ def make_processor(pool: asyncpg.Pool, s3: S3Client):
                 
                 match payload['mime_type']:
                     case "application/pdf":
-                        return await process_pdf(pool, s3, INPUT_PATH, OUTPUT_PATH, payload)
+                        return await process_pdf(pool, s3, BUCKET, INPUT_PATH, OUTPUT_PATH, payload)
                     case _:  
-                        return "e"
+                        logger.warning(f"Tipo MIME no soportado: {payload['mime_type']}")
+                        raise ValueError(f"Unsupported MIME type: {payload['mime_type']}")
             
             except Exception as e:
-                # .exception() guarda el stack trace completo automáticamente
                 logger.exception(f"Fallo crítico en el trabajo {job.id}: {e}")
-                raise e
+                raise  # ← preserva el traceback original
             
     return process_document
 
