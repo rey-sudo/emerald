@@ -19,8 +19,8 @@
     <!-- Folder icon -->
     <div class="card-icon">
       <svg
-        width="64"
-        height="64"
+        width="4rem"
+        height="4rem"
         version="1.1"
         viewBox="0 0 64 64"
         xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@
           opacity=".2"
         />
         <rect
-          :style="{ color: folder.color }"
+          :style="{ color: 'var(--ui-secondary)' }"
           x="3.9998"
           y="17.001"
           width="56"
@@ -91,13 +91,12 @@
           rx="4.3542"
           ry="4.2672"
           fill="url(#linearGradient946)"
-          opacity=".2"
+          opacity=".1"
         />
       </svg>
     </div>
 
-    <p class="card-name">{{ folder.name }}</p>
-    <p class="card-meta">{{ folder.document_count }} elementos</p>
+    <p class="card-name text-sm">{{ folder.name }}</p>
   </div>
 </template>
 
@@ -114,7 +113,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 .folder-card {
   background: var(--card, #fff);
   background: transparent;
-  border: 1px solid var(--ui-border, #e2ddd8);
+  border: 1px solid transparent;
   border-radius: var(--radius, 12px);
   padding: 20px 14px 14px;
   display: flex;
@@ -124,19 +123,18 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   cursor: pointer;
   position: relative;
   user-select: none;
-  transition: 0.3s ease
+  transition: 0.3s ease;
 }
 
 .folder-card:hover {
   box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
   border: 1px solid var(--ui-border-accented, #e2ddd8);
   border-color: transparent;
-  background: var(--ui-bg-muted); 
+  background: var(--ui-bg-muted);
 }
 
 .folder-card.selected {
   border-color: var(--ui-secondary, #5b7fa6);
- 
 }
 
 /* Sortable states */
@@ -149,13 +147,10 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 
 /* Icon wrapper */
 .card-icon {
-  width: 56px;
-  height: 56px;
 }
 
 /* Name */
 .card-name {
-  font-size: 13px;
   font-weight: 500;
   text-align: center;
   color: var(--text, #1c1814);
@@ -191,6 +186,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   transition:
     opacity 160ms ease,
     background 160ms ease;
+  display: none; 
 }
 
 .folder-card:hover .card-menu {

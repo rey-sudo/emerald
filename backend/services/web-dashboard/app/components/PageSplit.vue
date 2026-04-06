@@ -171,9 +171,9 @@ onBeforeUnmount(removeListeners);
 .split-divider {
   flex-shrink: 0;
   position: relative;
-  width: 6px;
+  width: 0.5rem;
   cursor: col-resize;
-  background: var(--ui-bg-muted);
+  background: var(--ui-bg-elevated);
   transition:
     background 0.15s ease,
     width 0.15s ease;

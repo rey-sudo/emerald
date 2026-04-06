@@ -297,7 +297,6 @@ const IconRefresh = {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #f0c04009 0%, transparent 60%);
   pointer-events: none;
 }
 

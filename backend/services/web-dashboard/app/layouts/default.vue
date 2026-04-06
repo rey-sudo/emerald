@@ -46,11 +46,11 @@ const navItems: NavigationMenuItem[] = [
     ],
   },
   {
-    label: "Blocks",
+    label: "Factory",
     icon: "i-lucide-box",
 
     tooltip: {
-      text: "Blocks",
+      text: "Widgets",
     },
     defaultOpen: true,
     to: "/blocks",
@@ -67,24 +67,25 @@ const navItems: NavigationMenuItem[] = [
             label: "Acuerdo 001 de 2024",
             icon: "i-lucide-file-text",
             description: "Define shortcuts for your application.",
+            to: "/blocks",
             children: [
               {
-                label: "1.2.6 Normativa",
-                icon: "i-lucide-file",
+                label: "Quiz",
+                icon: "i-lucide-book-open-check",
                 description: "Define shortcuts for your application.",
-                to: "/blocks",
+                to: "/",
               },
               {
-                label: "1.2.3 Normativa",
-                icon: "i-lucide-file",
+                label: "Concepts",
+                icon: "i-lucide-lightbulb",
                 description: "Define shortcuts for your application.",
-                to: "/blocks",
+                to: "/",
               },
               {
-                label: "1.2.8 Normativa",
-                icon: "i-lucide-file",
+                label: "Mind maps",
+                icon: "i-lucide-brain",
                 description: "Define shortcuts for your application.",
-                to: "/blocks",
+                to: "/",
               },
             ],
           },
@@ -98,7 +99,7 @@ const navItems: NavigationMenuItem[] = [
         tooltip: {
           text: "Acuerdo 001 de 2024",
         },
-        to: "/blocks",
+        to: "/",
         children: [
           {
             label: "Acuerdo 001 de 2024",
@@ -124,7 +125,7 @@ const navItems: NavigationMenuItem[] = [
     tooltip: {
       text: "Outputs",
     },
-    to: "/blocks",
+    to: "/",
     defaultOpen: false,
   },
 ];

@@ -232,6 +232,9 @@ const breadItems = [
     icon: "i-lucide-home",
     to: "/",
   },
+    {
+    label: ""
+  },
 ];
 
 const onFolderOpen = (folderId, folderName) => {
@@ -468,11 +471,6 @@ defineExpose({
   text-align: right;
 }
 
-:deep(.card-icon) {
-  width: 60px;
-  height: 60px;
-}
-
 /* ── Folder Row ─────────────────────────────────────────────── */
 :deep(.folder-row) {
   background: var(--card);
@@ -521,36 +519,6 @@ defineExpose({
   width: 130px;
   flex-shrink: 0;
   text-align: right;
-}
-
-/* ── Dots menu ──────────────────────────────────────────────── */
-:deep(.card-menu) {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--muted);
-  padding: 4px;
-  border-radius: 6px;
-  opacity: 0;
-  transition:
-    opacity var(--ease),
-    background var(--ease);
-  display: flex;
-  align-items: center;
-}
-:deep(.card-menu),
-:deep(.folder-row:hover .card-menu) {
-  opacity: 1;
-}
-:deep(.card-menu:hover) {
-  background: var(--bg);
-  color: var(--text);
-}
-:deep(.folder-row .card-menu) {
-  position: static;
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
