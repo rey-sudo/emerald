@@ -79,7 +79,15 @@ app.post("/create-job", async (c: Context) => {
   const { event_type, data }: CreateJobBody = parsed.data;
 
   try {
-    const job = await queue.add(event_type, data);
+    const jobOptions = {
+      attempts: 10,
+      backoff: {
+        type: "exponential",
+        delay: 2000,
+      },
+    };
+
+    const job = await queue.add(event_type, data, jobOptions);
     return ok(c, { jobId: job.id, data: { success: true } }, 201);
   } catch (err) {
     console.error("[create-job] Failed to enqueue:", err);
@@ -97,10 +105,7 @@ async function shutdown(signal: string): Promise<void> {
   await Promise.race([
     queue.close(),
     new Promise<never>((_, reject) =>
-      setTimeout(
-        () => reject(new Error("Queue close timed out")),
-        5_000,
-      ),
+      setTimeout(() => reject(new Error("Queue close timed out")), 5_000),
     ),
   ]).catch((err: Error) => console.error("[shutdown]", err.message));
 
