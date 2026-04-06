@@ -14,7 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+import asyncio
 from pathlib import Path
+import shutil
 from typing import Any
 from loguru import logger
 from mypy_boto3_s3 import S3Client
@@ -24,6 +26,19 @@ from uuid6 import uuid7
 import asyncpg
 import json
 import time
+
+def _upload(s3, filename, bucket, key, content_type):
+    s3.upload_file(
+        Filename=filename,
+        Bucket=bucket,
+        Key=key,
+        ExtraArgs={
+            'ACL': 'private',
+            'ContentType': content_type,
+            'Metadata': {'autor': 'Juan Perez', 'version': '1.0'},
+            'ContentDisposition': 'inline',
+        }
+    )
 
 async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output_path: Path, payload: Any):  
     bucket = 'documents'
@@ -38,53 +53,38 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output
     tmp_input_file_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_output_file_path.parent.mkdir(parents=True, exist_ok=True)
     
+    loop = asyncio.get_running_loop()
+    
     #1. Download the original .pdf file
-    s3.download_file(
-        Bucket=bucket,
-        Key=storage_path,     
-        Filename=tmp_input_file_path
+    await loop.run_in_executor(
+        None,
+        lambda: s3.download_file(
+            Bucket=bucket,
+            Key=storage_path,
+            Filename=tmp_input_file_path
+        )
     )
     
     #2. Converts the original .pdf file to .md .html
-    md_path, html_path = process_pdf_document(file_path=tmp_input_file_path, output_path=tmp_output_file_path, file_name=internal_name)
+    md_path, html_path = await loop.run_in_executor(
+        None,
+        lambda: process_pdf_document(
+            file_path=tmp_input_file_path,
+            output_path=tmp_output_file_path,
+            file_name=internal_name
+        )
+    )
     
     #3. Formats the final .html
-    format_html(file_path=html_path, output_path=html_path)
+    await loop.run_in_executor(None, lambda: format_html(file_path=html_path, output_path=html_path))
     
     #S3 logic ubications
     md_storage = storage_path.replace(".pdf", ".md")
     html_storage = storage_path.replace(".pdf", ".html")
-    
-    #MARKDOWN upload
-    s3.upload_file(
-                Filename=md_path, 
-                Bucket=bucket,      
-                Key=md_storage,           
-                ExtraArgs={
-                    'ACL': 'private',
-                    'ContentType': 'text/markdown',
-                    'Metadata': {
-                        'autor': 'Juan Perez',
-                        'version': '1.0'
-                    },
-                    'ContentDisposition': 'inline', 
-                }
-    )
-    
-    #HTML upload    
-    s3.upload_file(
-                Filename=html_path, 
-                Bucket=bucket,      
-                Key=html_storage,           
-                ExtraArgs={
-                    'ACL': 'private',
-                    'ContentType': 'text/html',
-                    'Metadata': {
-                        'autor': 'Juan Perez',
-                        'version': '1.0'
-                    },
-                    'ContentDisposition': 'inline', 
-                }
+        
+    await asyncio.gather(
+        loop.run_in_executor(None, lambda: _upload(s3, md_path,   bucket, md_storage,   'text/markdown')),
+        loop.run_in_executor(None, lambda: _upload(s3, html_path, bucket, html_storage, 'text/html')),
     )
     
     async with pool.acquire() as conn:
@@ -130,9 +130,14 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, input_path: Path, output
                 document_id,                
                 data_json,
                 meta_json
-            )               
-    
-    resultado = {"status": "success", "processed_at": "ahora"}
+            )       
+                    
+    assert user_id, "Error deleting unused folders"
+
+    for path in (input_path / user_id, output_path / user_id):
+        shutil.rmtree(path, ignore_errors=True)
+            
+    resultado = {"status": "success", "processed_at": int(time.time() * 1000)}
             
     logger.success("Trabajo finalizado con éxito")   
     
