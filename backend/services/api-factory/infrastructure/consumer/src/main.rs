@@ -1,3 +1,4 @@
+use consumer::folder::FolderHandler;
 use event_consumer::{
     Result,
     application::{self, EventEnveloped, consumer::MultiHandler},
@@ -8,83 +9,7 @@ use event_consumer::{
 };
 
 
-/// A specific handler implementation for folder-related events.
-/// This struct encapsulates the domain logic for the "folder" entity type.
-struct FolderHandler;
-
-#[derive(serde::Deserialize, sqlx::FromRow)]
-struct Folder {
-    id: uuid::Uuid,
-    user_id: uuid::Uuid,
-    name: String,
-    color: Option<String>,
-    created_at: i64,
-    updated_at: Option<i64>,
-    deleted_at: Option<i64>,
-    readed_at: Option<i64>,
-    status: String,
-    storage_path: String,
-    v: i64,
-}
-
-#[async_trait]
-impl MultiHandler for FolderHandler {
-    /// Determines if this handler should process a given entity_type.
-    /// Used by the dispatcher to route events only to interested parties.    
-    fn can_handle(&self, entity_type: &str) -> bool {
-        entity_type == "folder"
-    }
-    /// Returns a human-readable name for the handler.
-    /// Primarily used for structured logging and debugging purposes.
-    fn name(&self) -> &str {
-        "FolderHandler"
-    }
-    /// Executes the core business logic for a specific event.
-    /// * `tx` - A mutable reference to an active SQLx transaction.
-    /// * `event` - The enveloped event containing metadata and the actual payload.
-    async fn handle<'a>(
-        &self,
-        tx: &mut Transaction<'a, Postgres>,
-        event: &EventEnveloped,
-    ) -> Result<()> {
-        match event.event_type.as_str() {
-            "folder.created" => {
-                let folder: Folder = serde_json::from_value(event.data.clone())?;
-
-                sqlx::query!(
-                    r#"
-                    INSERT INTO folders (id, user_id, name, color, created_at, updated_at, deleted_at, readed_at, status, storage_path, v)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-                    "#,
-                    folder.id, folder.user_id, folder.name, folder.color, folder.created_at, 
-                    folder.updated_at, folder.deleted_at, folder.readed_at, folder.status, 
-                    folder.storage_path, folder.v
-                )
-                .execute(&mut **tx)
-                .await?;
-
-                Ok(())
-            }
-            "folder.updated" => {
-                info!("Handling folder update for ID: {}", event.event_id);
-                // self.on_updated(tx, event).await
-                Ok(())
-            }
-            "folder.deleted" => {
-                info!("Handling folder deletion for ID: {}", event.event_id);
-                // self.on_deleted(tx, event).await
-                Ok(())
-            }
-            _ => {
-                // If we don't care about this specific action, we ACK and move on
-                warn!("No specific logic for event_type: {}", event.event_type);
-                Ok(())
-            }
-        }
-    }
-}
-
-/// EXAMPLE. This struct follows the Router/Dispatcher pattern, allowing a single
+/// This struct follows the Router/Dispatcher pattern, allowing a single
 /// consumer to manage multiple entity types efficiently.
 struct HandlerRouter {
     folder: FolderHandler,
@@ -99,7 +24,7 @@ impl MultiHandler for HandlerRouter {
     /// Returns the identifier for this router.
     /// Useful for identifying the dispatcher in high-level application logs.
     fn name(&self) -> &str {
-        "MultiHandler"
+        return "MultiHandler"
     }
 
     /// Matches the event's entity type against the available handlers and
