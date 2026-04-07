@@ -2,7 +2,7 @@ CREATE TABLE
     IF NOT EXISTS folders (
         id UUID PRIMARY KEY,
         user_id UUID NOT NULL,
-        status VARCHAR(20),
+        status VARCHAR(20) NOT NULL,
         name VARCHAR(100) NOT NULL,
         storage_path TEXT NOT NULL,
         color VARCHAR(10) NOT NULL,

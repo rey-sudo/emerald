@@ -5,6 +5,7 @@ use event_consumer::{
     sqlx::{self, Postgres, Transaction},
     warn
 };
+use uuid::Uuid;
 
 /// This struct encapsulates the domain logic for the "folder" entity_type.
 pub struct FolderHandler;
@@ -12,8 +13,8 @@ pub struct FolderHandler;
 /// Represents the 'folders' table in the database.
 #[derive(serde::Deserialize, sqlx::FromRow)]
 pub struct Folder {
-    id: uuid::Uuid,
-    user_id: uuid::Uuid,
+    id: Uuid,
+    user_id: Uuid,
     status: String,
     name: String,
     storage_path: String,
@@ -64,14 +65,8 @@ impl MultiHandler for FolderHandler {
 
                 Ok(())
             }
-            "folder.updated" => {
-
-                Ok(())
-            }
-            "folder.deleted" => {
-
-                Ok(())
-            }
+            "folder.updated" => Ok(()),
+            "folder.deleted" => Ok(()),
             _ => {
                 // If we don't care about this specific action, we ACK and move on
                 warn!("No specific logic for event_type: {}", event.event_type);
