@@ -1,14 +1,31 @@
 use event_consumer::{
-    application::{self, consumer::MultiHandler, EventEnveloped},
+    Result,
+    application::{self, EventEnveloped, consumer::MultiHandler},
     async_trait, error, info,
     infrastructure::bootstrap::{self, AppState},
-    sqlx::{Postgres, Transaction},
-    warn, Result,
+    sqlx::{self, Postgres, QueryBuilder, Transaction},
+    warn
 };
 
-/// EXAMPLE. A specific handler implementation for folder-related events.
+
+/// A specific handler implementation for folder-related events.
 /// This struct encapsulates the domain logic for the "folder" entity type.
 struct FolderHandler;
+
+#[derive(serde::Deserialize, sqlx::FromRow)]
+struct Folder {
+    id: uuid::Uuid,
+    user_id: uuid::Uuid,
+    name: String,
+    color: Option<String>,
+    created_at: i64,
+    updated_at: Option<i64>,
+    deleted_at: Option<i64>,
+    readed_at: Option<i64>,
+    status: String,
+    storage_path: String,
+    v: i64,
+}
 
 #[async_trait]
 impl MultiHandler for FolderHandler {
@@ -32,8 +49,20 @@ impl MultiHandler for FolderHandler {
     ) -> Result<()> {
         match event.event_type.as_str() {
             "folder.created" => {
-                info!("Handling folder creation for ID: {}", event.event_id);
-                // self.on_created(tx, event).await
+                let folder: Folder = serde_json::from_value(event.data.clone())?;
+
+                sqlx::query!(
+                    r#"
+                    INSERT INTO folders (id, user_id, name, color, created_at, updated_at, deleted_at, readed_at, status, storage_path, v)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                    "#,
+                    folder.id, folder.user_id, folder.name, folder.color, folder.created_at, 
+                    folder.updated_at, folder.deleted_at, folder.readed_at, folder.status, 
+                    folder.storage_path, folder.v
+                )
+                .execute(&mut **tx)
+                .await?;
+
                 Ok(())
             }
             "folder.updated" => {
