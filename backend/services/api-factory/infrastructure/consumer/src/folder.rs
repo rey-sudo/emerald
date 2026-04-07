@@ -53,12 +53,11 @@ impl MultiHandler for FolderHandler {
 
                 sqlx::query!(
                     r#"
-                    INSERT INTO folders (id, user_id, name, color, created_at, updated_at, deleted_at, readed_at, status, storage_path, v)
+                    INSERT INTO folders (id, user_id, status, name, storage_path, color, created_at, readed_at, updated_at, deleted_at, v)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
                     "#,
-                    folder.id, folder.user_id, folder.name, folder.color, folder.created_at, 
-                    folder.updated_at, folder.deleted_at, folder.readed_at, folder.status, 
-                    folder.storage_path, folder.v
+                    folder.id, folder.user_id, folder.status, folder.name, folder.storage_path, folder.color, 
+                    folder.created_at, folder.readed_at, folder.updated_at, folder.deleted_at, folder.v
                 )
                 .execute(&mut **tx)
                 .await?;
