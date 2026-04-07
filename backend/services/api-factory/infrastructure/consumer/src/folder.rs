@@ -2,10 +2,9 @@ use event_consumer::{
     Result,
     application::{EventEnveloped, consumer::MultiHandler},
     async_trait, info,
-    sqlx::{self, Postgres, Transaction},
+    sqlx::{self, Postgres, Transaction, types::Uuid},
     warn
 };
-use uuid::Uuid;
 
 /// This struct encapsulates the domain logic for the "folder" entity_type.
 pub struct FolderHandler;
@@ -41,8 +40,6 @@ impl MultiHandler for FolderHandler {
     }
 
     /// Executes the core business logic for a specific event.
-    /// * `tx` - A mutable reference to an active SQLx transaction.
-    /// * `event` - The enveloped event containing metadata and the actual payload.
     async fn handle<'a>(
         &self,
         tx: &mut Transaction<'a, Postgres>,

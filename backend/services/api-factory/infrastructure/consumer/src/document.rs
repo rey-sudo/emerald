@@ -1,12 +1,10 @@
 use event_consumer::{
     Result,
     application::{EventEnveloped, consumer::MultiHandler},
-    async_trait, info,
-    sqlx::{self, Postgres, Transaction},
+    async_trait,
+    sqlx::{self, Postgres, Transaction, postgres::PgQueryResult, types::Uuid},
     warn,
 };
-use uuid::Uuid;
-use sqlx::postgres::{PgQueryResult};
 
 /// This struct encapsulates the domain logic for the "document" entity_type.
 pub struct DocumentHandler;
@@ -27,9 +25,7 @@ pub struct Document {
     pub checksum: Option<String>,
     pub context: Option<String>,
     pub keywords: Option<String>,
-
     pub metadata: Option<serde_json::Value>,
-
     pub created_at: Option<i64>,
     pub readed_at: Option<i64>,
     pub updated_at: Option<i64>,
@@ -51,8 +47,6 @@ impl MultiHandler for DocumentHandler {
     }
 
     /// Executes the core business logic for a specific event.
-    /// * `tx` - A mutable reference to an active SQLx transaction.
-    /// * `event` - The enveloped event containing metadata and the actual payload.
     async fn handle<'a>(
         &self,
         tx: &mut Transaction<'a, Postgres>,
@@ -98,8 +92,9 @@ impl MultiHandler for DocumentHandler {
             }
             "document.updated" => {
                 let document: Document = serde_json::from_value(event.data.clone())?;
-                
-                let result: PgQueryResult = sqlx::query!(r#"
+
+                let result: PgQueryResult = sqlx::query!(
+                    r#"
                 UPDATE documents
                 SET 
                     folder_id = $2,
@@ -120,30 +115,32 @@ impl MultiHandler for DocumentHandler {
                     v = $17
                 WHERE id = $1 AND v = ($17::bigint - 1)
                 "#,
-                    document.id,            
-                    document.folder_id,    
-                    document.original_name, 
+                    document.id,
+                    document.folder_id,
+                    document.original_name,
                     document.internal_name,
-                    document.content_type, 
-                    document.mime_type,   
-                    document.size_bytes,    
-                    document.storage_path,  
-                    document.status,        
-                    document.checksum,      
-                    document.context,       
-                    document.keywords,      
-                    document.metadata,      
-                    document.readed_at,     
-                    document.updated_at,    
-                    document.deleted_at,    
-                    document.v         
+                    document.content_type,
+                    document.mime_type,
+                    document.size_bytes,
+                    document.storage_path,
+                    document.status,
+                    document.checksum,
+                    document.context,
+                    document.keywords,
+                    document.metadata,
+                    document.readed_at,
+                    document.updated_at,
+                    document.deleted_at,
+                    document.v
                 )
                 .execute(&mut **tx)
                 .await?;
 
                 // Optimistic Concurrency Control
                 if result.rows_affected() == 0 {
-                    return Err(anyhow::anyhow!("Conflict: Document was modified by another process or not found"));
+                    return Err(anyhow::anyhow!(
+                        "Conflict: Document was modified by another process or not found"
+                    ));
                 }
 
                 Ok(())

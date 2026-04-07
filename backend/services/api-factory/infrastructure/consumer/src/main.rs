@@ -4,12 +4,11 @@ use event_consumer::{
     application::{self, EventEnveloped, consumer::MultiHandler},
     async_trait, error, info,
     infrastructure::bootstrap::{self, AppState},
-    sqlx::{self, Postgres, QueryBuilder, Transaction},
+    sqlx::{Postgres, Transaction},
     warn,
 };
 
-/// This struct follows the Router/Dispatcher pattern, allowing a single
-/// consumer to manage multiple entity types efficiently.
+/// This struct follows the Router/Dispatcher pattern.
 struct HandlerRouter {
     folder: FolderHandler,
     document: DocumentHandler,
@@ -21,14 +20,13 @@ impl MultiHandler for HandlerRouter {
     fn can_handle(&self, entity_type: &str) -> bool {
         self.folder.can_handle(entity_type) || self.document.can_handle(entity_type)
     }
+    
     /// Returns the identifier for this router.
-    /// Useful for identifying the dispatcher in high-level application logs.
     fn name(&self) -> &str {
         return "MultiHandler";
     }
 
-    /// Matches the event's entity type against the available handlers and
-    /// ensures the database transaction (`tx`) is passed down correctly.
+    /// Matches the event's entity type against the available handlers.
     async fn handle<'a>(
         &self,
         tx: &mut Transaction<'a, Postgres>,
@@ -50,8 +48,7 @@ impl MultiHandler for HandlerRouter {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // 1. Bootstrapping: Initialize configuration, database connection pools,
-    // and shared resources wrapped in an Arc for thread-safe access.
+    // 1. Bootstrapping: Initialize configuration, database connection pools.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
 
     // 2. Business Logic Handler: Instance of the specific handler for this service.
@@ -71,7 +68,7 @@ async fn main() -> Result<()> {
                     error!(
                     error = %e,
                     cause = ?e.source(),
-                    "Application loop CRASHED"
+                    "Application loop crashed"
                     );
 
                     return Err(e);
@@ -80,10 +77,10 @@ async fn main() -> Result<()> {
         },
 
         _ = tokio::signal::ctrl_c() => {
-            info!("Ctrl+C signal received, initiating graceful shutdown");
+            info!("Initiating graceful shutdown");
         },
     }
-
+    // 4. Leaving the service
     info!("Service stopped");
 
     Ok(())
