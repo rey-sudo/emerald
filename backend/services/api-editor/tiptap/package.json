@@ -1,0 +1,17 @@
+{
+  "name": "tiptap-html-converter",
+  "version": "1.0.0",
+  "description": "Conversor de HTML a JSON para Tiptap usando Node.js",
+  "main": "converter.js",
+  "dependencies": {
+    "@tiptap/core": "^2.10.3",
+    "@tiptap/html": "^2.10.3",
+    "@tiptap/starter-kit": "^2.10.3",
+    "jsdom": "^25.0.1"
+  },
+  "scripts": {
+    "start": "node converter.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
