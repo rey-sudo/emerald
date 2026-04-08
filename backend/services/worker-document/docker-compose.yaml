@@ -1,11 +1,27 @@
 services:
-  worker-document-consumer:
-    container_name: worker_document_consumer
+  js-sidecar:
     build:
-      context: ./infrastructure/consumer
+      context: ./js-sidecar
       dockerfile: Dockerfile
-    image: rey-sudo/worker-document-consumer:latest
-    restart: always
-    env_file:
-      - .env
-    network_mode: "host"
+    expose:
+      - "3000"        # No expone al host, solo a la red interna
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    environment:
+      REDIS_URL: redis://redis:6379
+      SIDECAR_URL: http://js-sidecar:3000   # En K8s esto es localhost
+    depends_on:
+      redis:
+        condition: service_healthy
+      js-sidecar:
+        condition: service_healthy
+    volumes:
+      - ./worker/src:/app/src   # Hot reload en desarrollo
