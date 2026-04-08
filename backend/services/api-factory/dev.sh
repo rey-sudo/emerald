@@ -15,11 +15,6 @@ else
   echo "Error: $env_file not found."
 fi
 
-if [ -d ".venv" ]; then
-  echo "Starting venv"
-  source .venv/bin/activate
-fi
-
 if [[ "$1" == "-c" ]]; then
   docker compose up --build -d
 else
@@ -36,7 +31,7 @@ cleanup() {
     sleep 1
     pkill -P $$
 
-    pkill -f "infrastructure/consumer/target/debug" || true
+    pkill -f "src/infrastructure/consumer/target/debug" || true
     pkill -9 -f target/debug/consumer || true
 
     exit 0
@@ -46,7 +41,7 @@ trap cleanup SIGINT
 
 echo "Running dev"
 
-cd "infrastructure/consumer"
+cd "src/infrastructure/consumer"
 
 cargo run &
 
@@ -54,10 +49,7 @@ cd $WORKDIR
 
 echo "🌐 Server: http://$HOST:$PORT"
 
-exec uvicorn main:app \
-  --host "$HOST" \
-  --port "$PORT" \
-  --reload 
+npm run dev
 
 wait
 
