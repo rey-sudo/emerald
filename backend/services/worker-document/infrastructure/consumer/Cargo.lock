@@ -188,6 +188,7 @@ dependencies = [
  "event_consumer",
  "serde_json",
  "tokio",
+ "tracing",
  "ureq",
 ]
 
@@ -455,11 +456,10 @@ dependencies = [
 
 [[package]]
 name = "event_consumer"
-version = "0.1.4"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c53d86b8c882974eaa245daf8e2c9edf8d73353c886638a677ffd74e0bdcc05f"
+checksum = "572117b48ea7b27f3ce6852c91719bc28b38f2a277678a4d1f8f8bf5e736a0bb"
 dependencies = [
- "anyhow",
  "async-trait",
  "chrono",
  "dotenvy",

@@ -1,5 +1,4 @@
-use anyhow::{Context, Result};
-use std::time::Duration;
+use std::{error::Error, time::Duration};
 use validator::Validate;
 
 #[derive(Debug, Clone, Validate)]
@@ -34,40 +33,45 @@ pub struct Config {
     pub consumer_group: String,
 
     pub consumer_prefix: String,
-    
+
     pub consumer_suffix: String,
 }
 
 impl Config {
-    pub fn from_env() -> Result<Self> {
-        let db_url: String = std::env::var("DATABASE_URL").context("DATABASE_URL is not set")?;
+    pub fn from_env() -> Result<Self, Box<dyn Error>> {
+        let db_url: String = std::env::var("DATABASE_URL")
+            .map_err(|e: std::env::VarError| format!("DATABASE_URL is not set: {}", e))?;
 
-        let pulsar_url: String = std::env::var("PULSAR_URL").context("PULSAR_URL is not set")?;
+        let pulsar_url: String = std::env::var("PULSAR_URL")
+            .map_err(|e: std::env::VarError| format!("PULSAR_URL is not set: {}", e))?;
 
         let batch_size: i64 = std::env::var("BATCH_SIZE")
-            .context("BATCH_SIZE is not set")?
+            .map_err(|e: std::env::VarError| format!("BATCH_SIZE is not set: {}", e))?
             .parse::<i64>()
-            .map_err(|_| anyhow::anyhow!("BATCH_SIZE must be a valid integer"))?;
+            .map_err(|_| format!("BATCH_SIZE must be a valid integer"))?;
 
         let poll_interval: Duration = std::env::var("POLL_INTERVAL")
-            .context("POLL_INTERVAL is not set")?
+            .map_err(|e: std::env::VarError| format!("POLL_INTERVAL is not set: {}", e))?
             .parse::<u64>()
             .map(|secs: u64| Duration::from_secs(secs))
-            .map_err(|_| anyhow::anyhow!("POLL_INTERVAL must be a positive integer"))?;
+            .map_err(|_| format!("POLL_INTERVAL must be a positive integer"))?;
 
         let pulsar_reconnect_delay: Duration = std::env::var("PULSAR_RECONNECT_DELAY_SECS")
-            .context("PULSAR_RECONNECT_DELAY_SECS is not set")?
+            .map_err(|e: std::env::VarError| {
+                format!("PULSAR_RECONNECT_DELAY_SECS is not set: {}", e)
+            })?
             .parse::<u64>()
             .map(Duration::from_secs)
-            .map_err(|_| anyhow::anyhow!("PULSAR_RECONNECT_DELAY_SECS must be a valid integer"))?;
+            .map_err(|_| format!("PULSAR_RECONNECT_DELAY_SECS must be a valid integer"))?;
 
         let pulsar_max_retries: u32 = std::env::var("PULSAR_MAX_RETRIES")
-            .context("PULSAR_MAX_RETRIES is not set")?
+            .map_err(|e: std::env::VarError| format!("PULSAR_MAX_RETRIES is not set: {}", e))?
             .parse::<u32>()
-            .map_err(|_| anyhow::anyhow!("PULSAR_MAX_RETRIES must be a valid integer"))?;
+            .map_err(|_| format!("PULSAR_MAX_RETRIES must be a valid integer"))?;
 
-        let topic_list: String = std::env::var("TOPIC_LIST")
-            .context("TOPIC_LIST is not set (expected comma-separated values like a,b,c)")?;
+        let topic_list: String = std::env::var("TOPIC_LIST").map_err(|e: std::env::VarError| {
+            format!("TOPIC_LIST is not set (expected comma-separated values like a,b,c)")
+        })?;
 
         let topics: Vec<String> = topic_list
             .split(',')
@@ -76,26 +80,28 @@ impl Config {
             .collect();
 
         let pg_max_connections: u32 = std::env::var("PG_MAX_CONNECTIONS")
-            .context("PG_MAX_CONNECTIONS is not set")?
+            .map_err(|e: std::env::VarError| format!("PG_MAX_CONNECTIONS is not set: {}", e))?
             .parse::<u32>()
-            .map_err(|_| anyhow::anyhow!("PG_MAX_CONNECTIONS must be a valid integer"))?;
+            .map_err(|_| format!("PG_MAX_CONNECTIONS must be a valid integer"))?;
 
         let pg_acquire_timeout_secs: u64 = std::env::var("PG_ACQUIRE_TIMEOUT_SECS")
-            .context("PG_ACQUIRE_TIMEOUT_SECS is not set")?
+            .map_err(|e: std::env::VarError| format!("PG_ACQUIRE_TIMEOUT_SECS is not set: {}", e))?
             .parse::<u64>()
-            .map_err(|_| anyhow::anyhow!("PG_ACQUIRE_TIMEOUT_SECS must be a valid integer"))?;
+            .map_err(|_| format!("PG_ACQUIRE_TIMEOUT_SECS must be a valid integer"))?;
 
         let pulsar_batch_size: u32 = std::env::var("PULSAR_BATCH_SIZE")
-            .context("PULSAR_BATCH_SIZE is not set")?
+            .map_err(|e: std::env::VarError| format!("PULSAR_BATCH_SIZE is not set: {}", e))?
             .parse::<u32>()
-            .map_err(|_| anyhow::anyhow!("PULSAR_BATCH_SIZE must be a valid integer"))?;
+            .map_err(|_| format!("PULSAR_BATCH_SIZE must be a valid integer"))?;
 
-        let consumer_group: String =
-            std::env::var("CONSUMER_GROUP").context("CONSUMER_GROUP is not set")?;
+        let consumer_group: String = std::env::var("CONSUMER_GROUP")
+            .map_err(|e: std::env::VarError| format!("CONSUMER_GROUP is not set: {}", e))?;
 
-        let consumer_prefix: String =  std::env::var("CONSUMER_PREFIX").context("CONSUMER_PREFIX is not set")?;
+        let consumer_prefix: String = std::env::var("CONSUMER_PREFIX")
+            .map_err(|e: std::env::VarError| format!("CONSUMER_PREFIX is not set: {}", e))?;
 
-        let consumer_suffix: String = std::env::var("CONSUMER_SUFFIX").context("CONSUMER_SUFFIX is not set")?;
+        let consumer_suffix: String = std::env::var("CONSUMER_SUFFIX")
+            .map_err(|e: std::env::VarError| format!("CONSUMER_SUFFIX is not set: {}", e))?;
 
         let config: Config = Self {
             db_url,
@@ -115,7 +121,7 @@ impl Config {
 
         config
             .validate()
-            .context("Configuration validation failed")?;
+            .map_err(|e: validator::ValidationErrors| format!("Configuration validation failed: {}", e))?;
 
         Ok(config)
     }

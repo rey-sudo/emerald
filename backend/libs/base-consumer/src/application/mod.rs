@@ -3,14 +3,13 @@ use crate::{
     application::consumer::{MultiHandler, process_event_with_handler},
     infrastructure::bootstrap::AppState,
 };
-use anyhow::{Context, Result};
 use futures::TryStreamExt;
 use pulsar::{
     Consumer, DeserializeMessage, Payload, Pulsar, SubType, TokioExecutor,
     consumer::DeadLetterPolicy,
 };
 use serde::{Deserialize, Serialize};
-use std::sync::Arc;
+use std::{error::Error, sync::Arc, time::Duration};
 use tracing::{error, info, warn};
 use uuid::Uuid;
 
@@ -31,7 +30,7 @@ impl DeserializeMessage for EventEnveloped {
     }
 }
 
-pub async fn run<L>(state: Arc<AppState>, multi_handler: L) -> Result<()>
+pub async fn run<L>(state: Arc<AppState>, multi_handler: L) -> Result<(), Box<dyn Error>>
 where
     L: MultiHandler + 'static,
 {
@@ -41,7 +40,7 @@ where
     let pulsar: Pulsar<_> = Pulsar::builder(&state.config.pulsar_url, TokioExecutor)
         .build()
         .await
-        .context("Failed to create Pulsar client")?;
+        .map_err(|e: pulsar::Error| format!("Failed to create Pulsar client: {}", e))?;
 
     // Clone the consumer group name to obtain an owned String.
     let consumer_group: String = state.config.consumer_group.clone();
@@ -51,11 +50,11 @@ where
         "{}-{}",
         state.config.consumer_prefix, state.config.consumer_suffix
     );
-    
+
     // Dead Letter Queue (DLQ) Configuration:
     let dlq_policy: DeadLetterPolicy = DeadLetterPolicy {
         max_redeliver_count: 5,
-        dead_letter_topic: format!("{}-DLQ", consumer_group),
+        dead_letter_topic: format!("{}-DLQ", state.config.consumer_prefix),
     };
 
     // consumer_name : Assign a unique name to this specific instance for tracking.
@@ -103,8 +102,7 @@ where
             }
             Err(e) => {
                 error!(id = %event.event_id, "Critical error processing event: {:?}", e);
-                // NACK retry
-                //consumer.nack_with_delay(&msg, std::time::Duration::from_secs(10)).await?;
+                tokio::time::sleep(Duration::from_secs(5)).await;
                 consumer.nack(&msg).await?;
             }
         }

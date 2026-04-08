@@ -1,12 +1,11 @@
 use consumer::{document::DocumentHandler, folder::FolderHandler};
 use event_consumer::{
-    Result,
     application::{self, EventEnveloped, consumer::MultiHandler},
-    async_trait, error, info,
+    async_trait,
     infrastructure::bootstrap::{self, AppState},
-    sqlx::{Postgres, Transaction},
-    warn,
+    sqlx::{Postgres, Transaction}
 };
+use tracing::{error, info, warn};
 
 /// This struct follows the Router/Dispatcher pattern.
 struct HandlerRouter {
@@ -31,7 +30,7 @@ impl MultiHandler for HandlerRouter {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<()> {
+    ) -> std::result::Result<(), Box<dyn std::error::Error>> {
         match event.entity_type.as_str() {
             "folder" => self.folder.handle(tx, event).await,
             "document" => self.document.handle(tx, event).await,
@@ -47,7 +46,7 @@ impl MultiHandler for HandlerRouter {
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     // 1. Bootstrapping: Initialize configuration, database connection pools.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
 

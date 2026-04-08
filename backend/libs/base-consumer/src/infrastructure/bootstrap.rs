@@ -1,8 +1,7 @@
 use crate::config::Config;
-use anyhow::Context;
-use anyhow::Result;
 use dotenvy::from_filename;
 use sqlx::postgres::PgPoolOptions;
+use std::error::Error;
 use std::sync::Arc;
 use std::time::Duration;
 use tracing::info;
@@ -13,7 +12,7 @@ pub struct AppState {
     pub pool: sqlx::PgPool,
 }
 
-pub async fn run() -> Result<Arc<AppState>> {
+pub async fn run() -> Result<Arc<AppState>, Box<dyn Error>> {
     from_filename(".env").ok();
 
     // Initialize tracing subscriber for structured, async-safe logging.
@@ -29,7 +28,7 @@ pub async fn run() -> Result<Arc<AppState>> {
         .acquire_timeout(Duration::from_secs(config.pg_acquire_timeout_secs))
         .connect(&config.db_url)
         .await
-        .context("Error connecting to PostgreSQL")?;
+        .map_err(|e: sqlx::Error| format!("Error connecting to PostgreSQL: {}", e))?;
 
     info!("Bootstrap finished");
 

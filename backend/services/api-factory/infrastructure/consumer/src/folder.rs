@@ -1,16 +1,14 @@
 use event_consumer::{
-    Result,
-    application::{EventEnveloped, consumer::MultiHandler},
-    async_trait, info,
-    sqlx::{self, Postgres, Transaction, types::Uuid},
-    warn
+    Uuid, application::{EventEnveloped, consumer::MultiHandler}, async_trait
 };
+use sqlx::{FromRow, Postgres, Transaction};
+use tracing::warn;
 
 /// This struct encapsulates the domain logic for the "folder" entity_type.
 pub struct FolderHandler;
 
 /// Represents the 'folders' table in the database.
-#[derive(serde::Deserialize, sqlx::FromRow)]
+#[derive(serde::Deserialize, FromRow)]
 pub struct Folder {
     id: Uuid,
     user_id: Uuid,
@@ -44,7 +42,7 @@ impl MultiHandler for FolderHandler {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<()> {
+    ) -> std::result::Result<(), Box<dyn std::error::Error>> {
         match event.event_type.as_str() {
             "folder.created" => {
                 let folder: Folder = serde_json::from_value(event.data.clone())?;

@@ -1,8 +1,7 @@
 use crate::{application::EventEnveloped, infrastructure::bootstrap::AppState};
-use anyhow::{Context, Result};
 use async_trait::async_trait;
 use sqlx::{Postgres, Transaction};
-use std::sync::Arc;
+use std::{error::Error, sync::Arc};
 use tracing::error;
 
 /// This contract trait must be implemented by any component that wishes to process
@@ -23,7 +22,7 @@ pub trait MultiHandler: Send + Sync {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<()>;
+    ) -> Result<(), Box<dyn std::error::Error>>;
 
     /// Provides a human-readable identifier for the handler.
     /// Useful for telemetry, structured logging, and identifying which
@@ -40,14 +39,14 @@ pub async fn process_event_with_handler<L: MultiHandler>(
     event: &EventEnveloped,
     group: &str,
     handlers: &L, // El handler específico del microservicio
-) -> Result<bool> {
+) -> Result<bool, Box<dyn Error>> {
     // 1. Transaction Initialization: Start an atomic unit of work.
     // All subsequent database operations will either succeed together or fail together.
     let mut tx: Transaction<'_, Postgres> = state
         .pool
         .begin()
         .await
-        .context("Failed to begin transaction")?;
+        .map_err(|e: sqlx::Error| format!("Failed to begin transaction: {}", e))?;
 
     let now_ms: i64 = chrono::Utc::now().timestamp();
 
@@ -88,7 +87,9 @@ pub async fn process_event_with_handler<L: MultiHandler>(
 
     // 4. Final Atomic Commit:
     // Persists both the 'processed' record and the handler's changes simultaneously.
-    tx.commit().await.context("Failed to commit transaction")?;
+    tx.commit()
+        .await
+        .map_err(|e: sqlx::Error| format!("Failed to commit transaction: {}", e))?;
 
     Ok(true)
 }

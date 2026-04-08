@@ -1,10 +1,8 @@
 use event_consumer::{
-    Result,
-    application::{EventEnveloped, consumer::MultiHandler},
-    async_trait,
-    sqlx::{self, Postgres, Transaction, postgres::PgQueryResult, types::Uuid},
-    warn,
+    Uuid, application::{EventEnveloped, consumer::MultiHandler}, async_trait
 };
+use sqlx::{Postgres, Transaction, postgres::PgQueryResult};
+use tracing::warn;
 
 /// This struct encapsulates the domain logic for the "document" entity_type.
 pub struct DocumentHandler;
@@ -51,7 +49,7 @@ impl MultiHandler for DocumentHandler {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<()> {
+    ) -> std::result::Result<(), Box<dyn std::error::Error>> {
         match event.event_type.as_str() {
             "document.created" => {
                 let document: Document = serde_json::from_value(event.data.clone())?;
@@ -138,9 +136,9 @@ impl MultiHandler for DocumentHandler {
 
                 // Optimistic Concurrency Control
                 if result.rows_affected() == 0 {
-                    return Err(anyhow::anyhow!(
-                        "Conflict: Document was modified by another process or not found"
-                    ));
+                    return Err(
+                        "Conflict: Document was modified by another process or not found".into(),
+                    );
                 }
 
                 Ok(())

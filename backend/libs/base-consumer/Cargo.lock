@@ -382,9 +382,8 @@ dependencies = [
 
 [[package]]
 name = "event_consumer"
-version = "0.1.4"
+version = "0.1.7"
 dependencies = [
- "anyhow",
  "async-trait",
  "chrono",
  "dotenvy",

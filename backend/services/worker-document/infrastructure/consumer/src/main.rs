@@ -1,11 +1,10 @@
 use event_consumer::{
-    Result,
     application::{self, EventEnveloped, consumer::MultiHandler},
-    async_trait, error, info,
+    async_trait,
     infrastructure::bootstrap::{self, AppState},
     sqlx::{Postgres, Transaction},
-    warn,
 };
+use tracing::{error, info, warn};
 
 /// A specific handler implementation for document-related events.
 /// This struct encapsulates the domain logic for the "document" entity type.
@@ -30,7 +29,7 @@ impl MultiHandler for DocumentHandler {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<()> {
+    ) -> std::result::Result<(), Box<dyn std::error::Error>> {
         let port: u16 = std::env::var("CONSUMER_SERVER_PORT")
             .unwrap_or_else(|_| "7080".to_string())
             .parse()
@@ -59,11 +58,9 @@ impl MultiHandler for DocumentHandler {
                         let status: ureq::http::StatusCode = response.status();
                         let body: String = response.body_mut().read_to_string()?;
                         error!("create-job failed — status: {}, body: {}", status, body);
-                        return Err(anyhow::anyhow!(
-                            "create-job failed with status {}: {}",
-                            status,
-                            body
-                        ));
+                        return Err(
+                            format!("create-job failed with status {}: {}", status, body).into(),
+                        );
                     }
                 }
 
@@ -112,7 +109,7 @@ impl MultiHandler for HandlerRouter {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<()> {
+    ) -> std::result::Result<(), Box<dyn std::error::Error>> {
         match event.entity_type.as_str() {
             "document" => self.document.handle(tx, event).await,
             _ => {
@@ -127,7 +124,7 @@ impl MultiHandler for HandlerRouter {
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     // 1. Bootstrapping: Initialize configuration, database connection pools,
     // and shared resources wrapped in an Arc for thread-safe access.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
@@ -150,7 +147,7 @@ async fn main() -> Result<()> {
                 error!(
                 error = %e,
                 cause = ?e.source(),
-                "Application loop CRASHED"
+                "Application loop crashed"
                 );
 
                 return Err(e);
@@ -159,7 +156,7 @@ async fn main() -> Result<()> {
     },
     // BRANCH B
     _ = tokio::signal::ctrl_c() => {
-         info!("Ctrl+C signal received, initiating graceful shutdown");
+        info!("Ctrl+C signal received, initiating graceful shutdown");
     },
     }
 
