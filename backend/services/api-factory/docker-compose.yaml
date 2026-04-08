@@ -4,7 +4,7 @@ services:
     build:
       context: ./infrastructure/consumer
       dockerfile: Dockerfile
-    image: rey-sudo/api-factory-consumer:latest
+    image: opengems/api-factory-consumer:latest
     restart: always
     env_file:
       - .env
