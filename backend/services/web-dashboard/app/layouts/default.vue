@@ -5,6 +5,58 @@ defineProps<Pick<SidebarProps, "variant" | "collapsible" | "side">>();
 
 const open = ref(true);
 
+const factoryStore = useFactoryStore();
+
+await factoryStore.getFolders();
+
+const factoryNavigation = computed(() => {
+  return {
+    label: "Factory",
+    icon: "i-lucide-box",
+    tooltip: {
+      text: "Widgets",
+    },
+    defaultOpen: true,
+    to: "/blocks",
+
+    children: factoryStore.sidebarFolders.map((folder) => ({
+      label: folder.folder_name,
+      icon: "i-lucide-folder",
+      description: `Carpeta: ${folder.folder_name}`,
+      tooltip: {
+        text: folder.folder_name,
+      },
+ 
+      children: folder.documents.map((doc) => ({
+        label: doc.originalName,
+        icon: "i-lucide-file-text",
+        description: "Documento procesado",
+        to: `/blocks/${doc.id}`, 
+        children: [
+          {
+            label: "Quiz",
+            icon: "i-lucide-book-open-check",
+            description: "Evalúa tus conocimientos",
+            to: `/quiz/${doc.id}`,
+          },
+          {
+            label: "Concepts",
+            icon: "i-lucide-lightbulb",
+            description: "Conceptos clave del documento",
+            to: `/concepts/${doc.id}`,
+          },
+          {
+            label: "Mind maps",
+            icon: "i-lucide-brain",
+            description: "Mapa mental generado",
+            to: `/mind-maps/${doc.id}`,
+          },
+        ],
+      })),
+    })),
+  };
+});
+
 const navItems: NavigationMenuItem[] = [
   {
     label: "Home",
@@ -45,80 +97,7 @@ const navItems: NavigationMenuItem[] = [
       },
     ],
   },
-  {
-    label: "Factory",
-    icon: "i-lucide-box",
-
-    tooltip: {
-      text: "Widgets",
-    },
-    defaultOpen: true,
-    to: "/blocks",
-    children: [
-      {
-        label: "Aduanero",
-        icon: "i-lucide-folder",
-        description: "Define shortcuts for your application.",
-        tooltip: {
-          text: "Acuerdo 001 de 2024",
-        },
-        children: [
-          {
-            label: "Acuerdo 001 de 2024",
-            icon: "i-lucide-file-text",
-            description: "Define shortcuts for your application.",
-            to: "/blocks",
-            children: [
-              {
-                label: "Quiz",
-                icon: "i-lucide-book-open-check",
-                description: "Define shortcuts for your application.",
-                to: "/",
-              },
-              {
-                label: "Concepts",
-                icon: "i-lucide-lightbulb",
-                description: "Define shortcuts for your application.",
-                to: "/",
-              },
-              {
-                label: "Mind maps",
-                icon: "i-lucide-brain",
-                description: "Define shortcuts for your application.",
-                to: "/",
-              },
-            ],
-          },
-        ],
-      },
-
-      {
-        label: "Gestion Documental",
-        icon: "i-lucide-folder",
-        description: "Define shortcuts for your application.",
-        tooltip: {
-          text: "Acuerdo 001 de 2024",
-        },
-        to: "/",
-        children: [
-          {
-            label: "Acuerdo 001 de 2024",
-            icon: "i-lucide-file-text",
-            description: "Define shortcuts for your application.",
-            children: [
-              {
-                label: "1.2.6 Normativa",
-                icon: "i-lucide-file",
-                description: "Define shortcuts for your application.",
-                to: "/",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-
+  factoryNavigation.value,
   {
     label: "Outputs",
     icon: "i-lucide-shapes",
