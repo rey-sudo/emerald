@@ -1,0 +1,22 @@
+{
+  "name": "api-editor",
+  "version": "1.0.0",
+  "description": "Editor service",
+  "type": "module",
+  "dependencies": {
+    "@fastify/websocket": "^11.2.0",
+    "dotenv": "^17.4.1",
+    "fastify": "^5.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "node --test"
+  }
+}
