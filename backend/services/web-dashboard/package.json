@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/ui": "^4.6.0",
     "@pinia/nuxt": "^0.11.3",
+    "@tiptap/extension-collaboration": "^3.22.3",
     "@tiptap/extension-highlight": "^3.20.4",
     "@tiptap/pm": "^3.22.1",
     "@tiptap/starter-kit": "^3.22.1",
@@ -22,7 +23,8 @@
     "sortablejs": "^1.15.7",
     "tailwindcss": "^4.2.2",
     "vue": "^3.5.30",
-    "vue-router": "^5.0.4"
+    "vue-router": "^5.0.4",
+    "yjs": "^13.6.30"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.101",

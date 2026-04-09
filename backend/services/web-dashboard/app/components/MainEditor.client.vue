@@ -31,8 +31,10 @@
 <script setup>
 import { onBeforeUnmount } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
-import StarterKit from "@tiptap/starter-kit";
 import { Node, mergeAttributes } from "@tiptap/core";
+import StarterKit from "@tiptap/starter-kit";
+import Collaboration from "@tiptap/extension-collaboration";
+import * as Y from "yjs";
 
 // 1. Definimos la extensión personalizada "Page"
 const Page = Node.create({
@@ -70,6 +72,8 @@ const Page = Node.create({
   },
 });
 
+const ydoc = new Y.Doc();
+
 // 2. Props para recibir el HTML ya "empaquetado" desde Python
 const props = defineProps({
   initialContent: {
@@ -80,11 +84,31 @@ const props = defineProps({
 
 // 3. Inicialización del Editor
 const editor = useEditor({
-  content: props.initialContent,
+  content: null,
   extensions: [
-    StarterKit,
-    Page, // Nuestra extensión de páginas
+    StarterKit.configure({
+      history: false,
+    }),
+    Page,
+    Collaboration.configure({
+      document: ydoc,
+      field: "default",
+    }),
   ],
+
+  onCreate({ editor: currentEditor }) {
+    // Para saber si el Ydoc está vacío sin usar ytext:
+    const fragment = ydoc.getXmlFragment("default");
+
+    if (!props.initialBinary && props.initialContent) {
+      // Si el fragmento no tiene hijos, está vacío
+      if (fragment.length === 0) {
+        console.log("Sembrando contenido inicial...");
+        currentEditor.commands.setContent(props.initialContent);
+      }
+    }
+  },
+
   editorProps: {
     attributes: {
       spellcheck: "false",
@@ -93,8 +117,16 @@ const editor = useEditor({
   },
 });
 
+ydoc.on("update", (update) => {
+  // 'update' es un pequeño binario (Uint8Array) con el cambio actual
+  console.log("Cambio detectado, enviando delta al servidor...", update);
+
+  // Aquí llamarías a tu API:
+  // fetch('/api/save-delta', { method: 'POST', body: update })
+});
+
 onBeforeUnmount(() => {
-  editor.value.destroy();
+  editor.value?.destroy();
 });
 </script>
 

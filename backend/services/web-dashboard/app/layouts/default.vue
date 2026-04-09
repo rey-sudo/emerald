@@ -26,32 +26,12 @@ const factoryNavigation = computed(() => {
       tooltip: {
         text: folder.folder_name,
       },
- 
+
       children: folder.documents.map((doc) => ({
         label: doc.originalName,
         icon: "i-lucide-file-text",
         description: "Documento procesado",
-        to: `/blocks/${doc.id}`, 
-        children: [
-          {
-            label: "Quiz",
-            icon: "i-lucide-book-open-check",
-            description: "Evalúa tus conocimientos",
-            to: `/quiz/${doc.id}`,
-          },
-          {
-            label: "Concepts",
-            icon: "i-lucide-lightbulb",
-            description: "Conceptos clave del documento",
-            to: `/concepts/${doc.id}`,
-          },
-          {
-            label: "Mind maps",
-            icon: "i-lucide-brain",
-            description: "Mapa mental generado",
-            to: `/mind-maps/${doc.id}`,
-          },
-        ],
+        to: `/blocks`,
       })),
     })),
   };
