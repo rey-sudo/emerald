@@ -1,3 +1,10 @@
 bullmq
 python-dotenv
 boto3-stubs[s3]
+dotenv
+boto3
+tenacity
+opendataloader_pdf
+bs4
+uuid6
+asyncpg

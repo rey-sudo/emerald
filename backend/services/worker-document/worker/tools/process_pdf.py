@@ -26,6 +26,7 @@ from uuid6 import uuid7
 import asyncpg
 import json
 import time
+import urllib.request
 
 def _upload(s3, filename, bucket, key, content_type):
     s3.upload_file(
@@ -77,13 +78,23 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, bucket: str, input_path:
     #3. Formats the final .html
     await loop.run_in_executor(None, lambda: format_html(file_path=html_path, output_path=html_path))
     
+    #4. Converts .html to tiptapJSON
+    url = "http://localhost:7081/html-to-json"
+    data = json.dumps({"html": "<h1>Hola</h1>"}).encode()
+    req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+    response_bytes = await loop.run_in_executor(None, lambda: urllib.request.urlopen(req).read())
+    json_path = Path("/tmp/respuesta.json")
+    json_path.write_bytes(response_bytes)
+    
     #S3 logic ubications
     md_storage = storage_path.replace(".pdf", ".md")
     html_storage = storage_path.replace(".pdf", ".html")
-        
+    json_storage = storage_path.replace(".pdf", ".json")  
+    
     await asyncio.gather(
         loop.run_in_executor(None, lambda: _upload(s3, md_path,   bucket, md_storage,   'text/markdown')),
         loop.run_in_executor(None, lambda: _upload(s3, html_path, bucket, html_storage, 'text/html')),
+        loop.run_in_executor(None, lambda: _upload(s3, json_path, bucket, json_storage, 'application/json')),
     )
     
     async with pool.acquire() as conn:
