@@ -28,6 +28,16 @@ import json
 import time
 import urllib.request
 
+async def _html_to_json(html_path: Path, loop=None) -> bytes:
+    if loop is None:
+        loop = asyncio.get_event_loop()
+    
+    html = html_path.read_text(encoding='utf-8')
+    url = "http://localhost:7081/html-to-json"
+    data = json.dumps({"html": html}).encode()
+    req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+    return await loop.run_in_executor(None, lambda: urllib.request.urlopen(req).read())
+
 def _upload(s3, filename, bucket, key, content_type):
     s3.upload_file(
         Filename=filename,
@@ -49,6 +59,7 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, bucket: str, input_path:
     
     tmp_input_file_path = input_path / user_id / internal_name
     tmp_output_file_path = output_path / user_id 
+    file_stem = tmp_input_file_path.stem
     
     tmp_input_file_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_output_file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -78,13 +89,10 @@ async def process_pdf(pool: asyncpg.Pool, s3: S3Client, bucket: str, input_path:
     #3. Formats the final .html
     await loop.run_in_executor(None, lambda: format_html(file_path=html_path, output_path=html_path))
     
-    #4. Converts .html to tiptapJSON
-    url = "http://localhost:7081/html-to-json"
-    data = json.dumps({"html": "<h1>Hola</h1>"}).encode()
-    req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
-    response_bytes = await loop.run_in_executor(None, lambda: urllib.request.urlopen(req).read())
-    json_path = Path("/tmp/respuesta.json")
-    json_path.write_bytes(response_bytes)
+    #4. Formats the html to json
+    json_bytes = await _html_to_json(html_path, loop)
+    json_path = tmp_output_file_path / f"{file_stem}.json"
+    json_path.write_bytes(json_bytes)
     
     #S3 logic ubications
     md_storage = storage_path.replace(".pdf", ".md")
