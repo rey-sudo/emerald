@@ -21,16 +21,50 @@ export const ClientMessageSchema = z.discriminatedUnion("command", [
 export type ClientMessage = z.infer<typeof ClientMessageSchema>;
 
 // ── Handlers ──────────────────────────────────────────────────────────────────
+type DocumentFormat = "json" | "binary";
+
+interface GetDocumentResponse {
+  success: boolean;
+  message: string;
+  command: "get_document";
+  data: {
+    documentId: string;
+    format: DocumentFormat;
+    content: any;
+    isNew: boolean;
+  };
+}
 
 export function handleGetDocument(
   params: z.infer<typeof GetDocumentSchema>["params"],
-) {
+): GetDocumentResponse {
   console.log(params);
 
+  const content = {
+    type: "doc",
+    content: [
+      {
+        type: "paragraph",
+        content: [
+          {
+            type: "text",
+            text: "Wow, this editor instance exports its content as JSON.",
+          },
+        ],
+      },
+    ],
+  };
+
   return {
+    success: true,
+    message: "The document",
     command: "get_document",
-    documentId: params.documentId,
-    content: `Contenido del documento ${params.documentId}`,
+    data: {
+      documentId: params.documentId,
+      format: "json",
+      content: content,
+      isNew: true,
+    },
   };
 }
 

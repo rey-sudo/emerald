@@ -36,9 +36,6 @@ import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
 import * as Y from "yjs";
 
-const editorStore = useEditorStore();
-
-// 1. Definimos la extensión personalizada "Page"
 const Page = Node.create({
   name: "page",
   group: "block",
@@ -74,17 +71,18 @@ const Page = Node.create({
   },
 });
 
-const ydoc = new Y.Doc();
+const editorStore = useEditorStore();
 
-// 2. Props para recibir el HTML ya "empaquetado" desde Python
-const props = defineProps({
-  initialContent: {
-    type: String,
-    default: "",
+editorStore.send({
+  command: "get_document",
+  params: {
+    documentId: "abc",
+    page: "default",
   },
 });
 
-// 3. Inicialización del Editor
+const ydoc = new Y.Doc();
+
 const editor = useEditor({
   content: null,
   extensions: [
@@ -97,32 +95,35 @@ const editor = useEditor({
       field: "default",
     }),
   ],
-
-  onCreate({ editor: currentEditor }) {
-    // Para saber si el Ydoc está vacío sin usar ytext:
-    const fragment = ydoc.getXmlFragment("default");
-
-    if (!props.initialBinary && props.initialContent) {
-      // Si el fragmento no tiene hijos, está vacío
-      if (fragment.length === 0) {
-        console.log("Sembrando contenido inicial...");
-        currentEditor.commands.setContent(props.initialContent);
-      }
-    }
-  },
-
   editorProps: {
     attributes: {
       spellcheck: "false",
-      class: "prose-container", // Clase para estilos generales de texto
+      class: "prose-container",
     },
   },
 });
 
+watch(
+  () => editorStore.message,
+  (msg) => {
+    if (!editor.value) return;
+
+    if (msg.command === "get_document") {
+      if (msg.data.isNew) {
+        console.log(msg.data.content);
+        editor.value.commands.setContent(msg.data.content);
+      }
+    }
+  },
+  { immediate: true },
+);
+
 ydoc.on("update", (update) => {
   console.log("Cambio detectado, enviando delta al servidor...", update);
 
-  editorStore.send({
+  /**
+ * 
+   editorStore.send({
     command: "update_document",
     params: {
       documentId: "abc",
@@ -130,6 +131,8 @@ ydoc.on("update", (update) => {
       page: "default",
     },
   });
+ * 
+ */
 });
 
 onMounted(() => editorStore.connect());

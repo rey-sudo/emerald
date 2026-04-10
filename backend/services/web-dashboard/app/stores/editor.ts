@@ -8,25 +8,36 @@ type EditorFrame = {
 export const useEditorStore = defineStore("editor", () => {
   const protocol = location.protocol === "https:" ? "wss" : "ws";
   const messages = ref<EditorFrame[]>([]);
+  const message = ref<EditorFrame | null>(null);
 
-const { status, send: wsSend, open, close } = useWebSocket(
-  `${protocol}://${location.host}/api/editor/ws`,
-  {
+  const {
+    status,
+    send: wsSend,
+    open,
+    close,
+  } = useWebSocket(`${protocol}://${location.host}/api/editor/ws`, {
     immediate: false,
     autoReconnect: true,
     onConnected: (ws) => {
       ws.binaryType = "arraybuffer";
     },
     onMessage: (_, event) => {
-      messages.value.push(decode(new Uint8Array(event.data)) as EditorFrame);
+      const parsed = decode(new Uint8Array(event.data)) as EditorFrame;
+      message.value = parsed;
+      messages.value.push(parsed);
     },
-  },
-);
+  });
 
-function send(cmd: EditorFrame) {
-  const encoded = encode(cmd);
-  wsSend(encoded.buffer.slice(encoded.byteOffset, encoded.byteOffset + encoded.byteLength), true); // ← fix 3: slice exacto
-}
+  function send(cmd: EditorFrame) {
+    const encoded = encode(cmd);
+    wsSend(
+      encoded.buffer.slice(
+        encoded.byteOffset,
+        encoded.byteOffset + encoded.byteLength,
+      ),
+      true,
+    );
+  }
 
-  return { status, messages, connect: open, disconnect: close, send };
+  return { status, message, messages, connect: open, disconnect: close, send };
 });
