@@ -6,7 +6,8 @@
   "dependencies": {
     "@fastify/websocket": "^11.2.0",
     "dotenv": "^17.4.1",
-    "fastify": "^5.8.4"
+    "fastify": "^5.8.4",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^25.5.2",

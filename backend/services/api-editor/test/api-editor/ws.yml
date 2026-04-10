@@ -1,0 +1,18 @@
+info:
+  name: ws
+  type: websocket
+  seq: 1
+
+websocket:
+  url: http://localhost:8003/api/editor/ws
+  message:
+    type: json
+    data: |-
+      {
+        "command":"start"
+      }
+  auth: inherit
+
+settings:
+  timeout: 0
+  keepAliveInterval: 0

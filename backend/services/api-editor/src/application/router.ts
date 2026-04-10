@@ -1,4 +1,24 @@
 import type { FastifyInstance } from "fastify";
+import {
+  ClientMessageSchema,
+  handleGetDocument,
+  handleUpdateDocument,
+  type ClientMessage,
+} from "./handlers.js";
+import { z } from "zod";
+
+// ── Dispatcher ────────────────────────────────────────────────────────────────
+
+function dispatch(message: ClientMessage) {
+  switch (message.command) {
+    case "get_document":
+      return handleGetDocument(message.params);
+    case "update_document":
+      return handleUpdateDocument(message.params);
+  }
+}
+
+// ── Router ────────────────────────────────────────────────────────────────────
 
 export async function router(app: FastifyInstance) {
   app.get("/", async () => ({
@@ -7,31 +27,54 @@ export async function router(app: FastifyInstance) {
     timestamp: new Date().toISOString(),
   }));
 
-  //====================================================================================
-
-  app.get("/ws", { websocket: true }, (socket: any, req: any) => {
+  app.get("/ws", { websocket: true }, (socket: any, _req: any) => {
     app.clients.add(socket);
-    app.log.info(`Cliente conectado · total: ${app.clients.size}`);
+    app.log.info(`Client connected: ${app.clients.size}`);
 
-    socket.on("message", (rawMsg: any) => {
+    //===================================================================
+
+    socket.on("message", async (rawMsg: any) => {
       const text = rawMsg.toString();
-      const message = JSON.parse(text)
 
-      app.log.info(`Mensaje recibido: ${message.command}`);
+      try {
+        const parsed = ClientMessageSchema.safeParse(JSON.parse(text));
 
-      const response = JSON.stringify({
-        type: "message",
-        echo: text,
-        message: `Eco: ${text}`,
-        timestamp: new Date().toISOString(),
-      });
+        if (!parsed.success) {
+          socket.send(
+            JSON.stringify({
+              type: "error",
+              errors: z.treeifyError(parsed.error),
+            }),
+          );
+          return;
+        }
 
-      socket.send(response);
+        app.log.info(`Command received: ${parsed.data.command}`);
+
+        const result = await dispatch(parsed.data);
+
+        socket.send(
+          JSON.stringify({
+            ...result,
+            timestamp: new Date().toISOString(),
+          }),
+        );
+      } catch (err: any) {
+        app.log.error(`Error processing: ${err.message}`);
+        socket.send(
+          JSON.stringify({
+            type: "error",
+            message: "Internal server error",
+          }),
+        );
+      }
     });
+
+    //===================================================================
 
     socket.on("close", () => {
       app.clients.delete(socket);
-      app.log.info(`Cliente desconectado · total: ${app.clients.size}`);
+      app.log.info(`Disconnected client: ${app.clients.size}`);
     });
 
     socket.on("error", (err: any) => {
