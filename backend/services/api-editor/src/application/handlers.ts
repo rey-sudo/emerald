@@ -9,7 +9,7 @@ export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
   params: z.object({
     documentId: z.string(),
-    content: z.string(),
+    binario: z.instanceof(Uint8Array),
   }),
 });
 
@@ -28,7 +28,7 @@ export function handleGetDocument(
   console.log(params);
 
   return {
-    type: "get_document",
+    command: "get_document",
     documentId: params.documentId,
     content: `Contenido del documento ${params.documentId}`,
   };
@@ -37,10 +37,11 @@ export function handleGetDocument(
 export function handleUpdateDocument(
   params: z.infer<typeof UpdateDocumentSchema>["params"],
 ) {
+  console.log("Binario recibido:", params.binario);
+
   return {
-    type: "update_document",
+    command: "update_document",
     documentId: params.documentId,
     success: true,
-    updatedContent: params.content,
   };
 }

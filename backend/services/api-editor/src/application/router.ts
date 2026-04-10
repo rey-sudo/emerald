@@ -6,6 +6,7 @@ import {
   type ClientMessage,
 } from "./handlers.js";
 import { z } from "zod";
+import { decode, encode } from "@msgpack/msgpack";
 
 // ── Dispatcher ────────────────────────────────────────────────────────────────
 
@@ -33,18 +34,21 @@ export async function router(app: FastifyInstance) {
 
     //===================================================================
 
-    socket.on("message", async (rawMsg: any) => {
-      const text = rawMsg.toString();
-
+    socket.on("message", async (rawMsg: Buffer, isBinary: boolean) => {
       try {
-        const parsed = ClientMessageSchema.safeParse(JSON.parse(text));
+        console.log(
+          "[backend] recibido - isBinary:",
+          isBinary,
+          "bytes:",
+          rawMsg.byteLength,
+        );
+
+        const parsed = ClientMessageSchema.safeParse(decode(rawMsg));
 
         if (!parsed.success) {
+          console.log("[backend] zod error:", JSON.stringify(z.treeifyError(parsed.error), null, 2));
           socket.send(
-            JSON.stringify({
-              type: "error",
-              errors: z.treeifyError(parsed.error),
-            }),
+            encode({ command: "error", errors: z.treeifyError(parsed.error) }),
           );
           return;
         }
@@ -53,19 +57,11 @@ export async function router(app: FastifyInstance) {
 
         const result = await dispatch(parsed.data);
 
-        socket.send(
-          JSON.stringify({
-            ...result,
-            timestamp: new Date().toISOString(),
-          }),
-        );
+        socket.send(encode({ ...result, timestamp: new Date().toISOString() }));
       } catch (err: any) {
         app.log.error(`Error processing: ${err.message}`);
         socket.send(
-          JSON.stringify({
-            type: "error",
-            message: "Internal server error",
-          }),
+          encode({ command: "error", message: "Internal server error" }),
         );
       }
     });

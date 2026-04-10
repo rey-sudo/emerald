@@ -36,6 +36,8 @@ import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
 import * as Y from "yjs";
 
+const editorStore = useEditorStore();
+
 // 1. Definimos la extensión personalizada "Page"
 const Page = Node.create({
   name: "page",
@@ -118,16 +120,25 @@ const editor = useEditor({
 });
 
 ydoc.on("update", (update) => {
-  // 'update' es un pequeño binario (Uint8Array) con el cambio actual
   console.log("Cambio detectado, enviando delta al servidor...", update);
 
-  // Aquí llamarías a tu API:
-  // fetch('/api/save-delta', { method: 'POST', body: update })
+  editorStore.send({
+    command: "update_document",
+    params: {
+      documentId: "abc",
+      binario: update,
+      page: "default",
+    },
+  });
 });
+
+onMounted(() => editorStore.connect());
 
 onBeforeUnmount(() => {
   editor.value?.destroy();
 });
+
+onUnmounted(() => editorStore.disconnect());
 </script>
 
 <style>

@@ -37,56 +37,53 @@ const factoryNavigation = computed(() => {
   };
 });
 
-const navItems: NavigationMenuItem[] = [
-  {
-    label: "Home",
-    icon: "i-lucide-house",
-    tooltip: {
-      text: "Home",
+const navItems: NavigationMenuItem[][] = [
+  [
+    {
+      label: "Folders",
+      icon: "i-lucide-folder",
+      tooltip: {
+        text: "Folders",
+      },
+      to: "/",
+      defaultOpen: false,
+      children: [
+        {
+          label: "Favorites",
+          icon: "i-lucide-star",
+          tooltip: {
+            text: "Acuerdo 001 de 2024",
+          },
+        },
+        {
+          label: "Community",
+          icon: "i-lucide-user",
+          tooltip: {
+            text: "Acuerdo 001 de 2024",
+          },
+        },
+        {
+          label: "Trash",
+          icon: "i-lucide-trash",
+          tooltip: {
+            text: "Acuerdo 001 de 2024",
+          },
+        },
+      ],
     },
-    to: "/",
-    defaultOpen: false,
-    children: [
-      {
-        label: "Shared",
-        icon: "i-lucide-users",
-        tooltip: {
-          text: "Acuerdo 001 de 2024",
-        },
+    factoryNavigation.value,
+    {
+      label: "Outputs",
+      icon: "i-lucide-shapes",
+      tooltip: {
+        text: "Outputs",
       },
-      {
-        label: "Recents",
-        icon: "i-lucide-clock",
-        tooltip: {
-          text: "Acuerdo 001 de 2024",
-        },
-      },
-      {
-        label: "Favorites",
-        icon: "i-lucide-star",
-        tooltip: {
-          text: "Acuerdo 001 de 2024",
-        },
-      },
-      {
-        label: "Trash",
-        icon: "i-lucide-trash",
-        tooltip: {
-          text: "Acuerdo 001 de 2024",
-        },
-      },
-    ],
-  },
-  factoryNavigation.value,
-  {
-    label: "Outputs",
-    icon: "i-lucide-shapes",
-    tooltip: {
-      text: "Outputs",
+      to: "/blocks",
+      defaultOpen: false,
     },
-    to: "/blocks",
-    defaultOpen: false,
-  },
+  ],
+
+  [],
 ];
 </script>
 

@@ -4,12 +4,13 @@ info:
   seq: 1
 
 websocket:
-  url: http://localhost:8003/api/editor/ws
+  url: ws://localhost:8003/api/editor/ws
   message:
     type: json
     data: |-
       {
-        "command":"start"
+        "command":"get_document",
+        "params": { "documentId": "abc" }
       }
   auth: inherit
 
