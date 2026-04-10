@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SERVICES=("api-document" "api-factory")
+SERVICES=("api-document" "api-factory" "api-editor")
 
 DB_URL="postgres://postgres:password@localhost:5432"
 
@@ -18,6 +18,16 @@ for SERVICE in "${SERVICES[@]}"; do
     else
         echo "Warning: Directory $SQL_PATH not found. Skipping..."
     fi
+
+    SQL_PATH="services/$SERVICE/src/infrastructure/sql"
+    
+    if [ -d "$SQL_PATH" ]; then
+        for file in "$SQL_PATH"/database.sql; do
+            psql "$DB_URL" -v ON_ERROR_STOP=1 -f "$file"
+        done
+    else
+        echo "Warning: Directory $SQL_PATH not found. Skipping..."
+    fi    
 done
 
 
@@ -35,6 +45,16 @@ for SERVICE in "${SERVICES[@]}"; do
     else
         echo "Warning: Directory $SQL_PATH not found. Skipping..."
     fi
+
+    SQL_PATH="services/$SERVICE/src/infrastructure/sql"
+    
+    if [ -d "$SQL_PATH" ]; then
+        for file in "$SQL_PATH"/*.sql; do
+            psql "$DB_URL/${SERVICE//-/_}" -v ON_ERROR_STOP=1 -f "$file"
+        done
+    else
+        echo "Warning: Directory $SQL_PATH not found. Skipping..."
+    fi    
 done
 
 for SERVICE in "${SERVICES[@]}"; do

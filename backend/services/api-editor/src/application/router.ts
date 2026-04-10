@@ -1,12 +1,15 @@
 import type { FastifyInstance } from "fastify";
-import {
-  ClientMessageSchema,
-  handleGetDocument,
-  handleUpdateDocument,
-  type ClientMessage,
-} from "./handlers.js";
-import { z } from "zod";
 import { decode, encode } from "@msgpack/msgpack";
+import { handleUpdateDocument, UpdateDocumentSchema } from "./update_draft.js";
+import { GetDocumentSchema, handleGetDocument } from "./get_draft.js";
+import { z } from "zod";
+
+export const ClientMessageSchema = z.discriminatedUnion("command", [
+  GetDocumentSchema,
+  UpdateDocumentSchema,
+]);
+
+export type ClientMessage = z.infer<typeof ClientMessageSchema>;
 
 // ── Dispatcher ────────────────────────────────────────────────────────────────
 

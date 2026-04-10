@@ -22,7 +22,9 @@ export const useEditorStore = defineStore("editor", () => {
       ws.binaryType = "arraybuffer";
     },
     onMessage: (_, event) => {
-      const parsed = decode(new Uint8Array(event.data)) as EditorFrame;
+      console.log(event.data)
+      const parsed = decode(new Uint8Array(event.data)) as any;
+      console.log(parsed);
       message.value = parsed;
       messages.value.push(parsed);
     },

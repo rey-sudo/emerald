@@ -31,7 +31,7 @@ const buttons = ref([
   {
     label: "",
     color: "neutral",
-    icon: "i-lucide-layout-grid",
+    icon: "i-lucide-menu",
   },
   {
     label: "Prompt",

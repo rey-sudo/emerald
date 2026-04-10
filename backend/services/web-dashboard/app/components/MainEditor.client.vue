@@ -76,7 +76,7 @@ const editorStore = useEditorStore();
 editorStore.send({
   command: "get_document",
   params: {
-    documentId: "abc",
+    documentId: "029d2612-a01d-734c-ab63-917106f31187",
     page: "default",
   },
 });
@@ -110,8 +110,10 @@ watch(
 
     if (msg.command === "get_document") {
       if (msg.data.isNew) {
-        console.log(msg.data.content);
         editor.value.commands.setContent(msg.data.content);
+      } else {
+        console.log(msg.data.content);
+        Y.applyUpdate(ydoc, msg.data.content);
       }
     }
   },
@@ -121,18 +123,14 @@ watch(
 ydoc.on("update", (update) => {
   console.log("Cambio detectado, enviando delta al servidor...", update);
 
-  /**
- * 
-   editorStore.send({
+  editorStore.send({
     command: "update_document",
     params: {
-      documentId: "abc",
+      documentId: "029d2612-a01d-734c-ab63-917106f31187",
       binario: update,
       page: "default",
     },
   });
- * 
- */
 });
 
 onMounted(() => editorStore.connect());
