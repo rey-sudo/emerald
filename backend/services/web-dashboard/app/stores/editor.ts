@@ -32,7 +32,7 @@ export const useEditorStore = defineStore("editor", () => {
 
   function send(cmd: EditorFrame) {
     const encoded = encode(cmd);
-    wsSend(
+    return wsSend(
       encoded.buffer.slice(
         encoded.byteOffset,
         encoded.byteOffset + encoded.byteLength,

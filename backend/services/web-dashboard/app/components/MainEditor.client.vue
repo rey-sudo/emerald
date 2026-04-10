@@ -120,18 +120,45 @@ watch(
   { immediate: true },
 );
 
-ydoc.on("update", (update) => {
-  console.log("Cambio detectado, enviando delta al servidor...", update);
+let localBuffer = [];
 
-  editorStore.send({
-    command: "update_document",
-    params: {
-      documentId: "029d2612-a01d-734c-ab63-917106f31187",
-      binario: update,
-      page: "default",
-    },
-  });
+ydoc.on("update", (update) => {
+  localBuffer.push(update);
 });
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+async function procesarSiguiente() {
+  if (localBuffer.length === 0) {
+    console.warn("nada que consumir.");
+    return null;
+  }
+  
+  let error = false;
+
+  for (const elemento of localBuffer) {
+    const result = editorStore.send({
+      command: "update_document",
+      params: {
+        documentId: "029d2612-a01d-734c-ab63-917106f31187",
+        binario: elemento,
+        page: "default",
+      },
+    });
+
+    if (!result) return (error = true);
+    await delay(100);
+  }
+
+  if (error) {
+    console.error("Error sending");
+    return;
+  }
+
+  localBuffer.length = 0;
+}
+
+const miIntervalo = setInterval(procesarSiguiente, 1000);
 
 onMounted(() => editorStore.connect());
 
