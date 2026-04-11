@@ -34,7 +34,7 @@ const buttons = ref([
     icon: "i-lucide-menu",
   },
   {
-    label: "Prompt",
+    label: "Chat",
     color: "neutral",
     icon: "i-lucide-message-circle-more",
   },
