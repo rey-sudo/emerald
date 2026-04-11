@@ -121,48 +121,76 @@ watch(
 );
 
 let localBuffer = [];
+let isProcessing = false;
 
 ydoc.on("update", (update) => {
   localBuffer.push(update);
 });
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-async function procesarSiguiente() {
-  if (localBuffer.length === 0) {
-    console.warn("nada que consumir.");
-    return null;
+async function processChanges() {
+  // Exit if there are no updates to send or if a sync process is already in progress
+  if (localBuffer.length === 0 || isProcessing) {
+    return;
   }
-  
-  let error = false;
 
-  for (const elemento of localBuffer) {
-    const result = editorStore.send({
+  // 1. Lock the process to prevent concurrent execution (race conditions)
+  isProcessing = true;
+
+  /**2. Extract and clear the buffer IMMEDIATELY.
+   * New incoming updates during the async 'await' period will be pushed to a
+   * fresh array, preventing data loss during the current transmission.
+   */
+  const updatesToSend = [...localBuffer];
+  localBuffer = [];
+
+  try {
+    // 2. Consolidate all micro-deltas into a single compressed binary.
+    const mergedUpdate = Y.mergeUpdates(updatesToSend);
+
+    // 3. Send a SINGLE network request to the backend.
+    const result = await editorStore.send({
       command: "update_document",
       params: {
         documentId: "029d2612-a01d-734c-ab63-917106f31187",
-        binario: elemento,
+        binario: mergedUpdate,
         page: "default",
       },
     });
 
-    if (!result) return (error = true);
-    await delay(100);
-  }
+    if (!result) {
+      throw new Error("El servidor no confirmó la recepción");
+    }
+  } catch (error) {
+    console.error("Error enviando cambios, reintentando...", error);
 
-  if (error) {
-    console.error("Error sending");
-    return;
+    /**
+     * Network failure recovery:
+     * Prepend the failed updates back to the beginning of the buffer so they
+     * can be merged and re-attempted in the next interval.
+     */
+    localBuffer.unshift(...updatesToSend);
+  } finally {
+    // Release the lock to allow the next scheduled process to run
+    isProcessing = false;
   }
-
-  localBuffer.length = 0;
 }
 
-const miIntervalo = setInterval(procesarSiguiente, 1000);
+const miIntervalo = setInterval(processChanges, 1000);
+
+function cerrarDocumento() {
+  clearInterval(miIntervalo);
+
+  // Opcional: Si quedó algo en el buffer justo antes de cerrar,
+  // puedes intentar hacer un último envío forzado aquí.
+  if (localBuffer.length > 0) {
+    processChanges();
+  }
+}
 
 onMounted(() => editorStore.connect());
 
 onBeforeUnmount(() => {
+  cerrarDocumento();
   editor.value?.destroy();
 });
 
