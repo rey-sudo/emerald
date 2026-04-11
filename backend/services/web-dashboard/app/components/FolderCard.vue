@@ -19,8 +19,8 @@
     <!-- Folder icon -->
     <div class="card-icon">
       <svg
-        width="3rem"
-        height="3rem"
+        width="2rem"
+        height="2rem"
         version="1.1"
         viewBox="0 0 64 64"
         xmlns="http://www.w3.org/2000/svg"
@@ -114,9 +114,8 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   background: var(--ui-bg-muted);
   border: 1px solid transparent;
   border-radius: var(--radius, 12px);
-  padding: 20px 14px 14px;
+  padding: 1rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 10px;
   cursor: pointer;

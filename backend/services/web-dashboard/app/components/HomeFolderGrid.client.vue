@@ -232,9 +232,6 @@ const breadItems = [
     icon: "i-lucide-home",
     to: "/",
   },
-  {
-    label: "",
-  },
 ];
 
 const onFolderOpen = (folderId, folderName) => {

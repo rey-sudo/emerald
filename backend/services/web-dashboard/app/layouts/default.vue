@@ -165,9 +165,10 @@ const navItems: NavigationMenuItem[][] = [
 <style>
 .window-drag {
   -webkit-app-region: drag !important;
+  max-height: var(--ui-header-height);
   width: 100%;
-  height: var(--ui-header-height);
   top: 0;
+  height: 100%;
   z-index: 9999;
 }
 </style>
