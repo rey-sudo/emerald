@@ -12,6 +12,7 @@ const props = withDefaults(
 
 const open = ref(true);
 
+const editorStore = useEditorStore();
 const factoryStore = useFactoryStore();
 
 await factoryStore.getFolders();
@@ -87,6 +88,14 @@ const navItems: NavigationMenuItem[][] = [
     },
   ],
 ];
+
+onMounted(() => {
+  editorStore.connect()
+});
+
+onUnmounted(() => {
+  editorStore.disconnect();
+});
 </script>
 
 <template>

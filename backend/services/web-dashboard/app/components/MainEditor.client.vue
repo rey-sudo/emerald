@@ -73,13 +73,21 @@ const Page = Node.create({
 
 const editorStore = useEditorStore();
 
-editorStore.send({
-  command: "get_document",
-  params: {
-    documentId: "029d2612-a01d-734c-ab63-917106f31187",
-    page: "default",
+watch(
+  () => editorStore.status,
+  (newStatus) => {
+    if (newStatus === "OPEN") {
+      editorStore.send({
+        command: "get_document",
+        params: {
+          documentId: "029d2612-a01d-734c-ab63-917106f31187",
+          page: "default",
+        },
+      });
+    }
   },
-});
+  { immediate: true },
+);
 
 const ydoc = new Y.Doc();
 
@@ -187,14 +195,10 @@ function cerrarDocumento() {
   }
 }
 
-onMounted(() => editorStore.connect());
-
 onBeforeUnmount(() => {
   cerrarDocumento();
   editor.value?.destroy();
 });
-
-onUnmounted(() => editorStore.disconnect());
 </script>
 
 <style>

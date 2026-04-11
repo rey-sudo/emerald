@@ -6,23 +6,29 @@ type EditorFrame = {
 };
 
 export const useEditorStore = defineStore("editor", () => {
-  const protocol = location.protocol === "https:" ? "wss" : "ws";
   const messages = ref<EditorFrame[]>([]);
   const message = ref<EditorFrame | null>(null);
+
+  const protocol = import.meta.client 
+    ? (window.location.protocol === "https:" ? "wss" : "ws") 
+    : "ws";
+  
+  const host = import.meta.client ? window.location.host : "";
 
   const {
     status,
     send: wsSend,
     open,
     close,
-  } = useWebSocket(`${protocol}://${location.host}/api/editor/ws`, {
+  } = useWebSocket(`${protocol}://${host}/api/editor/ws`, {
     immediate: false,
     autoReconnect: true,
     onConnected: (ws) => {
       ws.binaryType = "arraybuffer";
+      console.info("Websocket connected");
     },
     onMessage: (_, event) => {
-      console.log(event.data)
+      console.log(event.data);
       const parsed = decode(new Uint8Array(event.data)) as any;
       console.log(parsed);
       message.value = parsed;
@@ -31,6 +37,8 @@ export const useEditorStore = defineStore("editor", () => {
   });
 
   function send(cmd: EditorFrame) {
+    if (!import.meta.client) return;
+
     const encoded = encode(cmd);
     return wsSend(
       encoded.buffer.slice(

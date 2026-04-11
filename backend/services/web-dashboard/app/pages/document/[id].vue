@@ -8,3 +8,12 @@
     </template>
   </PageSplit>
 </template>
+
+<script setup>
+const route = useRoute()
+
+
+const documentId = route.params.id
+
+console.log('El ID es:', documentId)
+</script>
