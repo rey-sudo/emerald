@@ -40,8 +40,10 @@ const DEFAULT_CONTENT = {
 export async function handleGetDocument(
   params: z.infer<typeof GetDocumentSchema>["params"],
 ): Promise<GetDocumentResponse> {
+  const client = await pool.connect();
 
-  const query = `
+  try {
+    const query = `
     SELECT
       content_binary,
       v,
@@ -52,13 +54,24 @@ export async function handleGetDocument(
     LIMIT 1;
   `;
 
-  const client = await pool.connect();
-
-  try {
     const result = await client.query(query, [params.documentId]);
 
     // — Documento NO existe → devuelve JSON vacío para Tiptap
     if (result.rowCount === 0) {
+      const query = "SELECT * FROM documents WHERE id = $1";
+      const values = [params.documentId];
+
+      const res = await pool.query(query, values);
+
+      if (res.rows.length === 0) {
+        console.log("Document not found");
+        throw new Error("Document not found");
+      }
+
+      const document = res.rows[0];
+
+      console.log(document.storage_path);
+
       return {
         success: true,
         message: "New document",
@@ -66,7 +79,7 @@ export async function handleGetDocument(
         data: {
           documentId: params.documentId,
           format: "json",
-          content: DEFAULT_CONTENT,
+          content: res.rows[0],
           isNew: true,
         },
       };
@@ -86,7 +99,6 @@ export async function handleGetDocument(
         isNew: false,
       },
     };
-
   } catch (error) {
     console.error("Error obteniendo draft:", error);
     throw error;

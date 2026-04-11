@@ -1,0 +1,11 @@
+services:
+  api-editor-consumer:
+    container_name: api_editor_consumer
+    build:
+      context: ./infrastructure/consumer
+      dockerfile: Dockerfile
+    image: opengems/api-editor-consumer:latest
+    restart: always
+    env_file:
+      - .env
+    network_mode: "host" 

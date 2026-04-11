@@ -24,8 +24,6 @@ const factoryNavigation = computed(() => {
       text: "Widgets",
     },
     defaultOpen: true,
-    to: "/blocks",
-
     children: factoryStore.sidebarFolders.map((folder) => ({
       label: folder.folder_name,
       icon: "i-lucide-folder",
@@ -33,12 +31,11 @@ const factoryNavigation = computed(() => {
       tooltip: {
         text: folder.folder_name,
       },
-
       children: folder.documents.map((doc) => ({
         label: doc.originalName,
         icon: "i-lucide-file-text",
         description: "Documento procesado",
-        to: `/blocks`,
+        to: `/document/${doc.id}`,
       })),
     })),
   };
@@ -85,7 +82,7 @@ const navItems: NavigationMenuItem[][] = [
       tooltip: {
         text: "Outputs",
       },
-      to: "/blocks",
+      to: "/outputs",
       defaultOpen: false,
     },
   ],
