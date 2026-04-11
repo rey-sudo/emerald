@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import type { NavigationMenuItem, SidebarProps } from "@nuxt/ui";
 
-defineProps<Pick<SidebarProps, "variant" | "collapsible" | "side">>();
+const props = withDefaults(
+  defineProps<Pick<SidebarProps, "variant" | "collapsible" | "side">>(),
+  {
+    variant: "sidebar",
+    collapsible: "offcanvas",
+    side: "left",
+  },
+);
 
 const open = ref(true);
 
@@ -82,8 +89,6 @@ const navItems: NavigationMenuItem[][] = [
       defaultOpen: false,
     },
   ],
-
-  [],
 ];
 </script>
 
@@ -102,18 +107,22 @@ const navItems: NavigationMenuItem[][] = [
       :side="side"
       :ui="{
         container: 'h-full',
+        header:
+          'flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
       }"
     >
       <template #header>
-        <UButton
-          :icon="
-            side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
-          "
-          color="neutral"
-          variant="ghost"
-          aria-label="Toggle sidebar"
-          @click="open = !open"
-        />
+        <div class="window-drag flex items-center pl-4">
+          <UButton
+            :icon="
+              side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
+            "
+            color="neutral"
+            variant="ghost"
+            aria-label="Toggle sidebar"
+            @click="open = !open"
+          />
+        </div>
       </template>
 
       <UNavigationMenu
@@ -132,7 +141,7 @@ const navItems: NavigationMenuItem[][] = [
       class="flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default"
     >
       <div
-        class="h-(--ui-header-height) shrink-0 flex items-center px-4"
+        class="h-(--ui-header-height) shrink-0 flex items-center px-4 window-drag"
         :class="[
           variant !== 'floating' && 'border-b border-default',
           side === 'right' && 'justify-end',
@@ -153,4 +162,12 @@ const navItems: NavigationMenuItem[][] = [
   </div>
 </template>
 
-<style></style>
+<style>
+.window-drag {
+  -webkit-app-region: drag !important;
+  width: 100%;
+  height: var(--ui-header-height);
+  top: 0;
+  z-index: 9999;
+}
+</style>

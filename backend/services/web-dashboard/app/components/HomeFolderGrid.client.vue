@@ -232,8 +232,8 @@ const breadItems = [
     icon: "i-lucide-home",
     to: "/",
   },
-    {
-    label: ""
+  {
+    label: "",
   },
 ];
 
@@ -247,13 +247,15 @@ const onFolderOpen = (folderId, folderName) => {
 };
 
 const FOLDER_COLORS = [
-  "#d97845",
-  "#5b7fa6",
-  "#6aab8e",
-  "#9b7dc8",
-  "#c95e6e",
-  "#e0a84b",
-  "#5e9ec9",
+  "#85B7EB", // blue
+  "#5DCAA5", // teal
+  "#AFA9EC", // purple
+  "#EF9F27", // amber
+  "#F0997B", // coral
+  "#ED93B1", // pink
+  "#97C459", // green
+  "#F09595", // red
+  "#B4B2A9", // gray
 ];
 
 /** useSortable — attach/detach Sortable.js to a container ref */
