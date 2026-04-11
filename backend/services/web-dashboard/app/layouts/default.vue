@@ -40,10 +40,10 @@ const factoryNavigation = computed(() => {
 const navItems: NavigationMenuItem[][] = [
   [
     {
-      label: "Folders",
-      icon: "i-lucide-folder",
+      label: "Home",
+      icon: "i-lucide-home",
       tooltip: {
-        text: "Folders",
+        text: "Home",
       },
       to: "/",
       defaultOpen: false,

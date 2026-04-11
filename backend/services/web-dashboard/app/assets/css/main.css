@@ -121,38 +121,6 @@ text-9xl	8rem (128px)
   --ui-border-inverted: #e2e8f8; /* sobre fondos oscuros invertidos */
 }
 
-/* Duna — light theme */
-:root {
-  /* acciones e intenciones */
-  --ui-primary: #9c5a3c; /* terracota arcilla    → CTA, links, foco */
-  --ui-secondary: #a09080; /* piedra cálida       → acciones secundarias */
-  --ui-success: #4a7a54; /* verde musgo          → confirmación, válido */
-  --ui-info: #4870a0; /* azul pizarra         → informativo neutro */
-  --ui-warning: #b87828; /* ámbar tostado        → precaución, pendiente */
-  --ui-error: #a84040; /* rojo arcilla         → fallo, destructivo */
-
-  /* escala de texto */
-  --ui-text-dimmed: #d8cfc4; /* casi invisible, placeholders */
-  --ui-text-muted: #a09080; /* labels, metadatos débiles */
-  --ui-text-toned: #70605a; /* texto de apoyo, descripciones */
-  --ui-text: #3a2e28; /* cuerpo principal */
-  --ui-text-highlighted: #1e1610; /* énfasis, títulos */
-  --ui-text-inverted: #faf8f4; /* texto sobre fondos oscuros */
-
-  /* fondos */
-  --ui-bg: #f7f3ee; /* fondo base — lino cálido */
-  --ui-bg-muted: #f0e9e0; /* sidebars, áreas recesadas */
-  --ui-bg-elevated: #fdfbf8; /* tarjetas, modales */
-  --ui-bg-accented: #e8dfd4; /* hover, separadores con relleno */
-  --ui-bg-inverted: #2c2420; /* fondo sobre texto claro */
-
-  /* bordes */
-  --ui-border: #ddd4c8; /* borde por defecto */
-  --ui-border-muted: #e8e0d8; /* divisores internos casi invisibles */
-  --ui-border-accented: #c8b8a8; /* hover, focus */
-  --ui-border-inverted: #1e1610; /* sobre fondos oscuros invertidos */
-}
-
 :root {
   /* acciones e intenciones */
   --ui-primary: #a8b4c8; /* plata azulada       → CTA, links, foco */

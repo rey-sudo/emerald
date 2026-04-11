@@ -19,8 +19,8 @@
     <!-- Folder icon -->
     <div class="card-icon">
       <svg
-        width="4rem"
-        height="4rem"
+        width="3rem"
+        height="3rem"
         version="1.1"
         viewBox="0 0 64 64"
         xmlns="http://www.w3.org/2000/svg"
@@ -111,8 +111,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 
 <style scoped>
 .folder-card {
-  background: var(--card, #fff);
-  background: transparent;
+  background: var(--ui-bg-muted);
   border: 1px solid transparent;
   border-radius: var(--radius, 12px);
   padding: 20px 14px 14px;
@@ -130,7 +129,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
   border: 1px solid var(--ui-border-accented, #e2ddd8);
   border-color: transparent;
-  background: var(--ui-bg-muted);
+  background: var(--ui-bg-elevated);
 }
 
 .folder-card.selected {
@@ -186,7 +185,6 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   transition:
     opacity 160ms ease,
     background 160ms ease;
-  display: none; 
 }
 
 .folder-card:hover .card-menu {
