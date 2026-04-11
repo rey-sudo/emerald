@@ -13,12 +13,12 @@ export type ClientMessage = z.infer<typeof ClientMessageSchema>;
 
 // ── Dispatcher ────────────────────────────────────────────────────────────────
 
-function dispatch(message: ClientMessage) {
+function dispatch(app: FastifyInstance, message: ClientMessage) {
   switch (message.command) {
     case "get_document":
-      return handleGetDocument(message.params);
+      return handleGetDocument(app, message.params);
     case "update_document":
-      return handleUpdateDocument(message.params);
+      return handleUpdateDocument(app, message.params);
   }
 }
 
@@ -58,7 +58,7 @@ export async function router(app: FastifyInstance) {
 
         app.log.info(`Command received: ${parsed.data.command}`);
 
-        const result = await dispatch(parsed.data);
+        const result = await dispatch(app, parsed.data);
 
         socket.send(encode({ ...result, timestamp: new Date().toISOString() }));
       } catch (err: any) {

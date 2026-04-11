@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { Pool } from "pg";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import type { FastifyInstance } from "fastify";
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -22,22 +24,8 @@ export interface GetDocumentResponse {
   };
 }
 
-const DEFAULT_CONTENT = {
-  type: "doc",
-  content: [
-    {
-      type: "paragraph",
-      content: [
-        {
-          type: "text",
-          text: "Wow, this editor instance exports its content as JSON.",
-        },
-      ],
-    },
-  ],
-};
-
 export async function handleGetDocument(
+  app: FastifyInstance,
   params: z.infer<typeof GetDocumentSchema>["params"],
 ): Promise<GetDocumentResponse> {
   const client = await pool.connect();
@@ -56,21 +44,32 @@ export async function handleGetDocument(
 
     const result = await client.query(query, [params.documentId]);
 
-    // — Documento NO existe → devuelve JSON vacío para Tiptap
     if (result.rowCount === 0) {
-      const query = "SELECT * FROM documents WHERE id = $1";
-      const values = [params.documentId];
-
-      const res = await pool.query(query, values);
+      const _DOCUMENTS_QUERY = "SELECT * FROM documents WHERE id = $1";
+      const res = await pool.query(_DOCUMENTS_QUERY, [params.documentId]);
 
       if (res.rows.length === 0) {
-        console.log("Document not found");
+        console.log("Document not found", params.documentId);
         throw new Error("Document not found");
       }
 
       const document = res.rows[0];
+      const jsonKey = document["storage_path"].replace(".pdf", ".json");
 
-      console.log(document.storage_path);
+      const command = new GetObjectCommand({
+        Bucket: "documents",
+        Key: jsonKey,
+      });
+
+      const response = await app.s3.send(command);
+      if (!response.Body) {
+        throw new Error("No object");
+      }
+
+      const jsonString = await response.Body.transformToString();
+      const data = JSON.parse(jsonString);
+      
+      console.log("obtenido")
 
       return {
         success: true,
@@ -79,7 +78,7 @@ export async function handleGetDocument(
         data: {
           documentId: params.documentId,
           format: "json",
-          content: res.rows[0],
+          content: data,
           isNew: true,
         },
       };

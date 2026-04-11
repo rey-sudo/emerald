@@ -71,23 +71,9 @@ const Page = Node.create({
   },
 });
 
-const editorStore = useEditorStore();
+const route = useRoute();
 
-watch(
-  () => editorStore.status,
-  (newStatus) => {
-    if (newStatus === "OPEN") {
-      editorStore.send({
-        command: "get_document",
-        params: {
-          documentId: "029d2612-a01d-734c-ab63-917106f31187",
-          page: "default",
-        },
-      });
-    }
-  },
-  { immediate: true },
-);
+const editorStore = useEditorStore();
 
 const ydoc = new Y.Doc();
 
@@ -159,7 +145,7 @@ async function processChanges() {
     const result = await editorStore.send({
       command: "update_document",
       params: {
-        documentId: "029d2612-a01d-734c-ab63-917106f31187",
+        documentId: route.params.id,
         binario: mergedUpdate,
         page: "default",
       },

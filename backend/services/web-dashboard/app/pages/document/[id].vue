@@ -11,9 +11,21 @@
 
 <script setup>
 const route = useRoute()
+const editorStore = useEditorStore();
 
-
-const documentId = route.params.id
-
-console.log('El ID es:', documentId)
+watch(
+  [() => editorStore.status, () => route.params.id], 
+  ([newStatus, newId]) => {
+    if (newStatus === "OPEN" && newId) {
+      editorStore.send({
+        command: "get_document",
+        params: {
+          documentId: newId,
+          page: "default",
+        },
+      });
+    }
+  },
+  { immediate: true }
+);
 </script>

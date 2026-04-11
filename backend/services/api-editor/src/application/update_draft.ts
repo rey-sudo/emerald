@@ -1,6 +1,7 @@
 import { z } from "zod";
 import * as Y from "yjs";
 import { pool } from "../infrastructure/postgres/db.js";
+import type { FastifyInstance } from "fastify";
 
 export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
@@ -11,24 +12,25 @@ export const UpdateDocumentSchema = z.object({
 });
 
 export async function handleUpdateDocument(
+  app: FastifyInstance,
   params: z.infer<typeof UpdateDocumentSchema>["params"],
 ) {
   const now = Date.now();
-  const draftId = "029d2612-a01d-734c-ab63-917106f31187"; 
+  const draftId = "029d2612-a01d-734c-ab63-917106f31187";
 
   const client = await pool.connect();
 
   try {
-    const selectQuery = `SELECT content_binary FROM drafts WHERE id = $1 FOR UPDATE`; 
+    const selectQuery = `SELECT content_binary FROM drafts WHERE id = $1 FOR UPDATE`;
 
     const currentRes = await client.query(selectQuery, [draftId]);
-    
+
     let finalBinary;
     const incomingDelta = params.binario;
 
     if (currentRes.rows.length > 0 && currentRes.rows[0].content_binary) {
       const existingBinary = currentRes.rows[0].content_binary;
-      
+
       // Y.mergeUpdates combina el estado actual con el nuevo delta
       // Esto crea un nuevo binario que representa el estado final
       finalBinary = Y.mergeUpdates([existingBinary, incomingDelta]);
@@ -36,7 +38,7 @@ export async function handleUpdateDocument(
       // Si no existe nada previo, el delta es el estado inicial
       finalBinary = incomingDelta;
     }
-    
+
     const contentBuffer = Buffer.from(finalBinary);
 
     const upsertQuery = `
