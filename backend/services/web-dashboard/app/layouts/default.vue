@@ -10,12 +10,26 @@ const props = withDefaults(
   },
 );
 
-const open = ref(true);
-
 const editorStore = useEditorStore();
 const factoryStore = useFactoryStore();
-
 await factoryStore.getFolders();
+
+const open = ref(true);
+
+const activeTabId = ref(1);
+const myTabs = ref([
+  { id: 1, label: "Decreto 1080 de..." },
+  { id: 2, label: "Acuerdo 001 de 2024" },
+  { id: 3, label: "Resolucion 5402 de..." },
+]);
+
+const handleClose = (id: any) => {
+  myTabs.value = myTabs.value.filter((t) => t.id !== id);
+
+  if (activeTabId.value === id && myTabs.value.length > 0) {
+    activeTabId.value = 1;
+  }
+};
 
 const factoryNavigation = computed(() => {
   return {
@@ -100,7 +114,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="flex flex-1 h-screen"
+    class="bg-muted flex flex-1 h-screen"
     :class="[
       variant === 'inset' && 'bg-neutral-50 dark:bg-neutral-950',
       side === 'right' && 'flex-row-reverse',
@@ -147,7 +161,7 @@ onUnmounted(() => {
     </USidebar>
 
     <div
-      class="flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default"
+      class="bg-muted flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default"
     >
       <div
         class="h-(--ui-header-height) shrink-0 flex items-center px-4 window-drag"
@@ -156,6 +170,8 @@ onUnmounted(() => {
           side === 'right' && 'justify-end',
         ]"
       >
+        <Tabs v-model="activeTabId" :tabs="myTabs" @close="handleClose" />
+
         <UButton
           icon="i-lucide-bolt"
           variant="ghost"
@@ -170,7 +186,6 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
-
 <style>
 .window-drag {
   -webkit-app-region: drag !important;
@@ -183,6 +198,6 @@ onUnmounted(() => {
 
 .no-drag {
   -webkit-app-region: no-drag !important;
-  cursor: pointer; 
+  cursor: pointer;
 }
 </style>

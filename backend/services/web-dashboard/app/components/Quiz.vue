@@ -281,7 +281,7 @@ const IconRefresh = {
 <style scoped>
 /* ── Card shell ─────────────────────────────────────────────── */
 .card {
-  background: var(--ui-bg);
+
   overflow: hidden;
 }
 

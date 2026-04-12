@@ -133,7 +133,6 @@ function onComplete({ score, total, pct, answers }) {
 
 <style lang="css" scoped>
 .preview {
-  background: var(--ui-bg);
   display: flex;
   flex-direction: column;
 }
