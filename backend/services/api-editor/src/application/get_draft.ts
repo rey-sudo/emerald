@@ -1,9 +1,7 @@
 import { z } from "zod";
-import { Pool } from "pg";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { pool } from "../infrastructure/postgres/db.js";
 import type { FastifyInstance } from "fastify";
-
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 export const GetDocumentSchema = z.object({
   command: z.literal("get_document"),

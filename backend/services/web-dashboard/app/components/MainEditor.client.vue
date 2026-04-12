@@ -106,7 +106,6 @@ watch(
       if (msg.data.isNew) {
         editor.value.commands.setContent(msg.data.content);
       } else {
-        console.log(msg.data.content);
         Y.applyUpdate(ydoc, msg.data.content);
       }
     }
@@ -150,6 +149,8 @@ async function processChanges() {
         page: "default",
       },
     });
+
+    console.log(mergedUpdate.length);
 
     if (!result) {
       throw new Error("El servidor no confirmó la recepción");

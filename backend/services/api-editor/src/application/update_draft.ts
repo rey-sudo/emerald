@@ -1,7 +1,7 @@
 import { z } from "zod";
-import * as Y from "yjs";
 import { pool } from "../infrastructure/postgres/db.js";
 import type { FastifyInstance } from "fastify";
+import * as Y from "yjs";
 
 export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
@@ -11,42 +11,59 @@ export const UpdateDocumentSchema = z.object({
   }),
 });
 
+/**
+ * Handles document updates by merging Yjs deltas and persisting to PostgreSQL.
+ * Uses a 'SELECT FOR UPDATE' strategy to ensure atomic merges during concurrent edits.
+ */
 export async function handleUpdateDocument(
   app: FastifyInstance,
   params: z.infer<typeof UpdateDocumentSchema>["params"],
 ) {
-  const now = Date.now();
-  const draftId = "029d2612-a01d-734c-ab63-917106f31187";
+  const timestamp = Date.now();
+
+  const draftId = params.documentId;
+
+  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
+
+  const incomingDelta = params.binario;
 
   const client = await pool.connect();
 
   try {
-    const selectQuery = `SELECT content_binary FROM drafts WHERE id = $1 FOR UPDATE`;
+    await client.query("BEGIN");
 
-    const currentRes = await client.query(selectQuery, [draftId]);
+    const selectQuery = `SELECT user_id, content_binary FROM drafts WHERE id = $1 FOR UPDATE`;
+    const response = await client.query(selectQuery, [draftId]);
 
-    let finalBinary;
-    const incomingDelta = params.binario;
+    const row = response.rows[0];
+    const existingBinary = row?.content_binary;
+    const existingUser = row?.user_id as string;
 
-    if (currentRes.rows.length > 0 && currentRes.rows[0].content_binary) {
-      const existingBinary = currentRes.rows[0].content_binary;
+    let finalBinary: Uint8Array;
 
-      // Y.mergeUpdates combina el estado actual con el nuevo delta
-      // Esto crea un nuevo binario que representa el estado final
-      finalBinary = Y.mergeUpdates([existingBinary, incomingDelta]);
+    // Merge incoming delta with existing state if present; otherwise, initialize with delta.
+    if (existingBinary) {
+      console.log(existingUser, userId);
+
+      if (existingUser !== userId) {
+        throw new Error("Invalid credentials");
+      }
+
+      const existingUint8 = new Uint8Array(existingBinary);
+      finalBinary = Y.mergeUpdates([existingUint8, incomingDelta]);
     } else {
-      // Si no existe nada previo, el delta es el estado inicial
       finalBinary = incomingDelta;
     }
 
     const contentBuffer = Buffer.from(finalBinary);
 
+    // Perform Upsert: Insert new draft or update existing content and version counter
     const upsertQuery = `
       INSERT INTO drafts (
-        id, user_id, folder_id, document_id, mime_type, 
+        id, user_id, document_id, mime_type, 
         content_binary, created_at, updated_at, v
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $7, 1)
+      VALUES ($1, $2, $3, $4, $5, $6, $6, $7)
       ON CONFLICT (id) DO UPDATE SET
         content_binary = EXCLUDED.content_binary,
         updated_at     = EXCLUDED.updated_at,
@@ -54,27 +71,31 @@ export async function handleUpdateDocument(
       RETURNING id, v, updated_at;
     `;
 
-    const values = [
+    const upsertValues = [
       draftId,
-      "019d2612-a01d-734c-ab63-917106f31187",
-      "039d2612-a01d-734c-ab63-917106f31187",
-      "039d2622-a01d-734c-ab63-917106f31187",
+      userId,
+      draftId,
       "application/octet-stream",
       contentBuffer,
-      now,
+      timestamp,
+      1,
     ];
 
-    const result = await client.query(upsertQuery, values);
-    const row = result.rows[0];
+    const upsertResult = await client.query(upsertQuery, upsertValues);
+
+    await client.query("COMMIT");
+
+    const upsertResultRow = upsertResult.rows[0];
 
     return {
       command: "update_document",
       documentId: params.documentId,
-      v: row.v,
-      updatedAt: row.updated_at,
+      v: upsertResultRow.v,
+      updatedAt: upsertResultRow.updated_at,
       success: true,
     };
   } catch (error) {
+    await client.query("ROLLBACK");
     console.error("Error procesando delta del documento:", error);
     throw error;
   } finally {

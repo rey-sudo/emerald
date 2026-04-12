@@ -2,7 +2,6 @@ CREATE TABLE
     IF NOT EXISTS drafts (
         id UUID PRIMARY KEY,
         user_id UUID NOT NULL,
-        folder_id UUID NOT NULL,
         document_id UUID NOT NULL,
         mime_type VARCHAR(100) NOT NULL,
         content_binary BYTEA NOT NULL,
