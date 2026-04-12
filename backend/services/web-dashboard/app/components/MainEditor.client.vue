@@ -19,7 +19,16 @@
         @click="editor.chain().focus().toggleItalic().run()"
       />
 
-      <span class="doc-info">100/600 páginas</span>
+      <UButton
+        :class="{ 'is-active': editor.isActive('highlight') }"
+        icon="i-lucide-highlighter"
+        size="sm"
+        color="primary"
+        :variant="editor.isActive('highlight') ? 'solid' : 'outline'"
+        @click="editor.chain().focus().toggleHighlight().run()"
+      />
+
+      <span class="doc-info"></span>
     </div>
 
     <div class="editor-container">
@@ -32,8 +41,10 @@
 import { onBeforeUnmount } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Node, mergeAttributes } from "@tiptap/core";
+import { BulletList } from "@tiptap/extension-list";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
+import Highlight from "@tiptap/extension-highlight";
 import * as Y from "yjs";
 
 const Page = Node.create({
@@ -81,13 +92,20 @@ const editor = useEditor({
   content: null,
   extensions: [
     StarterKit.configure({
+      undoRedo: false,
       history: false,
+      bold: {
+        HTMLAttributes: {
+          class: "custom-bold-style",
+        },
+      },
     }),
     Page,
     Collaboration.configure({
       document: ydoc,
       field: "default",
     }),
+    Highlight,
   ],
   editorProps: {
     attributes: {
@@ -236,7 +254,7 @@ onBeforeUnmount(() => {
 }
 
 .editor-container::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-bg-inverted); 
+  background: var(--ui-bg-inverted);
 }
 
 .tiptap-viewport {
@@ -294,8 +312,8 @@ onBeforeUnmount(() => {
   margin-bottom: 1rem;
 }
 
-.page-virtual ul {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
+
+.custom-bold-style{
+  color: goldenrod;
 }
 </style>
