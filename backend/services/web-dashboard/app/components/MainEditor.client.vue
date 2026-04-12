@@ -193,7 +193,7 @@ onBeforeUnmount(() => {
 .editor-layout {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 3rem); /* Ocupa todo el alto de la ventana */
+  height: calc(100vh - 2.5rem); /* Ocupa todo el alto de la ventana */
   overflow: hidden; /* Evita scroll doble */
   background: var(--ui-bg);
 }
@@ -225,17 +225,18 @@ onBeforeUnmount(() => {
 }
 
 .editor-container::-webkit-scrollbar-track {
-  background: var(--ui-bg); /* Color del carril (fondo) */
-  border-radius: var(--ui-radius);
+  background: transparent;
 }
 
 .editor-container::-webkit-scrollbar-thumb {
+  border-radius: 8px;
   background: var(--ui-bg-accented);
-  border: 4px solid var(--ui-bg); /* Crea un efecto de margen interno */
+  border: 0.25rem solid var(--ui-bg);
+  height: 5rem;
 }
 
 .editor-container::-webkit-scrollbar-thumb:hover {
-  background: var(--ui-bg-inverted); /* Color cuando pasas el mouse */
+  background: var(--ui-bg-inverted); 
 }
 
 .tiptap-viewport {

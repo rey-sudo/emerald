@@ -100,7 +100,7 @@ const navItems: NavigationMenuItem[][] = [
       to: "/outputs",
       defaultOpen: false,
     },
-  ],
+  ]
 ];
 
 onMounted(() => {
@@ -172,12 +172,38 @@ onUnmounted(() => {
       >
         <Tabs v-model="activeTabId" :tabs="myTabs" @close="handleClose" />
 
-        <UButton
-          icon="i-lucide-bolt"
-          variant="ghost"
-          color="neutral"
-          class="ml-auto"
-        />
+        <UFieldGroup class="ml-auto">
+          <UButton
+            class="no-drag"
+            icon="i-lucide-panel-right"
+            color="neutral"
+            variant="ghost"
+          />
+          <UButton
+            class="no-drag"
+            icon="i-lucide-settings"
+            color="neutral"
+            variant="ghost"
+          />
+          <UButton
+            size="sm"
+            color="neutral"
+            variant="ghost"
+            icon="i-lucide-minus"
+          />
+          <UButton
+            size="sm"
+            color="neutral"
+            variant="ghost"
+            icon="i-lucide-square"
+          />
+          <UButton
+            size="sm"
+            color="neutral"
+            variant="ghost"
+            icon="i-lucide-x"
+          />
+        </UFieldGroup>
       </div>
 
       <div class="flex-1">

@@ -1,17 +1,22 @@
 <template>
   <div class="preview w-full">
     <div class="button-grid">
-      <UButton
+      <UTooltip
         v-for="(btn, index) in buttons"
         :key="index"
-        :icon="btn.icon"
-        size="lg"
-        :color="btn.color"
-        variant="outline"
-        >{{ btn.label }}</UButton
+        :text="btn.tooltip"
+        :content="{
+          align: 'center',
+          side: 'top',
+          sideOffset: 8,
+        }"
       >
+        <UButton :icon="btn.icon" size="md" :color="btn.color" variant="ghost"
+          >{{ btn.label }}
+        </UButton>
+      </UTooltip>
     </div>
-    <USeparator />
+
     <div class="preview-content">
       <Quiz
         :questions="questions"
@@ -29,33 +34,32 @@ import { ref } from "vue";
 
 const buttons = ref([
   {
-    label: "",
+    tooltip: "Outputs",
     color: "neutral",
-    icon: "i-lucide-menu",
+    icon: "i-lucide-shapes",
   },
   {
-    label: "Chat",
+    tooltip: "Chat",
     color: "neutral",
-    icon: "i-lucide-message-circle-more",
+    icon: "i-lucide-message-square",
   },
   {
-    label: "Quiz",
+    tooltip: "Quiz",
     color: "success",
     icon: "i-lucide-book-open-check",
   },
   {
-    label: "Concepts",
+    tooltip: "Concepts",
     color: "error",
     icon: "i-lucide-lightbulb",
   },
   {
-    label: "Mind Map",
+    tooltip: "Mind map",
     color: "warning",
     icon: "i-lucide-brain",
   },
 ]);
 
-function setArtifact(name) {}
 
 // ── localStorage helpers ─────────────────────────────────────────
 const LS_KEY = "quiz_session";

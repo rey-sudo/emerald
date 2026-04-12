@@ -165,13 +165,14 @@ onBeforeUnmount(removeListeners);
 .split-panel--right {
   flex: 1;
   min-width: 0; /* evita overflow en flexbox */
+  background: var(--ui-bg);
 }
 
 /* ─── Divider ──────────────────────────────────────────────────────────────── */
 .split-divider {
   flex-shrink: 0;
   position: relative;
-  width: 0.5rem;
+  width: 0.25rem;
   cursor: col-resize;
   background: var(--ui-bg-elevated);
   transition:
