@@ -34,7 +34,7 @@ const factoryNavigation = computed(() => {
       },
       children: folder.documents.map((doc) => ({
         label: doc.originalName,
-        icon: "i-lucide-file-text",
+        icon: "i-lucide-file",
         description: "Documento procesado",
         to: `/document/${doc.id}`,
       })),
@@ -90,7 +90,7 @@ const navItems: NavigationMenuItem[][] = [
 ];
 
 onMounted(() => {
-  editorStore.connect()
+  editorStore.connect();
 });
 
 onUnmounted(() => {
@@ -119,15 +119,18 @@ onUnmounted(() => {
     >
       <template #header>
         <div class="window-drag flex items-center pl-4">
-          <UButton
-            :icon="
-              side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
-            "
-            color="neutral"
-            variant="ghost"
-            aria-label="Toggle sidebar"
-            @click="open = !open"
-          />
+          <span class="[webkit-app-region:no-drag] z-20">
+            <UButton
+              class="no-drag"
+              :icon="
+                side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
+              "
+              color="neutral"
+              variant="ghost"
+              aria-label="Toggle sidebar"
+              @click="open = !open"
+            />
+          </span>
         </div>
       </template>
 
@@ -176,5 +179,10 @@ onUnmounted(() => {
   top: 0;
   height: 100%;
   z-index: 9999;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag !important;
+  cursor: pointer; 
 }
 </style>

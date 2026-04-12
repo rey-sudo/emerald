@@ -28,46 +28,54 @@ export async function handleGetDocument(
 ): Promise<GetDocumentResponse> {
   const client = await pool.connect();
 
+  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
+
   try {
-    const query = `
-    SELECT
-      content_binary,
-      v,
-      updated_at
-    FROM drafts
-    WHERE id = $1
-      AND deleted_at IS NULL
-    LIMIT 1;
-  `;
+    // 1. Check for an existing working draft in the database.
+    const draftQuery = `
+      SELECT content_binary, updated_at, v
+      FROM drafts
+      WHERE id = $1
+        AND user_id = $2 
+        AND deleted_at IS NULL
+      LIMIT 1;
+    `;
 
-    const result = await client.query(query, [params.documentId]);
+    const draftResult = await client.query(draftQuery, [
+      params.documentId,
+      userId,
+    ]);
 
-    if (result.rowCount === 0) {
-      const _DOCUMENTS_QUERY = "SELECT * FROM documents WHERE id = $1";
-      const res = await pool.query(_DOCUMENTS_QUERY, [params.documentId]);
+    // --- CASE 1: IF DRAFT NOT EXISTS ---
+    if (draftResult.rowCount === 0) {
+      // Obtain the original document
+      const documentResult = await client.query(
+        "SELECT * FROM documents WHERE id = $1 AND user_id = $2",
+        [params.documentId, userId],
+      );
 
-      if (res.rows.length === 0) {
-        console.log("Document not found", params.documentId);
+      // The original document does not exist
+      if (documentResult.rows.length === 0) {
+        app.log.warn(`Document ${params.documentId} not found in database.`);
         throw new Error("Document not found");
       }
 
-      const document = res.rows[0];
-      const jsonKey = document["storage_path"].replace(".pdf", ".json");
+      const document = documentResult.rows[0];
 
+      // Get the original document from S3 storage
+      const jsonKey = document.storage_path.replace(".pdf", ".json");
       const command = new GetObjectCommand({
         Bucket: "documents",
         Key: jsonKey,
       });
 
-      const response = await app.s3.send(command);
-      if (!response.Body) {
+      const s3Response = await app.s3.send(command);
+      if (!s3Response.Body) {
         throw new Error("No object");
       }
 
-      const jsonString = await response.Body.transformToString();
-      const data = JSON.parse(jsonString);
-      
-      console.log("obtenido")
+      const jsonString = await s3Response.Body.transformToString();
+      const jsonDocument = JSON.parse(jsonString);
 
       return {
         success: true,
@@ -76,14 +84,15 @@ export async function handleGetDocument(
         data: {
           documentId: params.documentId,
           format: "json",
-          content: data,
+          content: jsonDocument,
           isNew: true,
         },
       };
     }
 
-    // — Documento existe → devuelve BYTEA como base64 para el cliente
-    const row = result.rows[0];
+    // --- CASE 2: IF DRAFT EXISTS ---
+    const draft = draftResult.rows[0];
+    const binaryDocument = new Uint8Array(draft.content_binary);
 
     return {
       success: true,
@@ -92,12 +101,12 @@ export async function handleGetDocument(
       data: {
         documentId: params.documentId,
         format: "binary",
-        content: row.content_binary as Uint8Array,
+        content: binaryDocument,
         isNew: false,
       },
     };
   } catch (error) {
-    console.error("Error obteniendo draft:", error);
+    app.log.error(error);
     throw error;
   } finally {
     client.release();

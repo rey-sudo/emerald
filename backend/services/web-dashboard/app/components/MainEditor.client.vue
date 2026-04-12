@@ -241,7 +241,7 @@ onBeforeUnmount(() => {
 .tiptap-viewport {
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 2rem;
 }
 
 .tiptap-viewport .ProseMirror {
@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1100px; /* Muy importante para el scrollbar */
   min-height: 100px;
-  border-top: 1px solid var(--ui-border);
+  border-bottom: 1px solid var(--ui-border);
 }
 
 /* --- INDICADOR DE PÁGINA (ESTÉTICO) --- */
