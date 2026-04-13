@@ -310,6 +310,7 @@ onBeforeUnmount(() => {
 .page-virtual p {
   line-height: 1.6;
   margin-bottom: 1rem;
+  opacity: 0.7;
 }
 
 .custom-bold-style {
