@@ -2,19 +2,33 @@ import { z } from "zod";
 import { pool } from "../infrastructure/postgres/db.js";
 import type { FastifyInstance } from "fastify";
 import * as Y from "yjs";
+import { Piscina } from "piscina";
+
+const piscina = new Piscina({
+  filename: new URL("./update_draft_worker.mjs", import.meta.url).href,
+  minThreads: 2,
+  idleTimeout: 10000,
+});
 
 export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
   params: z.object({
-    documentId: z.string(),
-    binario: z.instanceof(Uint8Array),
+    documentId: z.uuid(),
+    binario: z.instanceof(Uint8Array).refine(
+      (data) => {
+        try {
+          const doc = new Y.Doc();
+          Y.applyUpdate(doc, data);
+          return true;
+        } catch {
+          return false;
+        }
+      },
+      { message: "Invalid Yjs binary" },
+    ),
   }),
 });
 
-/**
- * Handles document updates by merging Yjs deltas and persisting to PostgreSQL.
- * Uses a 'SELECT FOR UPDATE' strategy to ensure atomic merges during concurrent edits.
- */
 export async function handleUpdateDocument(
   app: FastifyInstance,
   params: z.infer<typeof UpdateDocumentSchema>["params"],
@@ -32,25 +46,51 @@ export async function handleUpdateDocument(
   try {
     await client.query("BEGIN");
 
-    const selectQuery = `SELECT user_id, content_binary FROM drafts WHERE id = $1 AND user_id = $2 FOR UPDATE`;
-    const response = await client.query(selectQuery, [draftId, userId]);
+    // 1. Ownership check to prevent unauthorized access
+    const documentResult = await client.query(
+      "SELECT id FROM documents WHERE id = $1 AND user_id = $2",
+      [draftId, userId],
+    );
 
-    const row = response.rows[0];
-    const existingBinary = row?.content_binary;
+    if (documentResult.rows.length === 0) {
+      throw new Error("Document not found");
+    }
+
+    // 2. Prevent race conditions using a session-level advisory lock on the document ID
+    await client.query(
+      "SELECT pg_advisory_xact_lock(('x' || left(md5($1), 16))::bit(64)::bigint)",
+      [draftId],
+    );
+
+    // 3. Fetch current state with a row-level lock (FOR UPDATE)
+    const response = await client.query(
+      `SELECT content_binary FROM drafts WHERE id = $1 AND user_id = $2 FOR UPDATE`,
+      [draftId, userId],
+    );
+
+    const draft = response.rows[0];
+    const existingBinary = draft?.content_binary;
 
     let finalBinary: Uint8Array;
 
-    // Merge incoming delta with existing state if present; otherwise, initialize with delta.
+    // 4. CRDT Logic: Merge incoming update with existing state using Y.js
     if (existingBinary) {
-      const existingUint8 = new Uint8Array(existingBinary);
-      finalBinary = Y.mergeUpdates([existingUint8, incomingDelta]);
+      try {
+        finalBinary = await piscina.run({
+          existingBinary,
+          incomingDelta,
+        });
+      } catch (workerError) {
+        app.log.error(workerError);
+        throw new Error("Failed to merge document state");
+      }
     } else {
       finalBinary = incomingDelta;
     }
 
     const contentBuffer = Buffer.from(finalBinary);
 
-    // Perform Upsert: Insert new draft or update existing content and version counter
+    // 5. Atomic Upsert: Update merged content and increment version counter
     const upsertQuery = `
       INSERT INTO drafts (
         id, user_id, document_id, mime_type, 
@@ -87,10 +127,9 @@ export async function handleUpdateDocument(
       updatedAt: upsertResultRow.updated_at,
       success: true,
     };
-  } catch (error) {
+  } catch (err) {
     await client.query("ROLLBACK");
-    console.error("Error procesando delta del documento:", error);
-    throw error;
+    throw err;
   } finally {
     client.release();
   }
