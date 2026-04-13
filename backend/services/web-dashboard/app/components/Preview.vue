@@ -9,7 +9,7 @@
           align: 'center',
           side: 'top',
           sideOffset: 8,
-          delayDuration: 100
+          delayDuration: 100,
         }"
       >
         <UButton :icon="btn.icon" size="sm" :color="btn.color" variant="ghost"
@@ -145,7 +145,7 @@ function onComplete({ score, total, pct, answers }) {
 }
 
 .button-grid {
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
