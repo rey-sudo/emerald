@@ -174,7 +174,7 @@ onBeforeUnmount(removeListeners);
   position: relative;
   width: 0.25rem;
   cursor: col-resize;
-  background: var(--ui-bg-elevated);
+  background: var(--ui-border-muted);
   transition:
     background 0.15s ease,
     width 0.15s ease;
