@@ -6,7 +6,7 @@
         icon="i-lucide-bold"
         size="sm"
         color="primary"
-        :variant="editor.isActive('bold') ? 'solid' : 'outline'"
+        :variant="editor.isActive('bold') ? 'solid' : 'ghost'"
         @click="editor.chain().focus().toggleBold().run()"
       />
 
@@ -15,7 +15,7 @@
         icon="i-lucide-italic"
         size="sm"
         color="primary"
-        :variant="editor.isActive('italic') ? 'solid' : 'outline'"
+        :variant="editor.isActive('italic') ? 'solid' : 'ghost'"
         @click="editor.chain().focus().toggleItalic().run()"
       />
 
@@ -24,7 +24,7 @@
         icon="i-lucide-highlighter"
         size="sm"
         color="primary"
-        :variant="editor.isActive('highlight') ? 'solid' : 'outline'"
+        :variant="editor.isActive('highlight') ? 'solid' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
 
@@ -41,7 +41,6 @@
 import { onBeforeUnmount } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Node, mergeAttributes } from "@tiptap/core";
-import { BulletList } from "@tiptap/extension-list";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
 import Highlight from "@tiptap/extension-highlight";
