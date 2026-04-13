@@ -219,9 +219,10 @@ onBeforeUnmount(() => {
 .editor-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  z-index: 10; /* Siempre por encima del contenido */
+  gap: 0.5rem;
+  padding: 0.5rem;
+  z-index: 10;
+  border-bottom: 1px solid var(--ui-border-muted);
 }
 
 .doc-info {
@@ -311,8 +312,7 @@ onBeforeUnmount(() => {
   margin-bottom: 1rem;
 }
 
-
-.custom-bold-style{
+.custom-bold-style {
   color: goldenrod;
 }
 </style>

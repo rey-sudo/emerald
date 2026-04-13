@@ -32,23 +32,16 @@ export async function handleUpdateDocument(
   try {
     await client.query("BEGIN");
 
-    const selectQuery = `SELECT user_id, content_binary FROM drafts WHERE id = $1 FOR UPDATE`;
-    const response = await client.query(selectQuery, [draftId]);
+    const selectQuery = `SELECT user_id, content_binary FROM drafts WHERE id = $1 AND user_id = $2 FOR UPDATE`;
+    const response = await client.query(selectQuery, [draftId, userId]);
 
     const row = response.rows[0];
     const existingBinary = row?.content_binary;
-    const existingUser = row?.user_id as string;
 
     let finalBinary: Uint8Array;
 
     // Merge incoming delta with existing state if present; otherwise, initialize with delta.
     if (existingBinary) {
-      console.log(existingUser, userId);
-
-      if (existingUser !== userId) {
-        throw new Error("Invalid credentials");
-      }
-
       const existingUint8 = new Uint8Array(existingBinary);
       finalBinary = Y.mergeUpdates([existingUint8, incomingDelta]);
     } else {

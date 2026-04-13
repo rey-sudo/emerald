@@ -9,9 +9,10 @@
           align: 'center',
           side: 'top',
           sideOffset: 8,
+          delayDuration: 100
         }"
       >
-        <UButton :icon="btn.icon" size="md" :color="btn.color" variant="ghost"
+        <UButton :icon="btn.icon" size="sm" :color="btn.color" variant="ghost"
           >{{ btn.label }}
         </UButton>
       </UTooltip>
@@ -59,7 +60,6 @@ const buttons = ref([
     icon: "i-lucide-brain",
   },
 ]);
-
 
 // ── localStorage helpers ─────────────────────────────────────────
 const LS_KEY = "quiz_session";
@@ -145,10 +145,11 @@ function onComplete({ score, total, pct, answers }) {
 }
 
 .button-grid {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  border-bottom: 1px solid var(--ui-border-muted);
 }
 
 .grid-button {

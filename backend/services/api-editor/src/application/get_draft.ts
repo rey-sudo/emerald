@@ -71,7 +71,7 @@ export async function handleGetDocument(
 
       const s3Response = await app.s3.send(command);
       if (!s3Response.Body) {
-        throw new Error("No object");
+        throw new Error("No S3 object");
       }
 
       const jsonString = await s3Response.Body.transformToString();
