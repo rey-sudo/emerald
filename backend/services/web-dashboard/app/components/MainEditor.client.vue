@@ -222,7 +222,7 @@ onBeforeUnmount(() => {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   z-index: 10;
-  border-bottom: 1px solid var(--ui-border-muted);
+
 }
 
 .doc-info {
@@ -238,7 +238,7 @@ onBeforeUnmount(() => {
 
 /* 2. Motores WebKit (Chrome, Safari, Edge) */
 .editor-container::-webkit-scrollbar {
-  width: 1.25rem; /* Ancho del scroll vertical */
+  width: 1rem; /* Ancho del scroll vertical */
   height: 1rem; /* Ancho del scroll horizontal */
 }
 
@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1100px; /* Muy importante para el scrollbar */
   min-height: 100px;
-  border-bottom: 1px solid var(--ui-border);
+  border-bottom: 1px solid var(--ui-border-muted);
 }
 
 /* --- INDICADOR DE PÁGINA (ESTÉTICO) --- */
