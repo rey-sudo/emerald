@@ -10,7 +10,7 @@
     <div
       class="folder-card"
       :class="{ selected }"
-      :data-id="folder.id"
+      :data-id="folder.folder_id"
       @click="$emit('click', $event)"
       @dblclick="$emit('dblclick', $event)"
       @contextmenu="$emit('contextmenu', $event)"
@@ -92,7 +92,7 @@
           />
         </svg>
 
-        <p class="card-name text-sm">{{ folder.name }}</p>
+        <p class="card-name text-sm">{{ folder.folder_name }}</p>
       </div>
 
       <UButton

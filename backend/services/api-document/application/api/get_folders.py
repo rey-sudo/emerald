@@ -18,7 +18,7 @@ class FolderResponse(BaseModel):
     deleted_at: Optional[int]
     v: int
 
-@router.get("/get-folders", response_model=List[FolderResponse])
+@router.get("/get-folders")
 async def get_folders_endpoint(
     request: Request,
     limit: int = Query(10, ge=1, le=100),
@@ -35,25 +35,52 @@ async def get_folders_endpoint(
 
     # SQL query to fetch active folders ordered by creation date (newest first)
     query = """
-    SELECT 
-        id, user_id, status, name, storage_path, color, 
-        created_at, readed_at, updated_at, deleted_at, v,
-        (
-            SELECT COUNT(*)::int 
-            FROM documents d 
-            WHERE d.folder_id = folders.id 
-              AND d.deleted_at IS NULL
-        ) AS document_count
-    FROM folders
-    WHERE user_id = $1 AND deleted_at IS NULL
-    ORDER BY created_at DESC
-    LIMIT $2 OFFSET $3;
+    SELECT
+        f.id           AS folder_id,
+        f.user_id,
+        f.name         AS folder_name,
+        f.status       AS folder_status,
+        f.color,
+        f.storage_path AS folder_storage_path,
+        f.created_at   AS folder_created_at,
+        f.updated_at   AS folder_updated_at,
+
+        COALESCE(
+        json_agg(
+            json_build_object(
+            'id',           d.id,
+            'originalName', d.original_name,
+            'internalName', d.internal_name,
+            'contentType',  d.content_type,
+            'mimeType',     d.mime_type,
+            'sizeBytes',    d.size_bytes,
+            'storagePath',  d.storage_path,
+            'status',       d.status,
+            'checksum',     d.checksum,
+            'context',      d.context,
+            'keywords',     d.keywords,
+            'metadata',     d.metadata,
+            'createdAt',    d.created_at,
+            'updatedAt',    d.updated_at
+            ) ORDER BY d.created_at DESC
+        ) FILTER (WHERE d.id IS NOT NULL),
+        '[]'
+        ) AS documents
+
+    FROM folders f
+    LEFT JOIN documents d
+            ON d.folder_id = f.id
+            AND d.deleted_at IS NULL
+    WHERE f.user_id    = $1
+        AND f.deleted_at IS NULL
+    GROUP BY f.id
+    ORDER BY f.created_at DESC;
     """
 
     try:
         async with pool.acquire() as connection:
             # Execute the query and fetch multiple rows
-            rows = await connection.fetch(query, user_id, limit, offset)
+            rows = await connection.fetch(query, user_id)
             
             # Convert asyncpg Record objects to dictionaries for Pydantic parsing
             return [dict(row) for row in rows]

@@ -9,7 +9,7 @@ const contextItems: ContextMenuItem[][] = [
   [
     {
       label: "New folder",
-      icon: "i-lucide-folder-plus",
+      icon: "material-symbols:drive-folder-upload-outline-rounded",
       onSelect(e: Event) {
         openNewFolderDialog();
       },

@@ -21,7 +21,7 @@
           <UButton
             :color="view === 'list' ? 'primary' : 'neutral'"
             variant="outline"
-            icon="material-symbols:view-list-outline"
+            icon="material-symbols:menu-rounded"
             @click="view = 'list'"
           />
           <UButton
@@ -139,11 +139,11 @@
         <div v-if="view === 'grid'" ref="gridRef" class="folder-grid">
           <FolderCard
             v-for="folder in documentStore.filteredFolders"
-            :key="folder.id"
+            :key="folder.folder_id"
             :folder="folder"
-            :selected="selectedId === folder.id"
-            @click.stop="selectedId = folder.id"
-            @dblclick="onFolderOpen(folder.id, folder.name)"
+            :selected="selectedId === folder.folder_id"
+            @click.stop="selectedId = folder.folder_id"
+            @dblclick="onFolderOpen(folder.folder_id, folder.folder_name)"
             @menu="(e) => console.log(e)"
           />
         </div>
@@ -154,10 +154,10 @@
 
           <FolderRow
             v-for="folder in documentStore.filteredFolders"
-            :key="folder.id"
+            :key="folder.folder_id"
             :folder="folder"
-            :selected="selectedId === folder.id"
-            @click.stop="selectedId = folder.id"
+            :selected="selectedId === folder.folder_id"
+            @click.stop="selectedId = folder.folder_id"
             @dblclick=""
             @menu="(e) => console.log(e)"
           />
@@ -430,7 +430,7 @@ defineExpose({
 .folder-grid {
   gap: 1rem;
   display: grid;
-  margin-top: 1rem;
+  margin-top: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 

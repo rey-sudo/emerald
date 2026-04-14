@@ -21,13 +21,13 @@
           <UButton
             :color="view === 'list' ? 'primary' : 'neutral'"
             variant="outline"
-            icon="i-lucide-text-align-justify"
+            icon="material-symbols:menu-rounded"
             @click="view = 'list'"
           />
           <UButton
             :color="view === 'grid' ? 'primary' : 'neutral'"
             variant="outline"
-            icon="i-lucide-layout-grid"
+            icon="material-symbols:grid-view-outline-rounded"
             @click="view = 'grid'"
           />
         </UFieldGroup>
@@ -43,7 +43,7 @@
           <UButton
             color="primary"
             variant="outline"
-            icon="i-lucide-arrow-up-from-line"
+            icon="material-symbols:upload-2-outline-rounded"
             label="File upload"
             size="md"
             @click="fileUploadDialog"
@@ -90,7 +90,7 @@
         <UBreadcrumb
           :items="breadItems"
           :ui="{
-            link: 'group relative flex items-center gap-1.5 text-base min-w-0 focus-visible:outline-primary',
+            link: 'group relative flex items-center gap-1.5 text-lg min-w-0 focus-visible:outline-primary font-medium',
           }"
         >
           <template #separator>
@@ -205,8 +205,8 @@ const onSubmit = async (_close) => {
 
 const breadItems = [
   {
-    label: "Home",
-    icon: "i-lucide-home",
+    label: "My folders",
+    icon: "",
     to: "/",
   },
   {

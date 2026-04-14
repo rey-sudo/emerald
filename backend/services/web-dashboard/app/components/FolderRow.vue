@@ -2,7 +2,7 @@
   <div
     class="folder-row"
     :class="{ selected }"
-    :data-id="folder.id"
+    :data-id="folder.folder_id"
     @click="$emit('click', $event)"
     @dblclick="$emit('dblclick', $event)"
     @contextmenu="$emit('contextmenu', $event)"
@@ -86,7 +86,7 @@
       </svg>
     </div>
 
-    <span class="row-name">{{ folder.name }}</span>
+    <span class="row-name">{{ folder.folder_name }}</span>
     <span class="row-type">Carpeta</span>
     <span class="row-date">{{ folder.modified }}</span>
 

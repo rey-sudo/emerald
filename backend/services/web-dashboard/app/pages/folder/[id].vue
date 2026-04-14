@@ -7,14 +7,13 @@ const folderId = route.params.id as string;
 const folderName = route.query.folderName as string;
 
 const documentStore = useDocumentStore();
-
 await documentStore.getFolders();
 
 const contextItems: ContextMenuItem[][] = [
   [
     {
       label: "File upload",
-      icon: "i-lucide-file-up",
+      icon: "material-symbols:upload-file-outline-rounded",
       onSelect(e: Event) {
         openFileUploadDialog();
       },
