@@ -34,6 +34,10 @@
     <div class="editor-container">
       <editor-content :editor="editor" class="tiptap-viewport" />
     </div>
+
+    <div class="footer">
+      <span class="text-xs ml-auto">Page 1/200</span>
+    </div>
   </div>
 </template>
 
@@ -222,7 +226,6 @@ onBeforeUnmount(() => {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   z-index: 10;
-
 }
 
 .doc-info {
@@ -307,7 +310,8 @@ onBeforeUnmount(() => {
   outline: none;
 }
 
-.page-virtual p {
+.page-virtual p,
+h1 {
   line-height: 1.6;
   margin-bottom: 1rem;
   opacity: 0.7;
@@ -315,5 +319,14 @@ onBeforeUnmount(() => {
 
 .custom-bold-style {
   color: goldenrod;
+}
+
+.footer {
+  z-index: 10;
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  border-top: 1px solid var(--ui-border-muted);
 }
 </style>

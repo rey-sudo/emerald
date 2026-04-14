@@ -25,11 +25,6 @@
       tabindex="0"
       @keydown="onKeyDown"
     >
-      <div class="split-divider__handle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
     </div>
 
     <!-- Right Panel -->
@@ -196,23 +191,6 @@ onBeforeUnmount(removeListeners);
   position: absolute;
   inset: 0 -6px;
   cursor: col-resize;
-}
-
-/* Tres líneas de agarre ─────────────────────────────────────────────────── */
-.split-divider__handle {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  pointer-events: none;
-}
-
-.split-divider__handle span {
-  display: block;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: #9e9e9e;
-  transition: background 0.15s ease;
 }
 
 .split-divider:hover .split-divider__handle span,
