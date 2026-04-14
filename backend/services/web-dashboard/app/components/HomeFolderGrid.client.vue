@@ -21,13 +21,13 @@
           <UButton
             :color="view === 'list' ? 'primary' : 'neutral'"
             variant="outline"
-            icon="i-lucide-text-align-justify"
+            icon="material-symbols:view-list-outline"
             @click="view = 'list'"
           />
           <UButton
             :color="view === 'grid' ? 'primary' : 'neutral'"
             variant="outline"
-            icon="i-lucide-layout-grid"
+            icon="material-symbols:grid-view-outline-rounded"
             @click="view = 'grid'"
           />
         </UFieldGroup>
@@ -43,7 +43,7 @@
           <UButton
             color="primary"
             variant="outline"
-            icon="i-lucide-plus"
+            icon="ic:round-plus"
             label="New folder"
             size="md"
             @click="newFolderDialog"
@@ -229,7 +229,7 @@ const onCreateFolder = async (close) => {
 const breadItems = [
   {
     label: "Home",
-    icon: "i-lucide-home",
+    icon: "material-symbols:home-outline-rounded",
     to: "/",
   },
 ];

@@ -37,27 +37,32 @@ const buttons = ref([
   {
     tooltip: "Outputs",
     color: "neutral",
-    icon: "i-lucide-shapes",
+    icon: "material-symbols:right-panel-close-outline-rounded",
+  },
+  {
+    tooltip: "Outputs",
+    color: "neutral",
+    icon: "material-symbols:widgets-outline-rounded",
   },
   {
     tooltip: "Chat",
     color: "neutral",
-    icon: "i-lucide-message-square",
+    icon: "material-symbols:chat-bubble-outline-rounded",
   },
   {
     tooltip: "Quiz",
     color: "success",
-    icon: "i-lucide-book-open-check",
+    icon: "material-symbols:quiz-outline-rounded",
   },
   {
     tooltip: "Concepts",
     color: "error",
-    icon: "i-lucide-lightbulb",
+    icon: "material-symbols:lightbulb-2-outline-rounded",
   },
   {
     tooltip: "Mind map",
     color: "warning",
-    icon: "i-lucide-brain",
+    icon: "material-symbols:mindfulness-outline-rounded",
   },
 ]);
 

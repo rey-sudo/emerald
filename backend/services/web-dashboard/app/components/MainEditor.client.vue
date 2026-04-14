@@ -6,7 +6,7 @@
         icon="i-lucide-bold"
         size="sm"
         color="primary"
-        :variant="editor.isActive('bold') ? 'solid' : 'ghost'"
+        :variant="editor.isActive('bold') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleBold().run()"
       />
 
@@ -15,7 +15,7 @@
         icon="i-lucide-italic"
         size="sm"
         color="primary"
-        :variant="editor.isActive('italic') ? 'solid' : 'ghost'"
+        :variant="editor.isActive('italic') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleItalic().run()"
       />
 
@@ -24,11 +24,10 @@
         icon="i-lucide-highlighter"
         size="sm"
         color="primary"
-        :variant="editor.isActive('highlight') ? 'solid' : 'ghost'"
+        :variant="editor.isActive('highlight') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
 
-      <span class="doc-info"></span>
     </div>
 
     <div class="editor-container">
@@ -225,13 +224,6 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--ui-border-muted);
-}
-
-.doc-info {
-  font-size: 12px;
-  color: #888;
-  margin-left: auto; /* Empuja la info a la derecha */
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
@@ -314,7 +306,7 @@ onBeforeUnmount(() => {
 h1 {
   line-height: 1.6;
   margin-bottom: 1rem;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .custom-bold-style {

@@ -34,21 +34,21 @@ const handleClose = (id: any) => {
 const factoryNavigation = computed(() => {
   return {
     label: "Factory",
-    icon: "i-lucide-box",
+    icon: "material-symbols:archive-outline",
     tooltip: {
       text: "Widgets",
     },
     defaultOpen: true,
     children: factoryStore.sidebarFolders.map((folder) => ({
       label: folder.folder_name,
-      icon: "i-lucide-folder",
+      icon: "material-symbols:folder-outline-rounded",
       description: `Carpeta: ${folder.folder_name}`,
       tooltip: {
         text: folder.folder_name,
       },
       children: folder.documents.map((doc) => ({
         label: doc.originalName,
-        icon: "i-lucide-file",
+        icon: "ic:outline-insert-drive-file",
         description: "Documento procesado",
         to: `/document/${doc.id}`,
       })),
@@ -60,7 +60,7 @@ const navItems: NavigationMenuItem[][] = [
   [
     {
       label: "Home",
-      icon: "i-lucide-home",
+      icon: "material-symbols:home-outline-rounded",
       tooltip: {
         text: "Home",
       },
@@ -69,21 +69,21 @@ const navItems: NavigationMenuItem[][] = [
       children: [
         {
           label: "Favorites",
-          icon: "i-lucide-star",
+          icon: "ic:round-star-outline",
           tooltip: {
             text: "Acuerdo 001 de 2024",
           },
         },
         {
           label: "Community",
-          icon: "i-lucide-user",
+          icon: "material-symbols:verified-user-outline-rounded",
           tooltip: {
             text: "Acuerdo 001 de 2024",
           },
         },
         {
           label: "Trash",
-          icon: "i-lucide-trash",
+          icon: "material-symbols:restore-from-trash-outline-rounded",
           tooltip: {
             text: "Acuerdo 001 de 2024",
           },
@@ -93,14 +93,14 @@ const navItems: NavigationMenuItem[][] = [
     factoryNavigation.value,
     {
       label: "Outputs",
-      icon: "i-lucide-shapes",
+      icon: "material-symbols:widgets-outline-rounded",
       tooltip: {
         text: "Outputs",
       },
       to: "/outputs",
       defaultOpen: false,
     },
-  ]
+  ],
 ];
 
 onMounted(() => {
@@ -137,7 +137,9 @@ onUnmounted(() => {
             <UButton
               class="no-drag"
               :icon="
-                side === 'left' ? 'i-lucide-panel-left' : 'i-lucide-panel-right'
+                side === 'left'
+                  ? 'material-symbols:left-panel-close-outline-rounded'
+                  : 'material-symbols:left-panel-open-outline-rounded'
               "
               color="neutral"
               variant="ghost"
@@ -175,13 +177,7 @@ onUnmounted(() => {
         <UFieldGroup class="ml-auto">
           <UButton
             class="no-drag"
-            icon="i-lucide-panel-right"
-            color="neutral"
-            variant="ghost"
-          />
-          <UButton
-            class="no-drag"
-            icon="i-lucide-settings"
+            icon="material-symbols:settings-outline-rounded"
             color="neutral"
             variant="ghost"
           />
@@ -189,19 +185,19 @@ onUnmounted(() => {
             size="sm"
             color="neutral"
             variant="ghost"
-            icon="i-lucide-minus"
+            icon="material-symbols:minimize"
           />
           <UButton
             size="sm"
             color="neutral"
             variant="ghost"
-            icon="i-lucide-square"
+            icon="material-symbols:square-outline"
           />
           <UButton
             size="sm"
             color="neutral"
             variant="ghost"
-            icon="i-lucide-x"
+            icon="material-symbols:close"
           />
         </UFieldGroup>
       </div>

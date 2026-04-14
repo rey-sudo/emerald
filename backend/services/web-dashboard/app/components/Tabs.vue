@@ -67,7 +67,7 @@ defineEmits(["update:modelValue", "close"]);
   min-width: 120px;
   max-width: 200px;
   cursor: pointer;
-  color: #999;
+  color: var(--ui-text-muted);
   font-size: 13px;
   border-radius: 6px 6px 0 0;
   transition:
