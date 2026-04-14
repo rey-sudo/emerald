@@ -65,7 +65,7 @@ export const useFactoryStore = defineStore("factory", () => {
   async function getFolders() {
     pending.value = true;
     try {
-      folders.value = await $fetch("/api/factory/get-folders");
+      folders.value = await $fetch("/api/editor/get-folders");
     } catch (e: any) {
       throw e;
     } finally {

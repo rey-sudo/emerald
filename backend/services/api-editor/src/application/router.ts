@@ -3,6 +3,7 @@ import { decode, encode } from "@msgpack/msgpack";
 import { handleUpdateDocument, UpdateDocumentSchema } from "./update_draft.js";
 import { GetDocumentSchema, handleGetDocument } from "./get_draft.js";
 import { z } from "zod";
+import { getFoldersHandler } from "./get-folders.js";
 
 export const ClientMessageSchema = z.discriminatedUnion("command", [
   GetDocumentSchema,
@@ -31,6 +32,8 @@ export async function router(app: FastifyInstance) {
     timestamp: new Date().toISOString(),
   }));
 
+  app.get("/get-folders", getFoldersHandler);
+
   app.get("/ws", { websocket: true }, (socket: any, _req: any) => {
     app.clients.add(socket);
     app.log.info(`Client connected: ${app.clients.size}`);
@@ -49,7 +52,10 @@ export async function router(app: FastifyInstance) {
         const parsed = ClientMessageSchema.safeParse(decode(rawMsg));
 
         if (!parsed.success) {
-          console.log("[backend] zod error:", JSON.stringify(z.treeifyError(parsed.error), null, 2));
+          console.log(
+            "[backend] zod error:",
+            JSON.stringify(z.treeifyError(parsed.error), null, 2),
+          );
           socket.send(
             encode({ command: "error", errors: z.treeifyError(parsed.error) }),
           );

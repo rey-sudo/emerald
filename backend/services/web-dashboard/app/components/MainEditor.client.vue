@@ -219,13 +219,13 @@ onBeforeUnmount(() => {
   background: var(--ui-bg);
 }
 
-/* El Header */
 .editor-header {
+  gap: 0.5rem;
+  z-index: 10;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 0.5rem 1rem;
-  z-index: 10;
+  border-bottom: 1px solid var(--ui-border-muted);
 }
 
 .doc-info {
