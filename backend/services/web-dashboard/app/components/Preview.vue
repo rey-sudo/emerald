@@ -154,7 +154,14 @@ function onComplete({ score, total, pct, answers }) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  border-bottom: 1px solid var(--ui-border-muted);
+  padding: 0.25rem 1rem;
+  border: 1px solid var(--ui-border);
+  border-top: none;
+  border-bottom-left-radius: calc(var(--ui-radius) * 2);
+  border-bottom-right-radius: calc(var(--ui-radius) * 2);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.15);
 }
 
 .grid-button {

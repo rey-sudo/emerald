@@ -6,7 +6,7 @@
         icon="i-lucide-bold"
         size="sm"
         color="primary"
-        :variant="editor.isActive('bold') ? 'outline' : 'ghost'"
+        :variant="editor.isActive('bold') ? 'soft' : 'ghost'"
         @click="editor.chain().focus().toggleBold().run()"
       />
 
@@ -15,7 +15,7 @@
         icon="i-lucide-italic"
         size="sm"
         color="primary"
-        :variant="editor.isActive('italic') ? 'outline' : 'ghost'"
+        :variant="editor.isActive('italic') ? 'soft' : 'ghost'"
         @click="editor.chain().focus().toggleItalic().run()"
       />
 
@@ -24,10 +24,9 @@
         icon="i-lucide-highlighter"
         size="sm"
         color="primary"
-        :variant="editor.isActive('highlight') ? 'outline' : 'ghost'"
+        :variant="editor.isActive('highlight') ? 'soft' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
-
     </div>
 
     <div class="editor-container">
@@ -223,7 +222,14 @@ onBeforeUnmount(() => {
   z-index: 10;
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem;
+  border: 1px solid var(--ui-border);
+  border-top: none;
+  border-bottom-left-radius: calc(var(--ui-radius) * 2);
+  border-bottom-right-radius: calc(var(--ui-radius) * 2);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.15);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
