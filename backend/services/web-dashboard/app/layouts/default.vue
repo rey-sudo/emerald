@@ -185,7 +185,7 @@ onUnmounted(() => {
             size="sm"
             color="neutral"
             variant="ghost"
-            icon="material-symbols:minimize"
+            icon="material-symbols:remove"
           />
           <UButton
             size="sm"

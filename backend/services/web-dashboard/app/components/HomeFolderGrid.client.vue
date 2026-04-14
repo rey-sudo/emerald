@@ -127,7 +127,7 @@
         <UBreadcrumb
           :items="breadItems"
           :ui="{
-            link: 'group relative flex items-center gap-1.5 text-base min-w-0 focus-visible:outline-primary',
+            link: 'group relative flex items-center gap-1.5 text-lg min-w-0 focus-visible:outline-primary',
           }"
         >
           <template #separator>
@@ -228,8 +228,8 @@ const onCreateFolder = async (close) => {
 
 const breadItems = [
   {
-    label: "Home",
-    icon: "material-symbols:home-outline-rounded",
+    label: "My folders",
+    icon: "",
     to: "/",
   },
 ];
@@ -422,12 +422,11 @@ defineExpose({
   padding: 1rem 2rem;
 }
 
-/* ── Grid ───────────────────────────────────────────────────── */
 .folder-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 1rem;
-  margin-top: 2rem;
+  display: grid;
+  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 /* ── List ───────────────────────────────────────────────────── */

@@ -69,7 +69,9 @@ defineEmits(["update:modelValue", "close"]);
   cursor: pointer;
   color: var(--ui-text-muted);
   font-size: 13px;
-  border-radius: 6px 6px 0 0;
+  border-radius: calc(var(--ui-radius) * 1);
+  border-bottom-left-radius: initial;
+  border-bottom-right-radius: initial;
   transition:
     background-color 0.2s,
     color 0.2s;

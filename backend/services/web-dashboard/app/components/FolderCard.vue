@@ -7,20 +7,9 @@
     @dblclick="$emit('dblclick', $event)"
     @contextmenu="$emit('contextmenu', $event)"
   >
-    <!-- Dots menu -->
-    <button class="card-menu js-no-drag" @click.stop="$emit('menu', $event)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <circle cx="12" cy="5" r="1.8" />
-        <circle cx="12" cy="12" r="1.8" />
-        <circle cx="12" cy="19" r="1.8" />
-      </svg>
-    </button>
-
-    <!-- Folder icon -->
     <div class="card-icon">
       <svg
         width="2rem"
-        height="2rem"
         version="1.1"
         viewBox="0 0 64 64"
         xmlns="http://www.w3.org/2000/svg"
@@ -94,9 +83,18 @@
           opacity="4%"
         />
       </svg>
+
+      <p class="card-name text-sm">{{ folder.name }}</p>
     </div>
 
-    <p class="card-name text-sm">{{ folder.name }}</p>
+    <UButton
+      class="card-menu js-no-drag"
+      color="neutral"
+      variant="ghost"
+      icon="lucide:ellipsis-vertical"
+      size="sm"
+      @click.stop="$emit('menu', $event)"
+    />
   </div>
 </template>
 
@@ -111,28 +109,29 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 
 <style scoped>
 .folder-card {
+  box-shadow: var(--ui-card-shadow);
+  border-radius: calc(var(--ui-radius) * 2);
   background: var(--ui-bg-muted);
   border: 1px solid transparent;
-  border-radius: var(--radius, 12px);
-  padding: 1rem;
+  padding: 0.75rem;
+  padding-right: 0.25rem;
   display: flex;
   align-items: center;
-  gap: 10px;
   cursor: pointer;
   position: relative;
   user-select: none;
   transition: 0.3s ease;
+  justify-content: space-between;
 }
 
 .folder-card:hover {
-  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
   border: 1px solid var(--ui-border-accented, #e2ddd8);
+  background: var(--ui-bg-accented);
   border-color: transparent;
-  background: var(--ui-bg-elevated);
 }
 
 .folder-card.selected {
-  border-color: var(--ui-secondary, #5b7fa6);
+  border-color: var(--ui-border, #5b7fa6);
 }
 
 /* Sortable states */
@@ -143,8 +142,13 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
 }
 
-/* Icon wrapper */
 .card-icon {
+  display: flex;
+  align-items: center;
+}
+
+.card-icon p {
+  margin-left: 1rem;
 }
 
 /* Name */
@@ -159,6 +163,7 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 /* Meta */
@@ -169,21 +174,11 @@ defineEmits(["click", "dblclick", "contextmenu", "menu"]);
 
 /* Dots menu */
 .card-menu {
-  position: absolute;
   top: 8px;
-  right: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--muted, #8a8078);
-  padding: 4px;
-  border-radius: 6px;
+  right: 1rem;
   display: flex;
+  position: absolute;
   align-items: center;
-  opacity: 0;
-  transition:
-    opacity 160ms ease,
-    background 160ms ease;
 }
 
 .folder-card:hover .card-menu {
