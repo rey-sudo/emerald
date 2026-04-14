@@ -127,7 +127,7 @@
         <UBreadcrumb
           :items="breadItems"
           :ui="{
-            link: 'group relative flex items-center gap-1.5 text-lg min-w-0 focus-visible:outline-primary',
+            link: 'group relative flex items-center gap-1.5 text-lg min-w-0 focus-visible:outline-primary font-medium',
           }"
         >
           <template #separator>
@@ -231,6 +231,11 @@ const breadItems = [
     label: "My folders",
     icon: "",
     to: "/",
+  },
+    {
+    label: "",
+    icon: "",
+    to: "",
   },
 ];
 
