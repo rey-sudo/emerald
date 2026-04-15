@@ -10,8 +10,8 @@ http:
     type: json
     data: |-
       {
-        "id": "019d9289-6238-7580-b256-6c12382b65b3",
-        "name": "prueba1",
+        "id": "019d929e-24d5-703c-a88c-5d8a9fb87f20",
+        "name": "prueba2",
         "color": "#000000"
       }
   auth: inherit

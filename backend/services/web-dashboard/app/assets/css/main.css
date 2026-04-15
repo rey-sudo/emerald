@@ -90,204 +90,6 @@ rounded-3xl
 }
 
 :root {
-  /* acciones e intenciones */
-  --ui-primary: #8b7cf8; /* violeta eléctrico   → CTA principal, links, foco */
-  --ui-secondary: #2e3558; /* índigo medio        → acciones secundarias */
-  --ui-success: #3d8c6e; /* verde azulado       → confirmación, válido */
-  --ui-info: #3d6e9e; /* azul acero          → informativo neutro */
-  --ui-warning: #c4853a; /* ámbar oscuro        → precaución, pendiente */
-  --ui-error: #c24545; /* rojo suave          → fallo, destructivo */
-
-  /* escala de texto */
-  --ui-text-dimmed: #1e2540; /* casi invisible, placeholders */
-  --ui-text-muted: #4a5280; /* labels, metadatos débiles */
-  --ui-text-toned: #7a84aa; /* texto de apoyo, descripciones */
-  --ui-text: #c8d0e8; /* cuerpo principal */
-  --ui-text-highlighted: #e2e8f8; /* énfasis, títulos */
-  --ui-text-inverted: #0c0f1e; /* texto sobre fondos claros */
-
-  /* fondos */
-  --ui-bg: #0c0f1e; /* fondo base — medianoche índigo */
-  --ui-bg-muted: #121629; /* sidebars, áreas recesadas */
-  --ui-bg-elevated: #1a1f35; /* tarjetas, modales */
-  --ui-bg-accented: #222840; /* hover, separadores con relleno */
-  --ui-bg-inverted: #c8d0e8; /* fondo sobre texto claro */
-
-  /* bordes */
-  --ui-border: #222840; /* borde por defecto */
-  --ui-border-muted: #1a1f35; /* divisores internos casi invisibles */
-  --ui-border-accented: #2e3558; /* hover, focus */
-  --ui-border-inverted: #e2e8f8; /* sobre fondos oscuros invertidos */
-}
-
-:root {
-  /* acciones e intenciones */
-  --ui-primary: #c4b89a; /* --c-accent2  → CTA principal, links, foco */
-  --ui-secondary: #3a3a3a; /* --c-border2  → acciones secundarias */
-  --ui-success: #4a7c54; /* --c-green    → confirmación, válido */
-  --ui-info: #4a6e8a; /* derivado      → informativo neutro */
-  --ui-warning: #b07830; /* --c-amber    → precaución, pendiente */
-  --ui-error: #c0432b; /* --c-red      → fallo, destructivo */
-
-  /* escala de texto */
-  --ui-text-dimmed: #3d3d3d; /* --c-faint    → texto casi invisible, placeholders */
-  --ui-text-muted: #6a6a6a; /* --c-muted    → labels, metadatos, secundario débil */
-  --ui-text-toned: #9a9590; /* --c-text2    → texto de apoyo, descripciones */
-  --ui-text: #e0dbd2; /* --c-text     → cuerpo principal */
-  --ui-text-highlighted: #e8e0d0; /* --c-accent   → énfasis, títulos */
-  --ui-text-inverted: #141414; /* --c-bg       → texto sobre fondos claros */
-
-  --ui-bg: #141414; /* --c-bg       → fondo base de la app */
-  --ui-bg-muted: #1c1c1c; /* --c-surface  → áreas recesadas, sidebars */
-  --ui-bg-elevated: #242424; /* --c-raised   → tarjetas, modales, hover */
-  --ui-bg-accented: #2e2e2e; /* --c-border   → separadores con relleno */
-  --ui-bg-inverted: #e0dbd2; /* --c-text     → fondo sobre texto claro */
-
-  --ui-border: #2e2e2e; /* --c-border  → borde por defecto */
-  --ui-border-muted: #242424; /* --c-raised  → borde casi invisible, divisores internos */
-  --ui-border-accented: #3a3a3a; /* --c-border2 → borde con énfasis, hover, focus */
-  --ui-border-inverted: #e8e0d0; /* --c-accent  → borde sobre fondos oscuros invertidos */
-}
-
-:root {
-  /* ── Sepia oscuro — tema de lectura nocturna ──────────────── */
-  /* Fondo cálido que absorbe la emisión azul del monitor       */
-  /* Contraste ~6:1 en lugar de ~12:1 — suave pero legible     */
-
-  /* acciones e intenciones */
-  --ui-primary: #b8a478; /* oro suave       → CTA, links, foco  */
-  --ui-secondary: #3a3428; /* marrón oscuro   → acciones secundarias */
-  --ui-success: #4e8858; /* verde oliva     → confirmación, válido */
-  --ui-info: #4870a0; /* acero cálido    → informativo neutro */
-  --ui-warning: #c07828; /* ámbar cálido    → precaución, pendiente */
-  --ui-error: #b84040; /* terracota       → fallo, destructivo */
-
-  /* escala de texto */
-  --ui-text-dimmed: #2a2418; /* placeholders casi invisibles */
-  --ui-text-muted: #66584a; /* labels, metadatos débiles    */
-  --ui-text-toned: #9a8a78; /* texto de apoyo, descripciones */
-  --ui-text: #ccc0ac; /* cuerpo principal — crema cálida */
-  --ui-text-highlighted: #e2d8c8; /* énfasis, títulos             */
-  --ui-text-inverted: #16130f; /* texto sobre fondos claros    */
-
-  /* fondos */
-  --ui-bg: #16130f; /* sepia oscuro — absorbe luz azul */
-  --ui-bg-muted: #1c1810; /* sidebars, áreas recesadas       */
-  --ui-bg-elevated: #231f18; /* tarjetas, modales               */
-  --ui-bg-accented: #2a2520; /* hover, separadores con relleno  */
-  --ui-bg-inverted: #ccc0ac; /* fondo sobre texto claro         */
-
-  /* bordes */
-  --ui-border: #2a2520; /* borde por defecto            */
-  --ui-border-muted: #231f18; /* divisores internos           */
-  --ui-border-accented: #3a3428; /* hover, focus                 */
-  --ui-border-inverted: #e2d8c8; /* sobre fondos oscuros         */
-}
-
-:root {
-  /* ── Papel claro — tema de lectura diurna ────────────────── */
-  /* Simula la calidez del papel impreso, no la pantalla LCD   */
-  /* Elimina el efecto "luz en los ojos" del blanco puro       */
-
-  /* acciones e intenciones */
-  --ui-primary: #7a6040; /* sepia oscuro    → CTA, links, foco  */
-  --ui-secondary: #c8c0b0; /* arena           → acciones secundarias */
-  --ui-success: #3a7848; /* verde oliva     → confirmación, válido */
-  --ui-info: #3860a0; /* azul índigo     → informativo neutro */
-  --ui-warning: #9a6820; /* ámbar oscuro    → precaución, pendiente */
-  --ui-error: #a03030; /* terracota       → fallo, destructivo */
-
-  /* escala de texto */
-  --ui-text-dimmed: #c8c0b0; /* placeholders casi invisibles */
-  --ui-text-muted: #a09080; /* labels, metadatos débiles    */
-  --ui-text-toned: #7a6858; /* texto de apoyo, descripciones */
-  --ui-text: #3a3028; /* cuerpo principal — tinta cálida */
-  --ui-text-highlighted: #1e180e; /* énfasis, títulos             */
-  --ui-text-inverted: #f4efe4; /* texto sobre fondos oscuros   */
-
-  /* fondos */
-  --ui-bg: #f4efe4; /* papel — beige cálido sin deslumbrar */
-  --ui-bg-muted: #ede8dc; /* sidebars, áreas recesadas           */
-  --ui-bg-elevated: #f8f4ec; /* tarjetas, modales                   */
-  --ui-bg-accented: #e8e2d8; /* hover, separadores con relleno      */
-  --ui-bg-inverted: #3a3028; /* fondo sobre texto claro             */
-
-  /* bordes */
-  --ui-border: #d8d0c4; /* borde por defecto            */
-  --ui-border-muted: #e4ddd4; /* divisores internos           */
-  --ui-border-accented: #c8bfb2; /* hover, focus                 */
-  --ui-border-inverted: #1e180e; /* sobre fondos oscuros         */
-}
-
-:root {
-  /* acciones e intenciones */
-  --ui-primary: #a8b4c8; /* plata azulada       → CTA, links, foco */
-  --ui-secondary: #343840; /* grafito medio       → acciones secundarias */
-  --ui-success: #4a8c6a; /* verde pizarra       → confirmación, válido */
-  --ui-info: #4878a0; /* acero azul          → informativo neutro */
-  --ui-warning: #b87c30; /* ámbar apagado       → precaución, pendiente */
-  --ui-error: #b84040; /* rojo grafito        → fallo, destructivo */
-
-  /* escala de texto */
-  --ui-text-dimmed: #2a2e34; /* casi invisible, placeholders */
-  --ui-text-muted: #5a6070; /* labels, metadatos débiles */
-  --ui-text-toned: #8892a0; /* texto de apoyo, descripciones */
-  --ui-text: #c8d0dc; /* cuerpo principal */
-  --ui-text-highlighted: #e8ecf2; /* énfasis, títulos */
-  --ui-text-inverted: #111315; /* texto sobre fondos claros */
-
-  /* fondos */
-  --ui-bg: #111315; /* fondo base — negro grafito frío */
-  --ui-bg-muted: #181b1e; /* sidebars, áreas recesadas */
-  --ui-bg-elevated: #1f2226; /* tarjetas, modales */
-  --ui-bg-accented: #272b30; /* hover, separadores con relleno */
-  --ui-bg-inverted: #c8d0dc; /* fondo sobre texto claro */
-
-  /* bordes */
-  --ui-border: #272b30; /* borde por defecto */
-  --ui-border-muted: #1f2226; /* divisores internos casi invisibles */
-  --ui-border-accented: #343840; /* hover, focus */
-  --ui-border-inverted: #e8ecf2; /* sobre fondos oscuros invertidos */
-}
-
-:root {
-  --ui-radius: 0.375rem;
-
-  /* Backgrounds */
-  --ui-bg: #f8f8f7;
-  --ui-bg-muted: #f0efed;
-  --ui-bg-elevated: #e2e1de;
-  --ui-bg-accented: #c9c8c4;
-  --ui-bg-inverted: #252422;
-
-  /* Text */
-  --ui-text-dimmed: #a8a7a2;
-  --ui-text-muted: #888780;
-  --ui-text-toned: #6b6a64;
-  --ui-text: #52514d;
-  --ui-text-highlighted: #252422;
-  --ui-text-inverted: #f8f8f7;
-
-  /* Borders */
-  --ui-border: #e2e1de;
-  --ui-border-muted: #e2e1de;
-  --ui-border-accented: #c9c8c4;
-  --ui-border-inverted: #252422;
-
-  /* Semantic */
-  --ui-primary: var(--ui-color-neutral-700);
-  --ui-secondary: var(--ui-color-neutral-500);
-  --ui-success: var(--ui-color-success-500);
-  --ui-info: var(--ui-color-info-500);
-  --ui-warning: var(--ui-color-warning-500);
-  --ui-error: var(--ui-color-error-500);
-
-  /* Layout */
-  --ui-container: 80rem;
-  --ui-header-height: 4rem;
-}
-
-:root {
   /* Backgrounds */
   --ui-bg: #1a1917;
   --ui-bg-muted: #222120;
@@ -318,6 +120,40 @@ rounded-3xl
   --ui-error: var(--ui-color-error-400);
 
   /* Layout — sin cambios */
+  --ui-container: 80rem;
+  --ui-header-height: 2.5rem;
+}
+
+:root {
+  /* Semantic */
+  --ui-primary: #a8b4c8;
+  --ui-secondary: #343840;
+  --ui-success: #4a8c6a;
+  --ui-info: #4878a0;
+  --ui-warning: #b87c30;
+  --ui-error: #b84040;
+
+  /* Backgrounds */
+  --ui-bg: #111315;
+  --ui-bg-muted: #181b1e;
+  --ui-bg-elevated: #1f2226;
+  --ui-bg-accented: #272b30;
+  --ui-bg-inverted: #c8d0dc;
+
+  /* Text */
+  --ui-text-dimmed: #2a2e34;
+  --ui-text-muted: #5a6070;
+  --ui-text-toned: #8892a0;
+  --ui-text: #c8d0dc;
+  --ui-text-highlighted: #e8ecf2;
+  --ui-text-inverted: #111315;
+
+  /* Borders */
+  --ui-border: #272b30;
+  --ui-border-muted: #1f2226;
+  --ui-border-accented: #343840;
+  --ui-border-inverted: #e8ecf2;
+
   --ui-container: 80rem;
   --ui-header-height: 2.5rem;
 }

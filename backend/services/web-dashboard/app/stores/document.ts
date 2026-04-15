@@ -58,13 +58,13 @@ export const useDocumentStore = defineStore("document", () => {
     folders.value.filter((folder: any) => folder?.folder_status === "created"),
   );
 
-  function getDocumentsByFolderId (folderId: string) {
+  function getDocumentsByFolderId(folderId: string) {
     const folder = filteredFolders.value.find((f) => f.folder_id === folderId);
 
     if (!folder) return [];
 
     return folder.documents;
-  };
+  }
 
   async function getFolders() {
     pending.value = true;
@@ -83,6 +83,23 @@ export const useDocumentStore = defineStore("document", () => {
       const response = await $fetch("/api/document/create-folder", {
         method: "POST",
         body: { name, color },
+      });
+
+      await getFolders();
+      return response;
+    } catch (e: any) {
+      throw e;
+    } finally {
+      pending.value = false;
+    }
+  }
+
+  async function updateFolder(id: string, name: string, color: string) {
+    pending.value = true;
+    try {
+      const response = await $fetch("/api/document/update-folder", {
+        method: "PATCH",
+        body: { id, name, color },
       });
 
       await getFolders();
@@ -123,6 +140,7 @@ export const useDocumentStore = defineStore("document", () => {
     getFolders,
     createFolder,
     uploadFile,
+    updateFolder,
     getDocumentsByFolderId,
   };
 });

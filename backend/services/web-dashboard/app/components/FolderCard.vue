@@ -11,9 +11,8 @@
       class="folder-card"
       :class="{ selected }"
       :data-id="folder.folder_id"
-      @click="$emit('click', $event)"
-      @dblclick="$emit('dblclick', $event)"
-      @contextmenu="$emit('contextmenu', $event)"
+      @click="$emit('events', { name: 'click', data: $event })"
+      @dblclick="$emit('events', { name: 'dblclick', data: $event })"
     >
       <div class="card-icon">
         <svg
@@ -110,12 +109,14 @@
 <script setup lang="ts">
 import type { ContextMenuItem } from "@nuxt/ui";
 
-defineProps({
+const props = defineProps({
   folder: { type: Object, required: true },
   selected: { type: Boolean, default: false },
 });
 
-defineEmits(["click", "dblclick", "contextmenu", "menu"]);
+const emit = defineEmits([
+  "events",
+]);
 
 const contextMenuRef = ref(null);
 
@@ -136,15 +137,32 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   {
     label: "Download",
     icon: "material-symbols:download-2-outline-rounded",
-    onSelect: () => {},
+    onSelect: () => {
+      emit("events", {
+        name: "download",
+        data: { id: props.folder.folder_id },
+      });
+    },
   },
   {
     label: "Rename",
     icon: "material-symbols:edit-outline-rounded",
+    onSelect: () => {
+      emit("events", {
+        name: "update",
+        data: { id: props.folder.folder_id },
+      });
+    },
   },
   {
     label: "Move to trash",
     icon: "material-symbols:restore-from-trash-outline-rounded",
+    onSelect: () => {
+      emit("events", {
+        name: "delete",
+        data: { id: props.folder.folder_id },
+      });
+    },
   },
 ]);
 </script>

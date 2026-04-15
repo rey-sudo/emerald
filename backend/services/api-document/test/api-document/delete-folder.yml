@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:8001/api/document/delete-folder/019d9289-6238-7580-b256-6c12382b65b3
+  url: http://localhost:8001/api/document/delete-folder/019d929e-24d5-703c-a88c-5d8a9fb87f20
   auth: inherit
 
 settings:
