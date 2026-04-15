@@ -288,6 +288,7 @@ const newFolderColorChip = computed(() => ({
 }));
 
 const updateFolderId = ref(null);
+const updateFolderData = ref(null);
 const updateFolderDialog = ref(false);
 const updateFolderName = ref("Untitled folder");
 const updateFolderColor = ref("#e0a84b");
@@ -296,6 +297,31 @@ const updateFolderColorChip = computed(() => ({
 }));
 
 const isSubmiting = ref(false);
+
+const handleFolderEvents = (event, folder) => {
+  console.log(event, folder);
+
+  if (event.name === "click") {
+    selectedId.value = folder.folder_id;
+  }
+
+  if (event.name === "dblclick") {
+    router.push({
+      path: `/folder/${folder.folder_id}`,
+      query: {
+        folderName: folder.folder_name,
+      },
+    });
+  }
+
+  if (event.name === "update") {
+    updateFolderId.value = folder.folder_id;
+    updateFolderData.value = folder;
+    updateFolderName.value = folder.folder_name;
+    updateFolderColor.value = folder.color;
+    updateFolderDialog.value = true;
+  }
+};
 
 const onCreateFolder = async (close) => {
   try {
@@ -324,41 +350,29 @@ const onCreateFolder = async (close) => {
   }
 };
 
-const handleFolderEvents = (event, folder) => {
-  console.log(event, folder);
-
-  if (event.name === "click") {
-    selectedId.value = folder.folder_id;
-  }
-
-  if (event.name === "dblclick") {
-    router.push({
-      path: `/folder/${folder.folder_id}`,
-      query: {
-        folderName: folder.folder_name,
-      },
-    });
-  }
-
-  if (event.name === "update") {
-    updateFolderId.value = folder.folder_id;
-    updateFolderName.value = folder.folder_name;
-    updateFolderColor.value = folder.color;
-    updateFolderDialog.value = true;
-  }
-};
-
 const onUpdateFolder = async (close) => {
   try {
     isSubmiting.value = true;
 
+    const params = {
+      ...updateFolderData.value,
+      folder_id: updateFolderId.value,
+      folder_name: updateFolderName.value,
+      color: updateFolderColor.value,
+    };
+
+    if (JSON.stringify(params) === JSON.stringify(updateFolderData.value)) {
+      return;
+    }
+
     await documentStore.updateFolder(
-      updateFolderId.value,
-      updateFolderName.value,
-      updateFolderColor.value,
+      params.folder_id,
+      params.folder_name,
+      params.color,
     );
 
     updateFolderId.value = null;
+    updateFolderData.value = null;
 
     toast.add({
       title: `Folder updated`,
@@ -393,7 +407,6 @@ const view = ref("grid"); // 'grid' | 'list'
 const search = ref("");
 const selectedId = ref(null);
 
-/** ListHeader */
 const ListHeader = defineComponent({
   setup() {
     return () =>
@@ -579,7 +592,6 @@ defineExpose({
   border-color: var(--accent2);
   background: rgba(91, 127, 166, 0.06);
 }
-
 
 :deep(.row-icon) {
   flex-shrink: 0;
