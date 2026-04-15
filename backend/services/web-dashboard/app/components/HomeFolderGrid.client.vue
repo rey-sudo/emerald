@@ -228,8 +228,8 @@ const onCreateFolder = async (close) => {
 
 const breadItems = [
   {
-    label: "My folders",
-    icon: "",
+    label: "Home",
+    icon: "material-symbols:home-outline-rounded",
     to: "/",
   }
 ];
