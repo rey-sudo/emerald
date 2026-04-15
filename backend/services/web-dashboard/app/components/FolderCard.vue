@@ -95,7 +95,7 @@
       </div>
 
       <UButton
-        class="card-menu js-no-drag"
+        class="card-menu rounded-3xl"
         color="neutral"
         variant="ghost"
         icon="lucide:ellipsis-vertical"
@@ -114,9 +114,7 @@ const props = defineProps({
   selected: { type: Boolean, default: false },
 });
 
-const emit = defineEmits([
-  "events",
-]);
+const emit = defineEmits(["events"]);
 
 const contextMenuRef = ref(null);
 
@@ -214,7 +212,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 .card-name {
   font-weight: 500;
   text-align: center;
-  color: var(--text, #1c1814);
+  color: var(--ui-text);
   line-height: 1.3;
   word-break: break-word;
   max-width: 100%;
@@ -225,26 +223,8 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   white-space: nowrap;
 }
 
-/* Meta */
-.card-meta {
-  font-size: 11px;
-  color: var(--muted, #8a8078);
-}
-
-/* Dots menu */
 .card-menu {
-  top: 8px;
-  right: 1rem;
-  display: flex;
+  right: 0px;
   position: absolute;
-  align-items: center;
-}
-
-.folder-card:hover .card-menu {
-  opacity: 1;
-}
-.card-menu:hover {
-  background: var(--bg, #f0ede8);
-  color: var(--text, #1c1814);
 }
 </style>

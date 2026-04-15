@@ -2,8 +2,6 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   try {
-    console.log(body);
-
     const response = await $fetch(
       "http://localhost:8001/api/document/update-folder",
       {
