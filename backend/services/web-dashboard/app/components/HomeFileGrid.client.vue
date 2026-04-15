@@ -101,7 +101,7 @@
         <!-- ── Grid view ── -->
         <div v-if="view === 'grid'" ref="gridRef" class="folder-grid">
           <FileCard
-            v-for="folder in documentStore.filteredFolders"
+            v-for="folder in currentDocuments"
             :key="folder.id"
             :folder="folder"
             :selected="selectedId === folder.id"
@@ -158,11 +158,15 @@ const props = defineProps({
   },
 });
 
-const toast = useToast();
-
 const router = useRouter();
 
+const toast = useToast();
+
 const documentStore = useDocumentStore();
+
+const currentDocuments = computed(() => {
+  return documentStore.getDocumentsByFolderId(props.folderId);
+});
 
 const fileUploadDialog = ref(false);
 const filesToUpload = ref([]);

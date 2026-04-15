@@ -1,3 +1,4 @@
+import json
 from uuid import UUID
 from pydantic import BaseModel
 from typing import List, Optional
@@ -64,7 +65,7 @@ async def get_folders_endpoint(
             'updatedAt',    d.updated_at
             ) ORDER BY d.created_at DESC
         ) FILTER (WHERE d.id IS NOT NULL),
-        '[]'
+        '[]'::json
         ) AS documents
 
     FROM folders f
@@ -81,9 +82,15 @@ async def get_folders_endpoint(
         async with pool.acquire() as connection:
             # Execute the query and fetch multiple rows
             rows = await connection.fetch(query, user_id)
+            result = []
             
-            # Convert asyncpg Record objects to dictionaries for Pydantic parsing
-            return [dict(row) for row in rows]
+            for row in rows:
+                folder_dict = dict(row)
+                if isinstance(folder_dict['documents'], str):
+                    folder_dict['documents'] = json.loads(folder_dict['documents'])
+                result.append(folder_dict)
+
+            return result
 
     except Exception as e:
         # Log the internal error for debugging

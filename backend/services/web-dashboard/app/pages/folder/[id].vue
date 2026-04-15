@@ -3,11 +3,11 @@ import type { ContextMenuItem } from "@nuxt/ui";
 
 const route = useRoute();
 
-const folderId = route.params.id as string;
-const folderName = route.query.folderName as string;
+const folderId = computed(() => route.params.id as string);
+const folderName = computed(() => route.query.folderName as string);
 
 const documentStore = useDocumentStore();
-await documentStore.getFolders();
+await documentStore.getFolders()
 
 const contextItems: ContextMenuItem[][] = [
   [
