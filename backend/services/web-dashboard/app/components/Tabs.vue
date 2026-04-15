@@ -82,12 +82,12 @@ defineEmits(["update:modelValue", "close"]);
 
 .emerald-tab:hover {
   background-color: var(--ui-bg-accented);
-  color: #dcddde;
+  color: var(--ui-text);
 }
 
 .emerald-tab.is-active {
   background-color: var(--ui-bg);
-  color: #fff;
+  color: var(--ui-text);
 }
 
 .tab-title {

@@ -66,12 +66,27 @@ text-6xl	3.75rem (60px)
 text-7xl	4.5rem (72px)
 text-8xl	6rem (96px)
 text-9xl	8rem (128px)
+
+rounded-xs
+
+rounded-sm
+
+rounded-md
+
+rounded-lg
+
+rounded-xl
+
+rounded-2xl
+
+rounded-3xl
+
+
 */
 
 :root {
   --ui-card-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 
 :root {
@@ -233,4 +248,76 @@ text-9xl	8rem (128px)
   --ui-border-muted: #1f2226; /* divisores internos casi invisibles */
   --ui-border-accented: #343840; /* hover, focus */
   --ui-border-inverted: #e8ecf2; /* sobre fondos oscuros invertidos */
+}
+
+:root {
+  --ui-radius: 0.375rem;
+
+  /* Backgrounds */
+  --ui-bg: #f8f8f7;
+  --ui-bg-muted: #f0efed;
+  --ui-bg-elevated: #e2e1de;
+  --ui-bg-accented: #c9c8c4;
+  --ui-bg-inverted: #252422;
+
+  /* Text */
+  --ui-text-dimmed: #a8a7a2;
+  --ui-text-muted: #888780;
+  --ui-text-toned: #6b6a64;
+  --ui-text: #52514d;
+  --ui-text-highlighted: #252422;
+  --ui-text-inverted: #f8f8f7;
+
+  /* Borders */
+  --ui-border: #e2e1de;
+  --ui-border-muted: #e2e1de;
+  --ui-border-accented: #c9c8c4;
+  --ui-border-inverted: #252422;
+
+  /* Semantic */
+  --ui-primary: var(--ui-color-neutral-700);
+  --ui-secondary: var(--ui-color-neutral-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-info: var(--ui-color-info-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-error: var(--ui-color-error-500);
+
+  /* Layout */
+  --ui-container: 80rem;
+  --ui-header-height: 4rem;
+}
+
+:root {
+  /* Backgrounds */
+  --ui-bg: #1a1917;
+  --ui-bg-muted: #222120;
+  --ui-bg-elevated: #2e2d2b;
+  --ui-bg-accented: #3a3937;
+  --ui-bg-inverted: #f8f8f7;
+
+  /* Text */
+  --ui-text-dimmed: #52514d;
+  --ui-text-muted: #6b6a64;
+  --ui-text-toned: #888780;
+  --ui-text: #c9c8c4;
+  --ui-text-highlighted: #f0efed;
+  --ui-text-inverted: #1a1917;
+
+  /* Borders */
+  --ui-border: #2e2d2b;
+  --ui-border-muted: #252422;
+  --ui-border-accented: #3a3937;
+  --ui-border-inverted: #f0efed;
+
+  /* Semantic */
+  --ui-primary: var(--ui-color-neutral-400);
+  --ui-secondary: var(--ui-color-neutral-400);
+  --ui-success: var(--ui-color-success-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
+
+  /* Layout — sin cambios */
+  --ui-container: 80rem;
+  --ui-header-height: 2.5rem;
 }

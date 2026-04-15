@@ -58,7 +58,7 @@
             opacity=".2"
           />
           <rect
-            :style="{ color: 'var(--ui-secondary)' }"
+            :style="{ color: folder.color }"
             x="3.9998"
             y="17.001"
             width="56"
@@ -136,9 +136,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   {
     label: "Download",
     icon: "material-symbols:download-2-outline-rounded",
-    onSelect: () => {
-     
-    },
+    onSelect: () => {},
   },
   {
     label: "Rename",
@@ -156,7 +154,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   box-shadow: var(--ui-card-shadow);
   border-radius: calc(var(--ui-radius) * 2);
   background: var(--ui-bg-muted);
-  border: 1px solid transparent;
+  border: 1px solid var(--ui-border);
   padding: 0.75rem;
   padding-right: 0.25rem;
   display: flex;
@@ -169,13 +167,13 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .folder-card:hover {
-  border: 1px solid var(--ui-border-accented, #e2ddd8);
-  background: var(--ui-bg-accented);
-  border-color: transparent;
+  background: var(--ui-bg-elevated);
+  border-color: var(--ui-border-accented);
 }
 
 .folder-card.selected {
-  border-color: var(--ui-border, #5b7fa6);
+  background: var(--ui-bg-accented);
+  border-color: var(--ui-border-elevated);
 }
 
 /* Sortable states */

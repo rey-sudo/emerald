@@ -231,12 +231,7 @@ const breadItems = [
     label: "My folders",
     icon: "",
     to: "/",
-  },
-    {
-    label: "",
-    icon: "",
-    to: "",
-  },
+  }
 ];
 
 const onFolderOpen = (folderId, folderName) => {

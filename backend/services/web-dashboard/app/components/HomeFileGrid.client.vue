@@ -101,12 +101,12 @@
         <!-- ── Grid view ── -->
         <div v-if="view === 'grid'" ref="gridRef" class="folder-grid">
           <FileCard
-            v-for="folder in currentDocuments"
-            :key="folder.id"
-            :folder="folder"
-            :selected="selectedId === folder.id"
-            @click.stop="selectedId = folder.id"
-            @dblclick="onFolderOpen(folder.id)"
+            v-for="file in currentDocuments"
+            :key="file.id"
+            :folder="file"
+            :selected="selectedId === file.id"
+            @click.stop="selectedId = file.id"
+            @dblclick="onFolderOpen(file.id)"
             @menu="(e) => console.log(e)"
           />
         </div>
@@ -403,7 +403,7 @@ defineExpose({
 /* ── Grid ───────────────────────────────────────────────────── */
 .folder-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -501,36 +501,6 @@ defineExpose({
   width: 130px;
   flex-shrink: 0;
   text-align: right;
-}
-
-/* ── Dots menu ──────────────────────────────────────────────── */
-:deep(.card-menu) {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--muted);
-  padding: 4px;
-  border-radius: 6px;
-  opacity: 0;
-  transition:
-    opacity var(--ease),
-    background var(--ease);
-  display: flex;
-  align-items: center;
-}
-:deep(.card-menu),
-:deep(.folder-row:hover .card-menu) {
-  opacity: 1;
-}
-:deep(.card-menu:hover) {
-  background: var(--bg);
-  color: var(--text);
-}
-:deep(.folder-row .card-menu) {
-  position: static;
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */

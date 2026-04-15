@@ -227,9 +227,7 @@ onBeforeUnmount(() => {
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 2);
   border-bottom-right-radius: calc(var(--ui-radius) * 2);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.3),
-    0 4px 6px -2px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--ui-card-shadow);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
