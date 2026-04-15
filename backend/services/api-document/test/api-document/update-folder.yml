@@ -1,0 +1,23 @@
+info:
+  name: update-folder
+  type: http
+  seq: 2
+
+http:
+  method: PATCH
+  url: http://localhost:8001/api/document/update-folder
+  body:
+    type: json
+    data: |-
+      {
+        "id": "019d9221-8e84-71e7-a78f-1b75f1103f47",
+        "name": "prueba",
+        "color": "#000000"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
