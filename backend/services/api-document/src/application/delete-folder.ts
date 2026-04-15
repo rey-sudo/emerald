@@ -27,7 +27,9 @@ export async function deleteFolderHandler(
   const { id } = parsed.data;
 
   const user_id = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: auth
-  const deleted_at = Date.now();
+  const now = Date.now();
+  const updated_at = now;
+  const deleted_at = now;
 
   const client = await pool.connect();
 
@@ -39,17 +41,13 @@ export async function deleteFolderHandler(
       SET
         status = 'deleted',
         updated_at = $1,
-        deleted_at = $1,
+        deleted_at = $2,
         v = v + 1
-      WHERE id = $2 AND user_id = $3
+      WHERE id = $3 AND user_id = $4
       RETURNING *;
     `;
 
-    const result = await client.query(query, [
-      deleted_at,
-      id,
-      user_id,
-    ]);
+    const result = await client.query(query, [updated_at, deleted_at, id, user_id]);
 
     if (!result.rows.length) {
       await client.query("ROLLBACK");

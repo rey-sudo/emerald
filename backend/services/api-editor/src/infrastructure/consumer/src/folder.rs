@@ -118,15 +118,18 @@ impl MultiHandler for FolderHandler {
                 let result: PgQueryResult = sqlx::query!(
                         r#"
                         UPDATE folders 
-                        SET 
-                            deleted_at = $2,
-                            v = $3
-                        WHERE id = $1 AND v = $4
+                        SET status = $1,
+                            updated_at = $2,
+                            deleted_at = $3,
+                            v = $4
+                        WHERE id = $5 AND v = $6
                         "#,
-                        folder.id,         // $1
-                        folder.deleted_at, // $2 
-                        folder.v,          // $3 
-                        expected_v         // $4 
+                        folder.status,         
+                        folder.updated_at,
+                        folder.deleted_at,
+                        folder.v,         
+                        folder.id,          
+                        expected_v         
                     )
                     .execute(&mut **tx)
                     .await?;
