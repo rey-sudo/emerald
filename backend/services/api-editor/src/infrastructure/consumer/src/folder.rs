@@ -1,14 +1,14 @@
 use event_consumer::{
     Uuid, application::{EventEnveloped, consumer::MultiHandler}, async_trait
 };
-use sqlx::{FromRow, Postgres, Transaction};
-use tracing::warn;
+use sqlx::{FromRow, Postgres, Transaction, postgres::PgQueryResult};
+use tracing::{info, warn};
 
 /// This struct encapsulates the domain logic for the "folder" entity_type.
 pub struct FolderHandler;
 
 /// Represents the 'folders' table in the database.
-#[derive(serde::Deserialize, FromRow)]
+#[derive(serde::Deserialize, FromRow, Debug)]
 pub struct Folder {
     id: Uuid,
     user_id: Uuid,
@@ -60,10 +60,91 @@ impl MultiHandler for FolderHandler {
 
                 Ok(())
             }
-            "folder.updated" => Ok(()),
-            "folder.deleted" => Ok(()),
+            "folder.updated" => {
+
+                let folder: Folder = serde_json::from_value(event.data.clone())?; 
+
+                info!("DEBUG DATA: {:?}", folder);
+
+                let expected_v: i64 = folder.v - 1;
+
+                let result: PgQueryResult = sqlx::query!(
+                    r#"
+                    UPDATE folders 
+                    SET 
+                        user_id = $2,
+                        status = $3,
+                        name = $4,
+                        storage_path = $5,
+                        color = $6,
+                        readed_at = $7,
+                        updated_at = $8,
+                        deleted_at = $9,
+                        v = $10
+                    WHERE id = $1 AND v = $11
+                    "#,
+                    folder.id,         // $1
+                    folder.user_id,    // $2
+                    folder.status,     // $3
+                    folder.name,       // $4
+                    folder.storage_path,// $5
+                    folder.color,      // $6
+                    folder.readed_at,  // $7
+                    folder.updated_at, // $8
+                    folder.deleted_at, // $9
+                    folder.v,          // $10
+                    expected_v         // $11
+                )
+                .execute(&mut **tx)
+                .await?;
+
+                if result.rows_affected() == 0 {
+                    let error_msg: String = format!(
+                        "Update fallido para Folder {}: conflicto de secuencia (se esperaba v={} en DB). Reintentando evento v={}...", 
+                        folder.id, expected_v, folder.v
+                    );
+
+                    warn!("{}", error_msg);
+
+                    return Err(error_msg.into());
+                }
+
+                Ok(())
+            }
+            "folder.deleted" => {
+                let folder: Folder = serde_json::from_value(event.data.clone())?;
+                let expected_v: i64 = folder.v - 1;
+
+                let result: PgQueryResult = sqlx::query!(
+                        r#"
+                        UPDATE folders 
+                        SET 
+                            deleted_at = $2,
+                            v = $3
+                        WHERE id = $1 AND v = $4
+                        "#,
+                        folder.id,         // $1
+                        folder.deleted_at, // $2 
+                        folder.v,          // $3 
+                        expected_v         // $4 
+                    )
+                    .execute(&mut **tx)
+                    .await?;
+
+                if result.rows_affected() == 0 {
+                    let error_msg: String = format!(
+                        "Conflicto de versión en Folder {}: se esperaba v={}, pero no se encontró en DB. Reintentando...", 
+                        folder.id, expected_v
+                    );
+
+                    warn!("{}", error_msg);
+                    
+                    return Err(error_msg.into());
+                }
+
+                Ok(())
+            }
             _ => {
-                // If we don't care about this specific action, we ACK and move on
                 warn!("No specific logic for event_type: {}", event.event_type);
                 Ok(())
             }

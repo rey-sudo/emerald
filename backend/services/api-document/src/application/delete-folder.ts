@@ -38,6 +38,7 @@ export async function deleteFolderHandler(
       UPDATE folders
       SET
         status = 'deleted',
+        updated_at = $1,
         deleted_at = $1,
         v = v + 1
       WHERE id = $2 AND user_id = $3
@@ -62,7 +63,7 @@ export async function deleteFolderHandler(
     const normalizedRow = {
       ...row,
       created_at: Number(row.created_at),
-      updated_at: row.updated_at ? Number(row.updated_at) : null,
+      updated_at: Number(row.updated_at),
       deleted_at: Number(row.deleted_at),
       v: Number(row.v),
     };
