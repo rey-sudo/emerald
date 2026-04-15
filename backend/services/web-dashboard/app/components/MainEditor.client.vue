@@ -225,8 +225,8 @@ onBeforeUnmount(() => {
   padding: 0.25rem 1rem;
   border: 1px solid var(--ui-border);
   border-top: none;
-  border-bottom-left-radius: calc(var(--ui-radius) * 2);
-  border-bottom-right-radius: calc(var(--ui-radius) * 2);
+  border-bottom-left-radius: calc(var(--ui-radius) * 0);
+  border-bottom-right-radius: calc(var(--ui-radius) * 0);
   box-shadow: var(--ui-card-shadow);
 }
 

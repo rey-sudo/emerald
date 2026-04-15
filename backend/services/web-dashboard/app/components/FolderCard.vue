@@ -167,7 +167,6 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .folder-card:hover {
-  background: var(--ui-bg-elevated);
   border-color: var(--ui-border-accented);
 }
 
