@@ -1,5 +1,5 @@
 <template>
-  <div class="emerald-tabs-container">
+  <div v-if="isDocumentRoute" class="emerald-tabs-container">
     <div
       v-for="tab in tabs"
       :key="tab.id"
@@ -47,6 +47,12 @@ defineProps({
 });
 
 defineEmits(["update:modelValue", "close"]);
+
+const route = useRoute();
+
+const isDocumentRoute = computed(() => {
+  return route.name === "document-id";
+});
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <UEmpty
-    class="h-[50%]"
+    class="h-[60%]"
     size="xl"
     variant="naked"
     icon="i-lucide-folder"
