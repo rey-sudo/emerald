@@ -3,7 +3,7 @@
     class="h-[60%]"
     size="xl"
     variant="naked"
-    icon="i-lucide-folder"
+    icon="material-symbols:folder-outline-rounded"
     title="No folders found"
     description="Please create a new folder and upload the documents you want."
   />

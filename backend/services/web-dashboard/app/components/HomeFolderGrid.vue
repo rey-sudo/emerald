@@ -276,7 +276,7 @@
           />
         </div>
 
-        <HomeEmptyFolders v-if="documentStore.filteredFolders.length === 0" />
+        <HomeFolderEmpty v-if="documentStore.filteredFolders.length === 0" />
       </main>
     </div>
   </div>
