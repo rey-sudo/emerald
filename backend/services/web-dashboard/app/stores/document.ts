@@ -111,6 +111,22 @@ export const useDocumentStore = defineStore("document", () => {
     }
   }
 
+  async function deleteFolder(id: string) {
+    pending.value = true;
+    try {
+      const response = await $fetch(`/api/document/delete-folder/${id}`, {
+        method: "DELETE"
+      });
+
+      await getFolders();
+      return response;
+    } catch (e: any) {
+      throw e;
+    } finally {
+      pending.value = false;
+    }
+  }
+
   async function uploadFile(file: File, folderId: string) {
     pending.value = true;
 
@@ -141,6 +157,7 @@ export const useDocumentStore = defineStore("document", () => {
     createFolder,
     uploadFile,
     updateFolder,
+    deleteFolder,
     getDocumentsByFolderId,
   };
 });

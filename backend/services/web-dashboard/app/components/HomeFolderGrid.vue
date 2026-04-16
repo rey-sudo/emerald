@@ -158,7 +158,40 @@
         />
       </template>
     </UModal>
-
+    <!--------------------------------------------------
+         DELETE FOLDER MODAL
+    ---------------------------------------------------->
+    <UModal
+      v-model:open="deleteFolderDialog"
+      title="Delete folder"
+      :ui="{
+        content: 'w-auto max-w-fit',
+        body: 'p-4 sm:p-6',
+        footer: 'justify-end',
+      }"
+    >
+      <template #body>
+        <div class="space-y-4">
+          <div class="space-x-4">
+            Are you sure you want to delete this folder?
+          </div>
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <UButton
+          label="Cancel"
+          color="neutral"
+          variant="outline"
+          @click="close"
+        />
+        <UButton
+          label="Delete"
+          color="primary"
+          :loading="isSubmiting"
+          @click="onDeleteFolder(close)"
+        />
+      </template>
+    </UModal>
     <!--------------------------------------------------
          HEADER
     ---------------------------------------------------->
@@ -287,14 +320,17 @@ const newFolderColorChip = computed(() => ({
   backgroundColor: newFolderColor.value,
 }));
 
+const updateFolderDialog = ref(false);
 const updateFolderId = ref(null);
 const updateFolderData = ref(null);
-const updateFolderDialog = ref(false);
 const updateFolderName = ref("Untitled folder");
 const updateFolderColor = ref("#e0a84b");
 const updateFolderColorChip = computed(() => ({
   backgroundColor: updateFolderColor.value,
 }));
+
+const deleteFolderDialog = ref(false);
+const deleteFolderId = ref(null);
 
 const isSubmiting = ref(false);
 
@@ -320,6 +356,11 @@ const handleFolderEvents = (event, folder) => {
     updateFolderName.value = folder.folder_name;
     updateFolderColor.value = folder.color;
     updateFolderDialog.value = true;
+  }
+
+  if (event.name === "delete") {
+    deleteFolderId.value = folder.folder_id;
+    deleteFolderDialog.value = true;
   }
 };
 
@@ -376,6 +417,34 @@ const onUpdateFolder = async (close) => {
 
     toast.add({
       title: `Folder updated`,
+      icon: "i-lucide-circle-check",
+      duration: 1_000,
+      progress: false,
+    });
+  } catch (e) {
+    toast.add({
+      title: `Something is wrong`,
+      icon: "i-lucide-x",
+      duration: 1_000,
+      color: "error",
+      progress: false,
+    });
+  } finally {
+    await promiseTimeout(1_000);
+    isSubmiting.value = false;
+    close();
+  }
+};
+
+const onDeleteFolder = async (close) => {
+  try {
+    isSubmiting.value = true;
+
+    await documentStore.deleteFolder(deleteFolderId.value);
+    deleteFolderId.value = null;
+
+    toast.add({
+      title: `Folder deleted`,
       icon: "i-lucide-circle-check",
       duration: 1_000,
       progress: false,

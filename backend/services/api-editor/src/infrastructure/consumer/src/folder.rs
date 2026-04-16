@@ -64,8 +64,6 @@ impl MultiHandler for FolderHandler {
 
                 let folder: Folder = serde_json::from_value(event.data.clone())?; 
 
-                info!("DEBUG DATA: {:?}", folder);
-
                 let expected_v: i64 = folder.v - 1;
 
                 let result: PgQueryResult = sqlx::query!(
@@ -100,7 +98,7 @@ impl MultiHandler for FolderHandler {
 
                 if result.rows_affected() == 0 {
                     let error_msg: String = format!(
-                        "Update fallido para Folder {}: conflicto de secuencia (se esperaba v={} en DB). Reintentando evento v={}...", 
+                        "Update failed for Folder {}: sequence conflict (expected v={} in DB). Retrying event v={}...", 
                         folder.id, expected_v, folder.v
                     );
 
@@ -113,6 +111,7 @@ impl MultiHandler for FolderHandler {
             }
             "folder.deleted" => {
                 let folder: Folder = serde_json::from_value(event.data.clone())?;
+
                 let expected_v: i64 = folder.v - 1;
 
                 let result: PgQueryResult = sqlx::query!(
@@ -133,10 +132,10 @@ impl MultiHandler for FolderHandler {
                     )
                     .execute(&mut **tx)
                     .await?;
-
-                if result.rows_affected() == 0 {
+                
+                if result.rows_affected() == 0 {    
                     let error_msg: String = format!(
-                        "Conflicto de versión en Folder {}: se esperaba v={}, pero no se encontró en DB. Reintentando...", 
+                        "Version conflict for Folder {}: expected v={}, but not found in DB. Retrying...", 
                         folder.id, expected_v
                     );
 
