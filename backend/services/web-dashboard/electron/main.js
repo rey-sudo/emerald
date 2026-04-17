@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -12,6 +12,19 @@ function createWindow() {
   });
 
   win.loadURL("http://localhost:3000");
+
+  win.on("focus", () => {
+    globalShortcut.register("F5", () => {
+      win.reload();
+    });
+    globalShortcut.register("CommandOrControl+R", () => {
+      win.reload();
+    });
+  });
+
+  win.on("blur", () => {
+    globalShortcut.unregisterAll();
+  });
 
   win.setMenuBarVisibility(false);
   win.setAutoHideMenuBar(true);

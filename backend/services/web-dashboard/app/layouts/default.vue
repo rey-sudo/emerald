@@ -114,9 +114,9 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="bg-muted flex flex-1 h-screen"
+    class="bg flex flex-1 h-screen"
     :class="[
-      variant === 'inset' && 'bg-neutral-50 dark:bg-neutral-950',
+      variant === 'inset' && 'bg',
       side === 'right' && 'flex-row-reverse',
     ]"
   >

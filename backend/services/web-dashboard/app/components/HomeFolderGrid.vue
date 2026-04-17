@@ -467,7 +467,7 @@ const onDeleteFolder = async (close) => {
 const breadItems = [
   {
     label: "Home",
-    icon: "material-symbols:home-outline-rounded",
+    icon: "",
     to: "/",
   },
 ];

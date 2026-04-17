@@ -24,8 +24,7 @@
       aria-orientation="vertical"
       tabindex="0"
       @keydown="onKeyDown"
-    >
-    </div>
+    ></div>
 
     <!-- Right Panel -->
     <div class="split-panel split-panel--right">
@@ -160,7 +159,7 @@ onBeforeUnmount(removeListeners);
 .split-panel--right {
   flex: 1;
   min-width: 0; /* evita overflow en flexbox */
-  background: var(--ui-bg);
+
 }
 
 /* ─── Divider ──────────────────────────────────────────────────────────────── */
