@@ -1,14 +1,16 @@
 use event_consumer::{
-    Uuid, application::{EventEnveloped, consumer::MultiHandler}, async_trait
+    Uuid,
+    application::{EventEnveloped, consumer::MultiHandler},
+    async_trait,
 };
 use sqlx::{Postgres, Transaction, postgres::PgQueryResult};
-use tracing::warn;
+use tracing::{info, warn};
 
 /// This struct encapsulates the domain logic for the "document" entity_type.
 pub struct DocumentHandler;
 
 /// Represents the 'document' table in the database.
-#[derive(serde::Deserialize, sqlx::FromRow)]
+#[derive(serde::Deserialize, sqlx::FromRow, Debug)]
 pub struct Document {
     pub id: Uuid,
     pub user_id: Uuid,
@@ -52,7 +54,11 @@ impl MultiHandler for DocumentHandler {
     ) -> std::result::Result<(), Box<dyn std::error::Error>> {
         match event.event_type.as_str() {
             "document.created" => {
+                info!("{:?}", event.data.clone());
+
                 let document: Document = serde_json::from_value(event.data.clone())?;
+
+                info!("{:?}", document);
 
                 sqlx::query!(r#"
                 INSERT INTO documents (

@@ -22,8 +22,10 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1030.0",
+    "@fastify/multipart": "^10.0.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",
+    "fastify-multer": "^2.0.3",
     "pg": "^8.20.0",
     "uuid": "^13.0.0",
     "zod": "^4.3.6"
