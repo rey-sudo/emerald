@@ -1,0 +1,22 @@
+info:
+  name: update-document
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: http://localhost:8001/api/document/update-document
+  body:
+    type: json
+    data: |-
+      {
+        "id": "019d9d37-09ff-73ed-b2e5-b620750a2b54",
+        "original_name": "prueba2"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
