@@ -48,7 +48,7 @@ export const uploadMiddleware = multer({
 });
 
 /**
- * Deletes an object from S3. Typically used as a compensating action 
+ * Deletes an object from S3. Typically used as a compensating action
  * if a subsequent database transaction fails.
  * @param s3 - The S3 client instance.
  * @param bucket - S3 bucket name.
@@ -90,6 +90,10 @@ function buildMetadata(
 
 // ── SQL ────────────────────────────────────────────────────────
 
+const SQL_CHECK_FOLDER_OWNERSHIP = `
+  SELECT 1 FROM folders WHERE id = $1 AND user_id = $2;
+`;
+
 const SQL_INSERT = `
   INSERT INTO documents (
     id, user_id, folder_id,
@@ -126,7 +130,7 @@ export const UploadFileBody = z.object({
 });
 
 /**
- * Main handler for uploading files. 
+ * Main handler for uploading files.
  * * Process:
  * 1. Validates the request body and file existence.
  * 2. Uploads the file buffer to AWS S3.
@@ -158,6 +162,20 @@ export async function uploadFileHandler(
 
   const { folder_id: folderId } = parsed.data;
 
+  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: authentication
+
+  const folderCheck = await pool.query(SQL_CHECK_FOLDER_OWNERSHIP, [
+    folderId,
+    userId,
+  ]);
+
+  if (folderCheck.rowCount === 0) {
+    return reply.status(403).send({
+      message:
+        "Access denied: Folder does not belong to user or does not exist.",
+    });
+  }
+
   const fileBuffer = file.buffer!;
   const rawContentType = file.mimetype; // "application/pdf; charset=utf-8"
   const mimeType = rawContentType.split(";")[0].trim(); // "application/pdf"
@@ -169,7 +187,6 @@ export async function uploadFileHandler(
   log.debug(`content_type=${mimeType}`);
   log.debug(`folder_id=${folderId}`);
 
-  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: authentication
   const docId = uuidv7();
   const internalName = `${docId}.${extension}`;
   const storageKey = `${userId}/${folderId}/${internalName}`;
