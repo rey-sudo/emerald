@@ -9,6 +9,7 @@ const SQL_GET_EXTENSION = `
     internal_name
   FROM documents
   WHERE id = $1
+    AND user_id = $2
     AND deleted_at IS NULL;
 `;
 
@@ -31,7 +32,7 @@ const SQL_INSERT_EVENT = `
 
 export const updateFileSchema = z.object({
   id: z.uuid("id must be a valid UUID"),
-  original_name: z.string().trim().min(1, "original_name is required."),
+  original_name: z.string().trim().min(1, "original_name is required."), //TODO
 });
 
 export async function updateDocumentHandler(
@@ -41,7 +42,6 @@ export async function updateDocumentHandler(
   const { log } = request;
 
   const parsed = updateFileSchema.safeParse(request.body);
-
   if (!parsed.success) {
     const formatted = z.treeifyError(parsed.error);
 
@@ -63,10 +63,10 @@ export async function updateDocumentHandler(
 
     const { rows: extRows } = await client.query(SQL_GET_EXTENSION, [
       id,
+      userId
     ]);
 
     const current = extRows[0];
-
     if (!current) {
       await client.query("ROLLBACK");
       return reply.status(404).send({ message: "Document not found" });
@@ -76,17 +76,14 @@ export async function updateDocumentHandler(
 
     const finalName = `${original_name.trim()}${extension}`;
 
-    console.log(finalName);
-
     const { rows } = await client.query(SQL_UPDATE_NAME, [
       finalName, // $1
       now, // $2 updated_at
       id, // $3
     ]);
 
-    const row = rows[0];
-
-    if (!row) {
+    const document = rows[0];
+    if (!document) {
       await client.query("ROLLBACK");
       return reply.status(404).send({
         message: `Document '${id}' not found.`,
@@ -94,11 +91,11 @@ export async function updateDocumentHandler(
     }
 
     const normalizedDocument = {
-      ...row,
-      size_bytes: Number(row.size_bytes),
-      created_at: Number(row.created_at),
-      updated_at: Number(row.updated_at),
-      v: Number(row.v),
+      ...document,
+      size_bytes: Number(document.size_bytes),
+      created_at: Number(document.created_at),
+      updated_at: Number(document.updated_at),
+      v: Number(document.v),
     };
 
     await client.query(SQL_INSERT_EVENT, [
@@ -108,9 +105,9 @@ export async function updateDocumentHandler(
       uuidv7(),
       now,
       "document",
-      row.id,
+      document.id,
       normalizedDocument,
-      JSON.stringify({ user_id: userId }),
+      { user_id: userId },
     ]);
 
     await client.query("COMMIT");
