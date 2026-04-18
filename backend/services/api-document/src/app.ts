@@ -33,7 +33,9 @@ declare module "fastify" {
 }
 
 export const app = Fastify({
-  logger: true,
+  logger: {
+    level: process.env.LOG_LEVEL || "info",
+  },
 });
 
 app.decorate("config", settings);

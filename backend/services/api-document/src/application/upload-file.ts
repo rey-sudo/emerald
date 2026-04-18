@@ -1,18 +1,18 @@
-import { FastifyRequest, FastifyReply } from "fastify";
 import {
   PutObjectCommand,
   DeleteObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
+import { FastifyRequest, FastifyReply } from "fastify";
 import { v7 as uuidv7 } from "uuid";
-import multer from "fastify-multer";
 import type { File } from "fastify-multer/lib/interfaces";
-import type { Pool } from "pg";
 import { pool } from "../infrastructure/postgres/db.js";
+import multer from "fastify-multer";
 import z from "zod";
 
-// ── Constants ──────────────────────────────────────────────────
-
+/**
+ * Map of supported MIME types to their corresponding file extensions.
+ */
 const ALLOWED_MIME_TYPES: Record<string, string> = {
   "application/pdf": "pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
@@ -21,10 +21,15 @@ const ALLOWED_MIME_TYPES: Record<string, string> = {
   "text/plain": "txt",
 };
 
+/**
+ * Maximum allowed file size (100 MB).
+ */
 const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
 
-// ── Multer ─────────────────────────────────────────────────────
-
+/**
+ * Multer middleware configuration for handling multipart/form-data.
+ * Uses memory storage and validates file types against ALLOWED_MIME_TYPES.
+ */
 export const uploadMiddleware = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: MAX_FILE_SIZE_BYTES },
@@ -42,8 +47,14 @@ export const uploadMiddleware = multer({
   },
 });
 
-// ── Helpers ────────────────────────────────────────────────────
-
+/**
+ * Deletes an object from S3. Typically used as a compensating action 
+ * if a subsequent database transaction fails.
+ * @param s3 - The S3 client instance.
+ * @param bucket - S3 bucket name.
+ * @param key - The object key (path) to delete.
+ * @param log - Fastify logger instance.
+ */
 async function deleteS3Object(
   s3: S3Client,
   bucket: string,
@@ -58,6 +69,13 @@ async function deleteS3Object(
   }
 }
 
+/**
+ * Constructs a JSON string containing file metadata.
+ * @param originalName - The original name of the uploaded file.
+ * @param sizeBytes - File size in bytes.
+ * @param folderId - UUID of the parent folder.
+ * @returns A JSON stringified metadata object.
+ */
 function buildMetadata(
   originalName: string,
   sizeBytes: number,
@@ -100,10 +118,23 @@ const SQL_INSERT_EVENT = `
   ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 `;
 
+/**
+ * Zod schema for validating the upload request body.
+ */
 export const UploadFileBody = z.object({
   folder_id: z.uuid("folder_id must be a valid UUID"),
 });
 
+/**
+ * Main handler for uploading files. 
+ * * Process:
+ * 1. Validates the request body and file existence.
+ * 2. Uploads the file buffer to AWS S3.
+ * 3. Starts a DB transaction to record document metadata and a 'document.created' event.
+ * 4. Performs a rollback and deletes the S3 object if the DB transaction fails.
+ * @param request - Fastify request object containing the file and body.
+ * @param reply - Fastify reply object.
+ */
 export async function uploadFileHandler(
   request: FastifyRequest,
   reply: FastifyReply,
@@ -111,13 +142,11 @@ export async function uploadFileHandler(
   const { s3, config, log } = request.server;
 
   const file = request.file as File;
-
   if (!file) {
     return reply.status(400).send({ message: "No file provided." });
   }
 
   const parsed = UploadFileBody.safeParse(request.body);
-
   if (!parsed.success) {
     const formatted = z.treeifyError(parsed.error);
 
@@ -132,17 +161,17 @@ export async function uploadFileHandler(
   const fileBuffer = file.buffer!;
   const rawContentType = file.mimetype; // "application/pdf; charset=utf-8"
   const mimeType = rawContentType.split(";")[0].trim(); // "application/pdf"
-  const ext = ALLOWED_MIME_TYPES[mimeType];
-  const originalName = file.originalname || `document.${ext}`;
+  const extension = ALLOWED_MIME_TYPES[mimeType];
+  const originalName = file.originalname || `document.${extension}`;
   const sizeBytes = file.size!;
 
-  log.info(`filename=${originalName}`);
-  log.info(`content_type=${mimeType}`);
-  log.info(`folder_id=${folderId}`);
+  log.debug(`filename=${originalName}`);
+  log.debug(`content_type=${mimeType}`);
+  log.debug(`folder_id=${folderId}`);
 
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: authentication
   const docId = uuidv7();
-  const internalName = `${docId}.${ext}`;
+  const internalName = `${docId}.${extension}`;
   const storageKey = `${userId}/${folderId}/${internalName}`;
   const createdAt = Date.now();
   const metadata = buildMetadata(originalName, sizeBytes, folderId);

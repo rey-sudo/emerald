@@ -210,7 +210,7 @@ const onSubmit = async (_close) => {
 const breadItems = [
   {
     label: "Home",
-    icon: "material-symbols:home-outline-rounded",
+    icon: "",
     to: "/",
   },
   {
