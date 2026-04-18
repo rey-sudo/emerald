@@ -94,6 +94,10 @@ const SQL_CHECK_FOLDER_OWNERSHIP = `
   SELECT 1 FROM folders WHERE id = $1 AND user_id = $2;
 `;
 
+const SQL_CHECK_FOLDER_OWNERSHIP_LOCKED = `
+  SELECT 1 FROM folders WHERE id = $1 AND user_id = $2 FOR SHARE;
+`;
+
 const SQL_INSERT = `
   INSERT INTO documents (
     id, user_id, folder_id,
@@ -224,6 +228,20 @@ export async function uploadFileHandler(
 
   try {
     await client.query("BEGIN");
+
+    const folderCheck = await client.query(SQL_CHECK_FOLDER_OWNERSHIP_LOCKED, [
+      folderId,
+      userId,
+    ]);
+
+    if (folderCheck.rowCount === 0) {
+      await client.query("ROLLBACK");
+      await deleteS3Object(s3, config.s3.bucket, storageKey, log);
+      return reply.status(403).send({
+        message:
+          "Access denied: Folder does not belong to user or does not exist.",
+      });
+    }
 
     const { rows } = await client.query(SQL_INSERT, [
       docId, // $1  id
