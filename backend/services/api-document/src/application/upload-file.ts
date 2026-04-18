@@ -9,6 +9,7 @@ import multer from "fastify-multer";
 import type { File } from "fastify-multer/lib/interfaces";
 import type { Pool } from "pg";
 import { pool } from "../infrastructure/postgres/db.js";
+import z from "zod";
 
 // ── Constants ──────────────────────────────────────────────────
 
@@ -99,7 +100,9 @@ const SQL_INSERT_EVENT = `
   ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 `;
 
-// ── Handler ────────────────────────────────────────────────────
+export const UploadFileBody = z.object({
+  folder_id: z.uuid("folder_id must be a valid UUID"),
+});
 
 export async function uploadFileHandler(
   request: FastifyRequest,
@@ -108,18 +111,27 @@ export async function uploadFileHandler(
   const { s3, config, log } = request.server;
 
   const file = request.file as File;
-  const folderId = (request.body as any).folder_id as string;
 
   if (!file) {
     return reply.status(400).send({ message: "No file provided." });
   }
 
-  if (!folderId) {
-    return reply.status(400).send({ message: "folder_id is required." });
+  const parsed = UploadFileBody.safeParse(request.body);
+
+  if (!parsed.success) {
+    const formatted = z.treeifyError(parsed.error);
+
+    return reply.status(400).send({
+      error: "Validation error",
+      details: formatted,
+    });
   }
 
+  const { folder_id: folderId } = parsed.data;
+
   const fileBuffer = file.buffer!;
-  const mimeType = file.mimetype.split(";")[0].trim();
+  const rawContentType = file.mimetype; // "application/pdf; charset=utf-8"
+  const mimeType = rawContentType.split(";")[0].trim(); // "application/pdf"
   const ext = ALLOWED_MIME_TYPES[mimeType];
   const originalName = file.originalname || `document.${ext}`;
   const sizeBytes = file.size!;
@@ -173,7 +185,7 @@ export async function uploadFileHandler(
       folderId, // $3  folder_id
       originalName, // $4  original_name
       internalName, // $5  internal_name
-      mimeType, // $6  content_type
+      rawContentType, // $6  content_type
       mimeType, // $7  mime_type
       sizeBytes, // $8  size_bytes
       storageKey, // $9  storage_path
@@ -189,10 +201,8 @@ export async function uploadFileHandler(
       ...row,
       size_bytes: Number(row.size_bytes),
       created_at: Number(row.created_at),
-      v: Number(row.v)
+      v: Number(row.v),
     };
-
-    console.log(normalizedDocument);
 
     await client.query(SQL_INSERT_EVENT, [
       0, // $1 specversion
@@ -210,7 +220,7 @@ export async function uploadFileHandler(
 
     // TODO: Dispatch Pub/Sub event
 
-    return reply.status(201).send(row);
+    return reply.status(201).send(normalizedDocument);
   } catch (e: any) {
     await client.query("ROLLBACK");
 
