@@ -240,14 +240,14 @@ export async function uploadFileHandler(
       initialV, // $12 v
     ]);
 
-    const row = rows[0];
-    if (!row) throw new Error("INSERT RETURNING returned empty.");
+    const document = rows[0];
+    if (!document) throw new Error("INSERT RETURNING returned empty.");
 
     const normalizedDocument = {
-      ...row,
-      size_bytes: Number(row.size_bytes),
-      created_at: Number(row.created_at),
-      v: Number(row.v),
+      ...document,
+      size_bytes: Number(document.size_bytes),
+      created_at: Number(document.created_at),
+      v: Number(document.v),
     };
 
     await client.query(SQL_INSERT_EVENT, [
@@ -257,9 +257,9 @@ export async function uploadFileHandler(
       uuidv7(), // $4 id
       Date.now(), // $5 time
       "document", // $6 entity_type
-      row.id, // $7 entity_id
+      document.id, // $7 entity_id
       normalizedDocument, // $8 data
-      JSON.stringify({ user_id: userId }), // $9 metadata
+      { user_id: userId }, // $9 metadata
     ]);
 
     await client.query("COMMIT");
