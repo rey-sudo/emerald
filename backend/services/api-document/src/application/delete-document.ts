@@ -4,18 +4,14 @@ import { v7 as uuidv7 } from "uuid";
 import { pool } from "../infrastructure/postgres/db.js";
 import z from "zod";
 
-// ── Types ────────────────────────────────────────────
-
-
-
-// ── SQL ──────────────────────────────────────────────
-
 const SQL_SOFT_DELETE = `
   UPDATE documents
-  SET deleted_at = $1,
+  SET status = 'deleted',
       updated_at = $1,
+      deleted_at = $2,
       v = v + 1
-  WHERE id = $2
+  WHERE id = $3
+    AND user_id = $4
     AND deleted_at IS NULL
   RETURNING *;
 `;
@@ -38,7 +34,6 @@ export async function deleteDocumentHandler(
   const { s3, config, log } = request.server;
 
   const parsed = deleteFileSchema.safeParse(request.params);
-
   if (!parsed.success) {
     const formatted = z.treeifyError(parsed.error);
 
@@ -51,22 +46,23 @@ export async function deleteDocumentHandler(
   const { id } = parsed.data;
 
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO auth
-  const now = Date.now();
+  const timestamp = Date.now();
 
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
-    // ── 1. Soft delete ────────────────────────────────
+    // ── 1. Soft delete ─────────────────────────────
     const { rows } = await client.query(SQL_SOFT_DELETE, [
-      now,
+      timestamp,
+      timestamp,
       id,
+      userId
     ]);
 
-    const row = rows[0];
-
-    if (!row) {
+    const document = rows[0];
+    if (!document) {
       await client.query("ROLLBACK");
       return reply.status(404).send({
         message: `Document '${id}' not found or already deleted.`,
@@ -78,11 +74,11 @@ export async function deleteDocumentHandler(
       await s3.send(
         new DeleteObjectCommand({
           Bucket: config.s3.bucket,
-          Key: row.storage_path,
+          Key: document.storage_path,
         }),
       );
 
-      log.info(`[delete-document] S3 object deleted: ${row.storage_path}`);
+      log.info(`[delete-document] S3 object deleted: ${document.storage_path}`);
     } catch (e) {
       await client.query("ROLLBACK");
 
@@ -94,12 +90,12 @@ export async function deleteDocumentHandler(
     }
 
     const normalizedDocument = {
-      ...row,
-      size_bytes: Number(row.size_bytes),
-      created_at: Number(row.created_at),
-      updated_at: Number(row.updated_at),
-      deleted_at: Number(row.deleted_at),
-      v: Number(row.v),
+      ...document,
+      size_bytes: Number(document.size_bytes),
+      created_at: Number(document.created_at),
+      updated_at: Number(document.updated_at),
+      deleted_at: Number(document.deleted_at),
+      v: Number(document.v),
     };
 
     // ── 3. Event ──────────────────────────────────────
@@ -108,11 +104,11 @@ export async function deleteDocumentHandler(
       "document.deleted",
       "api-document",
       uuidv7(),
-      now,
+      timestamp,
       "document",
-      row.id,
+      document.id,
       normalizedDocument,
-      JSON.stringify({ user_id: userId }),
+      { user_id: userId },
     ]);
 
     await client.query("COMMIT");
