@@ -21,7 +21,7 @@
 
         <div class="card-menu">
           <UButton
-            class="card-menu rounded-3xl relative z-100"
+            class="rounded-3xl relative z-100"
             color="neutral"
             variant="ghost"
             icon="lucide:ellipsis-vertical"
@@ -132,43 +132,23 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   border-color: var(--ui-border-elevated);
 }
 
-/* Sortable states */
-.file-card.sortable-ghost {
-  opacity: 0.35;
-}
-.file-card.sortable-chosen {
-  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
-}
-
-/* Icon wrapper */
-.card-icon {
-  width: 56px;
-  height: 56px;
+.file-card-header,
+.file-card-footer {
+  width: inherit;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 
-/* Name */
-.card-name {
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-  color: var(--text, #1c1814);
-  line-height: 1.3;
-  word-break: break-word;
-  max-width: 100%;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.file-card-header {
+  position: relative;
+  padding: 0 0.5rem;
 }
 
-/* Meta */
-.card-meta {
-  font-size: 11px;
-  color: var(--muted, #8a8078);
-}
-
-.file-card:hover .card-menu {
-  opacity: 1;
+.card-menu {
+  position: absolute;
+  right: 1px;
 }
 
 .file-card-content {
@@ -185,26 +165,21 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   border-radius: var(--ui-radius);
 }
 
-.file-card-header,
-.file-card-footer {
-  width: inherit;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-}
-
 .file-card-footer {
   justify-content: center;
 }
 
-.file-card-header {
-  position: relative;
-  padding: 0 0.5rem;
-}
-
-.card-menu {
-  position: absolute;
-  right: 1px;
+.card-name {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--text, #1c1814);
+  line-height: 1.3;
+  word-break: break-word;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
