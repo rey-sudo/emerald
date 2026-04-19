@@ -1,9 +1,40 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { pool } from "../infrastructure/postgres/db.js";
-import { v7 as uuid7 } from "uuid";
+import { v7 as uuidv7 } from "uuid";
 import z from "zod";
 
-const ParamsSchema = z.object({
+const SQL_SOFT_DELETE_FOLDER = `
+  UPDATE folders
+  SET
+    status = 'deleted',
+    updated_at = $1,
+    deleted_at = $2,
+    v = v + 1
+  WHERE id = $3 AND user_id = $4
+  RETURNING *;
+  `;
+
+const SQL_SOFT_DELETE_DOCUMENTS_IN_FOLDER = `
+  UPDATE documents
+  SET
+    status     = 'deleted',
+    updated_at = $1,
+    deleted_at = $2,
+    v          = v + 1
+  WHERE folder_id = $3
+    AND user_id   = $4
+    AND deleted_at IS NULL
+  RETURNING *;
+  `;
+
+const SQL_INSERT_EVENT = `
+  INSERT INTO events (
+    specversion, event_type, source, id, time,
+    entity_type, entity_id, data, metadata
+  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+  `;
+
+const deleteFolderSchema = z.object({
   id: z.uuid(),
 });
 
@@ -13,8 +44,7 @@ export async function deleteFolderHandler(
 ) {
   const logger = request.log;
 
-  const parsed = ParamsSchema.safeParse(request.params);
-
+  const parsed = deleteFolderSchema.safeParse(request.params);
   if (!parsed.success) {
     const formatted = z.treeifyError(parsed.error);
 
@@ -26,28 +56,34 @@ export async function deleteFolderHandler(
 
   const { id } = parsed.data;
 
-  const user_id = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: auth
-  const now = Date.now();
-  const updated_at = now;
-  const deleted_at = now;
+  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: auth
+  const timestamp = Date.now();
+  const updated_at = timestamp;
+  const deleted_at = timestamp;
 
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
-    const query = `
-      UPDATE folders
-      SET
-        status = 'deleted',
-        updated_at = $1,
-        deleted_at = $2,
-        v = v + 1
-      WHERE id = $3 AND user_id = $4
-      RETURNING *;
-    `;
+    // 1. Folder ownership and block --------------------------
+    const lockFolder = await client.query(
+      `SELECT id FROM folders WHERE id = $1 AND user_id = $2 FOR UPDATE`,
+      [id, userId],
+    );
 
-    const result = await client.query(query, [updated_at, deleted_at, id, user_id]);
+    if (lockFolder.rowCount === 0) {
+      await client.query("ROLLBACK"); 
+      return reply.status(404).send({ error: "Folder not found" });
+    }
+
+    // 2. Soft delete folder ----------------------------------
+    const result = await client.query(SQL_SOFT_DELETE_FOLDER, [
+      updated_at,
+      deleted_at,
+      id,
+      userId,
+    ]);
 
     if (!result.rows.length) {
       await client.query("ROLLBACK");
@@ -56,33 +92,56 @@ export async function deleteFolderHandler(
       });
     }
 
-    const row = result.rows[0];
-
+    const folder = result.rows[0];
     const normalizedRow = {
-      ...row,
-      created_at: Number(row.created_at),
-      updated_at: Number(row.updated_at),
-      deleted_at: Number(row.deleted_at),
-      v: Number(row.v),
+      ...folder,
+      created_at: Number(folder.created_at),
+      updated_at: Number(folder.updated_at),
+      deleted_at: Number(folder.deleted_at),
+      v: Number(folder.v),
     };
 
-    const eventQuery = `
-      INSERT INTO events (
-        specversion, event_type, source, id, time,
-        entity_type, entity_id, data, metadata
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-    `;
+    // 3. Soft delete documents in folder ------------------------------------
+    const documentsResult = await client.query(
+      SQL_SOFT_DELETE_DOCUMENTS_IN_FOLDER,
+      [updated_at, deleted_at, id, userId],
+    );
+   
+    const documents = documentsResult.rows;
+    //TODO: Bulk insert.
+    for (const doc of documents) {
+      const normalizedDoc = {
+        ...doc,
+        size_bytes: Number(doc.size_bytes),
+        created_at: Number(doc.created_at),
+        updated_at: Number(doc.updated_at),
+        deleted_at: Number(doc.deleted_at),
+        v: Number(doc.v),
+      };
 
-    await client.query(eventQuery, [
+      await client.query(SQL_INSERT_EVENT, [
+        0,
+        "document.deleted",
+        "api-document",
+        uuidv7(),
+        timestamp,
+        "document",
+        doc.id,
+        normalizedDoc,
+        { user_id: userId },
+      ]);
+    }
+
+    await client.query(SQL_INSERT_EVENT, [
       0,
       "folder.deleted",
       "api-document",
-      uuid7(),
-      Date.now(),
+      uuidv7(),
+      timestamp,
       "folder",
-      String(row.id),
+      folder.id,
       normalizedRow,
-      { user_id },
+      { user_id: userId },
     ]);
 
     await client.query("COMMIT");
