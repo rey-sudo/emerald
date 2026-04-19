@@ -15,7 +15,9 @@
       @dblclick="$emit('events', { name: 'dblclick', data: $event })"
     >
       <div class="file-card-header">
-        <UBadge color="neutral" variant="outline">PDF</UBadge>
+        <UBadge color="neutral" variant="outline">
+          {{ getFileExtension(file.originalName) }}</UBadge
+        >
 
         <div class="card-menu">
           <UButton
@@ -45,6 +47,7 @@
 
 <script setup lang="ts">
 import type { ContextMenuItem } from "@nuxt/ui";
+import { getFileExtension } from "~/utils/getFilenameExtension";
 
 const props = defineProps({
   file: { type: Object, required: true },
