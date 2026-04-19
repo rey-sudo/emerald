@@ -115,23 +115,34 @@ impl MultiHandler for FolderHandler {
                 let expected_v: i64 = folder.v - 1;
 
                 let result: PgQueryResult = sqlx::query!(
-                        r#"
-                        UPDATE folders 
-                        SET status = $1,
-                            updated_at = $2,
-                            deleted_at = $3,
-                            v = $4
-                        WHERE id = $5 AND v = $6
-                        "#,
-                        folder.status,         
-                        folder.updated_at,
-                        folder.deleted_at,
-                        folder.v,         
-                        folder.id,          
-                        expected_v         
-                    )
-                    .execute(&mut **tx)
-                    .await?;
+                    r#"
+                    UPDATE folders 
+                    SET 
+                        user_id = $2,
+                        status = $3,
+                        name = $4,
+                        storage_path = $5,
+                        color = $6,
+                        readed_at = $7,
+                        updated_at = $8,
+                        deleted_at = $9,
+                        v = $10
+                    WHERE id = $1 AND v = $11
+                    "#,
+                    folder.id,         // $1
+                    folder.user_id,    // $2
+                    folder.status,     // $3
+                    folder.name,       // $4
+                    folder.storage_path,// $5
+                    folder.color,      // $6
+                    folder.readed_at,  // $7
+                    folder.updated_at, // $8
+                    folder.deleted_at, // $9
+                    folder.v,          // $10
+                    expected_v         // $11
+                )
+                .execute(&mut **tx)
+                .await?;
                 
                 if result.rows_affected() == 0 {    
                     let error_msg: String = format!(
