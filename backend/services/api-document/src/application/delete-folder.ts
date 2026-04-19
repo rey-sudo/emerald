@@ -3,6 +3,8 @@ import { pool } from "../infrastructure/postgres/db.js";
 import { v7 as uuidv7 } from "uuid";
 import z from "zod";
 
+const SQL_CHECK_FOLDER = `SELECT id FROM folders WHERE id = $1 AND user_id = $2 FOR UPDATE`;
+
 const SQL_SOFT_DELETE_FOLDER = `
   UPDATE folders
   SET
@@ -10,7 +12,7 @@ const SQL_SOFT_DELETE_FOLDER = `
     updated_at = $1,
     deleted_at = $2,
     v = v + 1
-  WHERE id = $3 AND user_id = $4
+  WHERE id = $3
   RETURNING *;
   `;
 
@@ -22,7 +24,6 @@ const SQL_SOFT_DELETE_DOCUMENTS_IN_FOLDER = `
     deleted_at = $2,
     v          = v + 1
   WHERE folder_id = $3
-    AND user_id   = $4
     AND deleted_at IS NULL
   RETURNING *;
   `;
@@ -67,13 +68,10 @@ export async function deleteFolderHandler(
     await client.query("BEGIN");
 
     // 1. Folder ownership and block --------------------------
-    const lockFolder = await client.query(
-      `SELECT id FROM folders WHERE id = $1 AND user_id = $2 FOR UPDATE`,
-      [id, userId],
-    );
+    const lockFolder = await client.query(SQL_CHECK_FOLDER, [id, userId]);
 
     if (lockFolder.rowCount === 0) {
-      await client.query("ROLLBACK"); 
+      await client.query("ROLLBACK");
       return reply.status(404).send({ error: "Folder not found" });
     }
 
@@ -81,8 +79,7 @@ export async function deleteFolderHandler(
     const result = await client.query(SQL_SOFT_DELETE_FOLDER, [
       updated_at,
       deleted_at,
-      id,
-      userId,
+      id
     ]);
 
     if (!result.rows.length) {
@@ -104,9 +101,9 @@ export async function deleteFolderHandler(
     // 3. Soft delete documents in folder ------------------------------------
     const documentsResult = await client.query(
       SQL_SOFT_DELETE_DOCUMENTS_IN_FOLDER,
-      [updated_at, deleted_at, id, userId],
+      [updated_at, deleted_at, id],
     );
-   
+
     const documents = documentsResult.rows;
     //TODO: Bulk insert.
     for (const doc of documents) {
@@ -120,28 +117,28 @@ export async function deleteFolderHandler(
       };
 
       await client.query(SQL_INSERT_EVENT, [
-        0,
-        "document.deleted",
-        "api-document",
-        uuidv7(),
-        timestamp,
-        "document",
-        doc.id,
-        normalizedDoc,
-        { user_id: userId },
+        0, //$specversion
+        "document.deleted", //$event_type
+        "api-document", //$source
+        uuidv7(), //$id
+        timestamp, //$time
+        "document", //$entity_type
+        doc.id, //$entity_id
+        normalizedDoc, //$data
+        { user_id: userId }, //$metadata
       ]);
     }
 
     await client.query(SQL_INSERT_EVENT, [
-      0,
-      "folder.deleted",
-      "api-document",
-      uuidv7(),
-      timestamp,
-      "folder",
-      folder.id,
-      normalizedRow,
-      { user_id: userId },
+      0, //$specversion
+      "folder.deleted", //$event_type
+      "api-document",  //$source
+      uuidv7(),  //$id
+      timestamp,  //$time
+      "folder",  //$entity_type
+      folder.id,  //$entity_id
+      normalizedRow,  //$data
+      { user_id: userId },  //$metadata
     ]);
 
     await client.query("COMMIT");
