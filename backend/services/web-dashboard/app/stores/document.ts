@@ -115,7 +115,7 @@ export const useDocumentStore = defineStore("document", () => {
     pending.value = true;
     try {
       const response = await $fetch(`/api/document/delete-folder/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
       });
 
       await getFolders();
@@ -149,6 +149,39 @@ export const useDocumentStore = defineStore("document", () => {
     }
   }
 
+  async function updateDocument(id: string, original_name: string) {
+    pending.value = true;
+    try {
+      const response = await $fetch("/api/document/update-document", {
+        method: "PATCH",
+        body: { id, original_name },
+      });
+
+      await getFolders();
+      return response;
+    } catch (e: any) {
+      throw e;
+    } finally {
+      pending.value = false;
+    }
+  }
+
+  async function deleteDocument(id: string) {
+    pending.value = true;
+    try {
+      const response = await $fetch(`/api/document/delete-document/${id}`, {
+        method: "DELETE",
+      });
+
+      await getFolders();
+      return response;
+    } catch (e: any) {
+      throw e;
+    } finally {
+      pending.value = false;
+    }
+  }
+
   return {
     folders,
     pending,
@@ -158,6 +191,8 @@ export const useDocumentStore = defineStore("document", () => {
     uploadFile,
     updateFolder,
     deleteFolder,
+    updateDocument,
+    deleteDocument,
     getDocumentsByFolderId,
   };
 });

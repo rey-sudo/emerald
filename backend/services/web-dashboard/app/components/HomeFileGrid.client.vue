@@ -1,6 +1,123 @@
 <template>
   <div class="drive-shell">
     <!--------------------------------------------------
+         UPLOAD FILE MODAL
+    ---------------------------------------------------->
+    <UModal
+      v-model:open="fileUploadDialog"
+      title="File upload"
+      :ui="{
+        content: 'w-auto max-w-fit',
+        body: 'p-4 sm:p-6',
+        footer: 'justify-end',
+      }"
+    >
+      <template #body>
+        <div class="space-y-4">
+          <UFileUpload
+            v-model="filesToUpload"
+            layout="list"
+            multiple
+            label="Drop your files here"
+            description="PDF, DOCX, MD or TXT (max. 200MB)"
+            class="w-96"
+            :ui="{
+              base: 'min-h-48',
+            }"
+          />
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <UButton
+          label="Cancel"
+          color="neutral"
+          variant="outline"
+          @click="close"
+        />
+        <UButton
+          label="Upload"
+          color="primary"
+          :loading="isSubmiting"
+          @click="onSubmit(close)"
+        />
+      </template>
+    </UModal>
+    <!--------------------------------------------------
+         UPDATE FILE MODAL
+    ---------------------------------------------------->
+    <UModal
+      v-model:open="updateFileDialog"
+      title="Update file"
+      :ui="{
+        content: 'w-auto max-w-fit',
+        body: 'p-4 sm:p-6',
+        footer: 'justify-end',
+      }"
+    >
+      <template #body>
+        <div class="space-y-4">
+          <UInput
+            v-model="updateFileName"
+            class="w-full"
+            placeholder="Filename"
+            size="lg"
+            :maxlength="100"
+            autofocus
+          />
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <UButton
+          label="Cancel"
+          color="neutral"
+          variant="outline"
+          @click="close"
+        />
+        <UButton
+          label="Save"
+          color="primary"
+          :loading="isSubmiting"
+          @click="onUpdateDocument(close)"
+        />
+      </template>
+    </UModal>
+
+    <!--------------------------------------------------
+         DELETE FOLDER MODAL
+    ---------------------------------------------------->
+    <UModal
+      v-model:open="deleteDocumentDialog"
+      title="Delete document"
+      :ui="{
+        content: 'w-auto max-w-fit',
+        body: 'p-4 sm:p-6',
+        footer: 'justify-end',
+      }"
+    >
+      <template #body>
+        <div class="space-y-4">
+          <div class="space-x-4">
+            Are you sure you want to delete this document?
+          </div>
+        </div>
+      </template>
+      <template #footer="{ close }">
+        <UButton
+          label="Cancel"
+          color="neutral"
+          variant="outline"
+          @click="close"
+        />
+        <UButton
+          label="Delete"
+          color="primary"
+          :loading="isSubmiting"
+          @click="onDeleteDocument(close)"
+        />
+      </template>
+    </UModal>
+
+    <!--------------------------------------------------
          HEADER
     ---------------------------------------------------->
     <header class="topbar" oncontextmenu="return false;">
@@ -31,54 +148,14 @@
             @click="view = 'grid'"
           />
         </UFieldGroup>
-        <UModal
-          v-model:open="fileUploadDialog"
-          title="File upload"
-          :ui="{
-            content: 'w-auto max-w-fit',
-            body: 'p-4 sm:p-6',
-            footer: 'justify-end',
-          }"
-        >
-          <UButton
-            color="primary"
-            variant="outline"
-            icon="material-symbols:upload-2-outline-rounded"
-            label="File upload"
-            size="md"
-            @click="fileUploadDialog"
-          />
-
-          <template #body>
-            <div class="space-y-4">
-              <UFileUpload
-                v-model="filesToUpload"
-                layout="list"
-                multiple
-                label="Drop your files here"
-                description="PDF, DOCX, MD or TXT (max. 200MB)"
-                class="w-96"
-                :ui="{
-                  base: 'min-h-48',
-                }"
-              />
-            </div>
-          </template>
-          <template #footer="{ close }">
-            <UButton
-              label="Cancel"
-              color="neutral"
-              variant="outline"
-              @click="close"
-            />
-            <UButton
-              label="Upload"
-              color="primary"
-              :loading="isSubmiting"
-              @click="onSubmit(close)"
-            />
-          </template>
-        </UModal>
+        <UButton
+          color="primary"
+          variant="outline"
+          icon="material-symbols:upload-2-outline-rounded"
+          label="File upload"
+          size="md"
+          @click="fileUploadDialog = true"
+        />
       </div>
     </header>
     <!----------------------------------------------------
@@ -103,11 +180,9 @@
           <FileCard
             v-for="file in currentDocuments"
             :key="file.id"
-            :folder="file"
+            :file="file"
             :selected="selectedId === file.id"
-            @click.stop="selectedId = file.id"
-            @dblclick="onFolderOpen(file.id)"
-            @menu="(e) => console.log(e)"
+            @events="handleFolderEvents($event, file)"
           />
         </div>
 
@@ -144,7 +219,6 @@ import {
   h,
 } from "vue";
 import { promiseTimeout } from "@vueuse/core";
-import Sortable from "sortablejs";
 
 const props = defineProps({
   folderId: {
@@ -171,7 +245,115 @@ const currentDocuments = computed(() => {
 const fileUploadDialog = ref(false);
 const filesToUpload = ref([]);
 
+const selectedId = ref(null);
+
+const updateFileDialog = ref(false);
+const updateFileId = ref(null);
+const updateFileData = ref(null);
+const updateFileName = ref("Filename");
+
+const deleteDocumentDialog = ref(false);
+const deleteDocumentId = ref(null);
+
 const isSubmiting = ref(false);
+
+const handleFolderEvents = (event, document) => {
+  console.log(event, document);
+
+  if (event.name === "click") {
+    selectedId.value = document.id;
+  }
+
+  if (event.name === "dblclick") {
+    router.push({
+      path: `/document/${document.id}`,
+    });
+  }
+
+  if (event.name === "update") {
+    updateFileId.value = document.id;
+    updateFileData.value = document;
+    updateFileName.value = document.originalName;
+    updateFileDialog.value = true;
+  }
+
+  if (event.name === "delete") {
+    deleteDocumentId.value = document.id;
+    deleteDocumentDialog.value = true;
+  }
+};
+
+const onUpdateDocument = async (close) => {
+  try {
+    isSubmiting.value = true;
+
+    const params = {
+      ...updateFileData.value,
+      id: updateFileId.value,
+      original_name: updateFileName.value
+    };
+
+    if (JSON.stringify(params) === JSON.stringify(updateFileData.value)) {
+      return;
+    }
+
+    await documentStore.updateDocument(
+      params.id,
+      params.original_name
+    );
+
+    updateFileId.value = null;
+    updateFileData.value = null;
+
+    toast.add({
+      title: `Document updated`,
+      icon: "i-lucide-circle-check",
+      duration: 1_000,
+      progress: false,
+    });
+  } catch (e) {
+    toast.add({
+      title: `Something is wrong`,
+      icon: "i-lucide-x",
+      duration: 1_000,
+      color: "error",
+      progress: false,
+    });
+  } finally {
+    await promiseTimeout(1_000);
+    isSubmiting.value = false;
+    close();
+  }
+};
+
+
+const onDeleteDocument = async (close) => {
+  try {
+    isSubmiting.value = true;
+
+    await documentStore.deleteDocument(deleteDocumentId.value);
+    deleteDocumentId.value = null;
+
+    toast.add({
+      title: `Document deleted`,
+      icon: "i-lucide-circle-check",
+      duration: 1_000,
+      progress: false,
+    });
+  } catch (e) {
+    toast.add({
+      title: `Something is wrong`,
+      icon: "i-lucide-x",
+      duration: 1_000,
+      color: "error",
+      progress: false,
+    });
+  } finally {
+    await promiseTimeout(1_000);
+    isSubmiting.value = false;
+    close();
+  }
+};
 
 const onSubmit = async (_close) => {
   isSubmiting.value = true;
@@ -219,70 +401,8 @@ const breadItems = [
   },
 ];
 
-const onFolderOpen = (folderId) => {
-  router.push(`/folder/${folderId}`);
-};
-
-const FOLDER_COLORS = [
-  "#d97845",
-  "#5b7fa6",
-  "#6aab8e",
-  "#9b7dc8",
-  "#c95e6e",
-  "#e0a84b",
-  "#5e9ec9",
-];
-
-/** useSortable — attach/detach Sortable.js to a container ref */
-function useSortable(containerRef, onEnd) {
-  let instance = null;
-
-  function init(el) {
-    destroy();
-    if (!el) return;
-    instance = Sortable.create(el, {
-      animation: 160,
-      ghostClass: "sortable-ghost",
-      chosenClass: "sortable-chosen",
-      filter: ".js-no-drag",
-      preventOnFilter: false,
-      onEnd,
-    });
-  }
-  const destroy = () => {
-    instance?.destroy();
-    instance = null;
-  };
-
-  return { init, destroy };
-}
-
 const view = ref("grid"); // 'grid' | 'list'
 const search = ref("");
-const selectedId = ref(null);
-
-const gridRef = ref(null);
-const listRef = ref(null);
-
-const { init: initSort, destroy: destroySort } = useSortable(
-  null,
-  ({ oldIndex, newIndex }) => {
-    if (oldIndex === newIndex) return;
-    move(oldIndex, newIndex);
-  },
-);
-
-watch(view, async (v) => {
-  await nextTick();
-  initSort(v === "grid" ? gridRef.value : listRef.value);
-});
-
-onMounted(async () => {
-  await nextTick();
-  initSort(gridRef.value);
-});
-
-onUnmounted(destroySort);
 
 /** ListHeader */
 const ListHeader = defineComponent({

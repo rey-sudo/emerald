@@ -8,12 +8,11 @@
     }"
   >
     <div
-      class="folder-card"
+      class="file-card"
       :class="{ selected }"
-      :data-id="folder.id"
-      @click="$emit('click', $event)"
-      @dblclick="$emit('dblclick', $event)"
-      @contextmenu="$emit('contextmenu', $event)"
+      :data-id="file.id"
+      @click="$emit('events', { name: 'click', data: $event })"
+      @dblclick="$emit('events', { name: 'dblclick', data: $event })"
     >
       <div class="file-card-header">
         <UBadge color="neutral" variant="outline">PDF</UBadge>
@@ -38,7 +37,7 @@
       </div>
 
       <div class="file-card-footer">
-        <p class="card-name">{{ shortFileName(folder.originalName, 25) }}</p>
+        <p class="card-name">{{ shortFileName(file.originalName, 25) }}</p>
       </div>
     </div>
   </UContextMenu>
@@ -47,12 +46,12 @@
 <script setup lang="ts">
 import type { ContextMenuItem } from "@nuxt/ui";
 
-defineProps({
-  folder: { type: Object, required: true },
+const props = defineProps({
+  file: { type: Object, required: true },
   selected: { type: Boolean, default: false },
 });
 
-defineEmits(["click", "dblclick", "contextmenu", "menu"]);
+const emit = defineEmits(["events"]);
 
 const contextMenuRef = ref(null);
 
@@ -73,21 +72,38 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   {
     label: "Download",
     icon: "material-symbols:download-2-outline-rounded",
-    onSelect: () => {},
+    onSelect: () => {
+      emit("events", {
+        name: "download",
+        data: { id: props.file.id },
+      });
+    },
   },
   {
     label: "Rename",
     icon: "material-symbols:edit-outline-rounded",
+    onSelect: () => {
+      emit("events", {
+        name: "update",
+        data: { id: props.file.id },
+      });
+    },
   },
   {
     label: "Move to trash",
     icon: "material-symbols:restore-from-trash-outline-rounded",
+    onSelect: () => {
+      emit("events", {
+        name: "delete",
+        data: { id: props.file.id },
+      });
+    },
   },
 ]);
 </script>
 
 <style scoped>
-.folder-card {
+.file-card {
   width: 100%;
   background: var(--ui-bg-muted);
   border: 1px solid var(--ui-border);
@@ -104,20 +120,20 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   transition: 0.3s ease;
 }
 
-.folder-card:hover {
+.file-card:hover {
   border-color: var(--ui-border-accented);
 }
 
-.folder-card.selected {
+.file-card.selected {
   background: var(--ui-bg-accented);
   border-color: var(--ui-border-elevated);
 }
 
 /* Sortable states */
-.folder-card.sortable-ghost {
+.file-card.sortable-ghost {
   opacity: 0.35;
 }
-.folder-card.sortable-chosen {
+.file-card.sortable-chosen {
   box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
 }
 
@@ -148,7 +164,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   color: var(--muted, #8a8078);
 }
 
-.folder-card:hover .card-menu {
+.file-card:hover .card-menu {
   opacity: 1;
 }
 
