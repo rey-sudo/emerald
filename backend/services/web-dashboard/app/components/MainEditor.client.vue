@@ -234,7 +234,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem;
-  border: 1px solid var(--ui--muted);
+  border: 1px solid var(--ui-border-muted);
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 0);
   border-bottom-right-radius: calc(var(--ui-radius) * 0);
