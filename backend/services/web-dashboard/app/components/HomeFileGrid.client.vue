@@ -188,10 +188,10 @@
 
         <!-- ── List view ── -->
         <div v-else ref="listRef" class="folder-list">
-          <ListHeader v-if="documentStore.filteredFolders.length > 0" />
+          <ListHeader v-if="currentDocuments.length > 0" />
 
           <FolderRow
-            v-for="folder in documentStore.filteredFolders"
+            v-for="folder in currentDocuments"
             :key="folder.id"
             :folder="folder"
             :selected="selectedId === folder.id"
@@ -201,7 +201,7 @@
           />
         </div>
 
-        <HomeFolderEmpty v-if="documentStore.filteredFolders.length === 0" />
+        <HomeFileEmpty v-if="currentDocuments.length === 0" />
       </main>
     </div>
   </div>

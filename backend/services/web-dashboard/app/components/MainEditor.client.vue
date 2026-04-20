@@ -121,6 +121,10 @@ watch(
   (msg) => {
     if (!editor.value) return;
 
+    if (msg?.documentId && msg.documentId !== route.params.id) {
+      return;
+    }
+
     if (msg.command === "get_document") {
       if (msg.data.isNew) {
         editor.value.commands.setContent(msg.data.content);
@@ -148,6 +152,8 @@ async function processChanges() {
   // 1. Lock the process to prevent concurrent execution (race conditions)
   isProcessing = true;
 
+  const documentId = route.params.id;
+
   /**2. Extract and clear the buffer IMMEDIATELY.
    * New incoming updates during the async 'await' period will be pushed to a
    * fresh array, preventing data loss during the current transmission.
@@ -163,7 +169,7 @@ async function processChanges() {
     const result = await editorStore.send({
       command: "update_document",
       params: {
-        documentId: route.params.id,
+        documentId: documentId,
         binario: mergedUpdate,
         page: "default",
       },
@@ -203,7 +209,12 @@ function cerrarDocumento() {
 
 onBeforeUnmount(() => {
   cerrarDocumento();
-  editor.value?.destroy();
+
+  if (editor.value) {
+    editor.value.destroy();
+  }
+
+  ydoc.destroy();
 });
 </script>
 
@@ -223,7 +234,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem;
-  border: 1px solid var(--ui-border);
+  border: 1px solid var(--ui--muted);
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 0);
   border-bottom-right-radius: calc(var(--ui-radius) * 0);

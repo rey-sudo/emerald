@@ -1,10 +1,10 @@
 <template>
   <PageSplit initialWidth="60%">
     <template #left>
-      <MainEditor />
+      <MainEditor :key="route.params.id"/>
     </template>
     <template #right>
-      <Preview />
+      <Preview :key="route.params.id"/>
     </template>
   </PageSplit>
 </template>
