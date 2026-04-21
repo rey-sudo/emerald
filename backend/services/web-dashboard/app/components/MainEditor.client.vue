@@ -27,6 +27,22 @@
         :variant="editor.isActive('highlight') ? 'soft' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
+
+      <UButton
+        class="ml-auto"
+        :class="{ 'is-active': editor.isActive('highlight') }"
+        icon="i-lucide-mouse-pointer-click"
+        size="sm"
+        color="neutral"
+        :variant="editor.isActive('highlight') ? 'subtle' : 'outline'"
+        @click="editor.chain().focus().toggleSelection().run()"
+        >Select</UButton
+      >
+      <button v-if="editor" @click="editor.commands.clearAllSelections()">
+        Limpiar ({{
+          editor.storage.multiSelect.getSelectionCount(editor.state.doc)
+        }})
+      </button>
     </div>
 
     <div class="editor-container">
@@ -45,7 +61,6 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Node, mergeAttributes } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
-import Highlight from "@tiptap/extension-highlight";
 import * as Y from "yjs";
 
 const Page = Node.create({
@@ -106,7 +121,7 @@ const editor = useEditor({
       document: ydoc,
       field: "default",
     }),
-    Highlight,
+    MultiSelect,
   ],
   editorProps: {
     attributes: {
