@@ -39,10 +39,9 @@
         >Select</UButton
       >
       <button v-if="editor" @click="editor.commands.clearAllSelections()">
-        Limpiar ({{
-          editor.storage.multiSelect.getSelectionCount(editor.state.doc)
-        }})
+        Limpiar ({{ selectionCount }})
       </button>
+      <button @click="logSelections">ver</button>
     </div>
 
     <div class="editor-container">
@@ -157,6 +156,22 @@ let isProcessing = false;
 ydoc.on("update", (update) => {
   localBuffer.push(update);
 });
+
+const selectionCount = computed(() => {
+  if (!editor.value) return 0;
+  return editor.value.storage.multiSelect.getSelectionCount(
+    editor.value.state.doc,
+  );
+});
+
+const logSelections = () => {
+  if (!editor.value) return;
+
+  const entries = editor.value.storage.multiSelect.getSelectionsInOrder(
+    editor.value.state.doc,
+  );
+  console.log("Selecciones actuales:", entries);
+};
 
 async function processChanges() {
   // Exit if there are no updates to send or if a sync process is already in progress

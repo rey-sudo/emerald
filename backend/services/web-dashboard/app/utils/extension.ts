@@ -1,5 +1,5 @@
-import { Mark, mergeAttributes } from '@tiptap/core'
-import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
+import { Mark, mergeAttributes } from "@tiptap/core";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -10,38 +10,38 @@ export interface MultiSelectOptions {
    * Additional HTML attributes merged into every <mark> element.
    * @default {}
    */
-  HTMLAttributes: Record<string, any>
+  HTMLAttributes: Record<string, any>;
 
   /**
    * Color palette cycled through on each new selection.
    * Supports any valid CSS color string.
    */
-  colors: string[]
+  colors: string[];
 }
 
 export interface SelectionEntry {
   /** Unique identifier assigned to this selection. */
-  id: string
+  id: string;
   /**
    * Monotonic index reflecting the order in which this selection was created.
    * Selections removed and re-added always receive a higher number than all
    * previous ones; the counter never resets during a session.
    */
-  order: number
+  order: number;
   /**
    * Full text content of the selection, as it appears in the document.
    * Adjacent text nodes belonging to the same mark are concatenated.
    */
-  text: string
+  text: string;
   /** CSS color assigned to this selection. */
-  color: string
+  color: string;
 }
 
 export interface MultiSelectStorage {
   /** @internal Monotonic counter – do not mutate directly. */
-  _counter: number
+  _counter: number;
   /** @internal Cycles through the color palette – do not mutate directly. */
-  _colorIndex: number
+  _colorIndex: number;
 
   /**
    * Returns all selections currently in the document, sorted by the order
@@ -51,7 +51,7 @@ export interface MultiSelectStorage {
    * const entries = editor.storage.multiSelect.getSelectionsInOrder(editor.state.doc)
    * entries.forEach(e => console.log(`#${e.order}: "${e.text}"`))
    */
-  getSelectionsInOrder(doc: ProseMirrorNode): SelectionEntry[]
+  getSelectionsInOrder(doc: ProseMirrorNode): SelectionEntry[];
 
   /**
    * Returns the number of distinct selections currently in the document.
@@ -59,14 +59,14 @@ export interface MultiSelectStorage {
    * @example
    * const count = editor.storage.multiSelect.getSelectionCount(editor.state.doc)
    */
-  getSelectionCount(doc: ProseMirrorNode): number
+  getSelectionCount(doc: ProseMirrorNode): number;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Command augmentation
 // ─────────────────────────────────────────────────────────────────────────────
 
-declare module '@tiptap/core' {
+declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     multiSelect: {
       /**
@@ -81,7 +81,7 @@ declare module '@tiptap/core' {
        * @example
        * editor.commands.toggleSelection()
        */
-      toggleSelection: () => ReturnType
+      toggleSelection: () => ReturnType;
 
       /**
        * Remove **every** multiSelect mark from the entire document in a single
@@ -94,8 +94,8 @@ declare module '@tiptap/core' {
        * @example
        * editor.commands.clearAllSelections()
        */
-      clearAllSelections: () => ReturnType
-    }
+      clearAllSelections: () => ReturnType;
+    };
   }
 }
 
@@ -103,7 +103,7 @@ declare module '@tiptap/core' {
 // Internal helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
-const MARK_NAME = 'multiSelect'
+const MARK_NAME = "multiSelect";
 
 /**
  * Walk the document and aggregate all multiSelect marks into SelectionEntry
@@ -111,40 +111,40 @@ const MARK_NAME = 'multiSelect'
  * The returned array is sorted by `order` (creation order).
  */
 function collectSelections(doc: ProseMirrorNode): SelectionEntry[] {
-  const map = new Map<string, SelectionEntry>()
+  const map = new Map<string, SelectionEntry>();
 
-  doc.descendants(node => {
-    if (!node.isText) return
+  doc.descendants((node) => {
+    if (!node.isText) return;
 
     for (const mark of node.marks) {
-      if (mark.type.name !== MARK_NAME) continue
+      if (mark.type.name !== MARK_NAME) continue;
 
       const { id, order, color } = mark.attrs as {
-        id: string
-        order: number
-        color: string
-      }
+        id: string;
+        order: number;
+        color: string;
+      };
 
-      const existing = map.get(id)
+      const existing = map.get(id);
       if (existing) {
-        existing.text += node.text ?? ''
+        existing.text += node.text ?? "";
       } else {
-        map.set(id, { id, order, color, text: node.text ?? '' })
+        map.set(id, { id, order, color, text: node.text ?? "" });
       }
     }
-  })
+  });
 
-  return [...map.values()].sort((a, b) => a.order - b.order)
+  return [...map.values()].sort((a, b) => a.order - b.order);
 }
 
 function countDistinctSelections(doc: ProseMirrorNode): number {
-  const ids = new Set<string>()
-  doc.descendants(node => {
+  const ids = new Set<string>();
+  doc.descendants((node) => {
     for (const mark of node.marks) {
-      if (mark.type.name === MARK_NAME) ids.add(mark.attrs.id as string)
+      if (mark.type.name === MARK_NAME) ids.add(mark.attrs.id as string);
     }
-  })
-  return ids.size
+  });
+  return ids.size;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -158,16 +158,42 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
     return {
       HTMLAttributes: {},
       colors: [
-        '#FFD166', // amber
-        '#06D6A0', // mint
-        '#118AB2', // ocean
-        '#EF476F', // rose
-        '#A8DADC', // powder blue
-        '#C77DFF', // lavender
-        '#F4845F', // coral
-        '#B7E4C7', // sage
+        "#FFD166", // amber
+        "#06D6A0", // mint
+        "#118AB2", // ocean
+        "#EF476F", // rose
+        "#A8DADC", // powder blue
+        "#C77DFF", // lavender
+        "#F4845F", // coral
+        "#B7E4C7", // sage
+
+        "#2A9D8F", // persian green
+        "#83C5BE", // pale teal
+        "#52796F", // slate green
+        "#A3B18A", // moss grey
+        "#95D5B2", // light green
+
+        "#457B9D", // steel blue
+        "#48CAE4", // sky cyan
+        "#669BBC", // dusty blue
+        "#8D99AE", // cool grey
+        "#C8B6FF", // periwinkle
+
+        "#9D4EDD", // soft amethyst
+        "#CDB4DB", // pale violet
+        "#E5989B", // pastel mauve
+        "#B5838D", // dusty rose
+        "#F2B5D4", // cotton candy
+
+        "#E07A5F", // terracotta
+        "#E9C46A", // saffron
+        "#F4A261", // sandy brown
+        "#D4A373", // camel
+        "#CB997E", // warm taupe
+        "#A98467", // mocha
+        "#C1666B", // muted brick
       ],
-    }
+    };
   },
 
   // ── Storage: mutable state + public API methods ──────────────────────────
@@ -178,13 +204,13 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
       _colorIndex: 0,
 
       getSelectionsInOrder(doc: ProseMirrorNode): SelectionEntry[] {
-        return collectSelections(doc)
+        return collectSelections(doc);
       },
 
       getSelectionCount(doc: ProseMirrorNode): number {
-        return countDistinctSelections(doc)
+        return countDistinctSelections(doc);
       },
-    }
+    };
   },
 
   // ── Attributes ────────────────────────────────────────────────────────────
@@ -194,51 +220,51 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
       /** Unique selection identifier (used to aggregate text across text nodes). */
       id: {
         default: null,
-        parseHTML: el => el.getAttribute('data-ms-id'),
-        renderHTML: attrs => ({ 'data-ms-id': attrs.id }),
+        parseHTML: (el) => el.getAttribute("data-ms-id"),
+        renderHTML: (attrs) => ({ "data-ms-id": attrs.id }),
       },
 
       /** Creation order – drives the numbered badge and sorted extraction. */
       order: {
         default: 0,
-        parseHTML: el => Number(el.getAttribute('data-ms-order') ?? 0),
-        renderHTML: attrs => ({ 'data-ms-order': attrs.order }),
+        parseHTML: (el) => Number(el.getAttribute("data-ms-order") ?? 0),
+        renderHTML: (attrs) => ({ "data-ms-order": attrs.order }),
       },
 
       /** Background color for this selection. */
       color: {
-        default: '#FFD166',
-        parseHTML: el => el.getAttribute('data-ms-color'),
-        renderHTML: attrs => ({
-          'data-ms-color': attrs.color,
+        default: "#FFD166",
+        parseHTML: (el) => el.getAttribute("data-ms-color"),
+        renderHTML: (attrs) => ({
+          "data-ms-color": attrs.color,
           style: `background-color: ${attrs.color}40; border-bottom: 2px solid ${attrs.color};`,
         }),
       },
-    }
+    };
   },
 
   // ── HTML serialization ────────────────────────────────────────────────────
 
   parseHTML() {
-    return [{ tag: 'mark[data-ms-id]' }]
+    return [{ tag: "mark[data-ms-id]" }];
   },
 
   renderHTML({ HTMLAttributes }) {
     return [
-      'mark',
+      "mark",
       mergeAttributes(
-        { class: 'ms-mark' },
+        { class: "ms-mark" },
         this.options.HTMLAttributes,
         HTMLAttributes,
       ),
       0, // content hole
-    ]
+    ];
   },
 
   // ── Lifecycle: inject styles once on mount ────────────────────────────────
 
   onCreate() {
-    injectStyles()
+    injectStyles();
   },
 
   // ── Commands ──────────────────────────────────────────────────────────────
@@ -249,55 +275,59 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
       toggleSelection:
         () =>
         ({ commands, state }) => {
-          const { from, to, empty } = state.selection
+          const { from, to, empty } = state.selection;
 
           // Collapsed cursor – nothing to mark
-          if (empty) return false
+          if (empty) return false;
 
-          const markType = state.schema.marks[this.name]
-          const hasMark = state.doc.rangeHasMark(from, to, markType!)
+          const markType = state.schema.marks[this.name];
+          const hasMark = state.doc.rangeHasMark(from, to, markType!);
 
           if (hasMark) {
             // Remove the mark from the selected range only
-            return commands.unsetMark(this.name)
+            //return commands.unsetMark(this.name)
+            return false;
           }
 
           // Assign creation order and color, then apply the mark
-          const order = ++this.storage._counter
+          const order = ++this.storage._counter;
           const color =
-            this.options.colors[this.storage._colorIndex++ % this.options.colors.length]
+            this.options.colors[
+              this.storage._colorIndex++ % this.options.colors.length
+            ];
           // Compact collision-resistant id: timestamp base-36 + 5 random chars
           const id = `ms-${Date.now().toString(36)}-${Math.random()
             .toString(36)
-            .slice(2, 7)}`
+            .slice(2, 7)}`;
 
-          return commands.setMark(this.name, { id, order, color })
+          return commands.setMark(this.name, { id, order, color });
         },
 
       // ── clearAllSelections ─────────────────────────────────────────────────
       clearAllSelections:
         () =>
         ({ tr, dispatch, state }) => {
-          const markType = state.schema.marks[this.name]
+          const markType = state.schema.marks[this.name];
 
           // Collect all ranges to remove in a single pass
           state.doc.descendants((node, pos) => {
-            if (!node.isText) return
+            if (!node.isText) return;
             for (const mark of node.marks) {
               if (mark.type === markType) {
-                tr.removeMark(pos, pos + node.nodeSize, markType)
+                tr.removeMark(pos, pos + node.nodeSize, markType);
               }
             }
-          })
+          });
 
           // Reset color cycling so the palette starts fresh
-          this.storage._colorIndex = 0
+          this.storage._colorIndex = 0;
+          this.storage._counter = 0;
           // NOTE: _counter is intentionally NOT reset (see JSDoc above).
 
-          if (dispatch) dispatch(tr)
-          return true
+          if (dispatch) dispatch(tr);
+          return true;
         },
-    }
+    };
   },
 
   // ── Keyboard shortcut ─────────────────────────────────────────────────────
@@ -305,23 +335,23 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
   addKeyboardShortcuts() {
     return {
       // Cmd/Ctrl + Shift + X → toggle selection
-      'Mod-Shift-x': () => this.editor.commands.toggleSelection(),
-    }
+      "Mod-Shift-x": () => this.editor.commands.toggleSelection(),
+    };
   },
-})
+});
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Style injection
 // ─────────────────────────────────────────────────────────────────────────────
 
-const STYLE_ID = 'tiptap-multi-select-styles'
+const STYLE_ID = "tiptap-multi-select-styles";
 
 function injectStyles(): void {
-  if (typeof document === 'undefined') return // SSR guard
-  if (document.getElementById(STYLE_ID)) return // already injected
+  if (typeof document === "undefined") return; // SSR guard
+  if (document.getElementById(STYLE_ID)) return; // already injected
 
-  const style = document.createElement('style')
-  style.id = STYLE_ID
+  const style = document.createElement("style");
+  style.id = STYLE_ID;
   style.textContent = /* css */ `
 
     /* ── Base mark ─────────────────────────────────────────────── */
@@ -336,6 +366,7 @@ function injectStyles(): void {
         outline-color 0.15s ease;
       /* Subtle lift so the mark reads above plain text */
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+      color: var(--ui-text);
     }
 
     /* ── Hover ──────────────────────────────────────────────────── */
@@ -387,7 +418,7 @@ function injectStyles(): void {
       outline-offset: 2px;
     }
 
-  `
+  `;
 
-  document.head.appendChild(style)
+  document.head.appendChild(style);
 }
