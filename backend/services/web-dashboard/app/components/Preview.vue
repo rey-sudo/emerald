@@ -12,7 +12,7 @@
           delayDuration: 100,
         }"
       >
-        <UButton :icon="btn.icon" size="xl" :color="btn.color" variant="outline"
+        <UButton :icon="btn.icon" size="xl" color="neutral" variant="outline"
           >{{ btn.label }}
         </UButton>
       </UTooltip>
@@ -142,7 +142,6 @@ function onComplete({ score, total, pct, answers }) {
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.25rem 1rem;
-  border: 1px solid var(--ui-border);
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 2);
   border-bottom-right-radius: calc(var(--ui-radius) * 2);

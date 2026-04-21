@@ -4,7 +4,7 @@
       <UButton
         icon="i-lucide-undo-2"
         size="sm"
-        color="primary"
+        color="neutral"
         variant="ghost"
         :disabled="!editor.can().undo()"
         @click="editor.chain().focus().undo().run()"
@@ -13,18 +13,20 @@
       <UButton
         icon="i-lucide-redo-2"
         size="sm"
-        color="primary"
+        color="neutral"
         variant="ghost"
         :disabled="!editor.can().redo()"
         @click="editor.chain().focus().redo().run()"
       />
+
       <USeparator orientation="vertical" class="h-4" />
+
       <UButton
         :class="{ 'is-active': editor.isActive('bold') }"
         icon="i-lucide-bold"
         size="sm"
-        color="primary"
-        :variant="editor.isActive('bold') ? 'soft' : 'ghost'"
+        color="neutral"
+        :variant="editor.isActive('bold') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleBold().run()"
       />
 
@@ -32,8 +34,8 @@
         :class="{ 'is-active': editor.isActive('italic') }"
         icon="i-lucide-italic"
         size="sm"
-        color="primary"
-        :variant="editor.isActive('italic') ? 'soft' : 'ghost'"
+        color="neutral"
+        :variant="editor.isActive('italic') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleItalic().run()"
       />
 
@@ -41,13 +43,14 @@
         :class="{ 'is-active': editor.isActive('highlight') }"
         icon="i-lucide-highlighter"
         size="sm"
-        color="primary"
-        :variant="editor.isActive('highlight') ? 'soft' : 'ghost'"
+        color="neutral"
+        :variant="editor.isActive('highlight') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
 
+      <USeparator orientation="vertical" class="h-4 ml-auto" />
+
       <UButton
-        class="ml-auto"
         :class="{ 'is-active': editor.isActive('highlight') }"
         icon="i-lucide-mouse-pointer-click"
         size="sm"
@@ -56,10 +59,24 @@
         @click="editor.chain().focus().toggleSelection().run()"
         >Select</UButton
       >
-      <button v-if="editor" @click="editor.commands.clearAllSelections()">
-        Limpiar ({{ selectionCount }})
-      </button>
-      <button @click="logSelections">ver</button>
+
+      <UButton
+        :class="{ 'is-active': editor.isActive('highlight') }"
+        icon="i-lucide-eraser"
+        size="sm"
+        color="secondary"
+        :variant="editor.isActive('highlight') ? 'subtle' : 'outline'"
+        @click="editor.commands.clearAllSelections()"
+      >
+        Clean
+        <template #trailing>
+          <UBadge class="flex items-center text-center" color="neutral" variant="subtle" size="xs">{{
+            selectionCount
+          }}</UBadge>
+        </template>
+      </UButton>
+
+      <button style="display: none" @click="logSelections">ver</button>
     </div>
 
     <div class="editor-container">

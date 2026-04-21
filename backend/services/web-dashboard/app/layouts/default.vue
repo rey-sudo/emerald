@@ -46,6 +46,7 @@ const factoryNavigation = computed(() => {
       tooltip: {
         text: folder.folder_name,
       },
+      defaultOpen: true,
       children: folder.documents.map((doc) => ({
         label: doc.originalName,
         icon: "ic:outline-insert-drive-file",
@@ -175,7 +176,7 @@ onUnmounted(() => {
         <Tabs v-model="activeTabId" :tabs="myTabs" @close="handleClose" />
 
         <UFieldGroup class="ml-auto">
-          <UColorModeButton />
+          <UColorModeButton class="no-drag" />
 
           <UButton
             class="no-drag"

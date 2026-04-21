@@ -85,45 +85,9 @@ rounded-3xl
 */
 
 :root {
---ui-card-shadow: 
-  0 2px 4px rgba(0, 0, 0, 0.02),
-  0 10px 20px rgba(0, 0, 0, 0.04),
-  0 15px 35px rgba(0, 0, 0, 0.04);
-}
-
-:root {
-  /* Backgrounds */
-  --ui-bg: #1a1917;
-  --ui-bg-muted: #222120;
-  --ui-bg-elevated: #2e2d2b;
-  --ui-bg-accented: #3a3937;
-  --ui-bg-inverted: #f8f8f7;
-
-  /* Text */
-  --ui-text-dimmed: #52514d;
-  --ui-text-muted: #6b6a64;
-  --ui-text-toned: #888780;
-  --ui-text: #c9c8c4;
-  --ui-text-highlighted: #f0efed;
-  --ui-text-inverted: #1a1917;
-
-  /* Borders */
-  --ui-border: #2e2d2b;
-  --ui-border-muted: #252422;
-  --ui-border-accented: #3a3937;
-  --ui-border-inverted: #f0efed;
-
-  /* Semantic */
-  --ui-primary: var(--ui-color-neutral-400);
-  --ui-secondary: var(--ui-color-neutral-400);
-  --ui-success: var(--ui-color-success-400);
-  --ui-info: var(--ui-color-info-400);
-  --ui-warning: var(--ui-color-warning-400);
-  --ui-error: var(--ui-color-error-400);
-
-  /* Layout — sin cambios */
-  --ui-container: 80rem;
-  --ui-header-height: 2.5rem;
+  --ui-card-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02), 0 10px 20px rgba(0, 0, 0, 0.04),
+    0 15px 35px rgba(0, 0, 0, 0.04);
 }
 
 :root {
@@ -160,100 +124,79 @@ rounded-3xl
   --ui-header-height: 2.5rem;
 }
 
-
 :root {
-  /* ========== Semantic ========== */
-  --ui-primary: #10a37f;
-  --ui-secondary: #6366f1;
+  /* ========== Semantic (usa escala) ========== */
+  --ui-primary: var(--ui-color-primary-500);
+  --ui-secondary: var(--ui-color-secondary-500);
 
-  --ui-success: #16a34a;
-  --ui-info: #0ea5e9;
-  --ui-warning: #f59e0b;
-  --ui-error: #ef4444;
+  --ui-success: var(--ui-color-success-500);
+  --ui-info: var(--ui-color-info-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-error: var(--ui-color-error-500);
 
   /* ========== Backgrounds ========== */
-  --ui-bg: #ffffff;
-  --ui-bg-muted: #f1f1f3;
-  --ui-bg-elevated: #ffffff;
-  --ui-bg-accented: #e6f7f3;
-  --ui-bg-inverted: #111827;
+  --ui-bg: white;
+  --ui-bg-muted: var(--ui-color-neutral-50);
+  --ui-bg-elevated: var(--ui-color-neutral-100);
+  --ui-bg-accented: var(--ui-color-neutral-200);
+  --ui-bg-inverted: var(--ui-color-neutral-900);
 
   /* ========== Text ========== */
-  --ui-text-dimmed: #9ca3af;
-  --ui-text-muted: #6b7280;
-  --ui-text-toned: #374151;
-  --ui-text: #111827;
-  --ui-text-highlighted: #000000;
-  --ui-text-inverted: #ffffff;
+  --ui-text-dimmed: var(--ui-color-neutral-400);
+  --ui-text-muted: var(--ui-color-neutral-500);
+  --ui-text-toned: var(--ui-color-neutral-600);
+  --ui-text: var(--ui-color-neutral-700);
+  --ui-text-highlighted: var(--ui-color-neutral-900);
+  --ui-text-inverted: white;
 
   /* ========== Borders ========== */
-  --ui-border: #e5e7eb;
-  --ui-border-muted: #f1f1f3;
-  --ui-border-accented: #10a37f;
-  --ui-border-inverted: #374151;
+  --ui-border: var(--ui-color-neutral-200);
+  --ui-border-muted: var(--ui-color-neutral-200);
+  --ui-border-accented: var(--ui-color-neutral-300);
+  --ui-border-inverted: var(--ui-color-neutral-900);
 
   /* ========== Layout ========== */
   --ui-container: 1200px;
   --ui-header-height: 2.5rem;
 
-  /* ========== Extras (recomendado) ========== */
-  --ui-radius-sm: 6px;
-  --ui-radius-md: 10px;
-  --ui-radius-lg: 16px;
-
-  --ui-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --ui-shadow-md: 0 4px 8px rgba(0,0,0,0.08);
-
-  --ui-font-sans: 'Inter', system-ui, sans-serif;
+  /* ========== Radius (Nuxt estándar) ========== */
+  --ui-radius: 0.5rem;
 }
 
-
 .dark {
-  /* ========== Semantic ========== */
-  --ui-primary: #19c37d;
-  --ui-secondary: #818cf8;
+  /* ========== Semantic colors (usan escala) ========== */
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-secondary: var(--ui-color-secondary-400);
 
-  --ui-success: #22c55e;
-  --ui-info: #38bdf8;
-  --ui-warning: #fbbf24;
-  --ui-error: #f87171;
+  --ui-success: var(--ui-color-success-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
 
-  /* ========== Backgrounds ========== */
-  --ui-bg: #0f0f10;
-  --ui-bg-muted: #1a1a1c;
-  --ui-bg-elevated: #1f1f23;
-  --ui-bg-accented: #12372f;
-  --ui-bg-inverted: #ffffff;
+  /* ========== Background ========== */
+  --ui-bg: var(--ui-color-neutral-900);
+  --ui-bg-muted: var(--ui-color-neutral-800);
+  --ui-bg-elevated: var(--ui-color-neutral-800);
+  --ui-bg-accented: var(--ui-color-neutral-700);
+  --ui-bg-inverted: white;
 
   /* ========== Text ========== */
-  --ui-text-dimmed: #6b7280;
-  --ui-text-muted: #9ca3af;
-  --ui-text-toned: #d1d5db;
-  --ui-text: #f9fafb;
-  --ui-text-highlighted: #ffffff;
-  --ui-text-inverted: #111827;
+  --ui-text-dimmed: var(--ui-color-neutral-500);
+  --ui-text-muted: var(--ui-color-neutral-400);
+  --ui-text-toned: var(--ui-color-neutral-300);
+  --ui-text: var(--ui-color-neutral-200);
+  --ui-text-highlighted: white;
+  --ui-text-inverted: var(--ui-color-neutral-900);
 
   /* ========== Borders ========== */
-  --ui-border: #2a2a2e;
-  --ui-border-muted: #1a1a1c;
-  --ui-border-accented: #19c37d;
-  --ui-border-inverted: #e5e7eb;
-
-  /* ========== Layout (igual) ========== */
+  --ui-border: var(--ui-color-neutral-800);
+  --ui-border-muted: var(--ui-color-neutral-700);
+  --ui-border-accented: var(--ui-color-neutral-700);
+  --ui-border-inverted: white;
+  /* ========== Layout ========== */
   --ui-container: 1200px;
   --ui-header-height: 2.5rem;
 
-  /* ========== Extras ========== */
-  --ui-radius-sm: 6px;
-  --ui-radius-md: 10px;
-  --ui-radius-lg: 16px;
-
-  --ui-shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
-  --ui-shadow-md: 0 6px 16px rgba(0,0,0,0.5);
-
-  --ui-font-sans: 'Inter', system-ui, sans-serif;
-
-  /* ========== Derivados (clave) ========== */
-  --ui-primary-hover: #16a06b;
-  --ui-primary-soft: #12372f;
+  /* ========== Radius (opcional pero estándar) ========== */
+  --ui-radius: 0.5rem;
 }
