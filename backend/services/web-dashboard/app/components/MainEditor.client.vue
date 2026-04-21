@@ -2,6 +2,24 @@
   <div class="editor-layout">
     <div v-if="editor" class="editor-header">
       <UButton
+        icon="i-lucide-undo-2"
+        size="sm"
+        color="primary"
+        variant="ghost"
+        :disabled="!editor.can().undo()"
+        @click="editor.chain().focus().undo().run()"
+      />
+
+      <UButton
+        icon="i-lucide-redo-2"
+        size="sm"
+        color="primary"
+        variant="ghost"
+        :disabled="!editor.can().redo()"
+        @click="editor.chain().focus().redo().run()"
+      />
+      <USeparator orientation="vertical" class="h-4" />
+      <UButton
         :class="{ 'is-active': editor.isActive('bold') }"
         icon="i-lucide-bold"
         size="sm"
@@ -33,7 +51,7 @@
         :class="{ 'is-active': editor.isActive('highlight') }"
         icon="i-lucide-mouse-pointer-click"
         size="sm"
-        color="neutral"
+        color="primary"
         :variant="editor.isActive('highlight') ? 'subtle' : 'outline'"
         @click="editor.chain().focus().toggleSelection().run()"
         >Select</UButton
@@ -41,7 +59,6 @@
       <button v-if="editor" @click="editor.commands.clearAllSelections()">
         Limpiar ({{ selectionCount }})
       </button>
-      <button @click="logSelections">ver</button>
     </div>
 
     <div class="editor-container">
@@ -127,7 +144,7 @@ const editor = useEditor({
       spellcheck: "false",
       class: "prose-container",
     },
-  },
+  }
 });
 
 watch(
@@ -264,11 +281,9 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem;
-  border: 1px solid var(--ui-border-muted);
-  border-top: none;
+  border-bottom: 1px solid var(--ui-border);
   border-bottom-left-radius: calc(var(--ui-radius) * 0);
   border-bottom-right-radius: calc(var(--ui-radius) * 0);
-  box-shadow: var(--ui-card-shadow);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
@@ -323,7 +338,6 @@ onBeforeUnmount(() => {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1100px; /* Muy importante para el scrollbar */
   min-height: 100px;
-  border-bottom: 1px solid var(--ui-border-muted);
 }
 
 /* --- INDICADOR DE PÁGINA (ESTÉTICO) --- */

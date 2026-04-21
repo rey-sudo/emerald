@@ -4,7 +4,7 @@
       <UTooltip
         v-for="(btn, index) in buttons"
         :key="index"
-        :text="btn.tooltip"
+        :text="btn.label"
         :content="{
           align: 'center',
           side: 'top',
@@ -12,55 +12,42 @@
           delayDuration: 100,
         }"
       >
-        <UButton :icon="btn.icon" size="sm" :color="btn.color" variant="ghost"
+        <UButton :icon="btn.icon" size="xl" :color="btn.color" variant="outline"
           >{{ btn.label }}
         </UButton>
       </UTooltip>
     </div>
 
-    <div class="preview-content">
-      <Quiz
+    <div class="preview-content"></div>
+  </div>
+</template>
+
+<script setup>
+/**
+ *       <Quiz
         :questions="questions"
         title="Quiz"
         subtitle="Mid level"
         @answer="onAnswer"
         @complete="onComplete"
       />
-    </div>
-  </div>
-</template>
-
-<script setup>
+ * 
+ */
 import { ref } from "vue";
 
 const buttons = ref([
   {
-    tooltip: "Outputs",
-    color: "neutral",
-    icon: "material-symbols:right-panel-close-outline-rounded",
-  },
-  {
-    tooltip: "Outputs",
-    color: "neutral",
-    icon: "material-symbols:widgets-outline-rounded",
-  },
-  {
-    tooltip: "Chat",
-    color: "neutral",
-    icon: "material-symbols:chat-bubble-outline-rounded",
-  },
-  {
-    tooltip: "Quiz",
+    label: "Quiz",
     color: "success",
     icon: "material-symbols:quiz-outline-rounded",
   },
   {
-    tooltip: "Concepts",
+    label: "Concepts",
     color: "error",
     icon: "material-symbols:lightbulb-2-outline-rounded",
   },
   {
-    tooltip: "Mind map",
+    label: "Mind map",
     color: "warning",
     icon: "material-symbols:mindfulness-outline-rounded",
   },
@@ -159,7 +146,6 @@ function onComplete({ score, total, pct, answers }) {
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 2);
   border-bottom-right-radius: calc(var(--ui-radius) * 2);
-  box-shadow: var(--ui-card-shadow);
 }
 
 .grid-button {

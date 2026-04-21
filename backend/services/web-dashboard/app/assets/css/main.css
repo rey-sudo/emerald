@@ -85,8 +85,10 @@ rounded-3xl
 */
 
 :root {
-  --ui-card-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+--ui-card-shadow: 
+  0 2px 4px rgba(0, 0, 0, 0.02),
+  0 10px 20px rgba(0, 0, 0, 0.04),
+  0 15px 35px rgba(0, 0, 0, 0.04);
 }
 
 :root {
@@ -156,4 +158,102 @@ rounded-3xl
 
   --ui-container: 80rem;
   --ui-header-height: 2.5rem;
+}
+
+
+:root {
+  /* ========== Semantic ========== */
+  --ui-primary: #10a37f;
+  --ui-secondary: #6366f1;
+
+  --ui-success: #16a34a;
+  --ui-info: #0ea5e9;
+  --ui-warning: #f59e0b;
+  --ui-error: #ef4444;
+
+  /* ========== Backgrounds ========== */
+  --ui-bg: #ffffff;
+  --ui-bg-muted: #f1f1f3;
+  --ui-bg-elevated: #ffffff;
+  --ui-bg-accented: #e6f7f3;
+  --ui-bg-inverted: #111827;
+
+  /* ========== Text ========== */
+  --ui-text-dimmed: #9ca3af;
+  --ui-text-muted: #6b7280;
+  --ui-text-toned: #374151;
+  --ui-text: #111827;
+  --ui-text-highlighted: #000000;
+  --ui-text-inverted: #ffffff;
+
+  /* ========== Borders ========== */
+  --ui-border: #e5e7eb;
+  --ui-border-muted: #f1f1f3;
+  --ui-border-accented: #10a37f;
+  --ui-border-inverted: #374151;
+
+  /* ========== Layout ========== */
+  --ui-container: 1200px;
+  --ui-header-height: 2.5rem;
+
+  /* ========== Extras (recomendado) ========== */
+  --ui-radius-sm: 6px;
+  --ui-radius-md: 10px;
+  --ui-radius-lg: 16px;
+
+  --ui-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --ui-shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+
+  --ui-font-sans: 'Inter', system-ui, sans-serif;
+}
+
+
+.dark {
+  /* ========== Semantic ========== */
+  --ui-primary: #19c37d;
+  --ui-secondary: #818cf8;
+
+  --ui-success: #22c55e;
+  --ui-info: #38bdf8;
+  --ui-warning: #fbbf24;
+  --ui-error: #f87171;
+
+  /* ========== Backgrounds ========== */
+  --ui-bg: #0f0f10;
+  --ui-bg-muted: #1a1a1c;
+  --ui-bg-elevated: #1f1f23;
+  --ui-bg-accented: #12372f;
+  --ui-bg-inverted: #ffffff;
+
+  /* ========== Text ========== */
+  --ui-text-dimmed: #6b7280;
+  --ui-text-muted: #9ca3af;
+  --ui-text-toned: #d1d5db;
+  --ui-text: #f9fafb;
+  --ui-text-highlighted: #ffffff;
+  --ui-text-inverted: #111827;
+
+  /* ========== Borders ========== */
+  --ui-border: #2a2a2e;
+  --ui-border-muted: #1a1a1c;
+  --ui-border-accented: #19c37d;
+  --ui-border-inverted: #e5e7eb;
+
+  /* ========== Layout (igual) ========== */
+  --ui-container: 1200px;
+  --ui-header-height: 2.5rem;
+
+  /* ========== Extras ========== */
+  --ui-radius-sm: 6px;
+  --ui-radius-md: 10px;
+  --ui-radius-lg: 16px;
+
+  --ui-shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --ui-shadow-md: 0 6px 16px rgba(0,0,0,0.5);
+
+  --ui-font-sans: 'Inter', system-ui, sans-serif;
+
+  /* ========== Derivados (clave) ========== */
+  --ui-primary-hover: #16a06b;
+  --ui-primary-soft: #12372f;
 }
