@@ -1,5 +1,23 @@
+// Emerald
+// Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 import { Mark, mergeAttributes } from "@tiptap/core";
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
+import { Plugin, PluginKey } from "@tiptap/pm/state";
+
+const MultiSelectStateKey = new PluginKey("multiSelectState");
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -38,11 +56,6 @@ export interface SelectionEntry {
 }
 
 export interface MultiSelectStorage {
-  /** @internal Monotonic counter – do not mutate directly. */
-  _counter: number;
-  /** @internal Cycles through the color palette – do not mutate directly. */
-  _colorIndex: number;
-
   /**
    * Returns all selections currently in the document, sorted by the order
    * in which they were created (not by their position in the document).
@@ -147,6 +160,19 @@ function countDistinctSelections(doc: ProseMirrorNode): number {
   return ids.size;
 }
 
+function getMaxOrder(doc: ProseMirrorNode): number {
+  let max = 0;
+  doc.descendants((node) => {
+    node.marks.forEach((mark) => {
+      if (mark.type.name === MARK_NAME) {
+        const order = mark.attrs.order || 0;
+        if (order > max) max = order;
+      }
+    });
+  });
+  return max;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Extension
 // ─────────────────────────────────────────────────────────────────────────────
@@ -200,17 +226,34 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
 
   addStorage(): MultiSelectStorage {
     return {
-      _counter: 0,
-      _colorIndex: 0,
-
       getSelectionsInOrder(doc: ProseMirrorNode): SelectionEntry[] {
         return collectSelections(doc);
       },
-
       getSelectionCount(doc: ProseMirrorNode): number {
         return countDistinctSelections(doc);
       },
     };
+  },
+
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        key: MultiSelectStateKey,
+        state: {
+          init: () => ({ counter: 0, colorIndex: 0 }),
+          apply: (tr, pluginState) => {
+            const meta = tr.getMeta(MultiSelectStateKey);
+            if (meta) {
+              return {
+                counter: meta.counter ?? pluginState.counter,
+                colorIndex: meta.colorIndex ?? pluginState.colorIndex,
+              };
+            }
+            return pluginState;
+          },
+        },
+      }),
+    ];
   },
 
   // ── Attributes ────────────────────────────────────────────────────────────
@@ -274,33 +317,43 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
       // ── toggleSelection ────────────────────────────────────────────────────
       toggleSelection:
         () =>
-        ({ commands, state }) => {
+        ({ state, tr, dispatch }) => {
           const { from, to, empty } = state.selection;
 
-          // Collapsed cursor – nothing to mark
+          // 1. Si no hay selección, no hacemos nada
           if (empty) return false;
 
           const markType = state.schema.marks[this.name];
-          const hasMark = state.doc.rangeHasMark(from, to, markType!);
+          if (!markType) return false;
+
+          const hasMark = state.doc.rangeHasMark(from, to, markType);
 
           if (hasMark) {
-            // Remove the mark from the selected range only
-            //return commands.unsetMark(this.name)
-            return false;
+            // Opcional: Si quieres que al hacer click de nuevo se borre:
+            if (dispatch) tr.removeMark(from, to, markType);
+            return true;
+           // return false;
           }
 
-          // Assign creation order and color, then apply the mark
-          const order = ++this.storage._counter;
+          // 2. LA CLAVE: Calculamos el número basado SOLO en lo que existe en el doc
+          // Al hacer UNDO, el mark desaparece del doc, por lo que getMaxOrder bajará automáticamente.
+          const currentMax = getMaxOrder(state.doc);
+          const order = currentMax + 1;
+
+          // 3. El color se vincula al número para que sea consistente
           const color =
-            this.options.colors[
-              this.storage._colorIndex++ % this.options.colors.length
-            ];
-          // Compact collision-resistant id: timestamp base-36 + 5 random chars
+            this.options.colors[(order - 1) % this.options.colors.length];
+
+          // 4. ID único para este mark
           const id = `ms-${Date.now().toString(36)}-${Math.random()
             .toString(36)
             .slice(2, 7)}`;
 
-          return commands.setMark(this.name, { id, order, color });
+          if (dispatch) {
+            tr.addMark(from, to, markType.create({ id, order, color }));
+          }
+
+          return true;
         },
 
       // ── clearAllSelections ─────────────────────────────────────────────────
@@ -319,12 +372,17 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
             }
           });
 
-          // Reset color cycling so the palette starts fresh
-          this.storage._colorIndex = 0;
-          this.storage._counter = 0;
-          // NOTE: _counter is intentionally NOT reset (see JSDoc above).
+          // Leemos el estado actual
+          const pluginState = MultiSelectStateKey.getState(state);
 
-          if (dispatch) dispatch(tr);
+          if (dispatch) {
+            // Reseteamos el colorIndex a 0, pero mantenemos el counter intacto
+            tr.setMeta(MultiSelectStateKey, {
+              counter: pluginState.counter,
+              colorIndex: 0,
+            });
+          }
+
           return true;
         },
     };

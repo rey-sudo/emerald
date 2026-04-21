@@ -59,6 +59,7 @@
       <button v-if="editor" @click="editor.commands.clearAllSelections()">
         Limpiar ({{ selectionCount }})
       </button>
+      <button @click="logSelections">ver</button>
     </div>
 
     <div class="editor-container">
@@ -144,7 +145,7 @@ const editor = useEditor({
       spellcheck: "false",
       class: "prose-container",
     },
-  }
+  },
 });
 
 watch(
