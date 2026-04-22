@@ -380,7 +380,6 @@ onBeforeUnmount(() => {
   top: 20px;
   right: 30px;
   font-size: var(--text-sm);
-  font-weight: bold;
   color: var(--ui-text);
   letter-spacing: 1px;
   user-select: none; /* Evita que el número se seleccione al copiar texto */
