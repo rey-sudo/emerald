@@ -65,7 +65,7 @@
         icon="i-lucide-eraser"
         size="sm"
         color="secondary"
-        :variant="editor.isActive('multiSelect') ? 'outline' : 'outline'"
+        variant="outline"
         :disabled="!selectionCount"
         @click="editor.commands.clearAllSelections()"
       >
@@ -89,7 +89,15 @@
     </div>
 
     <div class="footer">
-      <span class="text-xs ml-auto">Page 1/200</span>
+      <span class="ml-auto">
+        <UBadge
+          class="flex items-center text-center"
+          color="neutral"
+          variant="subtle"
+          size="xs"
+          >Page 23/253</UBadge
+        >
+      </span>
     </div>
   </div>
 </template>
