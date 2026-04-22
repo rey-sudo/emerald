@@ -51,28 +51,33 @@
       <USeparator orientation="vertical" class="h-6 ml-auto" />
 
       <UButton
-        :class="{ 'is-active': editor.isActive('highlight') }"
+        :class="{ 'is-active': editor.isActive('multiSelect') }"
         icon="i-lucide-mouse-pointer-click"
         size="sm"
         color="primary"
-        :variant="editor.isActive('highlight') ? 'subtle' : 'outline'"
+        :variant="editor.isActive('multiSelect') ? 'subtle' : 'outline'"
         @click="editor.chain().focus().toggleSelection().run()"
         >Select</UButton
       >
 
       <UButton
-        :class="{ 'is-active': editor.isActive('highlight') }"
+        :class="{ 'is-active': selectionCount > 0 }"
         icon="i-lucide-eraser"
         size="sm"
         color="secondary"
-        :variant="editor.isActive('highlight') ? 'subtle' : 'outline'"
+        :variant="editor.isActive('multiSelect') ? 'outline' : 'outline'"
+        :disabled="!selectionCount"
         @click="editor.commands.clearAllSelections()"
       >
         Clean
         <template #trailing>
-          <UBadge class="flex items-center text-center" color="neutral" variant="subtle" size="xs">{{
-            selectionCount
-          }}</UBadge>
+          <UBadge
+            class="flex items-center text-center"
+            color="neutral"
+            variant="subtle"
+            size="xs"
+            >{{ selectionCount }}</UBadge
+          >
         </template>
       </UButton>
 
@@ -362,13 +367,13 @@ onBeforeUnmount(() => {
 
 .page-virtual::before {
   /* Toma el número del atributo data-number automáticamente */
-  content: "PÁGINA " attr(data-number);
+  content: "" attr(data-number);
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: bold;
-  color: #c0c0c0;
+  color: var(--ui-text-muted);
   letter-spacing: 1px;
   user-select: none; /* Evita que el número se seleccione al copiar texto */
   pointer-events: none; /* El ratón lo atraviesa para no estorbar la edición */
