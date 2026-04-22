@@ -19,7 +19,7 @@
         @click="editor.chain().focus().redo().run()"
       />
 
-      <USeparator orientation="vertical" class="h-4" />
+      <USeparator orientation="vertical" class="h-6" />
 
       <UButton
         :class="{ 'is-active': editor.isActive('bold') }"
@@ -48,7 +48,7 @@
         @click="editor.chain().focus().toggleHighlight().run()"
       />
 
-      <USeparator orientation="vertical" class="h-4 ml-auto" />
+      <USeparator orientation="vertical" class="h-6 ml-auto" />
 
       <UButton
         :class="{ 'is-active': editor.isActive('highlight') }"
