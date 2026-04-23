@@ -91,40 +91,6 @@ rounded-3xl
 }
 
 :root {
-  /* Semantic */
-  --ui-primary: #a8b4c8;
-  --ui-secondary: #343840;
-  --ui-success: #4a8c6a;
-  --ui-info: #4878a0;
-  --ui-warning: #b87c30;
-  --ui-error: #b84040;
-
-  /* Backgrounds */
-  --ui-bg: #111315;
-  --ui-bg-muted: #181b1e;
-  --ui-bg-elevated: #1f2226;
-  --ui-bg-accented: #272b30;
-  --ui-bg-inverted: #c8d0dc;
-
-  /* Text */
-  --ui-text-dimmed: #2a2e34;
-  --ui-text-muted: #5a6070;
-  --ui-text-toned: #8892a0;
-  --ui-text: #c8d0dc;
-  --ui-text-highlighted: #e8ecf2;
-  --ui-text-inverted: #111315;
-
-  /* Borders */
-  --ui-border: #272b30;
-  --ui-border-muted: #1f2226;
-  --ui-border-accented: #343840;
-  --ui-border-inverted: #e8ecf2;
-
-  --ui-container: 80rem;
-  --ui-header-height: 2.5rem;
-}
-
-:root {
   /* ========== Semantic (usa escala) ========== */
   --ui-primary: var(--ui-color-primary-500);
   --ui-secondary: var(--ui-color-secondary-500);
@@ -164,39 +130,38 @@ rounded-3xl
 }
 
 .dark {
-  /* ========== Semantic colors (usan escala) ========== */
-  --ui-primary: var(--ui-color-primary-400);
-  --ui-secondary: var(--ui-color-secondary-400);
+  /* ========== Semantic (Google Material Dark) ========== */
+  --ui-primary: #a8c7fa; /* Azul suave de Google Dark */
+  --ui-secondary: #c2e7ff; /* Celeste claro */
 
-  --ui-success: var(--ui-color-success-400);
-  --ui-info: var(--ui-color-info-400);
-  --ui-warning: var(--ui-color-warning-400);
-  --ui-error: var(--ui-color-error-400);
+  --ui-success: #6dd58c;
+  --ui-info: #7cacf8;
+  --ui-warning: #f2bf48;
+  --ui-error: #f2b8b5;
 
-  /* ========== Background ========== */
-  --ui-bg: var(--ui-color-neutral-900);
-  --ui-bg-muted: var(--ui-color-neutral-800);
-  --ui-bg-elevated: var(--ui-color-neutral-800);
-  --ui-bg-accented: var(--ui-color-neutral-700);
-  --ui-bg-inverted: white;
+  /* ========== Backgrounds (Pure Gemini App) ========== */
+  /* El fondo base de la app es casi negro, pero no puro */
+  --ui-bg: #131314;
+  --ui-bg-muted: #1e1f20;
+  --ui-bg-elevated: #28292a;
+  --ui-bg-accented: #333537;
+  --ui-bg-inverted: #e3e3e3;
 
-  /* ========== Text ========== */
-  --ui-text-dimmed: var(--ui-color-neutral-500);
-  --ui-text-muted: var(--ui-color-neutral-400);
-  --ui-text-toned: var(--ui-color-neutral-300);
-  --ui-text: var(--ui-color-neutral-200);
-  --ui-text-highlighted: white;
-  --ui-text-inverted: var(--ui-color-neutral-900);
+  /* ========== Text (Neutral High Contrast) ========== */
+  --ui-text-dimmed: #757575; /* Texto muy secundario */
+  --ui-text-muted: #9aa0a6; /* Placeholders / iconos */
+  --ui-text-toned: #c4c7c5; /* Texto secundario */
+  --ui-text: #e3e3e3; /* Texto principal (Off-white) */
+  --ui-text-highlighted: #ffffff;
+  --ui-text-inverted: #131314;
 
-  /* ========== Borders ========== */
-  --ui-border: var(--ui-color-neutral-800);
-  --ui-border-muted: var(--ui-color-neutral-700);
-  --ui-border-accented: var(--ui-color-neutral-700);
-  --ui-border-inverted: white;
-  /* ========== Layout ========== */
-  --ui-container: 1200px;
-  --ui-header-height: 2.5rem;
+  /* ========== Borders (Sutiles y sin saturación) ========== */
+  --ui-border: rgba(255, 255, 255, 0.1);
+  --ui-border-muted: #2c2e30;
+  --ui-border-accented: #444746;
+  --ui-border-inverted: #ffffff;
 
-  /* ========== Radius (opcional pero estándar) ========== */
-  --ui-radius: 8px;
+  /* ========== Layout & Effects ========== */
+  --ui-header-height: 2.5rem; /* La app de Gemini tiene headers más altos */
+  --ui-radius: 8px; /* Bordes un poco más redondeados (estilo móvil) */
 }

@@ -146,6 +146,7 @@ const Page = Node.create({
 });
 
 const route = useRoute();
+const initialDocumentId = route.params.id;
 
 const editorStore = useEditorStore();
 
@@ -183,7 +184,7 @@ watch(
   (msg) => {
     if (!editor.value) return;
 
-    if (msg?.documentId && msg.documentId !== route.params.id) {
+    if (msg?.documentId && msg.documentId !== initialDocumentId) {
       return;
     }
 
@@ -230,7 +231,7 @@ async function processChanges() {
   // 1. Lock the process to prevent concurrent execution (race conditions)
   isProcessing = true;
 
-  const documentId = route.params.id;
+  const documentId = initialDocumentId;
 
   /**2. Extract and clear the buffer IMMEDIATELY.
    * New incoming updates during the async 'await' period will be pushed to a
@@ -312,7 +313,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem;
-  border-bottom: 1px solid var(--ui-border);
+  border-bottom: 1px solid var(--ui-border-muted);
   border-bottom-left-radius: calc(var(--ui-radius) * 0);
   border-bottom-right-radius: calc(var(--ui-radius) * 0);
 }

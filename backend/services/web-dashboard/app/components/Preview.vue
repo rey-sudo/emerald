@@ -141,7 +141,7 @@ function onComplete({ score, total, pct, answers }) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 0.25rem 1rem;
+  padding: 1rem;
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 2);
   border-bottom-right-radius: calc(var(--ui-radius) * 2);
