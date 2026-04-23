@@ -51,7 +51,7 @@ function handleClick() {
   padding: 1rem;
   border-radius: var(--ui-radius);
 
-  background-color: var(--ui-bg-muted);
+  background-color: var(--ui-bg-elevated);
   color: var(--ui-text-muted);
 
   border: none;
@@ -63,7 +63,7 @@ function handleClick() {
 }
 
 .widget-button:hover {
-  background-color: var(--ui-bg-elevated);
+  background-color: var(--ui-bg-accented);
   color: var(--ui-text);
 }
 
