@@ -200,7 +200,7 @@
         <UInput
           v-model="search"
           icon="i-lucide-search"
-          size="md"
+          size="lg"
           variant="outline"
           color="secondary"
           placeholder="Search..."
@@ -209,7 +209,7 @@
       </label>
 
       <div class="topbar-actions">
-        <UFieldGroup size="md">
+        <UFieldGroup size="lg">
           <UButton
             :color="view === 'list' ? 'primary' : 'neutral'"
             variant="outline"
@@ -228,7 +228,7 @@
           variant="outline"
           icon="ic:round-plus"
           label="New folder"
-          size="md"
+          size="lg"
           @click="newFolderDialog = true"
         />
       </div>
@@ -466,7 +466,7 @@ const onDeleteFolder = async (close) => {
 
 const breadItems = [
   {
-    label: "Home",
+    label: "My folders",
     icon: "",
     to: "/",
   },

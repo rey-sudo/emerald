@@ -14,9 +14,20 @@
       @click="$emit('events', { name: 'click', data: $event })"
       @dblclick="$emit('events', { name: 'dblclick', data: $event })"
     >
+      <div class="card-header">
+        <UButton
+          class="card-menu rounded-3xl"
+          color="neutral"
+          variant="ghost"
+          icon="lucide:ellipsis-vertical"
+          size="sm"
+          @click="openMenu"
+        />
+      </div>
+
       <div class="card-icon">
         <svg
-          width="2rem"
+          width="6rem"
           version="1.1"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
@@ -90,18 +101,12 @@
             opacity="4%"
           />
         </svg>
-
-        <p class="card-name text-sm">{{ folder.folder_name }}</p>
       </div>
 
-      <UButton
-        class="card-menu rounded-3xl"
-        color="neutral"
-        variant="ghost"
-        icon="lucide:ellipsis-vertical"
-        size="sm"
-        @click="openMenu"
-      />
+      <div class="card-bottom">
+        <p class="card-title text-lg">{{ folder.folder_name }}</p>
+        <p class="card-subtle text-sm text-muted">{{ sourcesCount }} sources</p>
+      </div>
     </div>
   </UContextMenu>
 </template>
@@ -117,6 +122,8 @@ const props = defineProps({
 const emit = defineEmits(["events"]);
 
 const contextMenuRef = ref(null);
+
+const sourcesCount = computed(() => props.folder.documents.length || 0);
 
 const openMenu = (event: MouseEvent) => {
   const customEvent = new MouseEvent("contextmenu", {
@@ -167,28 +174,30 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 
 <style scoped>
 .folder-card {
-  box-shadow: var(--ui-card-shadow);
+  width: 100%;
   border-radius: calc(var(--ui-radius) * 2);
-  background: var(--ui-bg-muted);
-  border: 1px solid var(--ui-border);
+  background: var(--ui-bg-elevated);
+  border: 1px solid transparent;
   padding: 0.75rem;
+  height: 200px;
   padding-right: 0.25rem;
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
+  flex-direction: column;
   user-select: none;
   transition: 0.3s ease;
   justify-content: space-between;
 }
 
 .folder-card:hover {
-  border-color: var(--ui-border-accented);
+  background: var(--ui-bg-accented);
 }
 
 .folder-card.selected {
   background: var(--ui-bg-accented);
-  border-color: var(--ui-border-elevated);
+  border-color: var(--ui-primary);
 }
 
 /* Sortable states */
@@ -199,17 +208,19 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.1));
 }
 
+.card-header {
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .card-icon {
   display: flex;
   align-items: center;
 }
 
-.card-icon p {
-  margin-left: 1rem;
-}
-
-/* Name */
-.card-name {
+.card-title {
   font-weight: 500;
   text-align: center;
   color: var(--ui-text);
@@ -224,7 +235,18 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .card-menu {
-  right: 0px;
+  right: 0.5rem;
+  top: 1rem;
   position: absolute;
+}
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card-bottom p {
+  line-height: 1.5rem;
 }
 </style>

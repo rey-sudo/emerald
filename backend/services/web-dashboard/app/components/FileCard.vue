@@ -108,8 +108,8 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 <style scoped>
 .file-card {
   width: 100%;
-  background: var(--ui-bg-muted);
-  border: 1px solid var(--ui-border);
+  background: var(--ui-bg-elevated);
+  border: 1px solid transparent;
   border-radius: calc(var(--ui-radius) * 3);
   flex-direction: column;
   align-items: center;
@@ -119,17 +119,16 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   user-select: none;
   position: relative;
   box-sizing: border-box;
-  box-shadow: var(--ui-card-shadow);
   transition: 0.3s ease;
 }
 
 .file-card:hover {
-  border-color: var(--ui-border-accented);
+  background: var(--ui-bg-accented);
 }
 
 .file-card.selected {
   background: var(--ui-bg-accented);
-  border-color: var(--ui-border-elevated);
+  border-color: var(--ui-primary);
 }
 
 .file-card-header,

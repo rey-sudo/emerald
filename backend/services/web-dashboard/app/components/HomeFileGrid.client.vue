@@ -125,7 +125,7 @@
         <UInput
           v-model="search"
           icon="i-lucide-search"
-          size="md"
+          size="lg"
           variant="outline"
           color="secondary"
           placeholder="Search..."
@@ -134,7 +134,7 @@
       </label>
 
       <div class="topbar-actions">
-        <UFieldGroup size="md">
+        <UFieldGroup size="lg">
           <UButton
             :color="view === 'list' ? 'primary' : 'neutral'"
             variant="outline"
@@ -153,7 +153,7 @@
           variant="outline"
           icon="material-symbols:upload-2-outline-rounded"
           label="File upload"
-          size="md"
+          size="lg"
           @click="fileUploadDialog = true"
         />
       </div>
@@ -391,7 +391,7 @@ const onSubmit = async (_close) => {
 
 const breadItems = [
   {
-    label: "Home",
+    label: "My folders",
     icon: "",
     to: "/",
   },
