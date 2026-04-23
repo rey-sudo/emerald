@@ -1,108 +1,19 @@
-<template>
-  <div class="editor-layout">
-    <div v-if="editor" class="editor-header">
-      <UButton
-        icon="i-lucide-undo-2"
-        size="sm"
-        color="neutral"
-        variant="ghost"
-        :disabled="!editor.can().undo()"
-        @click="editor.chain().focus().undo().run()"
-      />
-
-      <UButton
-        icon="i-lucide-redo-2"
-        size="sm"
-        color="neutral"
-        variant="ghost"
-        :disabled="!editor.can().redo()"
-        @click="editor.chain().focus().redo().run()"
-      />
-
-      <USeparator orientation="vertical" class="h-6" />
-
-      <UButton
-        :class="{ 'is-active': editor.isActive('bold') }"
-        icon="i-lucide-bold"
-        size="sm"
-        color="neutral"
-        :variant="editor.isActive('bold') ? 'subtle' : 'ghost'"
-        @click="editor.chain().focus().toggleBold().run()"
-      />
-
-      <UButton
-        :class="{ 'is-active': editor.isActive('italic') }"
-        icon="i-lucide-italic"
-        size="sm"
-        color="neutral"
-        :variant="editor.isActive('italic') ? 'subtle' : 'ghost'"
-        @click="editor.chain().focus().toggleItalic().run()"
-      />
-
-      <UButton
-        :class="{ 'is-active': editor.isActive('highlight') }"
-        icon="i-lucide-highlighter"
-        size="sm"
-        color="neutral"
-        :variant="editor.isActive('highlight') ? 'subtle' : 'ghost'"
-        @click="editor.chain().focus().toggleHighlight().run()"
-      />
-
-      <USeparator orientation="vertical" class="h-6 ml-auto" />
-
-      <UButton
-        :class="{ 'is-active': editor.isActive('multiSelect') }"
-        icon="i-lucide-mouse-pointer-click"
-        size="sm"
-        color="primary"
-        :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
-        @click="editor.chain().focus().toggleSelection().run()"
-        >Select</UButton
-      >
-
-      <UButton
-        :class="{ 'is-active': selectionCount > 0 }"
-        icon="i-lucide-eraser"
-        size="sm"
-        color="secondary"
-        variant="ghost"
-        :disabled="!selectionCount"
-        @click="editor.commands.clearAllSelections()"
-      >
-        Clean
-        <template #trailing>
-          <UBadge
-            class="flex items-center text-center"
-            color="neutral"
-            variant="subtle"
-            size="xs"
-            >{{ selectionCount }}</UBadge
-          >
-        </template>
-      </UButton>
-
-      <button style="display: none" @click="logSelections">ver</button>
-    </div>
-
-    <div class="editor-container">
-      <editor-content :editor="editor" class="tiptap-viewport" />
-    </div>
-
-    <div class="footer">
-      <span class="ml-auto">
-        <UBadge
-          class="flex items-center text-center"
-          color="neutral"
-          variant="subtle"
-          size="xs"
-          >Page 23/253</UBadge
-        >
-      </span>
-    </div>
-  </div>
-</template>
-
 <script setup>
+// Emerald
+// Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 import { onBeforeUnmount } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Node, mergeAttributes } from "@tiptap/core";
@@ -297,6 +208,110 @@ onBeforeUnmount(() => {
 });
 </script>
 
+<template>
+  <div class="editor-layout">
+    <div v-if="editor" class="editor-header">
+      <UButton
+        icon="i-lucide-undo-2"
+        size="sm"
+        color="neutral"
+        variant="ghost"
+        :disabled="!editor.can().undo()"
+        @click="editor.chain().focus().undo().run()"
+      />
+
+      <UButton
+        icon="i-lucide-redo-2"
+        size="sm"
+        color="neutral"
+        variant="ghost"
+        :disabled="!editor.can().redo()"
+        @click="editor.chain().focus().redo().run()"
+      />
+
+      <USeparator orientation="vertical" class="h-6" />
+
+      <UButton
+        :class="{ 'is-active': editor.isActive('bold') }"
+        icon="i-lucide-bold"
+        size="sm"
+        color="neutral"
+        :variant="editor.isActive('bold') ? 'subtle' : 'ghost'"
+        @click="editor.chain().focus().toggleBold().run()"
+      />
+
+      <UButton
+        :class="{ 'is-active': editor.isActive('italic') }"
+        icon="i-lucide-italic"
+        size="sm"
+        color="neutral"
+        :variant="editor.isActive('italic') ? 'subtle' : 'ghost'"
+        @click="editor.chain().focus().toggleItalic().run()"
+      />
+
+      <UButton
+        :class="{ 'is-active': editor.isActive('highlight') }"
+        icon="i-lucide-highlighter"
+        size="sm"
+        color="neutral"
+        :variant="editor.isActive('highlight') ? 'subtle' : 'ghost'"
+        @click="editor.chain().focus().toggleHighlight().run()"
+      />
+
+      <USeparator orientation="vertical" class="h-6 ml-auto" />
+
+      <UButton
+        :class="{ 'is-active': editor.isActive('multiSelect') }"
+        icon="i-lucide-mouse-pointer-click"
+        size="sm"
+        color="primary"
+        :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
+        @click="editor.chain().focus().toggleSelection().run()"
+        >Select</UButton
+      >
+
+      <UButton
+        :class="{ 'is-active': selectionCount > 0 }"
+        icon="i-lucide-eraser"
+        size="sm"
+        color="secondary"
+        variant="ghost"
+        :disabled="!selectionCount"
+        @click="editor.commands.clearAllSelections()"
+      >
+        Clean
+        <template #trailing>
+          <UBadge
+            class="flex items-center text-center"
+            color="neutral"
+            variant="subtle"
+            size="xs"
+            >{{ selectionCount }}</UBadge
+          >
+        </template>
+      </UButton>
+
+      <button style="display: none" @click="logSelections">ver</button>
+    </div>
+
+    <div class="editor-container">
+      <editor-content :editor="editor" class="tiptap-viewport" />
+    </div>
+
+    <div class="footer">
+      <span class="ml-auto">
+        <UBadge
+          class="flex items-center text-center"
+          color="neutral"
+          variant="subtle"
+          size="xs"
+          >Page 23/253</UBadge
+        >
+      </span>
+    </div>
+  </div>
+</template>
+
 <style>
 /* Contenedor principal para organizar Header y Editor */
 .editor-layout {
@@ -381,8 +396,9 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: var(--text-sm);
-  color: var(--ui-text);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--ui-text-muted);
   letter-spacing: 1px;
   user-select: none; /* Evita que el número se seleccione al copiar texto */
   pointer-events: none; /* El ratón lo atraviesa para no estorbar la edición */

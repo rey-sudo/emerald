@@ -1,13 +1,19 @@
-<template>
-  <button class="audio-btn" @click="handleClick">
-    <span class="icon">
-      <UIcon :name="icon" class="size-5" />
-    </span>
-    <span class="text">{{ label }}</span>
-  </button>
-</template>
-
 <script setup lang="ts">
+// Emerald
+// Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 const props = defineProps<{
   label: string;
   icon: string;
@@ -22,20 +28,28 @@ function handleClick() {
 }
 </script>
 
+<template>
+  <button class="widget-button" @click="handleClick">
+    <span class="icon">
+      <UIcon :name="icon" class="size-5" />
+    </span>
+    <span class="text text-xs">{{ label }}</span>
+  </button>
+</template>
+
 <style scoped>
-.audio-btn {
+.widget-button {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  gap: 6px;
+  gap: 0.25rem;
 
-  width: 120px;
-  height: 90px;
+  width: 100%;
 
-  padding: 10px;
-  border-radius: 16px;
+  padding: 1rem;
+  border-radius: var(--ui-radius);
 
   background-color: var(--ui-bg-muted);
   color: var(--ui-text-muted);
@@ -43,24 +57,17 @@ function handleClick() {
   border: none;
   cursor: pointer;
 
-  font-size: 13px;
   font-weight: 500;
 
   transition: all 0.2s ease;
 }
 
-.audio-btn:hover {
-  background-color: #e5e7eb;
-  color: #374151;
-}
-
-.icon svg {
-  width: 22px;
-  height: 22px;
+.widget-button:hover {
+  background-color: var(--ui-bg-elevated);
+  color: var(--ui-text);
 }
 
 .text {
-  font-size: 12px;
   line-height: 1;
   text-align: center;
 }

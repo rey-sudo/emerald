@@ -134,10 +134,9 @@ function onComplete({ score, total, pct, answers }) {
 }
 
 .button-grid {
-  padding: 0.5rem 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
   padding: 1rem;
   border-top: none;
   border-bottom-left-radius: calc(var(--ui-radius) * 2);
