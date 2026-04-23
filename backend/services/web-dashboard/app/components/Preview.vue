@@ -135,13 +135,11 @@ function onComplete({ score, total, pct, answers }) {
       <div class="preview-header">
         <UButton
           icon="material-symbols:arrow-back-ios-new-rounded"
-          size="sm"
+          size="md"
           color="neutral"
           variant="ghost"
           @click="goBack"
-        >
-          
-        </UButton>
+        />
       </div>
       <component :is="currentView" />
     </div>
@@ -194,8 +192,8 @@ function onComplete({ score, total, pct, answers }) {
   z-index: 10;
   display: flex;
   align-items: center;
-  padding: 0.25rem 1rem;
-  border-bottom: 1px solid var(--ui-border-muted);
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid transparent;
   border-bottom-left-radius: calc(var(--ui-radius) * 0);
   border-bottom-right-radius: calc(var(--ui-radius) * 0);
 }

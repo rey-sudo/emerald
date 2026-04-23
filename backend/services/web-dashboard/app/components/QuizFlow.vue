@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserProps } from "@nuxt/ui";
+import type { RadioGroupItem, UserProps } from "@nuxt/ui";
 
 const members: UserProps[] = [
   {
@@ -54,25 +54,58 @@ const actions: any = [
     color: "neutral",
   },
 ];
+
+const radioItems = ref<RadioGroupItem[]>([
+  {
+    label: "Selection",
+    value: "selection",
+    description: "The questions are generated from the selected text.",
+  },
+  {
+    label: "Document",
+    value: "document",
+    description: "The questions are generated from the entire document.",
+  },
+  {
+    label: "Folder",
+    value: "folder",
+    description: "The questions are generated from the folder.",
+  },
+]);
 </script>
 
 <template>
   <UEmpty
-    title="Create quiz questions"
-    description="Create a list of questions for each item or idea."
+    title="New Quiz"
+    description="Generate questions for each topic."
     variant="naked"
+    size="xl"
   >
     <template #leading>
-      <UAvatarGroup size="xl">
-        <UAvatar icon="i-lucide-blocks" alt="Nuxt" loading="lazy" />
-        <UAvatar icon="i-lucide-school" alt="Unjs" loading="lazy" />
+      <UAvatarGroup size="3xl">
+        <UAvatar
+          icon="material-symbols:quiz-outline-rounded"
+          alt="Nuxt"
+          loading="lazy"
+        />
       </UAvatarGroup>
     </template>
 
-    <template #footer>
+    <template #body>
+      <URadioGroup
+        color="primary"
+        variant="table"
+        default-value="pro"
+        size="md"
+        :items="radioItems"
+        :ui="{
+          item: 'hover:bg-primary/5 transition-colors',
+        }"
+      />
+
       <USeparator class="my-4" />
 
-      <div class="grid grid-cols-2 gap-4">
+      <div class="w-full grid grid-cols-2 gap-4">
         <UPageCard
           v-for="(member, index) in members"
           :key="index"
@@ -88,5 +121,13 @@ const actions: any = [
         </UPageCard>
       </div>
     </template>
+
+    <template #footer>
+      <div class="w-full flex justify-end gap-2 mt-4">
+        <UButton color="neutral" variant="outline" size="lg">Cancel</UButton>
+        <UButton color="primary" size="lg">Create Quiz</UButton>
+      </div>
+    </template>
   </UEmpty>
 </template>
+<style scoped></style>

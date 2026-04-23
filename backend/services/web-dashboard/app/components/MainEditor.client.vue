@@ -272,9 +272,9 @@ onBeforeUnmount(() => {
 
       <UButton
         :class="{ 'is-active': selectionCount > 0 }"
-        icon="i-lucide-eraser"
+        
         size="sm"
-        color="secondary"
+        color="neutral"
         variant="ghost"
         :disabled="!selectionCount"
         @click="editor.commands.clearAllSelections()"
@@ -328,7 +328,6 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem;
-  background: var(--ui-bg-muted);
   border-bottom: 1px solid var(--ui-border-muted);
   border-bottom-left-radius: calc(var(--ui-radius) * 0);
   border-bottom-right-radius: calc(var(--ui-radius) * 0);
