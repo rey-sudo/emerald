@@ -27,7 +27,7 @@
 
       <div class="card-icon">
         <svg
-          width="5rem"
+          width="6rem"
           version="1.1"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@
             rx="4.3542"
             ry="4.2672"
             fill="url(#linearGradient946)"
-            opacity="4%"
+            opacity="1%"
           />
         </svg>
       </div>

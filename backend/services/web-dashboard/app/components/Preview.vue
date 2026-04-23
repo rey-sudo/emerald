@@ -1,31 +1,36 @@
-<template>
-  <div class="preview w-full">
-    <div class="button-grid">
-      <WidgetButton
-        v-for="(btn, index) in buttons"
-        :key="index"
-        :label="btn.label"
-        :icon="btn.icon"
-      />
-    </div>
-
-    <div class="preview-content"></div>
-  </div>
-</template>
-
 <script setup>
-/**
- *       <Quiz
-        :questions="questions"
-        title="Quiz"
-        subtitle="Mid level"
-        @answer="onAnswer"
-        @complete="onComplete"
-      />
- * 
- */
+// Emerald
+// Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 import { ref } from "vue";
 import WidgetButton from "./WidgetButton.vue";
+import QuizFlow from "./QuizFlow.vue";
+
+const views = {
+  quiz: QuizFlow,
+};
+
+const currentView = shallowRef("quiz");
+
+const openView = (viewKey) => {
+  currentView.value = views[viewKey];
+};
+
+const goBack = () => {
+  currentView.value = null;
+};
 
 const buttons = ref([
   {
@@ -124,13 +129,40 @@ function onComplete({ score, total, pct, answers }) {
 }
 </script>
 
+<template>
+  <div class="preview w-full">
+    <div v-if="currentView" class="view-overlay">
+      <div class="preview-header">
+        <UButton
+          icon="material-symbols:arrow-back-ios-new-rounded"
+          size="sm"
+          color="neutral"
+          variant="ghost"
+          @click="goBack"
+        >
+          
+        </UButton>
+      </div>
+      <component :is="currentView" />
+    </div>
+
+    <div class="button-grid">
+      <WidgetButton
+        v-for="(btn, index) in buttons"
+        :key="index"
+        :label="btn.label"
+        :icon="btn.icon"
+        @click="openView('quiz')"
+      />
+    </div>
+  </div>
+</template>
+
 <style lang="css" scoped>
 .preview {
   display: flex;
   flex-direction: column;
-}
-.preview-content {
-  padding: 1rem;
+  position: relative;
 }
 
 .button-grid {
@@ -145,5 +177,26 @@ function onComplete({ score, total, pct, answers }) {
 
 .grid-button {
   flex: 1 1 auto;
+}
+
+.view-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ui-bg);
+  z-index: 10;
+}
+
+.preview-header {
+  gap: 0.5rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  border-bottom: 1px solid var(--ui-border-muted);
+  border-bottom-left-radius: calc(var(--ui-radius) * 0);
+  border-bottom-right-radius: calc(var(--ui-radius) * 0);
 }
 </style>
