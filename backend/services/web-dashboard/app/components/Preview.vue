@@ -1,21 +1,12 @@
 <template>
   <div class="preview w-full">
     <div class="button-grid">
-      <UTooltip
+      <WidgetButton
         v-for="(btn, index) in buttons"
         :key="index"
-        :text="btn.label"
-        :content="{
-          align: 'center',
-          side: 'top',
-          sideOffset: 8,
-          delayDuration: 100,
-        }"
-      >
-        <UButton :icon="btn.icon" size="xl" color="neutral" variant="outline"
-          >{{ btn.label }}
-        </UButton>
-      </UTooltip>
+        :label="btn.label"
+        :icon="btn.icon"
+      />
     </div>
 
     <div class="preview-content"></div>
@@ -34,8 +25,14 @@
  * 
  */
 import { ref } from "vue";
+import WidgetButton from "./WidgetButton.vue";
 
 const buttons = ref([
+  {
+    label: "Chat",
+    color: "success",
+    icon: "material-symbols:chat-outline-rounded",
+  },
   {
     label: "Quiz",
     color: "success",

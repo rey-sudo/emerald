@@ -55,7 +55,7 @@
         icon="i-lucide-mouse-pointer-click"
         size="sm"
         color="primary"
-        :variant="editor.isActive('multiSelect') ? 'subtle' : 'outline'"
+        :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleSelection().run()"
         >Select</UButton
       >
@@ -65,7 +65,7 @@
         icon="i-lucide-eraser"
         size="sm"
         color="secondary"
-        variant="outline"
+        variant="ghost"
         :disabled="!selectionCount"
         @click="editor.commands.clearAllSelections()"
       >

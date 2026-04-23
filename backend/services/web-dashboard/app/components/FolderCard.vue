@@ -68,7 +68,7 @@
             opacity=".2"
           />
           <rect
-            :style="{ color: folder.color }"
+            :style="{ color: 'var(--ui-text-muted)' }"
             x="3.9998"
             y="17.001"
             width="56"
