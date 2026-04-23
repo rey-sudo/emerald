@@ -16,7 +16,7 @@
     >
       <div class="card-header">
         <UButton
-          class="card-menu rounded-3xl"
+          class="card-menu rounded-3xl ml-auto"
           color="neutral"
           variant="ghost"
           icon="lucide:ellipsis-vertical"
@@ -27,7 +27,7 @@
 
       <div class="card-icon">
         <svg
-          width="6rem"
+          width="5rem"
           version="1.1"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
