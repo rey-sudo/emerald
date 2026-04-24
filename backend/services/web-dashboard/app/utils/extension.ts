@@ -444,30 +444,24 @@ function injectStyles(): void {
     .ms-mark::after {
       content: attr(data-ms-order);
       position: absolute;
-      top: -8px;
+      top: 0px;
       right: -6px;
-
-      /* Size & shape */
       min-width: 14px;
       height: 14px;
       padding: 0 3px;
-      border-radius: 999px;
-
-      /* Typography */
-      font-size: 8px;
-      font-weight: 800;
+      font-size: calc(var(--text-base) / 2);
       font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
       line-height: 14px;
       text-align: center;
       letter-spacing: -0.3px;
-
-      /* Colors */
-      background: #111;
-      color: #fff;
-
-      /* Stacking */
+      background: var(--ui-bg-elevated);
+      color: var(--ui-text);
       pointer-events: none;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      left: -20px;
+      width: 0.5rem;
+      border-radius: 2px;
+      font-weight: 400;
     }
 
     /* ── Focus ring (for keyboard navigation) ───────────────────── */

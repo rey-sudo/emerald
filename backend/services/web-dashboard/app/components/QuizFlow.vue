@@ -4,54 +4,36 @@ import type { RadioGroupItem, UserProps } from "@nuxt/ui";
 const members: UserProps[] = [
   {
     name: "Easy",
-    description: "Intro",
+    description: "Beginner",
     to: "https://github.com/danielroe",
     target: "_blank",
     avatar: {
-      icon: "i-lucide-blocks",
+      icon: "material-symbols:child-care-outline",
       alt: "danielroe",
       loading: "lazy" as const,
     },
   },
   {
-    name: "Mid",
-    description: "School",
+    name: "Medium",
+    description: "Intermediate",
     to: "https://github.com/pi0",
     target: "_blank",
     avatar: {
-      icon: "i-lucide-school",
+      icon: "material-symbols:school-outline",
       alt: "pi0",
       loading: "lazy" as const,
     },
   },
   {
-    name: "Academic",
-    description: "Pro",
+    name: "Pro",
+    description: "Expert",
     to: "https://github.com/benjamincanac",
     target: "_blank",
     avatar: {
-      icon: "i-lucide-school",
+      icon: "material-symbols:history-edu",
       alt: "benjamincanac",
       loading: "lazy" as const,
     },
-  },
-];
-
-const actions: any = [
-  {
-    label: "Easy",
-    icon: "",
-    color: "neutral",
-  },
-  {
-    label: "Mid",
-    icon: "",
-    color: "neutral",
-  },
-  {
-    label: "Hard",
-    icon: "",
-    color: "neutral",
   },
 ];
 
@@ -79,7 +61,7 @@ const radioItems = ref<RadioGroupItem[]>([
     title="New Quiz"
     description="Generate questions for each topic."
     variant="naked"
-    size="xl"
+    size="lg"
   >
     <template #leading>
       <UAvatarGroup size="3xl">
@@ -92,6 +74,7 @@ const radioItems = ref<RadioGroupItem[]>([
     </template>
 
     <template #body>
+      <USeparator class="my-4" label="Range" />
       <URadioGroup
         color="primary"
         variant="table"
@@ -103,7 +86,7 @@ const radioItems = ref<RadioGroupItem[]>([
         }"
       />
 
-      <USeparator class="my-4" />
+      <USeparator class="my-4" label="Level" />
 
       <div class="w-full grid grid-cols-2 gap-4">
         <UPageCard

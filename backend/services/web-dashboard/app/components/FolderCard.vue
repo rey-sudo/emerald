@@ -27,7 +27,7 @@
 
       <div class="card-icon">
         <svg
-          width="5rem"
+          width="6rem"
           version="1.1"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
@@ -98,13 +98,13 @@
             rx="4.3542"
             ry="4.2672"
             fill="url(#linearGradient946)"
-            opacity="1%"
+            opacity="0%"
           />
         </svg>
       </div>
 
       <div class="card-bottom">
-        <p class="card-title text-lg">{{ folder.folder_name }}</p>
+        <p class="card-title text-base">{{ folder.folder_name }}</p>
         <p class="card-subtle text-sm text-muted">{{ sourcesCount }} sources</p>
       </div>
     </div>
@@ -247,6 +247,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .card-bottom p {
-  line-height: 1.5rem;
+  margin-top: 0rem;
+  margin-bottom: 0.25rem;
 }
 </style>

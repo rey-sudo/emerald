@@ -135,7 +135,7 @@ function onComplete({ score, total, pct, answers }) {
       <div class="preview-header">
         <UButton
           icon="material-symbols:arrow-back-ios-new-rounded"
-          size="md"
+          size="sm"
           color="neutral"
           variant="ghost"
           @click="goBack"
