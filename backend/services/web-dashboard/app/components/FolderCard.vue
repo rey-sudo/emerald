@@ -27,7 +27,7 @@
 
       <div class="card-icon">
         <svg
-          width="6rem"
+          width="5rem"
           version="1.1"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@
             opacity=".2"
           />
           <rect
-            :style="{ color: 'var(--ui-text-muted)' }"
+            :style="{ color: 'var(--ui-text-dimmed)' }"
             x="3.9998"
             y="17.001"
             width="56"
