@@ -43,14 +43,17 @@
 
 * {
   font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
-  /**
+/**
     font-family: "Inter", sans-serif;
     font-family: 'Roboto', sans-serif;
     font-family: 'Open Sans', sans-serif;
     font-family: 'Source Code Pro', monospace;
 */
-}
 
 /**
 text-xs	0.75rem (12px)

@@ -272,7 +272,6 @@ onBeforeUnmount(() => {
 
       <UButton
         :class="{ 'is-active': selectionCount > 0 }"
-        
         size="sm"
         color="neutral"
         variant="ghost"
@@ -385,6 +384,7 @@ onBeforeUnmount(() => {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1100px; /* Muy importante para el scrollbar */
   min-height: 100px;
+  border-bottom: 1px solid var(--ui-border-muted);
 }
 
 /* --- INDICADOR DE PÁGINA (ESTÉTICO) --- */
@@ -401,6 +401,7 @@ onBeforeUnmount(() => {
   letter-spacing: 1px;
   user-select: none; /* Evita que el número se seleccione al copiar texto */
   pointer-events: none; /* El ratón lo atraviesa para no estorbar la edición */
+  opacity: 0.5;
 }
 
 /* Estilos de texto básicos para que se vea bien */
