@@ -316,7 +316,7 @@ onBeforeUnmount(() => {
           color="neutral"
           variant="subtle"
           size="xs"
-          >Page 23/253</UBadge
+          >Page 23 of 253</UBadge
         >
       </span>
     </div>
@@ -413,7 +413,7 @@ onBeforeUnmount(() => {
   letter-spacing: 1px;
   user-select: none; /* Evita que el número se seleccione al copiar texto */
   pointer-events: none; /* El ratón lo atraviesa para no estorbar la edición */
-  opacity: 0.5;
+  opacity: 0;
 }
 
 /* Estilos de texto básicos para que se vea bien */
