@@ -101,9 +101,11 @@ watch(
 
     if (msg.command === "get_document") {
       if (msg.data.isNew) {
-        editor.value.commands.setContent(msg.data.content);
+        ydoc.transact(() => {
+          editor.value.commands.setContent(msg.data.content);
+        }, "first-upload");
       } else {
-        Y.applyUpdate(ydoc, msg.data.content);
+        Y.applyUpdate(ydoc, msg.data.content, "initial-load");
       }
     }
   },
@@ -111,9 +113,17 @@ watch(
 );
 
 let localBuffer = [];
-let isProcessing = false;
 
-ydoc.on("update", (update) => {
+ydoc.on("update", (update, origin) => {
+  if (origin === "initial-load") {
+    console.log("Ignoring initial-load");
+    return;
+  }
+
+  if (origin === "first-upload") {
+    console.log("Sending first-upload");
+  }
+
   localBuffer.push(update);
 });
 
@@ -132,6 +142,8 @@ const logSelections = () => {
   );
   console.log("Selecciones actuales:", entries);
 };
+
+let isProcessing = false;
 
 async function processChanges() {
   // Exit if there are no updates to send or if a sync process is already in progress
