@@ -1,17 +1,32 @@
 services:
-  pg-document:
+  postgres-global:
     image: postgres:17-alpine
-    container_name: pg-document
-    restart: unless-stopped
+    container_name: postgres_global
+    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=api_document
+      - POSTGRES_DB=main_db
+
+      - POSTGRES_INITDB_ARGS="--auth-host=scram-sha-256"
     ports:
       - "5432:5432"
     volumes:
-      - pg_data_document:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - shared-network
+    deploy:
+      resources:
+        limits:
+          memory: 1gb
+
+networks:
+  shared-network:
+    external: true
+    name: global-infra-net
 
 volumes:
-  pg_data_document:
+  postgres_data:
     driver: local

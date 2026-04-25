@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SERVICES=("api-document" "api-factory" "api-editor")
+SERVICES=("api-document" "document-processor" "api-factory" "api-editor")
 
 DB_URL="postgres://postgres:password@localhost:5432"
 

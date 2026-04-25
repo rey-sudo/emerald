@@ -42,27 +42,7 @@ impl MultiHandler for DocumentHandler {
                     "data": event.data
                 });
 
-                let mut response: ureq::http::Response<ureq::Body> =
-                    ureq::post(format!("http://localhost:{}/create-job", port))
-                        .send_json(&payload)?;
-
-                match response.status().is_success() {
-                    true => {
-                        let res_json: serde_json::Value = response.body_mut().read_json()?;
-                        info!(
-                            "Response:\n{}",
-                            serde_json::to_string_pretty(&res_json).unwrap()
-                        );
-                    }
-                    false => {
-                        let status: ureq::http::StatusCode = response.status();
-                        let body: String = response.body_mut().read_to_string()?;
-                        error!("create-job failed — status: {}, body: {}", status, body);
-                        return Err(
-                            format!("create-job failed with status {}: {}", status, body).into(),
-                        );
-                    }
-                }
+                info!("hola");
 
                 Ok(())
             }
