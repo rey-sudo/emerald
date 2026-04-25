@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TipTap Editor</title>
+
+    <!-- TipTap via CDN (ESM) -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@tiptap/core": "https://esm.sh/@tiptap/core@2.4.0",
+          "@tiptap/pm": "https://esm.sh/@tiptap/pm@2.4.0",
+          "@tiptap/starter-kit": "https://esm.sh/@tiptap/starter-kit@2.4.0"
+        }
+      }
+    </script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0e0e0e;
+        --surface: #161616;
+        --border: #2a2a2a;
+        --accent: #e8c97e;
+        --accent2: #7eb8e8;
+        --text: #e8e4dc;
+        --muted: #666;
+        --danger: #e87e7e;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "IBM Plex Sans", sans-serif;
+        font-weight: 300;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px 16px 80px;
+      }
+
+      /* ── Header ── */
+      header {
+        width: 100%;
+        max-width: 780px;
+        margin-bottom: 36px;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 20px;
+      }
+      header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--accent);
+      }
+      header span {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      /* ── Editor wrapper ── */
+      .editor-wrapper {
+        width: 100%;
+        max-width: 780px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow:
+          0 0 0 1px #1a1a1a,
+          0 24px 60px rgba(0, 0, 0, 0.6);
+        animation: fadeUp 0.5s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── Toolbar ── */
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        padding: 10px 12px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+      }
+      .toolbar-group {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+      }
+      .toolbar-sep {
+        width: 1px;
+        height: 20px;
+        background: var(--border);
+        margin: 0 6px;
+      }
+      .toolbar button {
+        background: transparent;
+        border: 1px solid transparent;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.15s;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+      .toolbar button:hover {
+        color: var(--text);
+        border-color: var(--border);
+        background: #1f1f1f;
+      }
+      .toolbar button.active {
+        color: var(--accent);
+        border-color: #3a3218;
+        background: #1e1a0e;
+      }
+      .toolbar button.danger {
+        color: var(--danger);
+      }
+      .toolbar button.danger:hover {
+        border-color: #3a1818;
+        background: #1e0e0e;
+      }
+
+      /* ── Content area ── */
+      .editor-content {
+        padding: 36px 48px;
+        min-height: 420px;
+        outline: none;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--text);
+        caret-color: var(--accent);
+      }
+
+      /* ProseMirror styles */
+      .ProseMirror {
+        outline: none;
+        min-height: 360px;
+      }
+      .ProseMirror > * + * {
+        margin-top: 1em;
+      }
+
+      .ProseMirror h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-bottom: 0.3em;
+      }
+      .ProseMirror h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: var(--accent2);
+        letter-spacing: -0.01em;
+      }
+      .ProseMirror h3 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 1.5em;
+      }
+
+      .ProseMirror strong {
+        color: var(--accent);
+        font-weight: 500;
+      }
+      .ProseMirror em {
+        color: #b8d4e8;
+        font-style: italic;
+      }
+      .ProseMirror s {
+        color: var(--muted);
+      }
+
+      .ProseMirror ul,
+      .ProseMirror ol {
+        padding-left: 1.5em;
+      }
+      .ProseMirror li {
+        margin-top: 0.3em;
+      }
+      .ProseMirror ul li::marker {
+        color: var(--accent);
+      }
+      .ProseMirror ol li::marker {
+        color: var(--accent2);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.9em;
+      }
+
+      .ProseMirror blockquote {
+        border-left: 3px solid var(--accent);
+        margin-left: 0;
+        padding: 4px 0 4px 20px;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      .ProseMirror code {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85em;
+        background: #1e1e1e;
+        border: 1px solid var(--border);
+        padding: 2px 6px;
+        border-radius: 3px;
+        color: var(--accent2);
+      }
+      .ProseMirror pre {
+        background: #111;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 16px 20px;
+        overflow-x: auto;
+      }
+      .ProseMirror pre code {
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: 0.88rem;
+        color: #a8d8a8;
+      }
+
+      .ProseMirror hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2em 0;
+      }
+
+      .ProseMirror p.is-editor-empty:first-child::before {
+        content: attr(data-placeholder);
+        color: #333;
+        pointer-events: none;
+        float: left;
+        height: 0;
+        font-style: italic;
+      }
+
+      /* ── Status bar ── */
+      .statusbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px;
+        border-top: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .statusbar span {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+      }
+      .statusbar .dot {
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>TipTap Editor</h1>
+      <span>ejemplo básico · v2.4</span>
+    </header>
+
+    <div class="editor-wrapper">
+      <!-- Toolbar -->
+      <div class="toolbar" id="toolbar">
+        <div class="toolbar-group">
+          <button data-cmd="toggleBold" title="Negrita (Ctrl+B)">
+            <b>B</b>
+          </button>
+          <button data-cmd="toggleItalic" title="Cursiva (Ctrl+I)">
+            <i>I</i>
+          </button>
+          <button data-cmd="toggleStrike" title="Tachado">S̶</button>
+          <button data-cmd="toggleCode" title="Código inline">&lt;/&gt;</button>
+        </div>
+        <div class="toolbar-sep"></div>
+        <div class="toolbar-group">
+          <button data-cmd="h1" title="Título 1">H1</button>
+          <button data-cmd="h2" title="Título 2">H2</button>
+          <button data-cmd="h3" title="Título 3">H3</button>
+        </div>
+        <div class="toolbar-sep"></div>
+        <div class="toolbar-group">
+          <button data-cmd="toggleBulletList" title="Lista">• Lista</button>
+          <button data-cmd="toggleOrderedList" title="Lista numerada">
+            1. Lista
+          </button>
+          <button data-cmd="toggleBlockquote" title="Cita">❝ Cita</button>
+          <button data-cmd="toggleCodeBlock" title="Bloque código">```</button>
+        </div>
+        <div class="toolbar-sep"></div>
+        <div class="toolbar-group">
+          <button data-cmd="setHorizontalRule" title="Línea horizontal">
+            — HR
+          </button>
+          <button data-cmd="undo" title="Deshacer (Ctrl+Z)">↩ Undo</button>
+          <button data-cmd="redo" title="Rehacer (Ctrl+Y)">↪ Redo</button>
+        </div>
+        <div class="toolbar-sep"></div>
+        <button data-cmd="clearContent" class="danger" title="Limpiar todo">
+          ✕ Clear
+        </button>
+      </div>
+
+      <!-- Editor mount point -->
+      <div class="editor-content" id="editor"></div>
+
+      <!-- Status bar -->
+      <div class="statusbar">
+        <span><span class="dot"></span>listo</span>
+        <span id="word-count">0 palabras · 0 caracteres</span>
+      </div>
+    </div>
+
+    <script type="module">
+      import { Editor } from "@tiptap/core";
+      import StarterKit from "@tiptap/starter-kit";
+
+      const editor = new Editor({
+        element: document.querySelector("#editor"),
+        extensions: [StarterKit],
+        content: `
+
+
+<ul>
+<li><p>4. El seguimiento, control y monitoreo del repositorio debe incorporar herramientas o metodologías que permitan realizar auditorías. El mantenimiento, así como la estrategia para la implementación del plan de preservación digital a largo plazo, debe seguir políticas y procedimientos documentados para asegurar que la información sea preservada contra toda contingencia, y conforme a normas técnicas y estándares para la preservación, migración o actualización.</p></li>
+</ul>
+88
+<ul>
+<li><p>Parágrafo 1. Las especificaciones técnicas y requisitos para la custodia y almacenamiento de documentos electrónicos de archivo en repositorios digitales de confianza y que garanticen la preservación digital, deben estar acorde con el entorno propio de la entidad y en concordancia con las normas técnicas colombianas, estándares internacionales y demás lineamientos que establezca el Archivo General de la Nación Jorge Palacios Preciado.</p></li>
+<li><p>Parágrafo 2. Los sujetos obligados deben garantizar la interoperabilidad de los diferentes sistemas de información para permitir la recuperación, conservación y preservación de los documentos electrónicos a lo largo de su ciclo de vida.</p></li>
+<li><p>Parágrafo 3. En los casos que se contrate el servicio de almacenamiento y custodia de documentos electrónicos de archivo con personas naturales o jurídicas que presten este tipo de servicio a entidades públicas, se debe garantizar que cumplen con los requisitos establecidos en el presente artículo. No obstante, la responsabilidad frente a la preservación de los documentos permanece en cabeza del sujeto obligado, por lo que, debe adoptar medidas para garantizar la autenticidad, integridad, fiabilidad, disponibilidad y el acceso a los documentos electrónicos de archivo, cuando se encuentra en repositorios de terceros.</p></li>
+</ul>
+
+<ul>
+<li><p>Artículo 3.1.5. Intervención de Bienes de Interés Cultural de Carácter Documental Archivístico- BIC-CDA. Cuando se trate de contratos cuyo objeto sea la intervención en conservación y restauración documental de los bienes declarados Bien de Interés Cultural de Carácter Documental Archivístico- BICCDA, públicos y privados del ámbito nacional o territorial, independientemente del tipo de soporte, la entidad deberá contar con la aprobación de la autoridad competente nacional o territorial, según corresponda, quien autorizará la intervención en conservación y restauración, disponiendo que esta solo podrá realizarse bajo la dirección de profesionales idóneos en conservación y restauración de bienes muebles y se oficializará mediante acto administrativo, de conformidad con lo establecido en Capítulo 2 “Declaratoria de Bienes de Interés Cultural de carácter documental archivístico BIC – CDA”, del título 8 del presente Acuerdo.</p></li>
+</ul>
+
+
+      `,
+        editorProps: {
+          attributes: { spellcheck: "false" },
+        },
+        onUpdate({ editor }) {
+          updateToolbar();
+          updateWordCount(editor);
+        },
+        onSelectionUpdate() {
+          updateToolbar();
+        },
+        onTransaction() {
+          updateToolbar();
+        },
+      });
+
+      // ── Toolbar button actions ──
+      const cmdMap = {
+        toggleBold: () => editor.chain().focus().toggleBold().run(),
+        toggleItalic: () => editor.chain().focus().toggleItalic().run(),
+        toggleStrike: () => editor.chain().focus().toggleStrike().run(),
+        toggleCode: () => editor.chain().focus().toggleCode().run(),
+        h1: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+        h2: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+        h3: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+        toggleBulletList: () => editor.chain().focus().toggleBulletList().run(),
+        toggleOrderedList: () =>
+          editor.chain().focus().toggleOrderedList().run(),
+        toggleBlockquote: () => editor.chain().focus().toggleBlockquote().run(),
+        toggleCodeBlock: () => editor.chain().focus().toggleCodeBlock().run(),
+        setHorizontalRule: () =>
+          editor.chain().focus().setHorizontalRule().run(),
+        undo: () => editor.chain().focus().undo().run(),
+        redo: () => editor.chain().focus().redo().run(),
+        clearContent: () => {
+          if (confirm("¿Limpiar todo el contenido?"))
+            editor.chain().focus().clearContent().run();
+        },
+      };
+
+      document.querySelector("#toolbar").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-cmd]");
+        if (!btn) return;
+        const fn = cmdMap[btn.dataset.cmd];
+        if (fn) fn();
+      });
+
+      // ── Active state ──
+      const activeChecks = {
+        toggleBold: () => editor.isActive("bold"),
+        toggleItalic: () => editor.isActive("italic"),
+        toggleStrike: () => editor.isActive("strike"),
+        toggleCode: () => editor.isActive("code"),
+        h1: () => editor.isActive("heading", { level: 1 }),
+        h2: () => editor.isActive("heading", { level: 2 }),
+        h3: () => editor.isActive("heading", { level: 3 }),
+        toggleBulletList: () => editor.isActive("bulletList"),
+        toggleOrderedList: () => editor.isActive("orderedList"),
+        toggleBlockquote: () => editor.isActive("blockquote"),
+        toggleCodeBlock: () => editor.isActive("codeBlock"),
+      };
+
+      function updateToolbar() {
+        document.querySelectorAll("#toolbar [data-cmd]").forEach((btn) => {
+          const check = activeChecks[btn.dataset.cmd];
+          if (check) btn.classList.toggle("active", check());
+        });
+      }
+
+      // ── Word count ──
+      function updateWordCount(ed) {
+        const text = ed.getText();
+        const words = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+        const chars = text.length;
+        document.getElementById("word-count").textContent =
+          `${words} palabra${words !== 1 ? "s" : ""} · ${chars} carácter${chars !== 1 ? "es" : ""}`;
+      }
+
+      updateToolbar();
+      updateWordCount(editor);
+    </script>
+  </body>
+</html>
