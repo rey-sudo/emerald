@@ -460,7 +460,7 @@ function injectStyles(): void {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
       left: -20px;
       width: 0.5rem;
-      border-radius: 2px;
+      border-radius: 50%;
       font-weight: 400;
     }
 
