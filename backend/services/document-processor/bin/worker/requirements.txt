@@ -1,10 +1,4 @@
-bullmq
-python-dotenv
-boto3-stubs[s3]
+pulsar-client==3.4.0
+asyncpg==0.29.0
+aioboto3==12.4.0
 dotenv
-boto3
-tenacity
-opendataloader_pdf
-bs4
-uuid6
-asyncpg

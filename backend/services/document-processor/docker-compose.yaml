@@ -1,22 +1,11 @@
 services:
-  document-processor-consumer:
-    build:
-      context: ./bin/consumer
-      dockerfile: Dockerfile
-    container_name: document_processor_consumer
-    env_file:
-      - ./bin/consumer/.env
-    networks:
-      - shared-network
   document-processor-worker:
     build:
       context: ./bin/worker
       dockerfile: Dockerfile
     container_name: document_processor_worker
-    environment:
-      - PYTHONUNBUFFERED=1
-      - SCYLLA_HOST=scylladb
-      - PULSAR_HOST=pulsar
+    env_file:
+      - ./bin/worker/.env
     networks:
       - shared-network
 

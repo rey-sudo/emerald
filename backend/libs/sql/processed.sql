@@ -1,14 +1,6 @@
-CREATE TABLE processed (
-    id UUID PRIMARY KEY,
-    consumer_group VARCHAR(255) NOT NULL,
-    event_id UUID NOT NULL,
-    processed_at BIGINT NOT NULL,
-    status VARCHAR(50) NOT NULL,
-
-    CONSTRAINT unique_event_per_consumer UNIQUE (consumer_group, event_id)
+CREATE TABLE IF NOT EXISTS processed_events (
+    event_id UUID PRIMARY KEY,
+    created_at BIGINT NOT NULL
 );
 
-
-CREATE INDEX idx_processed_time ON processed (processed_at);
-
-CREATE INDEX idx_processed_group_status ON processed (consumer_group, status);
+CREATE INDEX idx_processed_events_created_at ON processed_events (created_at);
