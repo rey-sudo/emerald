@@ -12,15 +12,23 @@ services:
     command: >
       mini
         -dir=/data
+        -ip=seaweedfs
+        -ip.bind=0.0.0.0
         -master.port=9333
         -volume.port=9340
         -filer.port=8888
         -s3.port=8333
-        -webdav.port=7333
         -admin.port=23646
     volumes:
       - seaweedfs_data:/data
     restart: unless-stopped
-
+    networks:
+      - shared-network
+      
 volumes:
   seaweedfs_data:
+
+networks:
+  shared-network:
+    external: true
+    name: global-infra-net

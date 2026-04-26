@@ -1,8 +1,8 @@
 import "dotenv/config";
 import Fastify from "fastify";
+import { S3Client } from "@aws-sdk/client-s3";
 import multipart from "@fastify/multipart";
 import { router } from "./application/router.js";
-import { S3Client } from "@aws-sdk/client-s3";
 
 const settings = {
   s3: {
@@ -15,6 +15,13 @@ const settings = {
   port: Number(process.env.PORT) || 3000,
 };
 
+declare module "fastify" {
+  interface FastifyInstance {
+    s3: S3Client;
+    config: typeof settings;
+  }
+}
+
 const s3Client = new S3Client({
   endpoint: settings.s3.endpoint,
   region: "us-east-1",
@@ -25,13 +32,6 @@ const s3Client = new S3Client({
   forcePathStyle: true,
 });
 
-declare module "fastify" {
-  interface FastifyInstance {
-    s3: S3Client;
-    config: typeof settings;
-  }
-}
-
 export const app = Fastify({
   logger: {
     level: process.env.LOG_LEVEL || "info",
@@ -40,8 +40,17 @@ export const app = Fastify({
 
 app.decorate("config", settings);
 app.decorate("s3", s3Client);
+
 app.addHook("onClose", async (instance) => {
   instance.s3.destroy();
 });
-app.register(multipart);
+
+app.register(multipart, {
+  attachFieldsToBody: true,
+  limits: {
+    files: 1,
+    fileSize: 10 * 1024 * 1024, // 10MB
+  },
+});
+
 app.register(router, { prefix: "/api/document" });

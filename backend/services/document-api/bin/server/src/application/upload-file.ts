@@ -5,10 +5,9 @@ import {
 } from "@aws-sdk/client-s3";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { v7 as uuidv7 } from "uuid";
-import type { File } from "fastify-multer/lib/interfaces";
 import { pool } from "../infrastructure/postgres/db.js";
-import multer from "fastify-multer";
 import z from "zod";
+import { MultipartFile, MultipartValue } from "@fastify/multipart";
 
 /**
  * Map of supported MIME types to their corresponding file extensions.
@@ -26,26 +25,43 @@ const ALLOWED_MIME_TYPES: Record<string, string> = {
  */
 const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
 
-/**
- * Multer middleware configuration for handling multipart/form-data.
- * Uses memory storage and validates file types against ALLOWED_MIME_TYPES.
- */
-export const uploadMiddleware = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: MAX_FILE_SIZE_BYTES },
-  fileFilter: (_req, file, cb) => {
-    const mime = file.mimetype.split(";")[0].trim();
-    if (mime in ALLOWED_MIME_TYPES) {
-      cb(null, true);
-    } else {
-      cb(
-        new Error(
-          `Unsupported file type: '${mime}'. Allowed types: ${Object.keys(ALLOWED_MIME_TYPES).join(", ")}`,
-        ),
-      );
-    }
-  },
-});
+// ── SQL ────────────────────────────────────────────────────────
+
+const SQL_CHECK_FOLDER_OWNERSHIP = `
+  SELECT 1 FROM folders WHERE id = $1 AND user_id = $2;
+`;
+
+const SQL_CHECK_FOLDER_OWNERSHIP_LOCKED = `
+  SELECT 1 FROM folders WHERE id = $1 AND user_id = $2 FOR SHARE;
+`;
+
+const SQL_INSERT = `
+  INSERT INTO documents (
+    id, user_id, folder_id,
+    original_name, internal_name,
+    content_type, mime_type,
+    size_bytes, storage_path,
+    metadata,
+    created_at, readed_at, updated_at, deleted_at,
+    v
+  ) VALUES (
+    $1,  $2,  $3,
+    $4,  $5,
+    $6,  $7,
+    $8,  $9,
+    $10,
+    $11, NULL, NULL, NULL,
+    $12
+  )
+  RETURNING *;
+`;
+
+const SQL_INSERT_EVENT = `
+  INSERT INTO events (
+    specversion, event_type, source, id, time,
+    entity_type, entity_id, data, metadata
+  ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+`;
 
 /**
  * Deletes an object from S3. Typically used as a compensating action
@@ -88,44 +104,6 @@ function buildMetadata(
   });
 }
 
-// ── SQL ────────────────────────────────────────────────────────
-
-const SQL_CHECK_FOLDER_OWNERSHIP = `
-  SELECT 1 FROM folders WHERE id = $1 AND user_id = $2;
-`;
-
-const SQL_CHECK_FOLDER_OWNERSHIP_LOCKED = `
-  SELECT 1 FROM folders WHERE id = $1 AND user_id = $2 FOR SHARE;
-`;
-
-const SQL_INSERT = `
-  INSERT INTO documents (
-    id, user_id, folder_id,
-    original_name, internal_name,
-    content_type, mime_type,
-    size_bytes, storage_path,
-    metadata,
-    created_at, readed_at, updated_at, deleted_at,
-    v
-  ) VALUES (
-    $1,  $2,  $3,
-    $4,  $5,
-    $6,  $7,
-    $8,  $9,
-    $10,
-    $11, NULL, NULL, NULL,
-    $12
-  )
-  RETURNING *;
-`;
-
-const SQL_INSERT_EVENT = `
-  INSERT INTO events (
-    specversion, event_type, source, id, time,
-    entity_type, entity_id, data, metadata
-  ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-`;
-
 /**
  * Zod schema for validating the upload request body.
  */
@@ -133,40 +111,58 @@ export const UploadFileBody = z.object({
   folder_id: z.uuid("folder_id must be a valid UUID"),
 });
 
-/**
- * Main handler for uploading files.
- * * Process:
- * 1. Validates the request body and file existence.
- * 2. Uploads the file buffer to AWS S3.
- * 3. Starts a DB transaction to record document metadata and a 'document.created' event.
- * 4. Performs a rollback and deletes the S3 object if the DB transaction fails.
- * @param request - Fastify request object containing the file and body.
- * @param reply - Fastify reply object.
- */
 export async function uploadFileHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
   const { s3, config, log } = request.server;
 
-  const file = request.file as File;
+  const body = request.body as {
+    folder_id?: MultipartValue<string>;
+    file?: MultipartFile;
+  };
+
+  const file = body.file;
   if (!file) {
     return reply.status(400).send({ message: "No file provided." });
   }
 
-  const parsed = UploadFileBody.safeParse(request.body);
-  if (!parsed.success) {
-    const formatted = z.treeifyError(parsed.error);
+  log.debug("RECEIVED FILE");
 
-    return reply.status(400).send({
-      error: "Validation error",
-      details: formatted,
+  const rawContentType = file.mimetype;
+  const mimeType = rawContentType.split(";")[0].trim();
+
+  if (!(mimeType in ALLOWED_MIME_TYPES)) {
+    return reply.status(415).send({
+      message: `Unsupported file type: '${mimeType}'. Allowed types: ${Object.keys(ALLOWED_MIME_TYPES).join(", ")}`,
     });
   }
 
+  const parsed = UploadFileBody.safeParse({
+    folder_id: body.folder_id?.value,
+  });
+  if (!parsed.success) {
+    const formatted = z.treeifyError(parsed.error);
+    return reply
+      .status(400)
+      .send({ error: "Validation error", details: formatted });
+  }
+
+  log.debug("ZOD VERIFICATION");
+
   const { folder_id: folderId } = parsed.data;
 
-  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: authentication
+  log.debug(folderId);
+
+  const userId = "019d2612-a01d-734c-ab63-917106f31187";
+  const fileBuffer = await file.toBuffer();
+  const extension = ALLOWED_MIME_TYPES[mimeType];
+  const originalName = file.filename || `document.${extension}`;
+  const sizeBytes = fileBuffer.length;
+
+  log.debug(`filename=${originalName}`);
+  log.debug(`content_type=${mimeType}`);
+  log.debug(`folder_id=${folderId}`);
 
   const folderCheck = await pool.query(SQL_CHECK_FOLDER_OWNERSHIP, [
     folderId,
@@ -179,17 +175,6 @@ export async function uploadFileHandler(
         "Access denied: Folder does not belong to user or does not exist.",
     });
   }
-
-  const fileBuffer = file.buffer!;
-  const rawContentType = file.mimetype; // "application/pdf; charset=utf-8"
-  const mimeType = rawContentType.split(";")[0].trim(); // "application/pdf"
-  const extension = ALLOWED_MIME_TYPES[mimeType];
-  const originalName = file.originalname || `document.${extension}`;
-  const sizeBytes = file.size!;
-
-  log.debug(`filename=${originalName}`);
-  log.debug(`content_type=${mimeType}`);
-  log.debug(`folder_id=${folderId}`);
 
   const docId = uuidv7();
   const internalName = `${docId}.${extension}`;
