@@ -21,7 +21,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
 import * as Y from "yjs";
 
-const Page = Node.create({
+const PageNode = Node.create({
   name: "page",
   group: "block",
   content: "block+", // Permite párrafos, listas, etc. dentro de la página
@@ -63,25 +63,27 @@ const editorStore = useEditorStore();
 
 const ydoc = new Y.Doc();
 
+const extensions = [
+  StarterKit.configure({
+    undoRedo: false,
+    history: false,
+    bold: {
+      HTMLAttributes: {
+        class: "custom-bold-style",
+      },
+    },
+  }),
+  PageNode,
+  Collaboration.configure({
+    document: ydoc,
+    field: "default",
+  }),
+  MultiSelect,
+];
+
 const editor = useEditor({
   content: null,
-  extensions: [
-    StarterKit.configure({
-      undoRedo: false,
-      history: false,
-      bold: {
-        HTMLAttributes: {
-          class: "custom-bold-style",
-        },
-      },
-    }),
-    Page,
-    Collaboration.configure({
-      document: ydoc,
-      field: "default",
-    }),
-    MultiSelect,
-  ],
+  extensions,
   editorProps: {
     attributes: {
       spellcheck: "false",

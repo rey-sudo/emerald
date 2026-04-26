@@ -37,18 +37,18 @@ const PageNode = Node.create({
     return {
       number: {
         default: null,
-        parseHTML: (el) => el.getAttribute("data-number"),
-        renderHTML: (attrs) => ({ "data-number": attrs.number }),
+        parseHTML: (element) => element.getAttribute("data-number"),
+        renderHTML: (attributes) => ({ "data-number": attributes.number }),
       },
       id: {
         default: null,
-        parseHTML: (el) => el.getAttribute("id"),
-        renderHTML: (attrs) => ({ id: attrs.id }),
+        parseHTML: (element) => element.getAttribute("id"),
+        renderHTML: (attributes) => ({ id: attributes.id }),
       },
       class: {
         default: "page-virtual",
-        parseHTML: (el) => el.getAttribute("class"),
-        renderHTML: (attrs) => ({ class: attrs.class }),
+        parseHTML: (element) => element.getAttribute("class"),
+        renderHTML: (attributes) => ({ class: attributes.class }),
       },
     };
   },
@@ -62,7 +62,16 @@ const PageNode = Node.create({
   },
 });
 
-const extensions = [StarterKit, PageNode];
+const extensions: any = [
+  StarterKit.configure({
+    bold: {
+      HTMLAttributes: {
+        class: "custom-bold-style",
+      },
+    },
+  }),
+  PageNode
+];
 
 //==============================================================================================
 
@@ -109,7 +118,6 @@ app.post("/html-to-json", {
   },
 });
 
-
 app.post("/html-to-y", {
   config: { timeout: 180_000 },
   handler: async (request, reply) => {
@@ -143,7 +151,10 @@ app.post("/html-to-y", {
       const message = err instanceof Error ? err.message : String(err);
       return reply
         .status(500)
-        .send({ error: "Error processing the HTML to Y.js binary.", detail: message });
+        .send({
+          error: "Error processing the HTML to Y.js binary.",
+          detail: message,
+        });
     }
   },
 });

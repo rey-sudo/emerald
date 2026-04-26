@@ -36,8 +36,6 @@ async def download(s3_session, s3_bucket, storage_path, tmp_path):
 
     return tmp_path
 
-import os
-
 async def upload_to_s3(s3_session, s3_bucket, s3_key, local_path):
     async with s3_session.client(
         "s3",
@@ -106,7 +104,6 @@ async def process_pdf(pool, s3_session, s3_bucket, payload):
     #4. Converts html to y binary
     y_path = tmp_output_file_path / f"{file_stem}.yjs"
     y_path = await _html_to_y(html_path, y_path)
-    logging.info(y_path)
     
     html_s3_key = storage_path.replace(".pdf", ".html")
     y_s3_key = storage_path.replace(".pdf", ".yjs")      
