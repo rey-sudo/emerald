@@ -1,4 +1,14 @@
 services:
+  document-api-publisher:
+    build:
+      context: ./bin/publisher
+      dockerfile: Dockerfile
+    container_name: document_api_publisher
+    env_file:
+      - ./bin/publisher/.env
+    networks:
+      - shared-network
+      
   document-api-server:
     build:
       context: ./bin/server
