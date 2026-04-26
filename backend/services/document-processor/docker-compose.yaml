@@ -8,6 +8,17 @@ services:
       - ./bin/worker/.env
     networks:
       - shared-network
+  document-processor-tiptap:
+    build:
+      context: ./bin/tiptap
+      dockerfile: Dockerfile
+    container_name: document_processor_tiptap 
+    env_file:
+      - ./bin/tiptap/.env
+    ports:
+      - "7001:7001"      
+    networks:
+      - shared-network 
 
 networks:
   shared-network:
