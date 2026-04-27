@@ -15,14 +15,13 @@ pub struct AppState {
 pub async fn run() -> Result<Arc<AppState>, Box<dyn Error>> {
     from_filename(".env").ok();
 
-    // Initialize tracing subscriber for structured, async-safe logging.
-    // Enables info!, warn!, error! logs across the entire service.
+    // 1. Init tracing subscriber for structured, async-safe logging and service-wide telemetry.
     tracing_subscriber::fmt::init();
 
-    // Returns an error if any required variables are missing or malformed.
+    // 2. Returns an error if any required variables are missing or malformed.
     let config: Config = Config::from_env()?;
 
-    // Initialize a connection pool to PostgreSQL with maximum concurrency and acquisition timeout limits.
+    // 3. Initialize a connection pool to PostgreSQL with maximum concurrency and acquisition timeout limits.
     let pool: sqlx::Pool<sqlx::Postgres> = PgPoolOptions::new()
         .max_connections(config.pg_max_connections)
         .acquire_timeout(Duration::from_secs(config.pg_acquire_timeout_secs))

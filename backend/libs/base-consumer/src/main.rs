@@ -1,5 +1,9 @@
 use event_consumer::{
-    application::{self, consumer::MultiHandler}, async_trait, infrastructure::bootstrap::{self, AppState}, model::EventEnveloped, sqlx::{Postgres, Transaction}
+    application::{self, consumer::MultiHandler},
+    async_trait,
+    infrastructure::bootstrap::{self, AppState},
+    model::EventEnveloped,
+    sqlx::{Postgres, Transaction},
 };
 
 use tracing::{error, info, warn};
@@ -134,23 +138,20 @@ impl MultiHandler for HandlerRouter {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // 1. Bootstrapping: Initialize configuration, database connection pools,
-    // and shared resources wrapped in an Arc for thread-safe access.
+    // 1. Bootstrap: Init config, DB pools, and shared resources in Arc for thread-safety.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
 
-    // 2. Business Logic Handler: Instance of the specific handler for this service.
+    // 2. Business Logic Handlers: Instance of the specific handlers for this service.
     let multi_handler: HandlerRouter = HandlerRouter {
         folder: FolderHandler,
-        document: DocumentHandler
+        document: DocumentHandler,
     };
 
     // 3. Concurrent Flow Control: 'tokio::select!' monitors multiple futures simultaneously.
     tokio::select! {
-        res = application::run(state.clone(), multi_handler) => {
+        res = application::run(state, multi_handler) => {
             match res {
-                Ok(_) => {
-                    warn!("Application loop finished gracefully but unexpectedly");
-                },
+                Ok(_) => warn!("Application loop finished gracefully but unexpectedly"),
                 Err(e) => {
                     error!(
                     error = %e,
