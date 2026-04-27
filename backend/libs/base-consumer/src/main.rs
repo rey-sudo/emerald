@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use event_consumer::{
     application::{self, consumer::MultiHandler},
     async_trait,
@@ -137,7 +139,7 @@ impl MultiHandler for HandlerRouter {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     // 1. Bootstrap: Init config, DB pools, and shared resources in Arc for thread-safety.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
 

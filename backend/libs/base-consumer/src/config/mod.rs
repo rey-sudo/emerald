@@ -50,7 +50,7 @@ fn validate_sizes(conf: &Config) -> Result<(), ValidationError> {
 }
 
 impl Config {
-    pub fn from_env() -> Result<Self, Box<dyn Error>> {
+    pub fn from_env() -> Result<Self, Box<dyn Error + Send + Sync>> {
         let db_url: String = std::env::var("DATABASE_URL")
             .map_err(|e: std::env::VarError| format!("DATABASE_URL is not set: {}", e))?;
 

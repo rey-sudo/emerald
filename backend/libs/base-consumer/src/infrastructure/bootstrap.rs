@@ -12,7 +12,7 @@ pub struct AppState {
     pub pool: sqlx::PgPool,
 }
 
-pub async fn run() -> Result<Arc<AppState>, Box<dyn Error>> {
+pub async fn run() -> Result<Arc<AppState>, Box<dyn Error + Send + Sync>> {
     from_filename(".env").ok();
 
     // 1. Init tracing subscriber for structured, async-safe logging and service-wide telemetry.

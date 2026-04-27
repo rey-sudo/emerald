@@ -4,7 +4,7 @@ use crate::{
 };
 use std::{collections::HashMap, error::Error, sync::Arc};
 
-pub async fn run<L>(state: Arc<AppState>, multi_handler: L) -> Result<(), Box<dyn Error>>
+pub async fn run<L>(state: Arc<AppState>, multi_handler: L) -> Result<(), Box<dyn Error + Send + Sync>>
 where
     L: MultiHandler + Send + Sync + 'static,
 {
@@ -20,30 +20,31 @@ where
 
     let m_handler: Arc<L> = Arc::new(multi_handler);
 
-    let mut handles: Vec<tokio::task::JoinHandle<()>> = vec![];
+    let mut handles: Vec<tokio::task::JoinHandle<Result<(), Box<dyn Error + Send + Sync>>>> =
+        vec![];
 
     for (sub_type, topics) in grouped {
-        match sub_type {
-            SubscriptionType::Shared => {
-                //tokio::spawn(run_shared_consumer(topics));
-            }
-            SubscriptionType::KeyShared => {
-                let state: Arc<AppState> = state.clone();
-                let handlers: Arc<L> = m_handler.clone();
+        let state: Arc<AppState> = state.clone();
+        let handlers: Arc<L> = m_handler.clone();
 
-                let handle: tokio::task::JoinHandle<()> = tokio::spawn(async move {
-                    if let Err(e) = run_key_shared_consumer(state, topics, handlers).await {
-                        tracing::error!("Consumer crashed: {:?}", e);
-                    }
-                });
-
-                handles.push(handle);
+        let handle: tokio::task::JoinHandle<Result<(), Box<dyn Error + Send + Sync>>> = tokio::spawn(async move {
+            match sub_type {
+                SubscriptionType::KeyShared => {
+                    run_key_shared_consumer(state, topics, handlers).await
+                }
+                SubscriptionType::Shared => {
+                    // run_shared_consumer(state, topics, handlers).await
+                    Ok(()) // O lo que corresponda
+                }
             }
-        }
+        });
+        handles.push(handle);
     }
 
     for handle in handles {
-        let _ = handle.await;
+        // El primer ? captura errores de Tokio (panics),
+        // el segundo ? captura errores de tu lógica (run_key_shared_consumer)
+        handle.await??;
     }
 
     Ok(())
