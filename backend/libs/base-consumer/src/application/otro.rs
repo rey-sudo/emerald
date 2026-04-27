@@ -1,11 +1,10 @@
 use crate::{
-    EventEnveloped,
     bootstrap::AppState,
-    consumer::{MultiHandler, process_event_with_handler},
+    consumer::{MultiHandler, process_event_with_handler}, model::EventEnveloped,
 };
 use futures::TryStreamExt;
 use pulsar::{
-    Consumer, DeserializeMessage, Payload, Pulsar, SubType, TokioExecutor,
+    Consumer, Pulsar, SubType, TokioExecutor,
     consumer::DeadLetterPolicy,
 };
 use std::{error::Error, sync::Arc, time::Duration};
@@ -79,7 +78,7 @@ where
         }
 
         // 3. Processing: Attempt to process the event using the transactional handler logic.
-        match process_event_with_handler(&state, &event, &consumer_group, handlers.as_ref()).await {
+        match process_event_with_handler(&state, &event, handlers.as_ref()).await {
             Ok(processed) => {
                 if processed {
                     info!(id = %event.event_id, "Event processed successfully");

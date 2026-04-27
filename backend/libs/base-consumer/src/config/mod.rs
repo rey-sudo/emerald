@@ -1,7 +1,9 @@
 use std::{error::Error, time::Duration};
-use validator::Validate;
+use validator::{Validate, ValidationError};
+
 
 #[derive(Debug, Clone, Validate)]
+#[validate(schema(function = "validate_sizes", message = "Sizes must match"))]
 pub struct Config {
     #[validate(url(message = "DATABASE_URL must be a valid URL"))]
     pub db_url: String,
@@ -38,6 +40,13 @@ pub struct Config {
     pub consumer_prefix: String,
 
     pub consumer_suffix: String,
+}
+
+fn validate_sizes(conf: &Config) -> Result<(), ValidationError> {
+    if conf.topics.len() != conf.topics_type.len() {
+        return Err(ValidationError::new("mismatched_lengths"));
+    }
+    Ok(())
 }
 
 impl Config {

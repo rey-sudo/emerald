@@ -1,8 +1,5 @@
 use event_consumer::{
-    application::{self, EventEnveloped, consumer::MultiHandler},
-    async_trait,
-    infrastructure::bootstrap::{self, AppState},
-    sqlx::{Postgres, Transaction},
+    application::{self, consumer::MultiHandler}, async_trait, infrastructure::bootstrap::{self, AppState}, model::EventEnveloped, sqlx::{Postgres, Transaction}
 };
 
 use tracing::{error, info, warn};

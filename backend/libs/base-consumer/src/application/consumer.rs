@@ -1,4 +1,4 @@
-use crate::{application::EventEnveloped, infrastructure::bootstrap::AppState};
+use crate::{infrastructure::bootstrap::AppState, model::EventEnveloped};
 use async_trait::async_trait;
 use sqlx::{Postgres, Transaction};
 use std::{error::Error, sync::Arc};
@@ -37,7 +37,6 @@ pub trait MultiHandler: Send + Sync {
 pub async fn process_event_with_handler<L: MultiHandler>(
     state: &Arc<AppState>,
     event: &EventEnveloped,
-    group: &str,
     handlers: &L, // El handler específico del microservicio
 ) -> Result<bool, Box<dyn Error + Send + Sync>> {
     // 1. Transaction Initialization: Start an atomic unit of work.
