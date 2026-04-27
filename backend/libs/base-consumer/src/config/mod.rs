@@ -1,10 +1,12 @@
 use std::{error::Error, time::Duration};
 use validator::{Validate, ValidationError};
 
-
 #[derive(Debug, Clone, Validate)]
 #[validate(schema(function = "validate_sizes", message = "Sizes must match"))]
 pub struct Config {
+    #[validate(length(min = 1, message = "POD_NAME cannot be empty"))]
+    pub pod_name: String,
+
     #[validate(url(message = "DATABASE_URL must be a valid URL"))]
     pub db_url: String,
 
@@ -51,6 +53,9 @@ fn validate_sizes(conf: &Config) -> Result<(), ValidationError> {
 
 impl Config {
     pub fn from_env() -> Result<Self, Box<dyn Error + Send + Sync>> {
+        let pod_name: String = std::env::var("POD_NAME")
+            .map_err(|e: std::env::VarError| format!("POD_NAME is not set: {}", e))?;
+
         let db_url: String = std::env::var("DATABASE_URL")
             .map_err(|e: std::env::VarError| format!("DATABASE_URL is not set: {}", e))?;
 
@@ -127,6 +132,7 @@ impl Config {
             .map_err(|e: std::env::VarError| format!("CONSUMER_SUFFIX is not set: {}", e))?;
 
         let config: Config = Self {
+            pod_name,
             db_url,
             pulsar_url,
             batch_size,
