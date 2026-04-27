@@ -8,7 +8,15 @@ services:
       - ./bin/publisher/.env
     networks:
       - shared-network
-      
+  document-api-consumer:
+    build:
+      context: ./bin/consumer
+      dockerfile: Dockerfile
+    container_name: document_api_consumer
+    env_file:
+      - ./bin/consumer/.env
+    networks:
+      - shared-network      
   document-api-server:
     build:
       context: ./bin/server

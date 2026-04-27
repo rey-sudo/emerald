@@ -46,16 +46,17 @@ pub async fn publish_pending_events(
     let mut published_count: usize = 0;
 
     for row in rows {
-        // 2. Generate a search pattern from the entity type and match it against the configured topics list.
-        let pattern: String = format!(".{}", row.entity_type);
-        let target_topic: &String = state
+        //2. Search the topic by event_type
+        let pattern = format!("/{}", row.event_type);
+
+        let target_topic = state
             .config
             .topics
             .iter()
-            .find(|t: &&String| t.contains(&pattern))
+            .find(|&t| t.ends_with(&pattern) || t == &row.event_type) 
             .unwrap_or(&state.config.topics[0]);
 
-        // 3. Cache a Pulsar producer for the target topic if it does not already exist in the registry.
+        //3. Cache a Pulsar producer for the target topic if it does not already exist in the registry.
         if !producers.contains_key(target_topic) {
             let new_producer: pulsar::Producer<TokioExecutor> =
                 pulsar.producer().with_topic(target_topic).build().await?;
@@ -63,7 +64,7 @@ pub async fn publish_pending_events(
             producers.insert(target_topic.clone(), new_producer);
             info!("Producer cached")
         }
-        // 4. Retrieve the mutable producer from the cache.
+        //4. Retrieve the mutable producer from the cache.
         let producer: &mut pulsar::Producer<TokioExecutor> =
             producers.get_mut(target_topic).unwrap();
 
@@ -82,7 +83,7 @@ pub async fn publish_pending_events(
             ..Default::default()
         };
 
-        // 5. Dispatch the event to Pulsar and upon successful delivery mark the event as published.
+        //5. Dispatch the event to Pulsar and upon successful delivery mark the event as published.
         match producer.send_non_blocking(message).await {
             Ok(_) => {
                 sqlx::query("UPDATE events SET published = TRUE WHERE id = $1")

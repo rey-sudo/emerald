@@ -382,7 +382,7 @@ dependencies = [
 
 [[package]]
 name = "event_publisher"
-version = "0.2.4"
+version = "0.2.6"
 dependencies = [
  "anyhow",
  "chrono",

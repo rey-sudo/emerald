@@ -2,12 +2,10 @@ from dotenv import load_dotenv
 load_dotenv()
 import asyncio
 import json
-from time import sleep
 import time
-import uuid
 import logging
-from functools import partial
 from tools import process_pdf
+from uuid6 import uuid7
 
 import pulsar
 import asyncpg
@@ -18,7 +16,7 @@ import aioboto3
 # -----------------------
 
 PULSAR_URL = "pulsar://broker:6650"
-TOPIC = "persistent://public/default/document-api.document"
+TOPIC = ["persistent://public/default/document.created"]
 
 EVENT_TYPE = "document.created"
 
@@ -69,7 +67,7 @@ async def insert_outbox(pool, document_id, timestamp_ms):
             0,
             "document.processed",
             "document-processor-worker",
-            str(uuid.uuid4()),
+            uuid7(),
             timestamp_ms,
             "document",
             document_id,

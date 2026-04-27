@@ -7,3 +7,4 @@ tenacity
 aiofiles
 beautifulsoup4
 aiohttp
+uuid6

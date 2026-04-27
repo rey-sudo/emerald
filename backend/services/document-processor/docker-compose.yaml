@@ -19,6 +19,15 @@ services:
       - "7001:7001"      
     networks:
       - shared-network 
+  document-processor-publisher:
+    build:
+      context: ./bin/publisher
+      dockerfile: Dockerfile
+    container_name: document_processor_publisher
+    env_file:
+      - ./bin/publisher/.env
+    networks:
+      - shared-network
 
 networks:
   shared-network:
