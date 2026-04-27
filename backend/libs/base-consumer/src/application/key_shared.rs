@@ -1,12 +1,11 @@
 use crate::{
     bootstrap::AppState,
-    consumer::{MultiHandler, process_event_with_handler}, model::EventEnveloped,
+    consumer::{MultiHandler, process_event_with_handler},
+    model::EventEnveloped,
 };
+
 use futures::TryStreamExt;
-use pulsar::{
-    Consumer, Pulsar, SubType, TokioExecutor,
-    consumer::DeadLetterPolicy,
-};
+use pulsar::{Consumer, Pulsar, SubType, TokioExecutor, consumer::DeadLetterPolicy};
 use std::{error::Error, sync::Arc, time::Duration};
 use tracing::{error, info, warn};
 
@@ -20,14 +19,13 @@ where
 {
     info!("KeyShared topics: {:?}", topics);
 
-    info!("Pulsar: {:?}", &state.config.pulsar_url);
     //1. Initialize the Pulsar client gateway. --------------------------------------------------------------
     let pulsar: Pulsar<_> = Pulsar::builder(&state.config.pulsar_url, TokioExecutor)
         .build()
         .await
         .map_err(|e: pulsar::Error| format!("Failed to create Pulsar client: {}", e))?;
 
-    info!("Connected tu pulsar");
+    info!("Connected to pulsar");
 
     // Clone the consumer group name to obtain an owned String.
     let consumer_group: String = state.config.consumer_group.clone();

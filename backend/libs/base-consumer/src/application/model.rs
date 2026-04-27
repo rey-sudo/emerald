@@ -19,7 +19,6 @@ impl DeserializeMessage for EventEnveloped {
     }
 }
 
-
 #[derive(Hash, Eq, PartialEq, Debug)]
 pub enum SubscriptionType {
     Shared,
