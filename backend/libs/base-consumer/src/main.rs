@@ -2,7 +2,7 @@ use event_consumer::{
     application::{self, EventEnveloped, consumer::MultiHandler},
     async_trait,
     infrastructure::bootstrap::{self, AppState},
-    sqlx::{Postgres, Transaction}
+    sqlx::{Postgres, Transaction},
 };
 
 use tracing::{error, info, warn};
@@ -30,7 +30,7 @@ impl MultiHandler for FolderHandler {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<(), Box<dyn std::error::Error>> {
+    ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         match event.event_type.as_str() {
             "folder.created" => {
                 info!("Handling folder creation for ID: {}", event.event_id);
@@ -56,17 +56,57 @@ impl MultiHandler for FolderHandler {
     }
 }
 
+/// EXAMPLE. A specific handler implementation for folder-related events.
+/// This struct encapsulates the domain logic for the "folder" entity type.
+struct DocumentHandler;
+
+#[async_trait]
+impl MultiHandler for DocumentHandler {
+    /// Determines if this handler should process a given entity_type.
+    /// Used by the dispatcher to route events only to interested parties.    
+    fn can_handle(&self, entity_type: &str) -> bool {
+        entity_type == "document"
+    }
+    /// Returns a human-readable name for the handler.
+    /// Primarily used for structured logging and debugging purposes.
+    fn name(&self) -> &str {
+        "DocumentHandler"
+    }
+    /// Executes the core business logic for a specific event.
+    /// * `tx` - A mutable reference to an active SQLx transaction.
+    /// * `event` - The enveloped event containing metadata and the actual payload.
+    async fn handle<'a>(
+        &self,
+        tx: &mut Transaction<'a, Postgres>,
+        event: &EventEnveloped,
+    ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+        match event.event_type.as_str() {
+            "document.processed" => {
+                info!("Handling document.processed for ID: {}", event.event_id);
+                // self.on_created(tx, event).await
+                Ok(())
+            }
+            _ => {
+                // If we don't care about this specific action, we ACK and move on
+                warn!("No specific logic for event_type: {}", event.event_type);
+                Ok(())
+            }
+        }
+    }
+}
+
 /// EXAMPLE. This struct follows the Router/Dispatcher pattern, allowing a single
 /// consumer to manage multiple entity types efficiently.
 struct HandlerRouter {
     folder: FolderHandler,
+    document: DocumentHandler,
 }
 
 #[async_trait]
 impl MultiHandler for HandlerRouter {
     /// Returns true if at least one sub-handler is interested in the entity type.
     fn can_handle(&self, entity_type: &str) -> bool {
-        self.folder.can_handle(entity_type) // OR others handlers
+        self.folder.can_handle(entity_type) || self.document.can_handle(entity_type)
     }
     /// Returns the identifier for this router.
     /// Useful for identifying the dispatcher in high-level application logs.
@@ -80,9 +120,10 @@ impl MultiHandler for HandlerRouter {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<(), Box<dyn std::error::Error>> {
+    ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         match event.entity_type.as_str() {
             "folder" => self.folder.handle(tx, event).await,
+            "document" => self.document.handle(tx, event).await,
             _ => {
                 warn!(
                     "MultiHandler received type it cannot route: {}",
@@ -103,6 +144,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 2. Business Logic Handler: Instance of the specific handler for this service.
     let multi_handler: HandlerRouter = HandlerRouter {
         folder: FolderHandler,
+        document: DocumentHandler
     };
 
     // 3. Concurrent Flow Control: 'tokio::select!' monitors multiple futures simultaneously.

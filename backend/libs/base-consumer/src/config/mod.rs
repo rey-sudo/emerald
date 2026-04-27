@@ -21,6 +21,9 @@ pub struct Config {
     #[validate(length(min = 1, message = "TOPIC_LIST cannot be empty"))]
     pub topics: Vec<String>,
 
+    #[validate(length(min = 1, message = "TOPIC_TYPE_LIST cannot be empty"))]
+    pub topics_type: Vec<String>,
+
     #[validate(range(min = 1, max = 500))]
     pub pg_max_connections: u32,
 
@@ -79,6 +82,17 @@ impl Config {
             .filter(|s: &String| !s.is_empty())
             .collect();
 
+        let topic_type_list: String =
+            std::env::var("TOPIC_TYPE_LIST").map_err(|e: std::env::VarError| {
+                format!("TOPIC_TYPE_LIST is not set (expected comma-separated values like a,b,c)")
+            })?;
+
+        let topics_type: Vec<String> = topic_type_list
+            .split(',')
+            .map(|s: &str| s.trim().to_string())
+            .filter(|s: &String| !s.is_empty())
+            .collect();
+
         let pg_max_connections: u32 = std::env::var("PG_MAX_CONNECTIONS")
             .map_err(|e: std::env::VarError| format!("PG_MAX_CONNECTIONS is not set: {}", e))?
             .parse::<u32>()
@@ -111,6 +125,7 @@ impl Config {
             pulsar_reconnect_delay,
             pulsar_max_retries,
             topics,
+            topics_type,
             pg_max_connections,
             pg_acquire_timeout_secs,
             pulsar_batch_size,
@@ -121,7 +136,9 @@ impl Config {
 
         config
             .validate()
-            .map_err(|e: validator::ValidationErrors| format!("Configuration validation failed: {}", e))?;
+            .map_err(|e: validator::ValidationErrors| {
+                format!("Configuration validation failed: {}", e)
+            })?;
 
         Ok(config)
     }

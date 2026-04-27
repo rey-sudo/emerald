@@ -1,15 +1,13 @@
 pub mod consumer;
+pub mod otro;
+
 use crate::{
-    application::consumer::{MultiHandler, process_event_with_handler},
-    infrastructure::bootstrap::AppState,
+    application::consumer::MultiHandler, infrastructure::bootstrap::AppState,
+    otro::run_key_shared_consumer,
 };
-use futures::TryStreamExt;
-use pulsar::{
-    Consumer, DeserializeMessage, Payload, Pulsar, SubType, TokioExecutor,
-    consumer::DeadLetterPolicy,
-};
+use pulsar::{DeserializeMessage, Payload};
 use serde::{Deserialize, Serialize};
-use std::{error::Error, sync::Arc, time::Duration};
+use std::{collections::HashMap, error::Error, sync::Arc, time::Duration};
 use tracing::{error, info, warn};
 use uuid::Uuid;
 
@@ -30,82 +28,64 @@ impl DeserializeMessage for EventEnveloped {
     }
 }
 
+#[derive(Hash, Eq, PartialEq, Debug)]
+enum SubscriptionType {
+    Shared,
+    KeyShared,
+}
+
+fn parse_topic_type(t: &str) -> SubscriptionType {
+    match t {
+        "shared" => SubscriptionType::Shared,
+        "key-shared" => SubscriptionType::KeyShared,
+        _ => panic!("Invalid topic type: {}", t),
+    }
+}
+
 pub async fn run<L>(state: Arc<AppState>, multi_handler: L) -> Result<(), Box<dyn Error>>
 where
-    L: MultiHandler + 'static,
+    L: MultiHandler + Send + Sync + 'static,
 {
-    info!("Starting consumer for topics: {:?}", state.config.topics);
+    let topics: Vec<String> = state.config.topics.clone();
+    let types: Vec<String> = state.config.topics_type.clone();
 
-    // Initialize the Pulsar client gateway.
-    let pulsar: Pulsar<_> = Pulsar::builder(&state.config.pulsar_url, TokioExecutor)
-        .build()
-        .await
-        .map_err(|e: pulsar::Error| format!("Failed to create Pulsar client: {}", e))?;
+    if topics.len() != types.len() {
+        warn!("TOPICS ({}) y TOPICS_TYPE ({})", topics.len(), types.len());
+    }
 
-    // Clone the consumer group name to obtain an owned String.
-    let consumer_group: String = state.config.consumer_group.clone();
+    let mut grouped: HashMap<SubscriptionType, Vec<String>> = HashMap::new();
 
-    // Create a unique name for this consumer.
-    let consumer_name: String = format!(
-        "{}-{}",
-        state.config.consumer_prefix, state.config.consumer_suffix
-    );
-
-    // Dead Letter Queue (DLQ) Configuration:
-    let dlq_policy: DeadLetterPolicy = DeadLetterPolicy {
-        max_redeliver_count: 5,
-        dead_letter_topic: format!("{}-DLQ", state.config.consumer_prefix),
-    };
-
-    // consumer_name : Assign a unique name to this specific instance for tracking.
-    // consumer_group: Join the shared subscription group to distribute the workload.
-    // KeyShared: to ensure ordered processing by entity ID.
-    let mut consumer: Consumer<EventEnveloped, TokioExecutor> = pulsar
-        .consumer()
-        .with_topics(state.config.topics.clone())
-        .with_consumer_name(consumer_name)
-        .with_subscription(&consumer_group)
-        .with_subscription_type(SubType::KeyShared)
-        .with_dead_letter_policy(dlq_policy)
-        .build()
-        .await?;
+    for (topic, t) in topics.iter().zip(types.iter()) {
+        let sub_type: SubscriptionType = parse_topic_type(t);
+        grouped.entry(sub_type).or_default().push(topic.clone());
+    }
 
     let handlers: Arc<L> = Arc::new(multi_handler);
 
-    while let Some(msg) = consumer.try_next().await? {
-        // 1. Deserialize: the payload acknowledging malformed messages to prevent queue blocking.
-        let event: EventEnveloped = match msg.deserialize() {
-            Ok(data) => data,
-            Err(e) => {
-                error!("Could not deserialize message: {:?}", e);
-                consumer.ack(&msg).await?;
-                continue;
-            }
-        };
+    let mut handles: Vec<tokio::task::JoinHandle<()>> = vec![];
 
-        // 2. Early Filtering: Check if the registered handlers can process this entity_type.
-        if !handlers.can_handle(&event.entity_type) {
-            info!("Event {} ignored by {}", event.event_id, handlers.name());
-            consumer.ack(&msg).await?;
-            continue;
-        }
-
-        // 3. Processing: Attempt to process the event using the transactional handler logic.
-        match process_event_with_handler(&state, &event, &consumer_group, &*handlers).await {
-            Ok(processed) => {
-                if processed {
-                    info!(id = %event.event_id, "Event processed successfully");
-                } else {
-                    warn!(id = %event.event_id, "Event skipped (already processed)");
-                }
-                consumer.ack(&msg).await?;
+    for (sub_type, topics) in grouped {
+        match sub_type {
+            SubscriptionType::Shared => {
+                //tokio::spawn(run_shared_consumer(topics));
             }
-            Err(e) => {
-                error!(id = %event.event_id, "Critical error processing event: {:?}", e);
-                tokio::time::sleep(Duration::from_secs(5)).await;
-                consumer.nack(&msg).await?;
+            SubscriptionType::KeyShared => {
+                let state = state.clone();
+                let handlers = handlers.clone();
+
+                let handle = tokio::spawn(async move {
+                    if let Err(e) = run_key_shared_consumer(state, topics, handlers).await {
+                        tracing::error!("Consumer crashed: {:?}", e);
+                    }
+                });
+
+                handles.push(handle);
             }
         }
+    }
+
+    for handle in handles {
+        let _ = handle.await;
     }
 
     Ok(())

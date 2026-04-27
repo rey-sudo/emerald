@@ -22,7 +22,7 @@ pub trait MultiHandler: Send + Sync {
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> Result<(), Box<dyn std::error::Error>>;
+    ) -> Result<(), Box<dyn std::error::Error + Send + Sync>>;
 
     /// Provides a human-readable identifier for the handler.
     /// Useful for telemetry, structured logging, and identifying which
@@ -39,7 +39,7 @@ pub async fn process_event_with_handler<L: MultiHandler>(
     event: &EventEnveloped,
     group: &str,
     handlers: &L, // El handler específico del microservicio
-) -> Result<bool, Box<dyn Error>> {
+) -> Result<bool, Box<dyn Error + Send + Sync>> {
     // 1. Transaction Initialization: Start an atomic unit of work.
     // All subsequent database operations will either succeed together or fail together.
     let mut tx: Transaction<'_, Postgres> = state
@@ -55,15 +55,12 @@ pub async fn process_event_with_handler<L: MultiHandler>(
     // The 'ON CONFLICT DO NOTHING' clause ensures that if the event was already
     // handled by this consumer group, the insert will fail silently without an error.
     let result: sqlx::postgres::PgQueryResult = sqlx::query(
-        "INSERT INTO processed (id, consumer_group, event_id, processed_at, status) 
-         VALUES ($1, $2, $3, $4, $5) 
-         ON CONFLICT (consumer_group, event_id) DO NOTHING",
+        "INSERT INTO processed_events (event_id, created_at) 
+            VALUES ($1, $2) 
+            ON CONFLICT (event_id) DO NOTHING",
     )
-    .bind(uuid::Uuid::now_v7())
-    .bind(group)
     .bind(event.event_id)
     .bind(now_ms)
-    .bind("SUCCESS")
     .execute(&mut *tx)
     .await?;
 

@@ -161,7 +161,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 .file-card-content img {
   width: 100%;
   height: 100%;
-  border-radius: var(--ui-radius);
+  border-radius: calc(var(--ui-radius) * 2);
 }
 
 .file-card-footer {
