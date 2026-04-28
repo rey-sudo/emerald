@@ -55,7 +55,19 @@ async def insert_processed(pool, event_id, timestamp_ms):
             timestamp_ms
         )
 
-async def insert_outbox(pool, document_id, timestamp_ms):
+async def insert_outbox(pool, document, timestamp_ms):
+    event_data = {
+        "id": document.get("id"),
+        "status": "PROCESSED",
+        "checksum": "sha3232323",
+        "metadata": {},
+        "v": document.get('v')
+    }
+    
+    logging.info(event_data)
+    
+    event_metadata = {}
+    
     async with pool.acquire() as conn:
         await conn.execute(
             """
@@ -70,9 +82,9 @@ async def insert_outbox(pool, document_id, timestamp_ms):
             uuid7(),
             timestamp_ms,
             "document",
-            document_id,
-            json.dumps({"document_id": document_id}),
-            json.dumps({}),
+            document.get("id"),
+            json.dumps(event_data),
+            json.dumps(event_metadata),
         )
 
 # -----------------------
@@ -100,13 +112,13 @@ async def handle(msg, consumer, pool, s3_session):
     async with semaphore:
         try:
             payload = json.loads(msg.data())
-            data = payload.get("data") or {}
-            
             event_id = payload.get("event_id")
-            event_type = payload.get("event_type")
-            document_id = data.get("id")
-            mime_type = data.get("mime_type")
-            
+            event_type = payload.get("event_type")  
+                      
+            document = payload.get("data") or {}
+            document_id = document.get("id")
+            mime_type = document.get("mime_type")
+                   
             timestamp_ms = int(time.time() * 1000)
             
             # 1. Basic check
@@ -149,7 +161,7 @@ async def handle(msg, consumer, pool, s3_session):
             # 6. Insert document.processed event
             for acc in range(3):
                 try:
-                    await insert_outbox(pool, document_id, timestamp_ms)
+                    await insert_outbox(pool, document, timestamp_ms)
                     break
                 except Exception:
                     if acc == 2:
