@@ -19,6 +19,8 @@ where
 {
     info!("KeyShared topics: {:?}", topics);
 
+    let consumer_type: &str = "key-shared";
+
     // 1. Client Connection: Build and initialize the Pulsar gateway using the Tokio executor.
     let pulsar: Pulsar<_> = Pulsar::builder(&state.config.pulsar_url, TokioExecutor)
         .build()
@@ -28,7 +30,7 @@ where
     debug!("Connected to pulsar");
 
     // 2. Identity Setup: Define unique consumer names and shared group identifiers from config.
-    let subscription_name: String = format!("{}-key-shared", state.config.consumer_group);
+    let subscription_name: String = format!("{}-{}", state.config.consumer_group, consumer_type);
     let consumer_name: String = format!(
         "{}-{}-{}",
         state.config.consumer_prefix,
@@ -39,7 +41,7 @@ where
     // 3. Error Handling Policy: Configure Dead Letter Queue parameters for message redelivery limits.
     let consumer_dlq_policy: DeadLetterPolicy = DeadLetterPolicy {
         max_redeliver_count: 5,
-        dead_letter_topic: format!("{}-key-shared-DLQ", state.config.consumer_group),
+        dead_letter_topic: format!("{}-{}-DLQ", state.config.consumer_group, consumer_type),
     };
 
     // 4. Consumer Initialization: Build the consumer with specific topics, subscription type, and DLQ policy.
