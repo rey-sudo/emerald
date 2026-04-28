@@ -4,43 +4,33 @@ use sqlx::{Postgres, Transaction};
 use std::{error::Error, sync::Arc};
 use tracing::error;
 
-/// This contract trait must be implemented by any component that wishes to process
-/// incoming events. It is designed to be thread-safe (`Send + Sync`) and
-/// supports asynchronous execution via the `#[async_trait]` macro.
+/// Contract for event processing components.
+/// Requires thread-safety and supports asynchronous execution.
 #[async_trait]
 pub trait MultiHandler: Send + Sync {
-    /// Predicate used by the consumer engine to determine if this handler
-    /// is capable of processing a specific entity_type.
+    /// 1. Capability Check: Determines if this handler can process a specific entity type.
     fn can_handle(&self, entity_type: &str) -> bool;
 
-    /// Main entry point for business logic execution.
-    /// This method receives a mutable reference to an active SQL transaction.
-    /// # Error Handling
-    /// Returning an `Err` will trigger a transaction rollback and signal
-    /// the engine to NACK (Negative Acknowledge) the message for a retry.
+    /// 2. Logic Execution: Processes the business logic within a shared database transaction.
+    /// Returns an error to trigger a rollback and signal a retry (NACK).
     async fn handle<'a>(
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
     ) -> Result<(), Box<dyn std::error::Error + Send + Sync>>;
 
-    /// Provides a human-readable identifier for the handler.
-    /// Useful for telemetry, structured logging, and identifying which
-    /// specific logic failed during a crash or error state.
+    /// 3. Identification: Provides a unique name for telemetry and debugging purposes.
     fn name(&self) -> &str;
 }
 
-/// Core transactional engine for event processing.
-///
-/// This function guarantees "Exactly-Once" processing semantics (within the DB scope)
-/// by wrapping both the idempotency check and the business logic in a single transaction.
+/// Core engine for transactional event processing.
+/// Implements the Inbox Pattern to ensure "Exactly-Once" semantics within the database.
 pub async fn process_event_with_handler<L: MultiHandler>(
     state: &Arc<AppState>,
     event: &EventEnveloped,
-    handlers: &L, // El handler específico del microservicio
+    handlers: &L,
 ) -> Result<bool, Box<dyn Error + Send + Sync>> {
-    // 1. Transaction Initialization: Start an atomic unit of work.
-    // All subsequent database operations will either succeed together or fail together.
+    // 1. Transaction Initialization: Begins an atomic unit of work to ensure data integrity.
     let mut tx: Transaction<'_, Postgres> = state
         .pool
         .begin()
@@ -49,10 +39,7 @@ pub async fn process_event_with_handler<L: MultiHandler>(
 
     let now_ms: i64 = chrono::Utc::now().timestamp();
 
-    // 2. Idempotency Control (Inbox Pattern):
-    // We attempt to record the event in the 'processed' table.
-    // The 'ON CONFLICT DO NOTHING' clause ensures that if the event was already
-    // handled by this consumer group, the insert will fail silently without an error.
+    // 2. Idempotency Control: Attempts to record the event to prevent duplicate processing.
     let result: sqlx::postgres::PgQueryResult = sqlx::query(
         "INSERT INTO processed_events (event_id, created_at) 
             VALUES ($1, $2) 
@@ -63,26 +50,22 @@ pub async fn process_event_with_handler<L: MultiHandler>(
     .execute(&mut *tx)
     .await?;
 
-    // If no rows were affected, the event is a duplicate.
-    // We exit early without executing business logic to prevent side effects.
+    // 3. Duplicate Detection: Skips execution if the event was already handled (0 rows affected).
     if result.rows_affected() == 0 {
         return Ok(false); // Ya procesado
     }
 
-    // 3. Dynamic Execution: Delegate to the microservice-specific handler.
-    // We pass the mutable transaction reference (&mut *tx) to ensure the handler's
-    // operations are part of this same atomic transaction.
+    // 4. Handler Dispatch: Delegates the event processing to the specific handler implementation.
     if let Err(e) = handlers.handle(&mut tx, event).await {
         error!(
             "Business logic failed for event {}: {:?}",
             event.event_id, e
         );
-        // Returning an error here drops 'tx', triggering an automatic rollback by SQLx.
+        // 5. Automatic Rollback: Returning an error causes the transaction to drop and roll back.
         return Err(e);
     }
 
-    // 4. Final Atomic Commit:
-    // Persists both the 'processed' record and the handler's changes simultaneously.
+    // 6. Final Commit: Persists both the idempotency record and business changes simultaneously.
     tx.commit()
         .await
         .map_err(|e: sqlx::Error| format!("Failed to commit transaction: {}", e))?;

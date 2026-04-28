@@ -1,5 +1,3 @@
-use std::error::Error;
-
 use event_consumer::{
     application::{self, consumer::MultiHandler},
     async_trait,
@@ -7,6 +5,7 @@ use event_consumer::{
     model::EventEnveloped,
     sqlx::{Postgres, Transaction},
 };
+use std::error::Error;
 
 use tracing::{error, info, warn};
 
@@ -84,6 +83,12 @@ impl MultiHandler for DocumentHandler {
         event: &EventEnveloped,
     ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         match event.event_type.as_str() {
+            "document.created" => {
+                info!("Handling document.created for ID: {}", event.event_id);
+                // self.on_created(tx, event).await
+                Ok(())
+            }
+
             "document.processed" => {
                 info!("Handling document.processed for ID: {}", event.event_id);
                 // self.on_created(tx, event).await
@@ -98,15 +103,16 @@ impl MultiHandler for DocumentHandler {
     }
 }
 
-/// EXAMPLE. This struct follows the Router/Dispatcher pattern, allowing a single
+//  ROUTER ---------------------------------------------------------------------------------------
+/// This struct follows the Router/Dispatcher pattern, allowing a single
 /// consumer to manage multiple entity types efficiently.
-struct HandlerRouter {
+struct Router {
     folder: FolderHandler,
     document: DocumentHandler,
 }
 
 #[async_trait]
-impl MultiHandler for HandlerRouter {
+impl MultiHandler for Router {
     /// Returns true if at least one sub-handler is interested in the entity type.
     fn can_handle(&self, entity_type: &str) -> bool {
         self.folder.can_handle(entity_type) || self.document.can_handle(entity_type)
@@ -114,7 +120,7 @@ impl MultiHandler for HandlerRouter {
     /// Returns the identifier for this router.
     /// Useful for identifying the dispatcher in high-level application logs.
     fn name(&self) -> &str {
-        "MultiHandler"
+        "Router"
     }
 
     /// Matches the event's entity type against the available handlers and
@@ -138,13 +144,14 @@ impl MultiHandler for HandlerRouter {
     }
 }
 
+// MAIN ---------------------------------------------------------------------------------------
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     // 1. Bootstrap: Init config, DB pools, and shared resources in Arc for thread-safety.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
 
     // 2. Business Logic Handlers: Instance of the specific handlers for this service.
-    let multi_handler: HandlerRouter = HandlerRouter {
+    let multi_handler: Router = Router {
         folder: FolderHandler,
         document: DocumentHandler,
     };
