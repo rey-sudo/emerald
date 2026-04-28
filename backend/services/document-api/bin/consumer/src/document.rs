@@ -68,8 +68,6 @@ impl MultiHandler for DocumentHandler {
                         .fetch_one(&mut **tx)
                         .await?;
 
-                info!("RESULT 2 {:?}", read_result);
-
                 let data_json: serde_json::Value = serde_json::to_value(read_result)?;
                 let meta_json: serde_json::Value = serde_json::json!({});
 
