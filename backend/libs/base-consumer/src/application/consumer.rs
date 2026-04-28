@@ -37,7 +37,7 @@ pub async fn process_event_with_handler<L: MultiHandler>(
         .await
         .map_err(|e: sqlx::Error| format!("Failed to begin transaction: {}", e))?;
 
-    let now_ms: i64 = chrono::Utc::now().timestamp();
+    let now_ms: i64 = chrono::Utc::now().timestamp_millis();
 
     // 2. Idempotency Control: Attempts to record the event to prevent duplicate processing.
     let result: sqlx::postgres::PgQueryResult = sqlx::query(
@@ -45,14 +45,14 @@ pub async fn process_event_with_handler<L: MultiHandler>(
             VALUES ($1, $2) 
             ON CONFLICT (event_id) DO NOTHING",
     )
-    .bind(event.event_id)
+    .bind(&event.event_id)
     .bind(now_ms)
     .execute(&mut *tx)
     .await?;
 
     // 3. Duplicate Detection: Skips execution if the event was already handled (0 rows affected).
     if result.rows_affected() == 0 {
-        return Ok(false); // Ya procesado
+        return Ok(false); // Already processed
     }
 
     // 4. Handler Dispatch: Delegates the event processing to the specific handler implementation.

@@ -1,6 +1,6 @@
 [package]
 name = "event_consumer"
-version = "0.1.8"
+version = "0.1.9"
 edition = "2024"
 authors = ["Juan José Caballero Rey <sudo.delete.evil@gmail.com>"]
 description = "Agnostic event consumer for outbox pattern"
