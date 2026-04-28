@@ -28,9 +28,13 @@ where
     debug!("Connected to pulsar");
 
     // 2. Identity Setup: Define unique consumer names and shared group identifiers from config.
-    let consumer_group: String = state.config.consumer_group.clone();
-    let consumer_name: String =
-        format!("{}-{}", state.config.consumer_prefix, state.config.pod_name);
+    let subscription_name: String = format!("{}-key-shared", state.config.consumer_group);
+    let consumer_name: String = format!(
+        "{}-{}-{}",
+        state.config.consumer_prefix,
+        state.config.pod_name,
+        std::process::id()
+    );
 
     // 3. Error Handling Policy: Configure Dead Letter Queue parameters for message redelivery limits.
     let consumer_dlq_policy: DeadLetterPolicy = DeadLetterPolicy {
@@ -43,7 +47,7 @@ where
         .consumer()
         .with_topics(topics)
         .with_consumer_name(consumer_name)
-        .with_subscription(&consumer_group)
+        .with_subscription(&subscription_name)
         .with_subscription_type(SubType::KeyShared)
         .with_dead_letter_policy(consumer_dlq_policy)
         .build()
