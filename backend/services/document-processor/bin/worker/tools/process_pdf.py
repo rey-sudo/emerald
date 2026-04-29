@@ -70,46 +70,44 @@ async def process_pdf(s3_client, s3_bucket, payload) -> str:
     
     file_stem = tmp_input_file_path.stem    
     
-    #1. Download the original .pdf file
+    # 1. Download the original .pdf file
     await download(s3_client, s3_bucket, storage_path, tmp_input_file_path)
     
     checksum = compute_file_checksum(tmp_input_file_path)
     
-    #2. Converts the original .pdf file to .html
+    # 2. Converts the original .pdf file to .html
     html_path = await asyncio.to_thread(
         process_pdf_document,
         file_path=tmp_input_file_path,
         output_path=tmp_output_file_path,
         file_name=internal_name
     )
-    #3. Format the html
+    # 3. Format the html
     html_path = await asyncio.to_thread(
         format_html,
         file_path=html_path,
         output_path=html_path
     )
-    #4. Converts html to y binary
+    # 4. Converts html to y binary
     y_path = tmp_output_file_path / f"{file_stem}.yjs"
     y_path = await _html_to_y(html_path, y_path)
     
     html_s3_key = storage_path.replace(".pdf", ".html")
     y_s3_key = storage_path.replace(".pdf", ".yjs")      
 
-    logging.info(f"Subiendo archivos a S3: {html_s3_key} y {y_s3_key}")
+    logging.info(f"Uploading files to S3: {html_s3_key} y {y_s3_key}")
     
     await asyncio.gather(
         upload_to_s3(s3_client, s3_bucket, html_s3_key, html_path),
         upload_to_s3(s3_client, s3_bucket, y_s3_key, y_path)
-    )
-
-    logging.info("Subida completada con éxito.")    
+    ) 
     
-    assert user_id, "Error deleting unused folders"
-
+    logging.info("Deleting tmp folders.")  
+    
+    assert user_id, "Error deleting tmp folders."
+    
     for path in (INPUT_PATH / user_id, OUTPUT_PATH / user_id):
         shutil.rmtree(path, ignore_errors=True)
         
-    logging.info("Folders tmp borrados")  
-    
     return checksum
        

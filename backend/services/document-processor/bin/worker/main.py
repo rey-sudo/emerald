@@ -29,11 +29,12 @@ from tools import process_pdf
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 # CONFIG ---------------------------------------------------------------------------------------------------------------
+
 PULSAR_URL = "pulsar://broker:6650"
 TOPIC = ["persistent://public/default/document.created"]
 SUBSCRIPTION_NAME = "document-processor-worker-shared-group"
 
-POSTGRES_DSN = "postgres://postgres:password@postgres_global:5432/document_processor"
+DATABASE_URL = "postgres://postgres:password@postgres_global:5432/document_processor"
 S3_BUCKET = "documents"
 
 CONCURRENCY = 40
@@ -42,12 +43,14 @@ QUEUE_SIZE = 500
 logging.basicConfig(level=logging.INFO)
 
 # GLOBAL ---------------------------------------------------------------------------------------------------------------
+
 queue: asyncio.Queue = asyncio.Queue(maxsize=QUEUE_SIZE)
 semaphore = asyncio.Semaphore(CONCURRENCY)
 shutdown_event = asyncio.Event()
 _active_tasks: set[asyncio.Task] = set()
 
 # S3 CLIENT ------------------------------------------------------------------------------------------------------------
+
 S3_CONFIG = Config(
     retries={"max_attempts": 3, "mode": "standard"},
     max_pool_connections=50, #CONCURRENCY
@@ -77,7 +80,14 @@ async def close_s3():
     if s3_client:
         await s3_client.__aexit__(None, None, None)
 
-# CHECK IDEMPOTENCE ----------------------------------------------------------------------------------------------------
+# DATABASE ----------------------------------------------------------------------------------------------------
+
+@retry(
+    stop=stop_after_attempt(2),
+    wait=wait_exponential(multiplier=1, min=2, max=10),  
+    retry=retry_if_exception_type(Exception), 
+    reraise=True 
+)
 async def try_insert_processed(pool, event_id, ts):
     async with pool.acquire() as conn:
         return await conn.fetchval(
@@ -91,9 +101,8 @@ async def try_insert_processed(pool, event_id, ts):
             ts
         ) is not None
         
-# INSERT OUTBOX EVENT --------------------------------------------------------------------------------------------------
 @retry(
-    stop=stop_after_attempt(3),
+    stop=stop_after_attempt(2),
     wait=wait_exponential(multiplier=1, min=2, max=10),  
     retry=retry_if_exception_type(Exception), 
     reraise=True 
@@ -128,6 +137,7 @@ async def insert_outbox(pool, document, ts, checksum, metadata):
         )
 
 # HANDLE ---------------------------------------------------------------------------------------------------------------
+
 async def handle(msg, consumer, pool):
     async with semaphore:
         try:
@@ -139,7 +149,7 @@ async def handle(msg, consumer, pool):
             metadata = payload.get("metadata") or {}
 
             doc_id = document.get("id")
-            mime = document.get("mime_type")
+            doc_mime = document.get("mime_type")
 
             if not event_id or not doc_id:
                 consumer.acknowledge(msg)
@@ -157,7 +167,7 @@ async def handle(msg, consumer, pool):
                 return
 
             # PROCESS
-            if mime == "application/pdf":
+            if doc_mime == "application/pdf":
                 try:
                     checksum = await asyncio.wait_for(
                         process_pdf(s3_client, S3_BUCKET, payload),
@@ -178,6 +188,7 @@ async def handle(msg, consumer, pool):
             consumer.negative_acknowledge(msg)
 
 # WORKER LOOP ----------------------------------------------------------------------------------------------------------
+
 async def worker_loop(consumer, pool):
     """
     Orchestrates asynchronous task dispatching by consuming messages from the internal queue 
@@ -193,6 +204,7 @@ async def worker_loop(consumer, pool):
         queue.task_done()
 
 # PULSAR LISTENER ------------------------------------------------------------------------------------------------------
+
 def listener(loop, consumer):
     """
     Continuously bridges blocking Pulsar message ingestion to the async queue using thread-safe event loop scheduling.
@@ -207,6 +219,7 @@ def listener(loop, consumer):
             continue
 
 # SHUTDOWN -------------------------------------------------------------------------------------------------------------
+
 async def shutdown():
     """Signals stop, waits for the queue to drain, and gracefully cancels all active tasks."""   
     
@@ -223,10 +236,11 @@ async def shutdown():
     await asyncio.gather(*_active_tasks, return_exceptions=True)
 
 # MAIN -----------------------------------------------------------------------------------------------------------------
+
 async def main():
     # 1. Database Initialization: Creates a connection pool for high-performance PostgreSQL access.
     pool = await asyncpg.create_pool(
-        dsn=POSTGRES_DSN,
+        dsn=DATABASE_URL,
         min_size=5,
         max_size=20 #CONCURRENCY
     )
