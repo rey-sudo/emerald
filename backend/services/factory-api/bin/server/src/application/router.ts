@@ -50,7 +50,6 @@ export async function router(app: FastifyInstance) {
         );
 
         const parsed = ClientMessageSchema.safeParse(decode(rawMsg));
-
         if (!parsed.success) {
           console.log(
             "[backend] zod error:",
@@ -68,6 +67,7 @@ export async function router(app: FastifyInstance) {
 
         socket.send(encode({ ...result, timestamp: new Date().toISOString() }));
       } catch (err: any) {
+        //TODO: FILTER ERRORS
         app.log.error(`Error processing: ${err.message}`);
         socket.send(
           encode({ command: "error", message: "Internal server error" }),

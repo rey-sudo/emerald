@@ -22,11 +22,11 @@ services:
         limits:
           memory: 1gb
 
+volumes:
+  postgres_data:
+    driver: local
+
 networks:
   shared-network:
     external: true
     name: global-infra-net
-
-volumes:
-  postgres_data:
-    driver: local

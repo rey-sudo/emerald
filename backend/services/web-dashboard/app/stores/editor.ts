@@ -9,10 +9,12 @@ export const useEditorStore = defineStore("editor", () => {
   const messages = ref<EditorFrame[]>([]);
   const message = ref<EditorFrame | null>(null);
 
-  const protocol = import.meta.client 
-    ? (window.location.protocol === "https:" ? "wss" : "ws") 
+  const protocol = import.meta.client
+    ? window.location.protocol === "https:"
+      ? "wss"
+      : "ws"
     : "ws";
-  
+
   const host = import.meta.client ? window.location.host : "";
 
   const {
@@ -28,7 +30,8 @@ export const useEditorStore = defineStore("editor", () => {
       console.info("Websocket connected");
     },
     onMessage: (_, event) => {
-      console.log(event.data);
+      console.log(encode(event));
+      
       const parsed = decode(new Uint8Array(event.data)) as any;
       console.log(parsed);
       message.value = parsed;

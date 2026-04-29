@@ -102,13 +102,7 @@ watch(
     }
 
     if (msg.command === "get_document") {
-      if (msg.data.isNew) {
-        ydoc.transact(() => {
-          editor.value.commands.setContent(msg.data.content);
-        }, "first-upload");
-      } else {
-        Y.applyUpdate(ydoc, msg.data.content, "initial-load");
-      }
+      Y.applyUpdate(ydoc, msg.data.content, "initial-load");
     }
   },
   { immediate: true },
