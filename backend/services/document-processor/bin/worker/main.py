@@ -32,7 +32,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_excep
 
 PULSAR_URL = "pulsar://broker:6650"
 TOPIC = ["persistent://public/default/document.created"]
-SUBSCRIPTION_NAME = "document-processor-worker-shared-group"
+SUBSCRIPTION_NAME = "document-processor-worker-group-shared"
 
 DATABASE_URL = "postgres://postgres:password@postgres_global:5432/document_processor"
 S3_BUCKET = "documents"

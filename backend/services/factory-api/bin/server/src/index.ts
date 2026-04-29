@@ -1,7 +1,7 @@
 import { app } from "./app.js";
 
 const HOST = process.env.HOST ?? "0.0.0.0";
-const PORT = parseInt(process.env.PORT ?? '8003', 10)
+const PORT = parseInt(process.env.PORT ?? '8002', 10)
 
 const start = async () => {
   try {

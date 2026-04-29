@@ -1,6 +1,6 @@
 export default defineWebSocketHandler({
   open(peer) {
-    const ws = new WebSocket("ws://localhost:8003/api/editor/ws");
+    const ws = new WebSocket("ws://localhost:8002/api/editor/ws");
     ws.binaryType = "arraybuffer";
 
     ws.onmessage = (event) => peer.send(event.data);

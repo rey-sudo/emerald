@@ -178,12 +178,14 @@ checksum = "c2459377285ad874054d797f3ccebf984978aa39129f6eafde5cdc8315b612f8"
 name = "consumer"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "event_consumer",
  "serde",
  "serde_json",
  "sqlx",
  "tokio",
  "tracing",
+ "uuid",
 ]
 
 [[package]]
@@ -394,9 +396,9 @@ dependencies = [
 
 [[package]]
 name = "event_consumer"
-version = "0.1.7"
+version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "572117b48ea7b27f3ce6852c91719bc28b38f2a277678a4d1f8f8bf5e736a0bb"
+checksum = "489465f2ac2f9985e70f0d1824d24460f063c71bb63412a756ff3dc4d25262be"
 dependencies = [
  "async-trait",
  "chrono",

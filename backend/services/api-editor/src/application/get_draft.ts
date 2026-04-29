@@ -1,114 +1,120 @@
 import { z } from "zod";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
-import { pool } from "../infrastructure/postgres/db.js";
 import type { FastifyInstance } from "fastify";
+import * as Y from "yjs";
 
 export const GetDocumentSchema = z.object({
   command: z.literal("get_document"),
   params: z.object({ documentId: z.string() }),
 });
 
-export type DocumentFormat = "json" | "binary";
+// Mismas convenciones de keys que en handleUpdateDocument
+const stateKey = (id: string) => `doc:${id}:state`;
+const STATE_TTL_SECONDS = 86_400;
 
-export interface GetDocumentResponse {
-  success: boolean;
-  message: string;
-  command: "get_document";
-  data: {
-    documentId: string;
-    format: DocumentFormat;
-    content: any;
-    isNew: boolean;
-  };
-}
+type GetDocumentResult = {
+  state: Buffer; // Uint8Array Y.js listo para Y.applyUpdate en el cliente
+  version: number; // Versión del snapshot en PostgreSQL
+  source: "redis" | "s3" | "empty"; // Para observabilidad / debugging
+};
+
+const SQL_SNAPSHOT = `
+  SELECT s3_key, version
+  FROM document_snapshots
+  WHERE document_id = $1
+  ORDER BY version DESC
+  LIMIT 1
+  `;
 
 export async function handleGetDocument(
   app: FastifyInstance,
   params: z.infer<typeof GetDocumentSchema>["params"],
-): Promise<GetDocumentResponse> {
-  const client = await pool.connect();
+): Promise<GetDocumentResult> {
+  const { documentId } = params;
 
+  const client = await app.pg_pool.connect();
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
 
-  try {
-    // 1. Check for an existing working draft in the database.
-    const draftQuery = `
-      SELECT content_binary, updated_at, v
-      FROM drafts
-      WHERE id = $1
-        AND user_id = $2 
-        AND deleted_at IS NULL
-      LIMIT 1;
-    `;
+  //OWNERSHIP AND COLABORATORS
 
-    const draftResult = await client.query(draftQuery, [
-      params.documentId,
-      userId,
-    ]);
+  //S3 ORIGINAL Y.JS BINARY must be exists
 
-    // --- CASE 1: IF DRAFT NOT EXISTS ---
-    if (draftResult.rowCount === 0) {
-      // Obtain the original document
-      const documentResult = await client.query(
-        "SELECT * FROM documents WHERE id = $1 AND user_id = $2",
-        [params.documentId, userId],
-      );
-
-      // The original document does not exist
-      if (documentResult.rows.length === 0) {
-        app.log.warn(`Document ${params.documentId} not found in database.`);
-        throw new Error("Document not found");
-      }
-
-      const document = documentResult.rows[0];
-
-      // Get the original document from S3 storage
-      const jsonKey = document.storage_path.replace(".pdf", ".json");
-      const command = new GetObjectCommand({
-        Bucket: "documents",
-        Key: jsonKey,
-      });
-
-      const s3Response = await app.s3.send(command);
-      if (!s3Response.Body) {
-        throw new Error("No S3 object");
-      }
-
-      const jsonString = await s3Response.Body.transformToString();
-      const jsonDocument = JSON.parse(jsonString);
-
-      return {
-        success: true,
-        message: "New document",
-        command: "get_document",
-        data: {
-          documentId: params.documentId,
-          format: "json",
-          content: jsonDocument,
-          isNew: true,
-        },
-      };
-    }
-
-    // --- CASE 2: IF DRAFT EXISTS ---
-    const draft = draftResult.rows[0];
-    const binaryDocument = new Uint8Array(draft.content_binary);
-
-    return {
-      success: true,
-      message: "Document found",
-      command: "get_document",
-      data: {
-        documentId: params.documentId,
-        format: "binary",
-        content: binaryDocument,
-        isNew: false,
-      },
-    };
-  } catch (error) {
-    app.log.error(error);
-    throw error;
-  } finally {
-    client.release();
+  // 1. IF DRAFT CACHE EXISTS --------------------------------------------
+  const cached = await app.redis.getBuffer(stateKey(documentId));
+  if (cached) {
+    app.log.debug({ documentId }, "[getDocument] cache hit");
+    return { state: cached, version: -1, source: "redis" };
   }
+
+  // CHECK SNAPSHOT -------------------------------------------------------
+  app.log.debug({ documentId }, "Checking snapshot in PostgreSQL");
+  const snapshot = await client.query(SQL_SNAPSHOT, [documentId, userId]);
+
+  // 2. IF SNAPSHOT NOT EXISTS---------------------------------------------
+  if (!snapshot) {
+    app.log.info(
+      { documentId },
+      "[getDocument] documento sin snapshots previos",
+    );
+
+    const emptyDoc = new Y.Doc();
+    const emptyState = Buffer.from(Y.encodeStateAsUpdate(emptyDoc));
+
+    // Sembramos Redis para que el próximo GET no llegue hasta PG
+    await app.redis.set(
+      stateKey(documentId),
+      emptyState,
+      "EX",
+      STATE_TTL_SECONDS,
+    );
+
+    return { state: emptyState, version: 0, source: "empty" };
+  }
+
+  // ─── 4. Descargar binario desde S3 ────────────────────────────────────────
+  app.log.info(
+    { documentId, s3Key: snapshot.s3_key },
+    "[getDocument] descargando snapshot desde S3",
+  );
+
+  const s3Object = await app.s3.getObject({
+    Bucket: process.env.S3_SNAPSHOTS_BUCKET!,
+    Key: snapshot.s3_key,
+  });
+
+  // S3 devuelve un stream; lo consumimos completo antes de continuar.
+  const s3Buffer = await streamToBuffer(s3Object.Body);
+
+  // ─── 5. Validar que el binario es un Y.js válido ──────────────────────────
+  try {
+    const testDoc = new Y.Doc();
+    Y.applyUpdate(testDoc, s3Buffer);
+  } catch (err) {
+    app.log.error(
+      { err, documentId, s3Key: snapshot.s3_key },
+      "[getDocument] snapshot S3 corrupto — no se puede aplicar como Y.js update",
+    );
+    throw new Error(`Snapshot corrupto para documento ${documentId}`);
+  }
+
+  // ─── 6. Repopular Redis (warm-up del cache) ───────────────────────────────
+  // A partir de aquí, los próximos GETs y los updates entrantes
+  // encontrarán el estado en Redis sin volver a S3.
+  await app.redis.set(stateKey(documentId), s3Buffer, "EX", STATE_TTL_SECONDS);
+
+  app.log.info(
+    { documentId, version: snapshot.version },
+    "[getDocument] estado restaurado desde S3 y cargado en Redis",
+  );
+
+  return { state: s3Buffer, version: snapshot.version, source: "s3" };
+}
+
+// ─── Helper: consumir un ReadableStream de S3 en un solo Buffer ───────────
+async function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    stream.on("data", (chunk: Buffer) => chunks.push(chunk));
+    stream.on("end", () => resolve(Buffer.concat(chunks)));
+    stream.on("error", reject);
+  });
 }

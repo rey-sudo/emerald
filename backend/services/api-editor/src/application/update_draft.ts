@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { pool } from "../infrastructure/postgres/db.js";
 import type { FastifyInstance } from "fastify";
-import * as Y from "yjs";
 import { Piscina } from "piscina";
+import * as Y from "yjs";
 
 const piscina = new Piscina({
   filename: new URL("./update_draft_worker.mjs", import.meta.url).href,
@@ -29,108 +28,88 @@ export const UpdateDocumentSchema = z.object({
   }),
 });
 
+// Redis keys
+const stateKey = (id: string) => `doc:${id}:state`;
+const pendingKey = (id: string) => `doc:${id}:pending`;
+const pubSubChan = (id: string) => `doc:${id}`;
+
+// TTL del estado fusionado en Redis (24h). Si expira, el Worker lo reconstruye desde S3.
+const STATE_TTL_SECONDS = 86_400;
+
 export async function handleUpdateDocument(
   app: FastifyInstance,
   params: z.infer<typeof UpdateDocumentSchema>["params"],
 ) {
   const timestamp = Date.now();
-
   const draftId = params.documentId;
-
-  const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
-
+  const userId = "019d2612-a01d-734c-ab63-917106f31187";
   const incomingDelta = params.binario;
 
-  const client = await pool.connect();
-
   try {
-    await client.query("BEGIN");
+    // ─── 1. Leer estado actual fusionado desde Redis ───────────────────────────
+    // getBuffer devuelve Buffer | null (ioredis). Si no existe aún, partimos de doc vacío.
+    const rawState = await app.redis.getBuffer(stateKey(draftId));
 
-    // 1. Ownership check to prevent unauthorized access
-    const documentResult = await client.query(
-      "SELECT id FROM documents WHERE id = $1 AND user_id = $2",
-      [draftId, userId],
+    // ─── 2. Merge CRDT en un worker thread (no bloquea el event loop) ─────────
+    // piscina serializa los Buffers a través de SharedArrayBuffer, evitando copia.
+    // update_draft_worker.mjs aplica Y.applyUpdate y devuelve el nuevo state vector.
+    const mergedStateBuffer: Buffer = await piscina.run(
+      { rawState, incomingDelta },
+      { name: "mergeYjsState" },
     );
 
-    if (documentResult.rows.length === 0) {
-      throw new Error("Document not found");
-    }
+    // ─── 3. Pipeline Redis: set estado, push chunk pendiente, broadcast pub/sub ─
+    // Las tres operaciones van en un pipeline para minimizar round-trips.
+    // NOTA: no es transacción atómica. En caso de race condition entre instancias,
+    // el estado en Redis puede quedar con un merge parcial, pero el Worker siempre
+    // reconstruye el estado correcto desde todos los chunks de Pulsar (CRDT idempotente).
+    const deltaBuffer = Buffer.from(incomingDelta);
 
-    // 2. Prevent race conditions using a session-level advisory lock on the document ID
-    await client.query(
-      "SELECT pg_advisory_xact_lock(('x' || left(md5($1), 16))::bit(64)::bigint)",
-      [draftId],
-    );
+    await app.redis
+      .pipeline()
+      // Estado fusionado con TTL para que no acumule documentos huérfanos
+      .set(stateKey(draftId), mergedStateBuffer, "EX", STATE_TTL_SECONDS)
+      // Lista de chunks crudos pendientes que el Worker consume vía Pulsar.
+      // LPUSH = inserción O(1) al inicio. El Worker lee desde el final (LRANGE + LTRIM).
+      .lpush(pendingKey(draftId), deltaBuffer)
+      // Pub/Sub: notifica a las demás instancias de MS-A para que reenvíen
+      // el delta a sus clientes WebSocket conectados al mismo documento.
+      .publish(pubSubChan(draftId), deltaBuffer)
+      .exec();
 
-    // 3. Fetch current state with a row-level lock (FOR UPDATE)
-    const response = await client.query(
-      `SELECT content_binary FROM drafts WHERE id = $1 AND user_id = $2 FOR UPDATE`,
-      [draftId, userId],
-    );
+    // ─── 4. Publicar en Apache Pulsar para el Snapshot Worker ─────────────────
+    // partitionKey = documentId → KeyShared garantiza que todos los mensajes
+    // del mismo documento llegan al mismo consumer en orden estricto.
 
-    const draft = response.rows[0];
-    const existingBinary = draft?.content_binary;
-
-    let finalBinary: Uint8Array;
-
-    // 4. CRDT Logic: Merge incoming update with existing state using Y.js
-    if (existingBinary) {
-      try {
-        finalBinary = await piscina.run({
-          existingBinary,
-          incomingDelta,
-        });
-      } catch (workerError) {
-        app.log.error(workerError);
-        throw new Error("Failed to merge document state");
-      }
-    } else {
-      finalBinary = incomingDelta;
-    }
-
-    const contentBuffer = Buffer.from(finalBinary);
-
-    // 5. Atomic Upsert: Update merged content and increment version counter
-    const upsertQuery = `
-      INSERT INTO drafts (
-        id, user_id, document_id, mime_type, 
-        content_binary, created_at, updated_at, v
-      )
-      VALUES ($1, $2, $3, $4, $5, $6, $6, $7)
-      ON CONFLICT (id) DO UPDATE SET
-        content_binary = EXCLUDED.content_binary,
-        updated_at     = EXCLUDED.updated_at,
-        v              = drafts.v + 1
-      RETURNING id, v, updated_at;
-    `;
-
-    const upsertValues = [
-      draftId,
-      userId,
-      draftId,
-      "application/octet-stream",
-      contentBuffer,
-      timestamp,
-      1,
-    ];
-
-    const upsertResult = await client.query(upsertQuery, upsertValues);
-
-    await client.query("COMMIT");
-
-    const upsertResultRow = upsertResult.rows[0];
+    console.log("PUBLISHED TO PULSAR");
 
     return {
       command: "update_document",
       documentId: params.documentId,
-      v: upsertResultRow.v,
-      updatedAt: upsertResultRow.updated_at,
       success: true,
     };
-  } catch (err) {
-    await client.query("ROLLBACK");
-    throw err;
-  } finally {
-    client.release();
+
+    //OUTBOX EVENT
+
+    /** 
+    await app.pulsarProducer.send({
+      data: deltaBuffer,
+      partitionKey: draftId,
+      properties: {
+        userId,
+        timestamp: String(timestamp),
+        // El Worker puede usar esto para decidir si hacer snapshot por tiempo
+        // sin necesidad de parsear el binario Y.js.
+        pendingKey: pendingKey(draftId),
+      },
+    });
+*/
+  } catch (error) {
+    app.log.error(
+      { error, draftId, userId, timestamp },
+      "[handleUpdateDocument] fallo al procesar update Y.js",
+    );
+    // Re-throw: el handler de WebSocket decide si cerrar la conexión o enviar error al cliente
+    throw error;
   }
 }

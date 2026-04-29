@@ -27,7 +27,7 @@
 
       <div class="card-icon">
         <svg
-          width="6rem"
+          width="5rem"
           version="1.1"
           viewBox="0 0 64 64"
           xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@
             opacity=".2"
           />
           <rect
-            :style="{ color: 'var(--ui-text-dimmed)' }"
+            :style="{ color: folder.color }"
             x="3.9998"
             y="17.001"
             width="56"
@@ -224,7 +224,6 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   font-weight: 500;
   text-align: center;
   color: var(--ui-text);
-  line-height: 1.3;
   word-break: break-word;
   max-width: 100%;
   display: -webkit-box;
@@ -247,7 +246,6 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .card-bottom p {
-  margin-top: 0rem;
-  margin-bottom: 0.25rem;
+  line-height: 1.5rem;
 }
 </style>

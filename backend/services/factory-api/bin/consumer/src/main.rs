@@ -1,38 +1,35 @@
-use consumer::{document::DocumentHandler, folder::FolderHandler};
+use std::error::Error;
+
+use consumer::{document::DocumentHandler};
 use event_consumer::{
-    application::{self, EventEnveloped, consumer::MultiHandler},
-    async_trait,
-    infrastructure::bootstrap::{self, AppState},
-    sqlx::{Postgres, Transaction}
+    application::{self, consumer::MultiHandler}, async_trait, infrastructure::bootstrap::{self, AppState}, model::EventEnveloped, sqlx::{Postgres, Transaction}
 };
 use tracing::{error, info, warn};
 
-/// This struct follows the Router/Dispatcher pattern.
-struct HandlerRouter {
-    folder: FolderHandler,
+struct Router {
     document: DocumentHandler,
 }
 
 #[async_trait]
-impl MultiHandler for HandlerRouter {
+impl MultiHandler for Router {
     /// Returns true if at least one sub-handler is interested in the entity type.
     fn can_handle(&self, entity_type: &str) -> bool {
-        self.folder.can_handle(entity_type) || self.document.can_handle(entity_type)
+        self.document.can_handle(entity_type)
     }
-    
     /// Returns the identifier for this router.
+    /// Useful for identifying the dispatcher in high-level application logs.
     fn name(&self) -> &str {
-        return "MultiHandler";
+        "Router"
     }
 
-    /// Matches the event's entity type against the available handlers.
+    /// Matches the event's entity type against the available handlers and
+    /// ensures the database transaction (`tx`) is passed down correctly.
     async fn handle<'a>(
         &self,
         tx: &mut Transaction<'a, Postgres>,
         event: &EventEnveloped,
-    ) -> std::result::Result<(), Box<dyn std::error::Error>> {
+    ) -> Result<(), Box<dyn Error + Send + Sync>> {
         match event.entity_type.as_str() {
-            "folder" => self.folder.handle(tx, event).await,
             "document" => self.document.handle(tx, event).await,
             _ => {
                 warn!(
@@ -45,29 +42,28 @@ impl MultiHandler for HandlerRouter {
     }
 }
 
+// MAIN ---------------------------------------------------------------------------------------
+
 #[tokio::main]
-async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
-    // 1. Bootstrapping: Initialize configuration, database connection pools.
+async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
+    // 1. Bootstrap: Init config, DB pools, and shared resources in Arc for thread-safety.
     let state: std::sync::Arc<AppState> = bootstrap::run().await?;
 
-    // 2. Business Logic Handler: Instance of the specific handler for this service.
-    let multi_handler: HandlerRouter = HandlerRouter {
-        folder: FolderHandler,
+    // 2. Business Logic Handlers: Instance of the specific handlers for this service.
+    let multi_handler: Router = Router {
         document: DocumentHandler,
     };
 
     // 3. Concurrent Flow Control: 'tokio::select!' monitors multiple futures simultaneously.
     tokio::select! {
-        res = application::run(state.clone(), multi_handler) => {
+        res = application::run(state, multi_handler) => {
             match res {
-                Ok(_) => {
-                    warn!("Application loop finished gracefully but unexpectedly");
-                },
+                Ok(_) => warn!("Application loop finished gracefully but unexpectedly"),
                 Err(e) => {
                     error!(
                     error = %e,
                     cause = ?e.source(),
-                    "Application loop crashed"
+                    "Application loop CRASHED"
                     );
 
                     return Err(e);
@@ -76,10 +72,10 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         },
 
         _ = tokio::signal::ctrl_c() => {
-            info!("Initiating graceful shutdown");
+            info!("Ctrl+C signal received, initiating graceful shutdown");
         },
     }
-    // 4. Leaving the service
+
     info!("Service stopped");
 
     Ok(())
