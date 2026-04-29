@@ -1,25 +1,34 @@
+# Emerald
+# Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+import os
 import asyncio
 import json
 import time
 import logging
 import signal
 import threading
-from typing import Any
-
 import pulsar
 import asyncpg
 import aioboto3
-import os
 from botocore.config import Config
-
 from uuid6 import uuid7
 from tools import process_pdf
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
-# =============================================================================
-# CONFIG
-# =============================================================================
-
+# CONFIG ---------------------------------------------------------------------------------------------------------------
 PULSAR_URL = "pulsar://broker:6650"
 TOPIC = ["persistent://public/default/document.created"]
 SUBSCRIPTION_NAME = "document-processor-worker-shared-group"
@@ -32,22 +41,16 @@ QUEUE_SIZE = 500
 
 logging.basicConfig(level=logging.INFO)
 
-# =============================================================================
-# GLOBALS
-# =============================================================================
-
+# GLOBAL ---------------------------------------------------------------------------------------------------------------
 queue: asyncio.Queue = asyncio.Queue(maxsize=QUEUE_SIZE)
 semaphore = asyncio.Semaphore(CONCURRENCY)
 shutdown_event = asyncio.Event()
 _active_tasks: set[asyncio.Task] = set()
 
-# =============================================================================
-# S3 CONFIG
-# =============================================================================
-
+# S3 CLIENT ------------------------------------------------------------------------------------------------------------
 S3_CONFIG = Config(
     retries={"max_attempts": 3, "mode": "standard"},
-    max_pool_connections=50,
+    max_pool_connections=50, #CONCURRENCY
     connect_timeout=5,
     read_timeout=30,
 )
@@ -74,10 +77,7 @@ async def close_s3():
     if s3_client:
         await s3_client.__aexit__(None, None, None)
 
-# =============================================================================
-# DB
-# =============================================================================
-
+# CHECK IDEMPOTENCE ----------------------------------------------------------------------------------------------------
 async def try_insert_processed(pool, event_id, ts):
     async with pool.acquire() as conn:
         return await conn.fetchval(
@@ -90,7 +90,8 @@ async def try_insert_processed(pool, event_id, ts):
             event_id,
             ts
         ) is not None
-
+        
+# INSERT OUTBOX EVENT --------------------------------------------------------------------------------------------------
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=2, max=10),  
@@ -126,10 +127,7 @@ async def insert_outbox(pool, document, ts, checksum, metadata):
             json.dumps(metadata),
         )
 
-# =============================================================================
-# CORE
-# =============================================================================
-
+# HANDLE ---------------------------------------------------------------------------------------------------------------
 async def handle(msg, consumer, pool):
     async with semaphore:
         try:
@@ -179,10 +177,7 @@ async def handle(msg, consumer, pool):
             logging.exception("error")
             consumer.negative_acknowledge(msg)
 
-# =============================================================================
-# WORKER LOOP
-# =============================================================================
-
+# WORKER LOOP ----------------------------------------------------------------------------------------------------------
 async def worker_loop(consumer, pool):
     """
     Orchestrates asynchronous task dispatching by consuming messages from the internal queue 
@@ -197,9 +192,7 @@ async def worker_loop(consumer, pool):
         task.add_done_callback(_active_tasks.discard)
         queue.task_done()
 
-# =============================================================================
-# LISTENER
-# =============================================================================
+# PULSAR LISTENER ------------------------------------------------------------------------------------------------------
 def listener(loop, consumer):
     """
     Continuously bridges blocking Pulsar message ingestion to the async queue using thread-safe event loop scheduling.
@@ -213,10 +206,7 @@ def listener(loop, consumer):
         except Exception:
             continue
 
-# =============================================================================
-# SHUTDOWN
-# =============================================================================
-
+# SHUTDOWN -------------------------------------------------------------------------------------------------------------
 async def shutdown():
     """Signals stop, waits for the queue to drain, and gracefully cancels all active tasks."""   
     
@@ -232,20 +222,19 @@ async def shutdown():
     # 'gather' runs the termination of all tasks concurrently.
     await asyncio.gather(*_active_tasks, return_exceptions=True)
 
-
-# =============================================================================
-# MAIN
-# =============================================================================
-
+# MAIN -----------------------------------------------------------------------------------------------------------------
 async def main():
+    # 1. Database Initialization: Creates a connection pool for high-performance PostgreSQL access.
     pool = await asyncpg.create_pool(
         dsn=POSTGRES_DSN,
         min_size=5,
-        max_size=20
+        max_size=20 #CONCURRENCY
     )
-
+    
+    # 2. Storage Setup: Initializes the S3 client connection for file storage or retrieval.
     await init_s3() 
-
+    
+    # 3. Messaging Configuration: Subscribes to the Pulsar topic using a Shared consumer type for load balancing.
     client = pulsar.Client(PULSAR_URL)
     consumer = client.subscribe(
         TOPIC,
@@ -256,21 +245,24 @@ async def main():
 
     loop = asyncio.get_running_loop()
     
-    # Spawns a daemon thread to bridge blocking Pulsar message ingestion with the async event loop.
+    # 4. Bridge Thread: Spawns a daemon thread to bridge blocking Pulsar message ingestion with the async event loop.
     threading.Thread(
         target=listener,
         args=(loop, consumer),
         daemon=True
     ).start()
-
+    
+    # 5. Worker Spawning: Creates a set of concurrent tasks to process messages using the connection pool.
     workers = [
         asyncio.create_task(worker_loop(consumer, pool))
         for _ in range(2)
     ]
-
+    
+    # 6. Signal Handling: Registers shutdown handlers to ensure clean termination on SIGINT or SIGTERM.
     for sig in (signal.SIGINT, signal.SIGTERM):
         loop.add_signal_handler(sig, lambda: asyncio.create_task(shutdown()))
-
+        
+    # 7. Execution: Concurrently runs all worker tasks and keeps the application alive.
     await asyncio.gather(*workers)
 
 if __name__ == "__main__":
