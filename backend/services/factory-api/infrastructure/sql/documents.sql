@@ -9,7 +9,7 @@ CREATE TABLE
         mime_type VARCHAR(100) NOT NULL,
         size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
         storage_path TEXT NOT NULL,
-        status VARCHAR(30) DEFAULT 'pending' NOT NULL,
+        status VARCHAR(30) DEFAULT 'PENDING' NOT NULL,
         checksum VARCHAR(255) DEFAULT NULL,
         context TEXT DEFAULT NULL,
         keywords TEXT DEFAULT NULL,
@@ -31,4 +31,4 @@ WHERE
 
 CREATE INDEX idx_documents_pending ON documents (user_id)
 WHERE
-    status = 'pending';
+    status = 'PENDING';

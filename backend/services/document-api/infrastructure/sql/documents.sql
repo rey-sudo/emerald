@@ -31,4 +31,4 @@ WHERE
 
 CREATE INDEX idx_documents_pending ON documents (user_id)
 WHERE
-    status = 'pending';
+    status = 'PENDING';

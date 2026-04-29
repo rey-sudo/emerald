@@ -97,65 +97,66 @@ impl MultiHandler for DocumentHandler {
                 let document: Document = serde_json::from_value(event.data.clone())?;
 
                 info!("{:?}", document);
-                /*
+
                 let expected_v: i64 = document.v - 1;
 
-                                let result: PgQueryResult = sqlx::query(
-                                    r#"
-                    UPDATE documents
-                    SET 
-                        folder_id = $2,
-                        original_name = $3,
-                        internal_name = $4,
-                        content_type = $5,
-                        mime_type = $6,
-                        size_bytes = $7,
-                        storage_path = $8,
-                        status = $9,
-                        checksum = $10,
-                        context = $11,
-                        keywords = $12,
-                        metadata = $13,
-                        readed_at = $14,
-                        updated_at = $15,
-                        deleted_at = $16,
-                        v = $17
-                    WHERE id = $1 AND v = $18
-                    "#,
-                                    document.id,
-                                    document.folder_id,
-                                    document.original_name,
-                                    document.internal_name,
-                                    document.content_type,
-                                    document.mime_type,
-                                    document.size_bytes,
-                                    document.storage_path,
-                                    document.status,
-                                    document.checksum,
-                                    document.context,
-                                    document.keywords,
-                                    document.metadata,
-                                    document.readed_at,
-                                    document.updated_at,
-                                    document.deleted_at,
-                                    document.v,
-                                    expected_v
-                                )
-                                .execute(&mut **tx)
-                                .await?;
+                let update_result: PgQueryResult = QueryBuilder::<Postgres>::new(
+                    "UPDATE documents SET \
+                        user_id = ",
+                )
+                .push_bind(document.user_id)
+                .push(", folder_id = ")
+                .push_bind(document.folder_id)
+                .push(", original_name = ")
+                .push_bind(document.original_name)
+                .push(", internal_name = ")
+                .push_bind(document.internal_name)
+                .push(", content_type = ")
+                .push_bind(document.content_type)
+                .push(", mime_type = ")
+                .push_bind(document.mime_type)
+                .push(", size_bytes = ")
+                .push_bind(document.size_bytes)
+                .push(", storage_path = ")
+                .push_bind(document.storage_path)
+                .push(", status = ")
+                .push_bind(document.status)
+                .push(", checksum = ")
+                .push_bind(document.checksum)
+                .push(", context = ")
+                .push_bind(document.context)
+                .push(", keywords = ")
+                .push_bind(document.keywords)
+                .push(", metadata = ")
+                .push_bind(document.metadata)
+                .push(", created_at = ")
+                .push_bind(document.created_at)
+                .push(", readed_at = ")
+                .push_bind(document.readed_at)
+                .push(", updated_at = ")
+                .push_bind(document.updated_at)
+                .push(", deleted_at = ")
+                .push_bind(document.deleted_at)
+                .push(", v = ")
+                .push_bind(document.v)
+                .push(" WHERE id = ")
+                .push_bind(document.id)
+                .push(" AND v = ")
+                .push_bind(expected_v)
+                .build()
+                .execute(&mut **tx)
+                .await?;
 
-                                // Optimistic Concurrency Control
-                                if result.rows_affected() == 0 {
-                                    let error_msg: String = format!(
-                                        "Update failed for Document {}: sequence conflict (expected v={} in DB). Retrying event v={}...",
-                                        document.id, expected_v, document.v
-                                    );
+                if update_result.rows_affected() == 0 {
+                    let error_msg: String = format!(
+                        "Error consuming event {}-{}-{}",
+                        &event.event_type, document.id, document.v
+                    );
 
-                                    warn!("{}", error_msg);
+                    warn!("{}", error_msg);
+                    return Err(error_msg.into());
+                }
 
-                                    return Err(error_msg.into());
-                                }
-                */
                 Ok(())
             }
 
@@ -163,65 +164,66 @@ impl MultiHandler for DocumentHandler {
                 let document: Document = serde_json::from_value(event.data.clone())?;
 
                 info!("{:?}", document);
-                /*
+
                 let expected_v: i64 = document.v - 1;
 
-                                let result: PgQueryResult = sqlx::query(
-                                    r#"
-                    UPDATE documents
-                    SET 
-                        folder_id = $2,
-                        original_name = $3,
-                        internal_name = $4,
-                        content_type = $5,
-                        mime_type = $6,
-                        size_bytes = $7,
-                        storage_path = $8,
-                        status = $9,
-                        checksum = $10,
-                        context = $11,
-                        keywords = $12,
-                        metadata = $13,
-                        readed_at = $14,
-                        updated_at = $15,
-                        deleted_at = $16,
-                        v = $17
-                    WHERE id = $1 AND v = $18
-                    "#,
-                                    document.id,
-                                    document.folder_id,
-                                    document.original_name,
-                                    document.internal_name,
-                                    document.content_type,
-                                    document.mime_type,
-                                    document.size_bytes,
-                                    document.storage_path,
-                                    document.status,
-                                    document.checksum,
-                                    document.context,
-                                    document.keywords,
-                                    document.metadata,
-                                    document.readed_at,
-                                    document.updated_at,
-                                    document.deleted_at,
-                                    document.v,
-                                    expected_v
-                                )
-                                .execute(&mut **tx)
-                                .await?;
+                let delete_result: PgQueryResult = QueryBuilder::<Postgres>::new(
+                    "UPDATE documents SET \
+                        user_id = ",
+                )
+                .push_bind(document.user_id)
+                .push(", folder_id = ")
+                .push_bind(document.folder_id)
+                .push(", original_name = ")
+                .push_bind(document.original_name)
+                .push(", internal_name = ")
+                .push_bind(document.internal_name)
+                .push(", content_type = ")
+                .push_bind(document.content_type)
+                .push(", mime_type = ")
+                .push_bind(document.mime_type)
+                .push(", size_bytes = ")
+                .push_bind(document.size_bytes)
+                .push(", storage_path = ")
+                .push_bind(document.storage_path)
+                .push(", status = ")
+                .push_bind(document.status)
+                .push(", checksum = ")
+                .push_bind(document.checksum)
+                .push(", context = ")
+                .push_bind(document.context)
+                .push(", keywords = ")
+                .push_bind(document.keywords)
+                .push(", metadata = ")
+                .push_bind(document.metadata)
+                .push(", created_at = ")
+                .push_bind(document.created_at)
+                .push(", readed_at = ")
+                .push_bind(document.readed_at)
+                .push(", updated_at = ")
+                .push_bind(document.updated_at)
+                .push(", deleted_at = ")
+                .push_bind(document.deleted_at)
+                .push(", v = ")
+                .push_bind(document.v)
+                .push(" WHERE id = ")
+                .push_bind(document.id)
+                .push(" AND v = ")
+                .push_bind(expected_v)
+                .build()
+                .execute(&mut **tx)
+                .await?;
 
-                                // Optimistic Concurrency Control
-                                if result.rows_affected() == 0 {
-                                    let error_msg: String = format!(
-                                        "Delete failed for Document {}: sequence conflict (expected v={} in DB). Retrying event v={}...",
-                                        document.id, expected_v, document.v
-                                    );
+                if delete_result.rows_affected() == 0 {
+                    let error_msg: String = format!(
+                        "Error consuming event {}-{}-{}",
+                        &event.event_type, document.id, document.v
+                    );
 
-                                    warn!("{}", error_msg);
+                    warn!("{}", error_msg);
+                    return Err(error_msg.into());
+                }
 
-                                    return Err(error_msg.into());
-                                }
-                */
                 Ok(())
             }
 
