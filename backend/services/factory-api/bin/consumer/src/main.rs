@@ -1,20 +1,25 @@
 use std::error::Error;
 
-use consumer::{document::DocumentHandler};
+use consumer::{document::DocumentHandler, folder::FolderHandler};
 use event_consumer::{
-    application::{self, consumer::MultiHandler}, async_trait, infrastructure::bootstrap::{self, AppState}, model::EventEnveloped, sqlx::{Postgres, Transaction}
+    application::{self, consumer::MultiHandler},
+    async_trait,
+    infrastructure::bootstrap::{self, AppState},
+    model::EventEnveloped,
+    sqlx::{Postgres, Transaction},
 };
 use tracing::{error, info, warn};
 
 struct Router {
     document: DocumentHandler,
+    folder: FolderHandler,
 }
 
 #[async_trait]
 impl MultiHandler for Router {
     /// Returns true if at least one sub-handler is interested in the entity type.
     fn can_handle(&self, entity_type: &str) -> bool {
-        self.document.can_handle(entity_type)
+        self.document.can_handle(entity_type) || self.folder.can_handle(entity_type)
     }
     /// Returns the identifier for this router.
     /// Useful for identifying the dispatcher in high-level application logs.
@@ -31,6 +36,7 @@ impl MultiHandler for Router {
     ) -> Result<(), Box<dyn Error + Send + Sync>> {
         match event.entity_type.as_str() {
             "document" => self.document.handle(tx, event).await,
+            "folder" => self.folder.handle(tx, event).await,
             _ => {
                 warn!(
                     "MultiHandler received type it cannot route: {}",
@@ -52,6 +58,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     // 2. Business Logic Handlers: Instance of the specific handlers for this service.
     let multi_handler: Router = Router {
         document: DocumentHandler,
+        folder: FolderHandler,
     };
 
     // 3. Concurrent Flow Control: 'tokio::select!' monitors multiple futures simultaneously.
