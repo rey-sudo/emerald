@@ -1,7 +1,6 @@
 import asyncio
 import json
 import time
-import hashlib
 import logging
 import signal
 import threading
@@ -10,9 +9,12 @@ from typing import Any
 import pulsar
 import asyncpg
 import aioboto3
+import os
+from botocore.config import Config
 
 from uuid6 import uuid7
 from tools import process_pdf
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 # =============================================================================
 # CONFIG
@@ -40,11 +42,38 @@ shutdown_event = asyncio.Event()
 _active_tasks: set[asyncio.Task] = set()
 
 # =============================================================================
-# HELPERS
+# S3 CONFIG
 # =============================================================================
 
-def compute_checksum_bytes(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
+S3_CONFIG = Config(
+    retries={"max_attempts": 3, "mode": "standard"},
+    max_pool_connections=50,
+    connect_timeout=5,
+    read_timeout=30,
+)
+
+s3_client = None  # GLOBAL
+
+async def init_s3():
+    global s3_client
+
+    session = aioboto3.Session()
+
+    s3_client = await session.client(
+        "s3",
+        endpoint_url=os.environ.get("S3_ENDPOINT"),
+        aws_access_key_id=os.environ.get("S3_ACCESS_KEY"),
+        aws_secret_access_key=os.environ.get("S3_SECRET_KEY"),
+        region_name=os.environ.get("S3_REGION"),
+        config=S3_CONFIG,
+    ).__aenter__()
+
+
+async def close_s3():
+    global s3_client
+    if s3_client:
+        await s3_client.__aexit__(None, None, None)
+
 # =============================================================================
 # DB
 # =============================================================================
@@ -62,12 +91,17 @@ async def try_insert_processed(pool, event_id, ts):
             ts
         ) is not None
 
-
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=2, max=10),  
+    retry=retry_if_exception_type(Exception), 
+    reraise=True 
+)
 async def insert_outbox(pool, document, ts, checksum, metadata):
     payload = {
         "id": document.get("id"),
         "status": "PROCESSED",
-        "checksum": "hash123",
+        "checksum": checksum,
         "metadata": {},
         "v": document.get("v")
     }
@@ -96,7 +130,7 @@ async def insert_outbox(pool, document, ts, checksum, metadata):
 # CORE
 # =============================================================================
 
-async def handle(msg, consumer, pool, s3):
+async def handle(msg, consumer, pool):
     async with semaphore:
         try:
             payload = json.loads(msg.data())
@@ -128,16 +162,13 @@ async def handle(msg, consumer, pool, s3):
             if mime == "application/pdf":
                 try:
                     checksum = await asyncio.wait_for(
-                        process_pdf(pool, s3, S3_BUCKET, payload),
+                        process_pdf(s3_client, S3_BUCKET, payload),
                         timeout=120
                     )
                 except asyncio.TimeoutError:
                     logging.warning("PDF processing timeout")
                     consumer.negative_acknowledge(msg)
                     return
-
-            # CHECKSUM REAL
-            checksum = b""
 
             # OUTBOX
             await insert_outbox(pool, document, ts, checksum, metadata)
@@ -151,15 +182,16 @@ async def handle(msg, consumer, pool, s3):
 # =============================================================================
 # WORKER LOOP
 # =============================================================================
-"""
-Orchestrates asynchronous task dispatching by consuming messages from the internal queue 
-and managing their lifecycle through active task tracking.
-"""
-async def worker_loop(consumer, pool, s3):
+
+async def worker_loop(consumer, pool):
+    """
+    Orchestrates asynchronous task dispatching by consuming messages from the internal queue 
+    and managing their lifecycle through active task tracking.
+    """    
     while not shutdown_event.is_set():
         msg = await queue.get()
 
-        task = asyncio.create_task(handle(msg, consumer, pool, s3))
+        task = asyncio.create_task(handle(msg, consumer, pool))
         _active_tasks.add(task)
 
         task.add_done_callback(_active_tasks.discard)
@@ -168,10 +200,10 @@ async def worker_loop(consumer, pool, s3):
 # =============================================================================
 # LISTENER
 # =============================================================================
-"""
-Continuously bridges blocking Pulsar message ingestion to the async queue using thread-safe event loop scheduling.
-"""
 def listener(loop, consumer):
+    """
+    Continuously bridges blocking Pulsar message ingestion to the async queue using thread-safe event loop scheduling.
+    """
     while True:
         try:
             msg = consumer.receive(timeout_millis=5000)
@@ -186,6 +218,8 @@ def listener(loop, consumer):
 # =============================================================================
 
 async def shutdown():
+    """Signals stop, waits for the queue to drain, and gracefully cancels all active tasks."""   
+    
     logging.info("shutdown started")
     shutdown_event.set()
 
@@ -193,8 +227,11 @@ async def shutdown():
 
     for task in _active_tasks:
         task.cancel()
-
+        
+    # The '*' unpacks the list into individual arguments for gather.
+    # 'gather' runs the termination of all tasks concurrently.
     await asyncio.gather(*_active_tasks, return_exceptions=True)
+
 
 # =============================================================================
 # MAIN
@@ -207,7 +244,7 @@ async def main():
         max_size=20
     )
 
-    session = aioboto3.Session()
+    await init_s3() 
 
     client = pulsar.Client(PULSAR_URL)
     consumer = client.subscribe(
@@ -227,7 +264,7 @@ async def main():
     ).start()
 
     workers = [
-        asyncio.create_task(worker_loop(consumer, pool, session))
+        asyncio.create_task(worker_loop(consumer, pool))
         for _ in range(2)
     ]
 

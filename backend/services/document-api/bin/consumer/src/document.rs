@@ -39,6 +39,8 @@ impl MultiHandler for DocumentHandler {
 
                 let update_result: PgQueryResult =
                     QueryBuilder::<Postgres>::new("UPDATE documents SET status = 'PROCESSED'")
+                        .push(", checksum = ")
+                        .push_bind(&document.checksum)
                         .push(", updated_at = ")
                         .push_bind(&timestamp_ms)
                         .push(", v  = v + 1")
