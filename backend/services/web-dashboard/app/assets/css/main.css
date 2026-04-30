@@ -89,33 +89,19 @@ rounded-3xl
 
 :root {
   /* Gris puro — sin tinte, compatible con cualquier primario */
-  --ui-color-neutral-50: #fafafa;
-  --ui-color-neutral-100: #f5f5f5;
-  --ui-color-neutral-200: #e5e5e5;
-  --ui-color-neutral-300: #d4d4d4;
-  --ui-color-neutral-400: #b0b0b0;
-  --ui-color-neutral-500: #808080;
-  --ui-color-neutral-600: #5f5f5f;
-  --ui-color-neutral-700: #4d4d4d;
-  --ui-color-neutral-800: #333333;
-  --ui-color-neutral-900: #242424;
-  --ui-color-neutral-925: #1c1c1c;
-  --ui-color-neutral-950: #171717;
-  --ui-color-neutral-1000: #0d0d0d;
-
-  --ui-color-neutral-inverted-50: #000000;
-  --ui-color-neutral-inverted-100: #0a0a0a;
-  --ui-color-neutral-inverted-200: #101010;
-  --ui-color-neutral-inverted-300: #171717;
-  --ui-color-neutral-inverted-400: #262626;
-  --ui-color-neutral-inverted-500: #404040;
-  --ui-color-neutral-inverted-600: #525252;
-  --ui-color-neutral-inverted-700: #737373;
-  --ui-color-neutral-inverted-800: #a3a3a3;
-  --ui-color-neutral-inverted-900: #d4d4d4;
-  --ui-color-neutral-inverted-925: #e5e5e5;
-  --ui-color-neutral-inverted-950: #f5f5f5;
-  --ui-color-neutral-inverted-1000: #ffffff;
+  --ui-color-neutral-50: #f8f9fb;
+  --ui-color-neutral-100: #f1f3f7;
+  --ui-color-neutral-200: #e2e5ed;
+  --ui-color-neutral-300: #ced2dc;
+  --ui-color-neutral-400: #adb2bf;
+  --ui-color-neutral-500: #7d8494;
+  --ui-color-neutral-600: #5c6270;
+  --ui-color-neutral-700: #4a4f5c;
+  --ui-color-neutral-800: #313540;
+  --ui-color-neutral-900: #22252e;
+  --ui-color-neutral-925: #1a1d24;
+  --ui-color-neutral-950: #15171e;
+  --ui-color-neutral-1000: #0c0e13;
 
   /* ========== Escala Primary ========== */
   --ui-color-primary-50: #eff6ff;
@@ -254,10 +240,10 @@ rounded-3xl
   --ui-text-inverted: var(--ui-color-neutral-900);
 
   /* ========== Borders ========== */
-  --ui-border: var(--ui-color-neutral-800); /* era 700 */
+  --ui-border: var(--ui-color-neutral-800);
   --ui-border-muted: var(--ui-color-neutral-700);
-  --ui-border-accented: var(--ui-color-neutral-700); /* era 600 */
-  --ui-border-inverted: white; /* era neutral-50 */
+  --ui-border-accented: var(--ui-color-neutral-700);
+  --ui-border-inverted: white;
 
   /* ========== Layout ========== */
   --ui-container: 1200px;
@@ -275,10 +261,12 @@ rounded-3xl
   --editor-bg: var(--ui-bg);
   --tab-bg: var(--ui-bg);
   --split-bg: var(--ui-bg);
+  --header-bg: var(--ui-bg);
 }
 
 .dark {
   --editor-bg: var(--ui-color-neutral-925);
   --tab-bg: var(--ui-color-neutral-925);
   --split-bg: var(--ui-color-neutral-925);
+  --header-bg: var(--ui-color-neutral-900);
 }

@@ -133,7 +133,7 @@ onUnmounted(() => {
       }"
     >
       <template #header>
-        <div class="bg-elevated window-drag flex items-center pl-4">
+        <div class="bg-[var(--header-bg)] window-drag flex items-center pl-4">
           <span class="[webkit-app-region:no-drag] z-20">
             <UButton
               class="no-drag"
@@ -164,7 +164,7 @@ onUnmounted(() => {
     </USidebar>
 
     <div
-      class=" bg-elevated flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default"
+      class="bg-[var(--header-bg)] flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[var(--header-bg)]"
     >
       <div
         class="h-(--ui-header-height) shrink-0 flex items-center px-4 window-drag "

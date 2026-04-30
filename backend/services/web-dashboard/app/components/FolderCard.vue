@@ -137,7 +137,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 .folder-card {
   width: 100%;
   border-radius: calc(var(--ui-radius) * 2);
-  background: var(--ui-bg);
+  background: var(--ui-bg-muted);
   border: 1px solid transparent;
   padding: 0.75rem;
   height: 200px;
@@ -153,7 +153,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .folder-card:hover {
-  background: var(--ui-bg-elevated);
+  background: var(--ui-bg-accented);
 }
 
 .folder-card.selected {
