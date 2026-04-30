@@ -60,15 +60,7 @@
             fill="var(--ui-primary)"
             opacity="1"
           />
-          <rect
-            x="0"
-            y="50"
-            width="50"
-            height="12"
-            rx="6"
-            :fill="folder.color"
-            opacity="1"
-          />
+          <circle cx="265" cy="60" r="10" :fill="folder.color" opacity="1" />
         </svg>
       </div>
 
@@ -145,7 +137,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 .folder-card {
   width: 100%;
   border-radius: calc(var(--ui-radius) * 2);
-  background: var(--ui-bg-elevated);
+  background: var(--ui-bg);
   border: 1px solid transparent;
   padding: 0.75rem;
   height: 200px;
@@ -161,12 +153,11 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 }
 
 .folder-card:hover {
-  background: var(--ui-bg-accented);
+  background: var(--ui-bg-elevated);
 }
 
 .folder-card.selected {
-  background: var(--ui-bg-accented);
-  border-color: var(--ui-primary);
+  border-color: var(--ui-border-accented);
 }
 
 /* Sortable states */
@@ -206,6 +197,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   right: 0.5rem;
   top: 1rem;
   position: absolute;
+  display: none;
 }
 .card-bottom {
   display: flex;

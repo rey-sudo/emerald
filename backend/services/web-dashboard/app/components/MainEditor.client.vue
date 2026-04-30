@@ -303,7 +303,7 @@ onBeforeUnmount(() => {
         @click="editor.commands.clearAllSelections()"
       >
         Clean
-        <template #leading>
+        <template #trailing>
           <UBadge
             class="flex items-center text-center rounded-xs"
             color="neutral"
