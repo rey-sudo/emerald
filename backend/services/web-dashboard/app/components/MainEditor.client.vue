@@ -288,7 +288,7 @@ onBeforeUnmount(() => {
         :class="{ 'is-active': editor.isActive('multiSelect') }"
         icon="i-lucide-mouse-pointer-click"
         size="sm"
-        color="primary"
+        color="neutral"
         :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleSelection().run()"
         >Select</UButton
@@ -336,6 +336,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
+* {
+  font-family: "Open Sans", sans-serif !important;
+}
 /* Contenedor principal para organizar Header y Editor */
 .editor-layout {
   display: flex;
@@ -436,7 +439,7 @@ onBeforeUnmount(() => {
 h1 {
   line-height: 1.6;
   margin-bottom: 1rem;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .custom-bold-style {
