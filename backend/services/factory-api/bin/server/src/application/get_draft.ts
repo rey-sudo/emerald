@@ -28,6 +28,7 @@ export interface GetDocumentResponse {
   data: {
     documentId: string;
     content: any;
+    chunks: any;
   };
 }
 
@@ -40,7 +41,7 @@ export async function handleGetDocument(
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
   const documentId = params.documentId;
 
-  const binaryKey = `doc:${documentId}:bin`;
+  const binaryKey = `doc:${documentId}:state`;
   const streamKey = `doc:${documentId}:chunks`;
 
   try {
@@ -99,12 +100,24 @@ export async function handleGetDocument(
 
     const content = new Uint8Array(baseBinary);
 
+    const streamEntries = await redis.xrangeBuffer(streamKey, "-", "+");
+
+    const chunks = streamEntries.map(([id, fields]) => {
+      return {
+        id: id.toString(),
+        data: new Uint8Array(fields[1]),
+      };
+    });
+
+    console.log(chunks);
+
     return {
       success: true,
       command: "get_document",
       data: {
         documentId,
         content,
+        chunks,
       },
     };
   } catch (error) {

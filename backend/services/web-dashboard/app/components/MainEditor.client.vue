@@ -102,7 +102,18 @@ watch(
     }
 
     if (msg.command === "get_document") {
-      Y.applyUpdate(ydoc, msg.data.content, "initial-load");
+      const binary = msg?.data?.content;
+
+      if (binary) {
+        Y.applyUpdate(ydoc, msg.data.content, "initial-load");
+      }
+
+      const chunks = msg?.data?.chunks;
+      if (chunks) {
+        chunks.forEach((chunk) => {
+          Y.applyUpdate(ydoc, chunk.data, "initial-load");
+        });
+      }
     }
   },
   { immediate: true },

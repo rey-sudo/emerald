@@ -5,7 +5,7 @@ import { Piscina } from "piscina";
 import * as Y from "yjs";
 
 const piscina = new Piscina({
-  filename: new URL('./update_draft_worker.mjs', import.meta.url).pathname,
+  filename: new URL("./update_draft_worker.mjs", import.meta.url).pathname,
   minThreads: 2,
   idleTimeout: 10000,
 });
@@ -33,104 +33,62 @@ export async function handleUpdateDocument(
   app: FastifyInstance,
   params: z.infer<typeof UpdateDocumentSchema>["params"],
 ) {
+  const { s3, redis, pg_pool, log } = app;
+
   const timestamp = Date.now();
 
   const draftId = params.documentId;
-
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
 
-  const incomingDelta = params.binario;
+  const deltaBinary = params.binario;
 
-  const client = await pool.connect();
-
+  const binaryKey = `doc:${draftId}:state`;
+  const streamKey = `doc:${draftId}:chunks`;
+  
   try {
-    await client.query("BEGIN");
-
-    // 1. Ownership check to prevent unauthorized access
-    const documentResult = await client.query(
-      "SELECT id FROM documents WHERE id = $1 AND user_id = $2",
+    // 1. Check document authorization. ------------------------------------------------------------------------------------
+    const documentResult = await pg_pool.query(
+      "SELECT * FROM documents WHERE id = $1 AND user_id = $2",
       [draftId, userId],
     );
 
+    // The original document does not exist
     if (documentResult.rows.length === 0) {
+      log.warn(`Document not found in database.`);
       throw new Error("Document not found");
     }
 
-    // 2. Prevent race conditions using a session-level advisory lock on the document ID
-    await client.query(
-      "SELECT pg_advisory_xact_lock(('x' || left(md5($1), 16))::bit(64)::bigint)",
-      [draftId],
+    const updateBuffer = Buffer.from(
+      deltaBinary.buffer,
+      deltaBinary.byteOffset,
+      deltaBinary.byteLength,
     );
 
-    // 3. Fetch current state with a row-level lock (FOR UPDATE)
-    const response = await client.query(
-      `SELECT content_binary FROM drafts WHERE id = $1 AND user_id = $2 FOR UPDATE`,
-      [draftId, userId],
-    );
+    // 2. Operación Atómica en Redis (XADD + Renovar TTL)
+    const pipeline = redis.pipeline();
 
-    const draft = response.rows[0];
-    const existingBinary = draft?.content_binary;
+    pipeline.xadd(streamKey, "*", "data", updateBuffer);
 
-    let finalBinary: Uint8Array;
+    //DELEGATE EXPIRE TO SNAPSHOT WORKER
+    pipeline.expire(streamKey, 3600 * 2);
+    pipeline.expire(binaryKey, 3600 * 2);
 
-    // 4. CRDT Logic: Merge incoming update with existing state using Y.js
-    if (existingBinary) {
-      try {
-        finalBinary = await piscina.run({
-          existingBinary,
-          incomingDelta,
-        });
-      } catch (workerError) {
-        app.log.error(workerError);
-        throw new Error("Failed to merge document state");
-      }
-    } else {
-      finalBinary = incomingDelta;
+    const results = await pipeline.exec();
+    if (!results) {
+      throw new Error("Fallo al ejecutar el pipeline de Redis");
     }
 
-    const contentBuffer = Buffer.from(finalBinary);
-
-    // 5. Atomic Upsert: Update merged content and increment version counter
-    const upsertQuery = `
-      INSERT INTO drafts (
-        id, user_id, document_id, mime_type, 
-        content_binary, created_at, updated_at, v
-      )
-      VALUES ($1, $2, $3, $4, $5, $6, $6, $7)
-      ON CONFLICT (id) DO UPDATE SET
-        content_binary = EXCLUDED.content_binary,
-        updated_at     = EXCLUDED.updated_at,
-        v              = drafts.v + 1
-      RETURNING id, v, updated_at;
-    `;
-
-    const upsertValues = [
-      draftId,
-      userId,
-      draftId,
-      "application/octet-stream",
-      contentBuffer,
-      timestamp,
-      1,
-    ];
-
-    const upsertResult = await client.query(upsertQuery, upsertValues);
-
-    await client.query("COMMIT");
-
-    const upsertResultRow = upsertResult.rows[0];
+    console.log(results);
 
     return {
-      command: "update_document",
-      documentId: params.documentId,
-      v: upsertResultRow.v,
-      updatedAt: upsertResultRow.updated_at,
       success: true,
+      command: "update_document",
+      data: {
+        draftId,
+      },
     };
-  } catch (err) {
-    await client.query("ROLLBACK");
-    throw err;
-  } finally {
-    client.release();
+  } catch (error) {
+    log.error(error);
+    throw error;
   }
 }
