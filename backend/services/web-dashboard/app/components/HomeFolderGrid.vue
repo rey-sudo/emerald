@@ -511,8 +511,6 @@ defineExpose({
   --muted: var(--ui-text-muted);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --radius: 12px;
-  --radius-sm: 8px;
   --ease: 160ms ease;
 
   font-family: var(--font-ui);

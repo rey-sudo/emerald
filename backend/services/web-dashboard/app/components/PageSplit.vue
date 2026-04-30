@@ -139,6 +139,7 @@ onBeforeUnmount(removeListeners);
   height: 100%;
   overflow: hidden;
   user-select: none; /* evita selección de texto al arrastrar */
+  background: var(--split-bg);
 }
 
 /* Mientras arrastra, bloquea selección en TODO el documento */
@@ -159,7 +160,6 @@ onBeforeUnmount(removeListeners);
 .split-panel--right {
   flex: 1;
   min-width: 0; /* evita overflow en flexbox */
-
 }
 
 /* ─── Divider ──────────────────────────────────────────────────────────────── */
@@ -168,7 +168,7 @@ onBeforeUnmount(removeListeners);
   position: relative;
   width: 1px;
   cursor: col-resize;
-  background: var(--ui-border-muted);
+  background: var(--ui-border);
   transition:
     background 0.15s ease,
     width 0.15s ease;

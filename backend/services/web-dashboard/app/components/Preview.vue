@@ -184,6 +184,7 @@ function onComplete({ score, total, pct, answers }) {
   width: 100%;
   height: 100%;
   background: var(--ui-bg);
+  overflow: hidden;
   z-index: 10;
 }
 

@@ -81,18 +81,19 @@ const isDocumentRoute = computed(() => {
   transition:
     background-color 0.2s,
     color 0.2s;
-  border: 1px solid var(--ui-border);
+  border: 1px solid transparent;
   border-bottom: none;
   -webkit-app-region: no-drag;
 }
 
 .emerald-tab:hover {
-  background-color: var(--ui-bg-accented);
+  background-color: var(--ui-bg-elevated);
   color: var(--ui-text);
 }
 
 .emerald-tab.is-active {
-  background-color: var(--ui-bg);
+  background-color: var(--tab-bg);
+  border-color: var(--ui-border);
   color: var(--ui-text);
 }
 
@@ -140,6 +141,6 @@ const isDocumentRoute = computed(() => {
 }
 
 .is-active .active-indicator {
-  background-color: var(--ui-bg);
+  background-color: var(--tab-bg);
 }
 </style>

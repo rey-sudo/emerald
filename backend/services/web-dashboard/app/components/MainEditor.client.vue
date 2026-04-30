@@ -303,7 +303,7 @@ onBeforeUnmount(() => {
         @click="editor.commands.clearAllSelections()"
       >
         Clean
-        <template #trailing>
+        <template #leading>
           <UBadge
             class="flex items-center text-center rounded-xs"
             color="neutral"
@@ -342,7 +342,6 @@ onBeforeUnmount(() => {
   flex-direction: column;
   height: calc(100vh - 2.5rem); /* Ocupa todo el alto de la ventana */
   overflow: hidden; /* Evita scroll doble */
-  background: var(--ui-bg);
 }
 
 .editor-header {
@@ -351,9 +350,9 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   padding: 0.25rem 1rem;
-  border-bottom: 1px solid var(--ui-border-muted);
-  border-bottom-left-radius: calc(var(--ui-radius) * 0);
-  border-bottom-right-radius: calc(var(--ui-radius) * 0);
+  border-bottom: 1px solid var(--ui-border);
+  border-bottom-left-radius: calc(var(--ui-radius) * 1);
+  border-bottom-right-radius: calc(var(--ui-radius) * 1);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */

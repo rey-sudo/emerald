@@ -110,7 +110,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   width: 100%;
   background: var(--ui-bg-elevated);
   border: 1px solid transparent;
-  border-radius: calc(var(--ui-radius) * 3);
+  border-radius: calc(var(--ui-radius) * 2);
   flex-direction: column;
   align-items: center;
   display: flex;
@@ -161,7 +161,7 @@ const contextMenuItems = ref<ContextMenuItem[]>([
 .file-card-content img {
   width: 100%;
   height: 100%;
-  border-radius: calc(var(--ui-radius) * 2);
+  border-radius: calc(var(--ui-radius) * 0);
 }
 
 .file-card-footer {
