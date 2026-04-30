@@ -1,8 +1,9 @@
 import { encode, decode } from "@msgpack/msgpack";
 
 type WsMessage = {
-  command: string;
   success: boolean;
+  command: string;
+  message: string;
   data: any;
   timestamp: Date;
 };
