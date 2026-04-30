@@ -19,6 +19,7 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Node, mergeAttributes } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Collaboration from "@tiptap/extension-collaboration";
+import Highlight from "@tiptap/extension-highlight";
 import * as Y from "yjs";
 
 const PageNode = Node.create({
@@ -79,6 +80,7 @@ const extensions = [
     field: "default",
   }),
   MultiSelect,
+  Highlight,
 ];
 
 const editor = useEditor({
@@ -251,29 +253,32 @@ onBeforeUnmount(() => {
       <USeparator orientation="vertical" class="h-6" />
 
       <UButton
+        class="rounded-sm"
         :class="{ 'is-active': editor.isActive('bold') }"
         icon="i-lucide-bold"
         size="sm"
         color="neutral"
-        :variant="editor.isActive('bold') ? 'subtle' : 'ghost'"
+        :variant="editor.isActive('bold') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleBold().run()"
       />
 
       <UButton
+        class="rounded-sm"
         :class="{ 'is-active': editor.isActive('italic') }"
         icon="i-lucide-italic"
         size="sm"
         color="neutral"
-        :variant="editor.isActive('italic') ? 'subtle' : 'ghost'"
+        :variant="editor.isActive('italic') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleItalic().run()"
       />
 
       <UButton
+        class="rounded-sm"
         :class="{ 'is-active': editor.isActive('highlight') }"
         icon="i-lucide-highlighter"
         size="sm"
         color="neutral"
-        :variant="editor.isActive('highlight') ? 'subtle' : 'ghost'"
+        :variant="editor.isActive('highlight') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
 
@@ -300,7 +305,7 @@ onBeforeUnmount(() => {
         Clean
         <template #trailing>
           <UBadge
-            class="flex items-center text-center"
+            class="flex items-center text-center rounded-xs"
             color="neutral"
             variant="subtle"
             size="xs"
@@ -436,7 +441,7 @@ h1 {
 }
 
 .custom-bold-style {
-  color: goldenrod;
+  color: var(--ui-primary);
 }
 
 .footer {

@@ -31,7 +31,7 @@ function handleClick() {
 <template>
   <button class="widget-button" @click="handleClick">
     <span class="icon">
-      <UIcon :name="icon" class="size-5" />
+      <UIcon :name="icon" class="size-6" />
     </span>
     <span class="text text-xs">{{ label }}</span>
   </button>

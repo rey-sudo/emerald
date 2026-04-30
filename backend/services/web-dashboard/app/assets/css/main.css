@@ -88,9 +88,89 @@ rounded-3xl
 */
 
 :root {
-  --ui-card-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.02), 0 10px 20px rgba(0, 0, 0, 0.04),
-    0 15px 35px rgba(0, 0, 0, 0.04);
+  /* ========== Escala Neutral ========== */
+  --ui-color-neutral-50: #f9fafb;
+  --ui-color-neutral-100: #f3f4f6;
+  --ui-color-neutral-200: #e5e7eb;
+  --ui-color-neutral-300: #d1d5db;
+  --ui-color-neutral-400: #9ca3af;
+  --ui-color-neutral-500: #6b7280;
+  --ui-color-neutral-600: #4b5563;
+  --ui-color-neutral-700: #374151;
+  --ui-color-neutral-800: #1f2937;
+  --ui-color-neutral-900: #111827;
+
+  /* ========== Escala Primary ========== */
+  --ui-color-primary-50: #eff6ff;
+  --ui-color-primary-100: #dbeafe;
+  --ui-color-primary-200: #bfdbfe;
+  --ui-color-primary-300: #93c5fd;
+  --ui-color-primary-400: #60a5fa;
+  --ui-color-primary-500: #3b82f6;
+  --ui-color-primary-600: #2563eb;
+  --ui-color-primary-700: #1d4ed8;
+  --ui-color-primary-800: #1e40af;
+  --ui-color-primary-900: #1e3a8a;
+
+  /* ========== Escala Secondary ========== */
+  --ui-color-secondary-50: #f5f3ff;
+  --ui-color-secondary-100: #ede9fe;
+  --ui-color-secondary-200: #ddd6fe;
+  --ui-color-secondary-300: #c4b5fd;
+  --ui-color-secondary-400: #a78bfa;
+  --ui-color-secondary-500: #8b5cf6;
+  --ui-color-secondary-600: #7c3aed;
+  --ui-color-secondary-700: #6d28d9;
+  --ui-color-secondary-800: #5b21b6;
+  --ui-color-secondary-900: #4c1d95;
+
+  /* ========== Escala Success ========== */
+  --ui-color-success-50: #f0fdf4;
+  --ui-color-success-100: #dcfce7;
+  --ui-color-success-200: #bbf7d0;
+  --ui-color-success-300: #86efac;
+  --ui-color-success-400: #4ade80;
+  --ui-color-success-500: #22c55e;
+  --ui-color-success-600: #16a34a;
+  --ui-color-success-700: #15803d;
+  --ui-color-success-800: #166534;
+  --ui-color-success-900: #14532d;
+
+  /* ========== Escala Info ========== */
+  --ui-color-info-50: #ecfeff;
+  --ui-color-info-100: #cffafe;
+  --ui-color-info-200: #a5f3fc;
+  --ui-color-info-300: #67e8f9;
+  --ui-color-info-400: #22d3ee;
+  --ui-color-info-500: #06b6d4;
+  --ui-color-info-600: #0891b2;
+  --ui-color-info-700: #0e7490;
+  --ui-color-info-800: #155e75;
+  --ui-color-info-900: #164e63;
+
+  /* ========== Escala Warning ========== */
+  --ui-color-warning-50: #fffbeb;
+  --ui-color-warning-100: #fef3c7;
+  --ui-color-warning-200: #fde68a;
+  --ui-color-warning-300: #fcd34d;
+  --ui-color-warning-400: #fbbf24;
+  --ui-color-warning-500: #f59e0b;
+  --ui-color-warning-600: #d97706;
+  --ui-color-warning-700: #b45309;
+  --ui-color-warning-800: #92400e;
+  --ui-color-warning-900: #78350f;
+
+  /* ========== Escala Error ========== */
+  --ui-color-error-50: #fef2f2;
+  --ui-color-error-100: #fee2e2;
+  --ui-color-error-200: #fecaca;
+  --ui-color-error-300: #fca5a5;
+  --ui-color-error-400: #f87171;
+  --ui-color-error-500: #ef4444;
+  --ui-color-error-600: #dc2626;
+  --ui-color-error-700: #b91c1c;
+  --ui-color-error-800: #991b1b;
+  --ui-color-error-900: #7f1d1d;
 }
 
 :root {
@@ -133,38 +213,46 @@ rounded-3xl
 }
 
 .dark {
-  /* ========== Semantic (Google Material Dark) ========== */
-  --ui-primary: #a8c7fa; /* Azul suave de Google Dark */
-  --ui-secondary: #c2e7ff; /* Celeste claro */
+  /* ========== Semantic (usa escala) ========== */
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-secondary: var(--ui-color-secondary-400);
 
-  --ui-success: #6dd58c;
-  --ui-info: #7cacf8;
-  --ui-warning: #f2bf48;
-  --ui-error: #f2b8b5;
+  --ui-success: var(--ui-color-success-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
 
-  /* ========== Backgrounds (Pure Gemini App) ========== */
-  /* El fondo base de la app es casi negro, pero no puro */
-  --ui-bg: #131314;
-  --ui-bg-muted: #1e1f20;
-  --ui-bg-elevated: #28292a;
-  --ui-bg-accented: #333537;
-  --ui-bg-inverted: #e3e3e3;
+  /* ========== Backgrounds ========== */
+  --ui-bg: var(--ui-color-neutral-900);
+  --ui-bg-muted: var(--ui-color-neutral-800);
+  --ui-bg-elevated: var(--ui-color-neutral-800);
+  --ui-bg-accented: var(--ui-color-neutral-700);
+  --ui-bg-inverted: var(--ui-color-neutral-50);
 
-  /* ========== Text (Neutral High Contrast) ========== */
-  --ui-text-dimmed: #757575; /* Texto muy secundario */
-  --ui-text-muted: #9aa0a6; /* Placeholders / iconos */
-  --ui-text-toned: #c4c7c5; /* Texto secundario */
-  --ui-text: #e3e3e3; /* Texto principal (Off-white) */
-  --ui-text-highlighted: #ffffff;
-  --ui-text-inverted: #131314;
+  /* ========== Text ========== */
+  --ui-text-dimmed: var(--ui-color-neutral-600);
+  --ui-text-muted: var(--ui-color-neutral-500);
+  --ui-text-toned: var(--ui-color-neutral-400);
+  --ui-text: var(--ui-color-neutral-300);
+  --ui-text-highlighted: var(--ui-color-neutral-50);
+  --ui-text-inverted: var(--ui-color-neutral-900);
 
-  /* ========== Borders (Sutiles y sin saturación) ========== */
-  --ui-border: rgba(255, 255, 255, 0.1);
-  --ui-border-muted: #2c2e30;
-  --ui-border-accented: #444746;
-  --ui-border-inverted: #ffffff;
+  /* ========== Borders ========== */
+  --ui-border: var(--ui-color-neutral-700);
+  --ui-border-muted: var(--ui-color-neutral-700);
+  --ui-border-accented: var(--ui-color-neutral-600);
+  --ui-border-inverted: var(--ui-color-neutral-50);
 
-  /* ========== Layout & Effects ========== */
-  --ui-header-height: 2.5rem; /* La app de Gemini tiene headers más altos */
-  --ui-radius: 8px; /* Bordes un poco más redondeados (estilo móvil) */
+  /* ========== Layout ========== */
+  --ui-container: 1200px;
+  --ui-header-height: 2.5rem;
+
+  /* ========== Radius (Nuxt estándar) ========== */
+  --ui-radius: 8px;
+}
+
+:root {
+  --ui-card-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02), 0 10px 20px rgba(0, 0, 0, 0.04),
+    0 15px 35px rgba(0, 0, 0, 0.04);
 }
