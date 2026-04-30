@@ -1,13 +1,20 @@
 import { encode, decode } from "@msgpack/msgpack";
 
-type EditorFrame = {
+type WsMessage = {
   command: string;
-  params?: Record<string, unknown> & { binario?: Uint8Array };
+  success: boolean;
+  data: any;
+  timestamp: Date;
+};
+
+type WsCommand = {
+  command: string;
+  params: any;
 };
 
 export const useEditorStore = defineStore("editor", () => {
-  const messages = ref<EditorFrame[]>([]);
-  const message = ref<EditorFrame | null>(null);
+  const allMessages = ref<WsMessage[]>([]);
+  const message = ref<WsMessage | null>(null);
 
   const protocol = import.meta.client
     ? window.location.protocol === "https:"
@@ -30,16 +37,15 @@ export const useEditorStore = defineStore("editor", () => {
       console.info("Websocket connected");
     },
     onMessage: (_, event) => {
-      console.log(encode(event));
-      
-      const parsed = decode(new Uint8Array(event.data)) as any;
-      console.log(parsed);
+      const parsed = decode(event.data) as any;
       message.value = parsed;
-      messages.value.push(parsed);
+      allMessages.value.push(parsed);
+
+      console.log(parsed);
     },
   });
 
-  function send(cmd: EditorFrame) {
+  function send(cmd: WsCommand) {
     if (!import.meta.client) return;
 
     const encoded = encode(cmd);
@@ -52,5 +58,12 @@ export const useEditorStore = defineStore("editor", () => {
     );
   }
 
-  return { status, message, messages, connect: open, disconnect: close, send };
+  return {
+    status,
+    message,
+    allMessages,
+    connect: open,
+    disconnect: close,
+    send,
+  };
 });
