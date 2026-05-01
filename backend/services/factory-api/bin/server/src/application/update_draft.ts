@@ -17,7 +17,9 @@ import { z } from "zod";
 import type { FastifyInstance } from "fastify";
 import { pulsarProducer } from "../app.js";
 import pRetry, { AbortError } from "p-retry";
+import { AppError } from "./error.js";
 import * as Y from "yjs";
+import Redis from "ioredis";
 
 export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
@@ -38,7 +40,7 @@ export const UpdateDocumentSchema = z.object({
   }),
 });
 
-export interface GetDocumentResponse {
+export interface UpdateDocumentResponse {
   success: boolean;
   command: "update_document";
   message: string;
@@ -47,29 +49,143 @@ export interface GetDocumentResponse {
   };
 }
 
-export async function handleUpdateDocument(app: FastifyInstance, params: any) {
+export interface OutboxPayload {
+  draftId: string;
+  chunkId: null | string;
+  chunk: null | string;
+  source: string;
+  created_at: number;
+}
+
+// PROCESS CHUNK -------------------------------------------------------------------------------------------------------
+/**
+ *
+ * @param redis
+ * @param draftId
+ * @param deltaBinary
+ * @param binaryKey
+ * @param streamKey
+ * @param expireValue
+ * @param timestamp
+ * @returns
+ */
+async function processChunk(
+  log: any,
+  redis: Redis.Redis,
+  draftId: string,
+  deltaBinary: Uint8Array<ArrayBuffer>,
+  binaryKey: string,
+  streamKey: string,
+  expireValue: number,
+  timestamp: number,
+) {
+  const retryConfig = {
+    retries: 5,
+    onFailedAttempt: (error: any) => {
+      log.warn(`Retry failed: ${error.error.message}`);
+    },
+  };
+
+  const outboxPayload: OutboxPayload = {
+    draftId,
+    chunkId: null,
+    chunk: null,
+    source: "factory-api-server",
+    created_at: timestamp,
+  };
+
+  let response = {
+    success: false,
+    outboxPayload,
+  };
+
+  try {
+    await pRetry(async (attemptNumber) => {
+      // 1. Buffer convertion
+      const updateBuffer = Buffer.from(
+        deltaBinary.buffer,
+        deltaBinary.byteOffset,
+        deltaBinary.byteLength,
+      );
+
+      if (updateBuffer.length === 0) {
+        throw new AbortError("Empty buffer: unrecoverable error");
+      }
+
+      outboxPayload.chunk = updateBuffer.toString("base64");
+
+      // 2. Operación en Redis -----------------------------------------------------------------------------------------
+
+      const pipeline = redis.pipeline();
+
+      pipeline.xadd(streamKey, "*", "data", updateBuffer);
+      pipeline.expire(streamKey, expireValue);
+      pipeline.expire(binaryKey, expireValue);
+
+      const results = await pipeline.exec();
+      if (!results) {
+        throw new Error(
+          "Redis pipeline no retornó resultados (posible desconexión).",
+        );
+      }
+
+      const [err, chunkId] = results[0];
+      if (err) throw new Error(`Redis XADD falló: ${err.message}`);
+
+      // 3. Pulsar publication ------------------------------------
+      outboxPayload.chunkId = chunkId as string;
+
+      try {
+        const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
+        const published = await pulsarProducer.send({
+          data: pulsarPayload,
+          partitionKey: draftId,
+        });
+
+        console.log(published.toString());
+      } catch (pulsarError) {
+        log.error(pulsarError);
+        throw pulsarError;
+      }
+    }, retryConfig);
+
+    response.success = true;
+  } catch (error) {
+    response.success = false;
+  } finally {
+    return response;
+  }
+}
+
+// UPDATE DOCUMENT HANDLER ---------------------------------------------------------------------------------------------
+
+export async function handleUpdateDocument(
+  app: FastifyInstance,
+  params: any,
+): Promise<UpdateDocumentResponse> {
   const { redis, pg_pool, log } = app;
 
-  // 1. Params validation. -----------------------------------------------------------------------------------------------
+  // 1. Params validation. ---------------------------------------------------------------------------------------------
 
   const result = UpdateDocumentSchema.shape.params.safeParse(params);
   if (!result.success) {
     const errorTree = z.treeifyError(result.error);
-
     log.error({ errors: errorTree }, "Invalid params error");
-    throw new Error("Invalid request parameters");
+
+    throw new AppError("Invalid request parameters", false);
   }
 
+  const { binario: deltaBinary } = result.data;
+
   const timestamp = Date.now();
-  const draftId = params.documentId;
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
-  const deltaBinary = params.binario;
+  const draftId = params.documentId;
   const binaryKey = `doc:${draftId}:state`;
   const streamKey = `doc:${draftId}:chunks`;
   const expireValue = 3600;
 
   try {
-    // 2. Check document authorization. ------------------------------------------------------------------------------------
+    // 2. Check authorization. -----------------------------------------------------------------------------------------
 
     const documentResult = await pg_pool.query(
       "SELECT * FROM documents WHERE id = $1 AND user_id = $2",
@@ -79,84 +195,27 @@ export async function handleUpdateDocument(app: FastifyInstance, params: any) {
     // The original document does not exist
     if (documentResult.rows.length === 0) {
       log.warn(`Document not found in database.`);
-      throw new Error("Document not found");
+      throw new AppError("Document not found", false);
     }
 
-    // 3. Persist in the stream and Pulsar ------------------------------------------------------------------------------------------
+    // 3. Process diff chunk -------------------------------------------------------------------------------------------
 
-    let updateBuffer = null;
-
-    const outboxPayload = {
+    const { success, outboxPayload } = await processChunk(
+      log,
+      redis,
       draftId,
-      chunkId: null,
-      chunk: updateBuffer,
-      source: "factory-api-server",
-      created_at: timestamp,
-    };
+      deltaBinary,
+      binaryKey,
+      streamKey,
+      expireValue,
+      timestamp,
+    );
 
-    const processChunk = async () => {
-      // Envolvemos la lógica en pRetry
-      return await pRetry(
-        async (attemptNumber) => {
-          updateBuffer = Buffer.from(
-            deltaBinary.buffer,
-            deltaBinary.byteOffset,
-            deltaBinary.byteLength,
-          );
+    console.log(success, outboxPayload);
 
-          if (updateBuffer.length === 0) {
-            throw new AbortError(
-              "Buffer vacío: Error irrecuperable en los datos del chunk.",
-            );
-          }
+    // 4. Fallback: Persist in database --------------------------------------------------------------------------------
 
-          // 2. Operación en Redis
-          const pipeline = redis.pipeline();
-
-          pipeline.xadd(streamKey, "*", "data", updateBuffer);
-          pipeline.expire(streamKey, expireValue);
-          pipeline.expire(binaryKey, expireValue);
-
-          const results = await pipeline.exec();
-          if (!results) {
-            throw new Error(
-              "Redis pipeline no retornó resultados (posible desconexión).",
-            );
-          }
-
-          const [err, chunkId] = results[0];
-          if (err) throw new Error(`Redis XADD falló: ${err.message}`);
-
-          // 3. Operación en Pulsar
-          try {
-            const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
-            const final = await pulsarProducer.send({
-              data: pulsarPayload,
-              partitionKey: draftId,
-            });
-
-            return { chunkId, pulsarMsgId: final.toString() };
-          } catch (pulsarError) {
-            throw pulsarError;
-          }
-        },
-        {
-          retries: 5,
-          onFailedAttempt: (error) => {
-            console.warn(`Intento fallido: ${error.error.message}`);
-          },
-        },
-      );
-    };
-
-    try {
-      const { chunkId, pulsarMsgId } = await processChunk();
-      console.log(
-        `✅ Chunk ${chunkId} procesado con éxito. Pulsar: ${pulsarMsgId}`,
-      );
-    } catch (error) {
-      console.error("❌ Fallo definitivo tras todos los reintentos:", error);
-
+    if (success === false) {
       //OUTBOX EVENT
     }
 
@@ -168,8 +227,14 @@ export async function handleUpdateDocument(app: FastifyInstance, params: any) {
         draftId,
       },
     };
-  } catch (error) {
-    log.error(error);
-    throw error;
+  } catch (err) {
+    log.error(err);
+    if (err instanceof AppError) {
+      throw new Error("Errooor");
+
+      //outboxPayload
+    } else {
+      throw new Error("Errooor");
+    }
   }
 }
