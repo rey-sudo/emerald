@@ -200,16 +200,11 @@ async def handle(msg, consumer, pool):
                         return #TX FINISH
                                 
                 async with conn.transaction():
-                    try:
-                        await insert_processed(conn, event_id, ts)
-                        await insert_outbox(conn, document, ts, checksum, metadata)
+                    await insert_processed(conn, event_id, ts)
+                    await insert_outbox(conn, document, ts, checksum, metadata)
                         
-                        consumer.acknowledge(msg)
-                    except (asyncio.TimeoutError, Exception) as e:
-                        logging.error(f"Processing failed, rolling back: {e}")
-                        consumer.negative_acknowledge(msg)
-                        raise 
-            
+                    consumer.acknowledge(msg)
+                    
             # TRANSACTION END----------------------------------------------------------------------------------------------
             
         except Exception:
