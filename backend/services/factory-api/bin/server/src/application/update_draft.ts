@@ -1,14 +1,23 @@
-import { z } from "zod";
-import { pool } from "../infrastructure/postgres/db.js";
-import type { FastifyInstance } from "fastify";
-import { Piscina } from "piscina";
-import * as Y from "yjs";
+// Emerald
+// Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation version 3 of the License.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-const piscina = new Piscina({
-  filename: new URL("./update_draft_worker.mjs", import.meta.url).pathname,
-  minThreads: 2,
-  idleTimeout: 10000,
-});
+import { z } from "zod";
+import type { FastifyInstance } from "fastify";
+import { pulsarProducer } from "../app.js";
+import pRetry, { AbortError } from "p-retry";
+import * as Y from "yjs";
 
 export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
@@ -29,24 +38,38 @@ export const UpdateDocumentSchema = z.object({
   }),
 });
 
-export async function handleUpdateDocument(
-  app: FastifyInstance,
-  params: z.infer<typeof UpdateDocumentSchema>["params"],
-) {
-  const { s3, redis, pg_pool, log } = app;
+export interface GetDocumentResponse {
+  success: boolean;
+  command: "update_document";
+  message: string;
+  data: {
+    draftId: string;
+  };
+}
 
-  const timestamp = Date.now();
+export async function handleUpdateDocument(app: FastifyInstance, params: any) {
+  const { redis, pg_pool, log } = app;
+
+  // 1. Params validation. -----------------------------------------------------------------------------------------------
+
+  const result = UpdateDocumentSchema.shape.params.safeParse(params);
+  if (!result.success) {
+    const errorTree = z.treeifyError(result.error);
+
+    log.error({ errors: errorTree }, "Invalid params error");
+    throw new Error("Invalid request parameters");
+  }
 
   const draftId = params.documentId;
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
-
   const deltaBinary = params.binario;
-
   const binaryKey = `doc:${draftId}:state`;
   const streamKey = `doc:${draftId}:chunks`;
-  
+  const expireValue = 3600;
+
   try {
-    // 1. Check document authorization. ------------------------------------------------------------------------------------
+    // 2. Check document authorization. ------------------------------------------------------------------------------------
+
     const documentResult = await pg_pool.query(
       "SELECT * FROM documents WHERE id = $1 AND user_id = $2",
       [draftId, userId],
@@ -58,31 +81,81 @@ export async function handleUpdateDocument(
       throw new Error("Document not found");
     }
 
-    const updateBuffer = Buffer.from(
-      deltaBinary.buffer,
-      deltaBinary.byteOffset,
-      deltaBinary.byteLength,
-    );
+    // 3. Persist in the stream and Pulsar ------------------------------------------------------------------------------------------
 
-    // 2. Operación Atómica en Redis (XADD + Renovar TTL)
-    const pipeline = redis.pipeline();
+    const processChunk = async () => {
+      // Envolvemos la lógica en pRetry
+      return await pRetry(
+        async (attemptNumber) => {
+          // 1. Preparar Buffer
+          const updateBuffer = Buffer.from(
+            deltaBinary.buffer,
+            deltaBinary.byteOffset,
+            deltaBinary.byteLength,
+          );
 
-    pipeline.xadd(streamKey, "*", "data", updateBuffer);
+          if (updateBuffer.length === 0) {
+            throw new AbortError(
+              "Buffer vacío: Error irrecuperable en los datos del chunk.",
+            );
+          }
 
-    //DELEGATE EXPIRE TO SNAPSHOT WORKER
-    pipeline.expire(streamKey, 3600 * 2);
-    pipeline.expire(binaryKey, 3600 * 2);
+          // 2. Operación en Redis
+          const pipeline = redis.pipeline();
+          pipeline.xadd(streamKey, "*", "data", updateBuffer);
+          pipeline.expire(streamKey, 3600 * 2);
+          pipeline.expire(binaryKey, 3600 * 2);
 
-    const results = await pipeline.exec();
-    if (!results) {
-      throw new Error("Fallo al ejecutar el pipeline de Redis");
+          const results = await pipeline.exec();
+          if (!results) {
+            throw new Error(
+              "Redis pipeline no retornó resultados (posible desconexión).",
+            );
+          }
+
+          const [err, chunkId] = results[0];
+          if (err) throw new Error(`Redis XADD falló: ${err.message}`);
+
+          // 3. Operación en Pulsar
+          try {
+            const final = await pulsarProducer.send({
+              data: updateBuffer,
+              partitionKey: draftId,
+              properties: {
+                docId: draftId,
+                chunkId: chunkId as string,
+              },
+            });
+
+            return { chunkId, pulsarMsgId: final.toString() };
+          } catch (pulsarError) {
+            throw pulsarError;
+          }
+        },
+        {
+          retries: 5,
+          onFailedAttempt: (error) => {
+            console.warn(`Intento fallido: ${error.error.message}`);
+          },
+        },
+      );
+    };
+
+    try {
+      const { chunkId, pulsarMsgId } = await processChunk();
+      console.log(
+        `✅ Chunk ${chunkId} procesado con éxito. Pulsar: ${pulsarMsgId}`,
+      );
+    } catch (error) {
+      console.error("❌ Fallo definitivo tras todos los reintentos:", error);
+
+      //OUTBOX EVENT
     }
-
-    console.log(results);
 
     return {
       success: true,
       command: "update_document",
+      message: "success",
       data: {
         draftId,
       },

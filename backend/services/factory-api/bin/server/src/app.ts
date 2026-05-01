@@ -1,6 +1,7 @@
 import "dotenv/config";
 import Fastify from "fastify";
 import fastifyWebsocket from "@fastify/websocket";
+import Pulsar from "pulsar-client";
 import { router } from "./application/router.js";
 import { S3Client } from "@aws-sdk/client-s3";
 import { Pool } from "pg";
@@ -28,10 +29,19 @@ const s3Client = new S3Client({
   forcePathStyle: true,
 });
 
-const redisClient = new Redis(process.env.REDIS_URL!)
+const redisClient = new Redis(process.env.REDIS_URL!);
 
 const pgPool = new Pool({
   connectionString: process.env.DATABASE_URL,
+});
+
+export const pulsarClient = new Pulsar.Client({
+  serviceUrl: "pulsar://broker:6650",
+});
+
+export const pulsarProducer = await pulsarClient.createProducer({
+  topic: "persistent://public/default/chunk.created",
+  batchingEnabled: true,
 });
 
 app.decorate("clients", new Set<WebSocket>());
@@ -44,6 +54,7 @@ app.addHook("onClose", async (instance) => {
     instance.s3.destroy(),
     instance.redis.quit(),
     instance.pg_pool.end(),
+    pulsarProducer.close(),
   ]);
 });
 
