@@ -14,7 +14,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import { z } from "zod";
-import type { FastifyInstance } from "fastify";
+import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { pulsarProducer } from "../app.js";
 import pRetry, { AbortError } from "p-retry";
 import { AppError } from "./error.js";
@@ -70,7 +70,7 @@ export interface OutboxPayload {
  * @returns
  */
 async function processChunk(
-  log: any,
+  log: FastifyBaseLogger,
   redis: Redis.Redis,
   draftId: string,
   deltaBinary: Uint8Array<ArrayBuffer>,
@@ -129,19 +129,17 @@ async function processChunk(
       }
 
       const [err, chunkId] = results[0];
-      if (err) throw new Error(`Redis XADD falló: ${err.message}`);
+      if (err) throw new Error(`Redis XADD failed: ${err.message}`);
 
       // 3. Pulsar publication -----------------------------------------------------------------------------------------
 
       outboxPayload.chunkId = chunkId as string;
 
       const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
-      const published = await pulsarProducer.send({
+      await pulsarProducer.send({
         data: pulsarPayload,
         partitionKey: draftId,
       });
-
-      console.log(published.toString());
     }, retryConfig);
 
     response.success = true;
@@ -165,8 +163,7 @@ export async function handleUpdateDocument(
 
   const result = UpdateDocumentSchema.shape.params.safeParse(params);
   if (!result.success) {
-    const errorTree = z.treeifyError(result.error);
-    log.error({ errors: errorTree }, "Invalid params error");
+    log.error({ errors: z.treeifyError(result.error) }, "Invalid params error");
 
     throw new AppError("Invalid request parameters", false);
   }
@@ -189,7 +186,7 @@ export async function handleUpdateDocument(
     );
 
     // The original document does not exist
-    if (documentResult.rows.length === 0) {
+    if (documentResult.rowCount === 0) {
       log.warn(`Document not found in database.`);
       throw new AppError("Document not found", false);
     }
