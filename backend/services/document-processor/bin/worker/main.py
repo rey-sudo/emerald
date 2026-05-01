@@ -88,18 +88,33 @@ async def close_s3():
     retry=retry_if_exception_type(Exception), 
     reraise=True 
 )
-async def try_insert_processed(pool, event_id, ts):
-    async with pool.acquire() as conn:
-        return await conn.fetchval(
-            """
-            INSERT INTO processed_events(event_id, created_at)
-            VALUES ($1, $2)
-            ON CONFLICT DO NOTHING
-            RETURNING event_id
-            """,
-            event_id,
-            ts
-        ) is not None
+
+async def check_if_consumed(conn, event_id: str) -> bool:
+    query = """
+        SELECT EXISTS (
+            SELECT 1 
+            FROM processed_events 
+            WHERE event_id = $1
+        );
+    """
+    try:
+        is_consumed = await conn.fetchval(query, event_id)
+        return is_consumed
+    except Exception as e:
+        logging.error(f"Error checking idempotency for {event_id}: {e}")
+        return False
+
+async def insert_processed(conn, event_id: str, ts):
+    query = """
+        INSERT INTO processed_events (event_id, created_at)
+        VALUES ($1,$2)
+        ON CONFLICT (event_id) DO NOTHING;
+    """
+    try:
+        await conn.execute(query, event_id, ts)
+    except Exception as e:
+        logging.error(f"Failed to insert processed event {event_id}: {e}")
+        raise
         
 @retry(
     stop=stop_after_attempt(2),
@@ -107,17 +122,15 @@ async def try_insert_processed(pool, event_id, ts):
     retry=retry_if_exception_type(Exception), 
     reraise=True 
 )
-async def insert_outbox(pool, document, ts, checksum, metadata):
-    payload = {
-        "id": document.get("id"),
-        "status": "PROCESSED",
-        "checksum": checksum,
-        "metadata": {},
-        "v": document.get("v")
-    }
-
-    async with pool.acquire() as conn:
-        await conn.execute(
+async def insert_outbox(conn, document, ts, checksum, metadata):
+        payload = {
+            "id": document.get("id"),
+            "status": "PROCESSED",
+            "checksum": checksum,
+            "metadata": {},
+            "v": document.get("v")
+        }
+        return await conn.execute(
             """
             INSERT INTO events (
                 specversion, event_type, source, id, time,
@@ -142,8 +155,10 @@ async def handle(msg, consumer, pool):
     async with semaphore:
         try:
             payload = json.loads(msg.data())
-
             event_id = payload.get("event_id")
+            
+            #TODO: REDIS event_id LOCK
+            
             event_type = payload.get("event_type")
             document = payload.get("data") or {}
             metadata = payload.get("metadata") or {}
@@ -152,37 +167,51 @@ async def handle(msg, consumer, pool):
             doc_mime = document.get("mime_type")
 
             if not event_id or not doc_id:
+                logging.warning("Invalid serialized event.")
                 consumer.acknowledge(msg)
                 return
 
             if event_type != "document.created":
+                logging.warning("Invalid event_type")
                 consumer.acknowledge(msg)
                 return
 
             ts = int(time.time() * 1000)
 
-            is_new = await try_insert_processed(pool, event_id, ts)
-            if not is_new:
-                consumer.acknowledge(msg)
-                return
+            # TRANSACTION ----------------------------------------------------------------------------------------------
 
-            # PROCESS
-            if doc_mime == "application/pdf":
-                try:
-                    checksum = await asyncio.wait_for(
-                        process_pdf(s3_client, S3_BUCKET, payload),
-                        timeout=120
-                    )
-                except asyncio.TimeoutError:
-                    logging.warning("PDF processing timeout")
-                    consumer.negative_acknowledge(msg)
+            async with pool.acquire() as conn:
+                #NO INSERTA NADA SOLO VERIFICA IDEMPOTENCIA.
+                is_consumed = await check_if_consumed(conn, event_id)
+                if is_consumed:
+                    logging.warning(f"Event already processed: {event_id}")
+                    consumer.acknowledge(msg)
                     return
 
-            # OUTBOX
-            await insert_outbox(pool, document, ts, checksum, metadata)
-
-            consumer.acknowledge(msg)
-
+                match doc_mime:
+                    case "application/pdf":
+                        checksum = await asyncio.wait_for(
+                            process_pdf(s3_client, S3_BUCKET, payload),
+                            timeout=60
+                        )
+                    case _:
+                        logging.warning("Invalid doc_mime")
+                        consumer.acknowledge(msg)
+                        return #TX FINISH
+                                
+                async with conn.transaction():
+                    try:
+                        await insert_processed(conn, event_id, ts)
+                        await insert_outbox(conn, document, ts, checksum, metadata)
+                        
+                        consumer.acknowledge(msg)
+                    except (asyncio.TimeoutError, Exception) as e:
+                        logging.error(f"Processing failed, rolling back: {e}")
+                        consumer.negative_acknowledge(msg)
+                        raise 
+            
+            # TRANSACTION END----------------------------------------------------------------------------------------------
+            
         except Exception:
             logging.exception("error")
             consumer.negative_acknowledge(msg)
