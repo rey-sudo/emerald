@@ -47,7 +47,7 @@ logging.basicConfig(level=logging.INFO)
 queue: asyncio.Queue = asyncio.Queue(maxsize=QUEUE_SIZE)
 semaphore = asyncio.Semaphore(CONCURRENCY)
 shutdown_event = asyncio.Event()
-stop_listener = threading.Event()
+stop_listener = threading.Event() #Pulsar listener in Threading 
 _active_tasks: set[asyncio.Task] = set()
 
 # S3 CLIENT ------------------------------------------------------------------------------------------------------------
@@ -89,7 +89,6 @@ async def close_s3():
     retry=retry_if_exception_type(Exception), 
     reraise=True 
 )
-
 async def check_if_consumed(conn, event_id: str) -> bool:
     query = """
         SELECT EXISTS (
@@ -98,25 +97,24 @@ async def check_if_consumed(conn, event_id: str) -> bool:
             WHERE event_id = $1
         );
     """
-    try:
-        is_consumed = await conn.fetchval(query, event_id)
-        return is_consumed
-    except Exception as e:
-        logging.error(f"Error checking idempotency for {event_id}: {e}")
-        return False
+    return await conn.fetchval(query, event_id)
 
+
+@retry(
+    stop=stop_after_attempt(2),
+    wait=wait_exponential(multiplier=1, min=2, max=10),  
+    retry=retry_if_exception_type(Exception), 
+    reraise=True 
+)
 async def insert_processed(conn, event_id: str, ts):
     query = """
         INSERT INTO processed_events (event_id, created_at)
         VALUES ($1,$2)
         ON CONFLICT (event_id) DO NOTHING;
     """
-    try:
-        await conn.execute(query, event_id, ts)
-    except Exception as e:
-        logging.error(f"Failed to insert processed event {event_id}: {e}")
-        raise
-        
+    return await conn.execute(query, event_id, ts)
+
+    
 @retry(
     stop=stop_after_attempt(2),
     wait=wait_exponential(multiplier=1, min=2, max=10),  
@@ -202,7 +200,6 @@ async def handle(msg, consumer, pool):
             async with conn.transaction():
                 await insert_processed(conn, event_id, ts)
                 await insert_outbox(conn, document, ts, checksum, metadata)
-                    
                 consumer.acknowledge(msg)
                 
         # TRANSACTION END----------------------------------------------------------------------------------------------
