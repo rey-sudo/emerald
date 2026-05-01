@@ -47,6 +47,7 @@ logging.basicConfig(level=logging.INFO)
 queue: asyncio.Queue = asyncio.Queue(maxsize=QUEUE_SIZE)
 semaphore = asyncio.Semaphore(CONCURRENCY)
 shutdown_event = asyncio.Event()
+stop_listener = threading.Event()
 _active_tasks: set[asyncio.Task] = set()
 
 # S3 CLIENT ------------------------------------------------------------------------------------------------------------
@@ -152,64 +153,63 @@ async def insert_outbox(conn, document, ts, checksum, metadata):
 # HANDLE ---------------------------------------------------------------------------------------------------------------
 
 async def handle(msg, consumer, pool):
-    async with semaphore:
-        try:
-            payload = json.loads(msg.data())
-            event_id = payload.get("event_id")
-            
-            #TODO: REDIS event_id LOCK
-            
-            event_type = payload.get("event_type")
-            document = payload.get("data") or {}
-            metadata = payload.get("metadata") or {}
+    try:
+        payload = json.loads(msg.data())
+        event_id = payload.get("event_id")
+        
+        #TODO: REDIS event_id LOCK ok
+        
+        event_type = payload.get("event_type")
+        document = payload.get("data") or {}
+        metadata = payload.get("metadata") or {}
 
-            doc_id = document.get("id")
-            doc_mime = document.get("mime_type")
+        doc_id = document.get("id")
+        doc_mime = document.get("mime_type")
 
-            if not event_id or not doc_id:
-                logging.warning("Invalid serialized event.")
+        if not event_id or not doc_id:
+            logging.warning("Invalid serialized event.")
+            consumer.acknowledge(msg)
+            return
+
+        if event_type != "document.created":
+            logging.warning("Invalid event_type")
+            consumer.acknowledge(msg)
+            return
+
+        ts = int(time.time() * 1000)
+
+        # TRANSACTION ----------------------------------------------------------------------------------------------
+
+        async with pool.acquire() as conn:
+            #NO INSERTA NADA SOLO VERIFICA IDEMPOTENCIA.
+            is_consumed = await check_if_consumed(conn, event_id)
+            if is_consumed:
+                logging.warning(f"Event already processed: {event_id}")
                 consumer.acknowledge(msg)
                 return
 
-            if event_type != "document.created":
-                logging.warning("Invalid event_type")
-                consumer.acknowledge(msg)
-                return
-
-            ts = int(time.time() * 1000)
-
-            # TRANSACTION ----------------------------------------------------------------------------------------------
-
-            async with pool.acquire() as conn:
-                #NO INSERTA NADA SOLO VERIFICA IDEMPOTENCIA.
-                is_consumed = await check_if_consumed(conn, event_id)
-                if is_consumed:
-                    logging.warning(f"Event already processed: {event_id}")
+            match doc_mime:
+                case "application/pdf":
+                    checksum = await asyncio.wait_for(
+                        process_pdf(s3_client, S3_BUCKET, payload),
+                        timeout=60
+                    )
+                case _:
+                    logging.warning("Invalid doc_mime")
                     consumer.acknowledge(msg)
-                    return
-
-                match doc_mime:
-                    case "application/pdf":
-                        checksum = await asyncio.wait_for(
-                            process_pdf(s3_client, S3_BUCKET, payload),
-                            timeout=60
-                        )
-                    case _:
-                        logging.warning("Invalid doc_mime")
-                        consumer.acknowledge(msg)
-                        return #TX FINISH
-                                
-                async with conn.transaction():
-                    await insert_processed(conn, event_id, ts)
-                    await insert_outbox(conn, document, ts, checksum, metadata)
-                        
-                    consumer.acknowledge(msg)
+                    return #TX FINISH
+                            
+            async with conn.transaction():
+                await insert_processed(conn, event_id, ts)
+                await insert_outbox(conn, document, ts, checksum, metadata)
                     
-            # TRANSACTION END----------------------------------------------------------------------------------------------
-            
-        except Exception:
-            logging.exception("error")
-            consumer.negative_acknowledge(msg)
+                consumer.acknowledge(msg)
+                
+        # TRANSACTION END----------------------------------------------------------------------------------------------
+        
+    except Exception:
+        logging.exception("error")
+        consumer.negative_acknowledge(msg)
 
 # WORKER LOOP ----------------------------------------------------------------------------------------------------------
 
@@ -221,9 +221,16 @@ async def worker_loop(consumer, pool):
     while not shutdown_event.is_set():
         msg = await queue.get()
 
-        task = asyncio.create_task(handle(msg, consumer, pool))
-        _active_tasks.add(task)
+        await semaphore.acquire()
 
+        async def run(m):
+            try:
+                await handle(m, consumer, pool)
+            finally:
+                semaphore.release()
+
+        task = asyncio.create_task(run(msg))
+        _active_tasks.add(task)
         task.add_done_callback(_active_tasks.discard)
         queue.task_done()
 
@@ -233,7 +240,7 @@ def listener(loop, consumer):
     """
     Continuously bridges blocking Pulsar message ingestion to the async queue using thread-safe event loop scheduling.
     """
-    while True:
+    while not stop_listener.is_set():
         try:
             msg = consumer.receive(timeout_millis=5000)
             if msg:
@@ -249,6 +256,7 @@ async def shutdown():
     
     logging.info("shutdown started")
     shutdown_event.set()
+    stop_listener.set()  
 
     await queue.join()
 
@@ -258,6 +266,9 @@ async def shutdown():
     # The '*' unpacks the list into individual arguments for gather.
     # 'gather' runs the termination of all tasks concurrently.
     await asyncio.gather(*_active_tasks, return_exceptions=True)
+    
+    await close_s3()
+    logging.info("shutdown complete")
 
 # MAIN -----------------------------------------------------------------------------------------------------------------
 
