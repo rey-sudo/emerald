@@ -100,8 +100,9 @@ async function processChunk(
   };
 
   try {
-    await pRetry(async (attemptNumber) => {
-      // 1. Buffer convertion
+    await pRetry(async () => {
+      // 1. Buffer convertion ------------------------------------------------------------------------------------------
+
       const updateBuffer = Buffer.from(
         deltaBinary.buffer,
         deltaBinary.byteOffset,
@@ -114,7 +115,7 @@ async function processChunk(
 
       outboxPayload.chunk = updateBuffer.toString("base64");
 
-      // 2. Operación en Redis -----------------------------------------------------------------------------------------
+      // 2. Redis operation --------------------------------------------------------------------------------------------
 
       const pipeline = redis.pipeline();
 
@@ -124,33 +125,28 @@ async function processChunk(
 
       const results = await pipeline.exec();
       if (!results) {
-        throw new Error(
-          "Redis pipeline no retornó resultados (posible desconexión).",
-        );
+        throw new Error("Error in the redis pipeline");
       }
 
       const [err, chunkId] = results[0];
       if (err) throw new Error(`Redis XADD falló: ${err.message}`);
 
-      // 3. Pulsar publication ------------------------------------
+      // 3. Pulsar publication -----------------------------------------------------------------------------------------
+
       outboxPayload.chunkId = chunkId as string;
 
-      try {
-        const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
-        const published = await pulsarProducer.send({
-          data: pulsarPayload,
-          partitionKey: draftId,
-        });
+      const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
+      const published = await pulsarProducer.send({
+        data: pulsarPayload,
+        partitionKey: draftId,
+      });
 
-        console.log(published.toString());
-      } catch (pulsarError) {
-        log.error(pulsarError);
-        throw pulsarError;
-      }
+      console.log(published.toString());
     }, retryConfig);
 
     response.success = true;
   } catch (error) {
+    log.error(error);
     response.success = false;
   } finally {
     return response;
@@ -188,7 +184,7 @@ export async function handleUpdateDocument(
     // 2. Check authorization. -----------------------------------------------------------------------------------------
 
     const documentResult = await pg_pool.query(
-      "SELECT * FROM documents WHERE id = $1 AND user_id = $2",
+      "SELECT 1 FROM documents WHERE id = $1 AND user_id = $2",
       [draftId, userId],
     );
 
@@ -217,24 +213,31 @@ export async function handleUpdateDocument(
 
     if (success === false) {
       //OUTBOX EVENT
+
+      return {
+        success: false,
+        command: "update_document",
+        message: "queued_for_retry",
+        data: { draftId },
+      };
     }
 
     return {
       success: true,
       command: "update_document",
-      message: "success",
-      data: {
-        draftId,
-      },
+      message: "chunk_processed",
+      data: { draftId },
     };
   } catch (err) {
-    log.error(err);
     if (err instanceof AppError) {
-      throw new Error("Errooor");
-
-      //outboxPayload
-    } else {
-      throw new Error("Errooor");
+      log.error(
+        { statusCode: err.statusCode, message: err.message },
+        "AppError caught in handleUpdateDocument",
+      );
+      throw err;
     }
+
+    log.error(err, "Unexpected error in handleUpdateDocument");
+    throw new AppError("An unexpected error occurred", true, 500);
   }
 }
