@@ -60,6 +60,7 @@ export async function handleUpdateDocument(app: FastifyInstance, params: any) {
     throw new Error("Invalid request parameters");
   }
 
+  const timestamp = Date.now();
   const draftId = params.documentId;
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
   const deltaBinary = params.binario;
@@ -83,12 +84,21 @@ export async function handleUpdateDocument(app: FastifyInstance, params: any) {
 
     // 3. Persist in the stream and Pulsar ------------------------------------------------------------------------------------------
 
+    let updateBuffer = null;
+
+    const outboxPayload = {
+      draftId,
+      chunkId: null,
+      chunk: updateBuffer,
+      source: "factory-api-server",
+      created_at: timestamp,
+    };
+
     const processChunk = async () => {
       // Envolvemos la lógica en pRetry
       return await pRetry(
         async (attemptNumber) => {
-          // 1. Preparar Buffer
-          const updateBuffer = Buffer.from(
+          updateBuffer = Buffer.from(
             deltaBinary.buffer,
             deltaBinary.byteOffset,
             deltaBinary.byteLength,
@@ -102,9 +112,10 @@ export async function handleUpdateDocument(app: FastifyInstance, params: any) {
 
           // 2. Operación en Redis
           const pipeline = redis.pipeline();
+
           pipeline.xadd(streamKey, "*", "data", updateBuffer);
-          pipeline.expire(streamKey, 3600 * 2);
-          pipeline.expire(binaryKey, 3600 * 2);
+          pipeline.expire(streamKey, expireValue);
+          pipeline.expire(binaryKey, expireValue);
 
           const results = await pipeline.exec();
           if (!results) {
@@ -118,13 +129,10 @@ export async function handleUpdateDocument(app: FastifyInstance, params: any) {
 
           // 3. Operación en Pulsar
           try {
+            const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
             const final = await pulsarProducer.send({
-              data: updateBuffer,
+              data: pulsarPayload,
               partitionKey: draftId,
-              properties: {
-                docId: draftId,
-                chunkId: chunkId as string,
-              },
             });
 
             return { chunkId, pulsarMsgId: final.toString() };
