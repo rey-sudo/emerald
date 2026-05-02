@@ -200,7 +200,9 @@ async def handle(msg, consumer, pool):
             async with conn.transaction():
                 await insert_processed(conn, event_id, ts)
                 await insert_outbox(conn, document, ts, checksum, metadata)
-                consumer.acknowledge(msg)
+                #TX COMMIT
+                
+        consumer.acknowledge(msg)
                 
         # TRANSACTION END----------------------------------------------------------------------------------------------
         
