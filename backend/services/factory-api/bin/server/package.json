@@ -1,7 +1,7 @@
 {
-  "name": "factory-api-server",
+  "name": "editor-api-server",
   "version": "1.0.0",
-  "description": "Factory service",
+  "description": "editor service",
   "type": "module",
   "keywords": [],
   "author": "",

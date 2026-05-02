@@ -1,20 +1,20 @@
 services:
-  factory-api-server:
+  editor-api-server:
     build:
       context: ./bin/server
       dockerfile: Dockerfile
-    container_name: factory_api_server  
+    container_name: editor_api_server  
     env_file:
       - ./bin/server/.env
     ports:
       - "8002:8002"      
     networks:
       - shared-network  
-  factory-api-consumer:
+  editor-api-consumer:
     build:
       context: ./bin/consumer
       dockerfile: Dockerfile
-    container_name: factory_api_consumer
+    container_name: editor_api_consumer
     env_file:
       - ./bin/consumer/.env
     networks:
