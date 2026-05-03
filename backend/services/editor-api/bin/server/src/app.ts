@@ -42,6 +42,7 @@ export const pulsarClient = new Pulsar.Client({
 export const pulsarProducer = await pulsarClient.createProducer({
   topic: "persistent://public/default/chunk.created",
   batchingEnabled: true,
+  batchingType: "KeyBasedBatching",
 });
 
 app.decorate("clients", new Set<WebSocket>());

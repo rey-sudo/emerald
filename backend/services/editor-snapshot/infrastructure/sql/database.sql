@@ -1,6 +1,6 @@
-SELECT 'CREATE DATABASE document_processor'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'document_processor')\gexec
+SELECT 'CREATE DATABASE editor_snapshot'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'editor_snapshot')\gexec
 
-\c document_processor
+\c editor_snapshot
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

@@ -1,25 +1,43 @@
-# ── Stage 1: build ────────────────────────────────────────────────────────────
-FROM python:3.12-slim AS builder
+# ================= BASE =================
+FROM python:3.11-slim
 
-WORKDIR /build
+# ================= ENV =================
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir --prefix=/install \
-    "pulsar-client>=3.4.0"
+# ================= SYSTEM DEPENDENCIES =================
+# Pulsar client necesita librerías nativas
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    libcurl4-openssl-dev \
+    libprotobuf-dev \
+    protobuf-compiler \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
+# ================= WORKDIR =================
+WORKDIR /app
 
-# ── Stage 2: runtime ──────────────────────────────────────────────────────────
-FROM python:3.12-slim
+# ================= PYTHON DEPENDENCIES =================
+COPY requirements.txt .
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --from=builder /install /usr/local
+# ================= APP =================
+COPY . .
 
-RUN useradd --no-create-home --shell /bin/false worker
+# ================= SECURITY =================
+# no correr como root
+RUN useradd -m worker
 USER worker
 
-WORKDIR /app
-COPY main.py .
+# ================= HEALTHCHECK =================
+# opcional pero recomendado en k8s
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD python healthcheck.py || exit 1
 
-ENTRYPOINT ["python", "main.py"]
+# ================= ENTRYPOINT =================
+CMD ["python", "main.py"]

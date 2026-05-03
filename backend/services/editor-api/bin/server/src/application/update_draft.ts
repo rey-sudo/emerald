@@ -138,7 +138,7 @@ async function processChunk(
       const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
       await pulsarProducer.send({
         data: pulsarPayload,
-        partitionKey: draftId,
+        partitionKey: draftId
       });
     }, retryConfig);
 
