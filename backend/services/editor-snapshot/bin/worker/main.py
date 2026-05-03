@@ -169,22 +169,22 @@ class SnapshotWorker:
                     continue
 
                 try:
-                    # 🔥 procesamiento completo antes del ACK
                     await self.process_batch_test(messages)
 
-                    # ✅ ACK controlado del batch completo
                     for msg in messages:
                         self.consumer.acknowledge(msg)
 
-                except Exception as e:
+                except Exception:
                     logging.exception("Batch failed")
 
-                    # ❗ NO ACK → redelivery automática
                     for msg in messages:
                         self.consumer.negative_acknowledge(msg)
 
-            except Exception as e:
+                    await asyncio.sleep(0.5)
+
+            except Exception:
                 logging.exception("Fatal loop error")
+                await asyncio.sleep(1)
 
     async def close(self):
         self.consumer.close()
