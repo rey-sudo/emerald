@@ -1,10 +1,8 @@
-pulsar-client==3.4.0
+pulsar-client==3.11.0
 asyncpg==0.29.0
 aioboto3==12.4.0
 dotenv
-opendataloader-pdf
 tenacity
 aiofiles
-beautifulsoup4
 aiohttp
 uuid6

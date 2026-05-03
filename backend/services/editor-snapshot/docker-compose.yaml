@@ -1,33 +1,35 @@
 services:
-  document-processor-worker:
+  editor-snapshot-worker:
     build:
       context: ./bin/worker
       dockerfile: Dockerfile
-    container_name: document_processor_worker
+    container_name: editor_snapshot_worker
     env_file:
       - ./bin/worker/.env
     networks:
       - shared-network
-  document-processor-tiptap:
-    build:
-      context: ./bin/tiptap
-      dockerfile: Dockerfile
-    container_name: document_processor_tiptap 
-    env_file:
-      - ./bin/tiptap/.env
-    ports:
-      - "7001:7001"      
-    networks:
-      - shared-network 
-  document-processor-publisher:
-    build:
-      context: ./bin/publisher
-      dockerfile: Dockerfile
-    container_name: document_processor_publisher
-    env_file:
-      - ./bin/publisher/.env
-    networks:
-      - shared-network
+
+#  document-processor-tiptap:
+#    build:
+#      context: ./bin/tiptap
+#      dockerfile: Dockerfile
+#    container_name: document_processor_tiptap 
+#    env_file:
+#      - ./bin/tiptap/.env
+#    ports:
+#      - "7001:7001"      
+#    networks:
+#      - shared-network 
+#
+#  document-processor-publisher:
+#    build:
+#      context: ./bin/publisher
+#      dockerfile: Dockerfile
+#    container_name: document_processor_publisher
+#    env_file:
+#      - ./bin/publisher/.env
+#    networks:
+#      - shared-network
 
 networks:
   shared-network:

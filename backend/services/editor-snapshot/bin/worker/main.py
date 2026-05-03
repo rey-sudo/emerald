@@ -1,317 +1,198 @@
-# Emerald
-# Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation version 3 of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-import os
 import asyncio
-import json
-import time
 import logging
+import os
 import signal
-import threading
+import sys
+import time
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from typing import List
+
 import pulsar
-import asyncpg
-import aioboto3
-from botocore.config import Config
-from uuid6 import uuid7
-from tools import process_pdf
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
-
-# CONFIG ---------------------------------------------------------------------------------------------------------------
-
-PULSAR_URL = "pulsar://broker:6650"
-TOPIC = ["persistent://public/default/document.created"]
-SUBSCRIPTION_NAME = "document-processor-worker-group-shared"
-
-DATABASE_URL = "postgres://postgres:password@postgres_global:5432/document_processor"
-S3_BUCKET = "documents"
-
-CONCURRENCY = 40
-QUEUE_SIZE = 500
-
-logging.basicConfig(level=logging.INFO)
-
-# GLOBAL ---------------------------------------------------------------------------------------------------------------
-
-queue: asyncio.Queue = asyncio.Queue(maxsize=QUEUE_SIZE)
-semaphore = asyncio.Semaphore(CONCURRENCY)
-shutdown_event = asyncio.Event()
-stop_listener = threading.Event() #Pulsar listener in Threading 
-_active_tasks: set[asyncio.Task] = set()
-
-# S3 CLIENT ------------------------------------------------------------------------------------------------------------
-
-S3_CONFIG = Config(
-    retries={"max_attempts": 3, "mode": "standard"},
-    max_pool_connections=50, #CONCURRENCY
-    connect_timeout=5,
-    read_timeout=30,
-)
-
-s3_client = None  # GLOBAL
-
-async def init_s3():
-    global s3_client
-
-    session = aioboto3.Session()
-
-    s3_client = await session.client(
-        "s3",
-        endpoint_url=os.environ.get("S3_ENDPOINT"),
-        aws_access_key_id=os.environ.get("S3_ACCESS_KEY"),
-        aws_secret_access_key=os.environ.get("S3_SECRET_KEY"),
-        region_name=os.environ.get("S3_REGION"),
-        config=S3_CONFIG,
-    ).__aenter__()
 
 
-async def close_s3():
-    global s3_client
-    if s3_client:
-        await s3_client.__aexit__(None, None, None)
+# ─── Config ───────────────────────────────────────────────────────────────────
 
-# DATABASE ----------------------------------------------------------------------------------------------------
+@dataclass(frozen=True)
+class Config:
+    pulsar_url: str = os.getenv("PULSAR_URL", "pulsar://broker:6650")
+    topic: str = os.getenv("PULSAR_TOPIC", "persistent://public/default/chunk.created")
+    subscription: str = os.getenv("PULSAR_SUB", "sub-keyshared-prod")
+    dead_letter_topic: str = os.getenv("PULSAR_DLT", "persistent://public/default/mi-topico-DLT")
 
-@retry(
-    stop=stop_after_attempt(2),
-    wait=wait_exponential(multiplier=1, min=2, max=10),  
-    retry=retry_if_exception_type(Exception), 
-    reraise=True 
-)
-async def check_if_consumed(conn, event_id: str) -> bool:
-    query = """
-        SELECT EXISTS (
-            SELECT 1 
-            FROM processed_events 
-            WHERE event_id = $1
-        );
+    batch_max_messages: int = int(os.getenv("BATCH_MAX_MESSAGES", "200"))
+    batch_max_bytes: int = int(os.getenv("BATCH_MAX_BYTES", str(5 * 1024 * 1024)))
+    batch_timeout_ms: int = int(os.getenv("BATCH_TIMEOUT_MS", "500"))
+
+    receiver_queue_size: int = int(os.getenv("RECEIVER_QUEUE_SIZE", "500"))
+
+    max_redeliver_count: int = int(os.getenv("MAX_REDELIVER_COUNT", "5"))
+    nack_delay_ms: int = int(os.getenv("NACK_DELAY_MS", "1000"))
+
+    receive_timeout_ms: int = int(os.getenv("RECEIVE_TIMEOUT_MS", "1000"))
+
+    log_level: str = os.getenv("LOG_LEVEL", "INFO")
+
+
+# ─── Idempotencia (HOOK) ──────────────────────────────────────────────────────
+
+class IdempotencyStore:
     """
-    return await conn.fetchval(query, event_id)
-
-
-@retry(
-    stop=stop_after_attempt(2),
-    wait=wait_exponential(multiplier=1, min=2, max=10),  
-    retry=retry_if_exception_type(Exception), 
-    reraise=True 
-)
-async def insert_processed(conn, event_id: str, ts):
-    query = """
-        INSERT INTO processed_events (event_id, created_at)
-        VALUES ($1,$2)
-        ON CONFLICT (event_id) DO NOTHING;
+    Implementa Redis / DB en producción.
+    Aquí es solo placeholder.
     """
-    return await conn.execute(query, event_id, ts)
 
-    
-@retry(
-    stop=stop_after_attempt(2),
-    wait=wait_exponential(multiplier=1, min=2, max=10),  
-    retry=retry_if_exception_type(Exception), 
-    reraise=True 
-)
-async def insert_outbox(conn, document, ts, checksum, metadata):
-        payload = {
-            "id": document.get("id"),
-            "status": "PROCESSED",
-            "checksum": checksum,
-            "metadata": {},
-            "v": document.get("v")
-        }
-        return await conn.execute(
-            """
-            INSERT INTO events (
-                specversion, event_type, source, id, time,
-                entity_type, entity_id, data, metadata
-            )
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-            """,
-            0,
-            "document.processed",
-            "document-processor-worker",
-            uuid7(),
-            ts,
-            "document",
-            document.get("id"),
-            json.dumps(payload),
-            json.dumps(metadata),
+    def __init__(self):
+        self._seen = set()
+
+    def seen(self, msg_id: str) -> bool:
+        return msg_id in self._seen
+
+    def mark(self, msg_id: str):
+        self._seen.add(msg_id)
+
+
+# ─── Lógica de negocio ────────────────────────────────────────────────────────
+
+async def process_message(msg) -> bool:
+    """
+    Procesa UN mensaje.
+    Retorna True si OK, False si debe reintentarse.
+    """
+    try:
+        value = msg.data().decode("utf-8", errors="replace")
+        await asyncio.sleep(0.001)  # simula IO
+        return True
+    except Exception:
+        return False
+
+
+# ─── Worker ───────────────────────────────────────────────────────────────────
+
+class Worker:
+    def __init__(self, cfg: Config):
+        self.cfg = cfg
+        self._running = True
+        self._client = None
+        self._consumer = None
+        self._idempotency = IdempotencyStore()
+
+    def _connect(self):
+        self._client = pulsar.Client(
+            self.cfg.pulsar_url,
+            logger=pulsar.ConsoleLogger(pulsar.LoggerLevel.Warn),
         )
 
-# HANDLE ---------------------------------------------------------------------------------------------------------------
+        self._consumer = self._client.subscribe(
+            self.cfg.topic,
+            subscription_name=self.cfg.subscription,
+            consumer_type=pulsar.ConsumerType.KeyShared,
+            batch_receive_policy=pulsar.ConsumerBatchReceivePolicy(
+                self.cfg.batch_max_messages,
+                self.cfg.batch_max_bytes,
+                self.cfg.batch_timeout_ms,
+            ),
+            dead_letter_policy=pulsar.ConsumerDeadLetterPolicy(
+                dead_letter_topic=self.cfg.dead_letter_topic,
+                max_redeliver_count=self.cfg.max_redeliver_count,
+            ),
+            receiver_queue_size=self.cfg.receiver_queue_size,
+            negative_ack_redelivery_delay_ms=self.cfg.nack_delay_ms,
+        )
 
-async def handle(msg, consumer, pool):
-    try:
-        payload = json.loads(msg.data())
-        event_id = payload.get("event_id")
+    def _disconnect(self):
+        if self._consumer:
+            self._consumer.close()
+        if self._client:
+            self._client.close()
+
+    async def _receive(self, pool):
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(pool, lambda: self._consumer.batch_receive())
+
+    async def _process_batch(self, messages: List):
+        ok, fail = 0, 0
         
-        #TODO: REDIS event_id LOCK ok
-        
-        event_type = payload.get("event_type")
-        document = payload.get("data") or {}
-        metadata = payload.get("metadata") or {}
+        logging.info(messages)
 
-        doc_id = document.get("id")
-        doc_mime = document.get("mime_type")
+        for msg in messages:
+            msg_id = str(msg.message_id())
 
-        if not event_id or not doc_id:
-            logging.warning("Invalid serialized event.")
-            consumer.acknowledge(msg)
-            return
+            # ── Idempotencia ──
+            if self._idempotency.seen(msg_id):
+                self._consumer.acknowledge(msg)
+                continue
 
-        if event_type != "document.created":
-            logging.warning("Invalid event_type")
-            consumer.acknowledge(msg)
-            return
+            success = await process_message(msg)
 
-        ts = int(time.time() * 1000)
+            if success:
+                self._consumer.acknowledge(msg)
+                self._idempotency.mark(msg_id)
+                ok += 1
+            else:
+                self._consumer.negative_acknowledge(msg)
+                fail += 1
 
-        # TRANSACTION ----------------------------------------------------------------------------------------------
+        return ok, fail
 
-        async with pool.acquire() as conn:
-            #NO INSERTA NADA SOLO VERIFICA IDEMPOTENCIA.
-            is_consumed = await check_if_consumed(conn, event_id)
-            if is_consumed:
-                logging.warning(f"Event already processed: {event_id}")
-                consumer.acknowledge(msg)
-                return
+    async def run(self):
+        self._connect()
 
-            match doc_mime:
-                case "application/pdf":
-                    checksum = await asyncio.wait_for(
-                        process_pdf(s3_client, S3_BUCKET, payload),
-                        timeout=60
+        logging.info("Worker iniciado | sub=%s", self.cfg.subscription)
+
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            while self._running:
+                try:
+                    messages = await self._receive(pool)
+
+                    if not messages:
+                        continue
+
+                    t0 = time.perf_counter()
+
+                    ok, fail = await self._process_batch(messages)
+
+                    elapsed = time.perf_counter() - t0
+
+                    logging.info(
+                        "batch=%d ok=%d fail=%d time=%.3fs",
+                        len(messages), ok, fail, elapsed
                     )
-                case _:
-                    logging.warning("Invalid doc_mime")
-                    consumer.acknowledge(msg)
-                    return #TX FINISH
-                            
-            async with conn.transaction():
-                await insert_processed(conn, event_id, ts)
-                await insert_outbox(conn, document, ts, checksum, metadata)
-                #TX COMMIT
-                
-        consumer.acknowledge(msg)
-                
-        # TRANSACTION END----------------------------------------------------------------------------------------------
-        
-    except Exception:
-        logging.exception("error")
-        consumer.negative_acknowledge(msg)
 
-# WORKER LOOP ----------------------------------------------------------------------------------------------------------
+                except asyncio.CancelledError:
+                    break
+                except Exception as e:
+                    logging.error("Loop error: %s", e, exc_info=True)
+                    await asyncio.sleep(1)
 
-async def worker_loop(consumer, pool):
-    """
-    Orchestrates asynchronous task dispatching by consuming messages from the internal queue 
-    and managing their lifecycle through active task tracking.
-    """    
-    while not shutdown_event.is_set():
-        msg = await queue.get()
+        self._disconnect()
+        logging.info("Worker detenido")
 
-        await semaphore.acquire()
+    def stop(self):
+        logging.info("Shutdown solicitado")
+        self._running = False
 
-        async def run(m):
-            try:
-                await handle(m, consumer, pool)
-            finally:
-                semaphore.release()
 
-        task = asyncio.create_task(run(msg))
-        _active_tasks.add(task)
-        task.add_done_callback(_active_tasks.discard)
-        queue.task_done()
-
-# PULSAR LISTENER ------------------------------------------------------------------------------------------------------
-
-def listener(loop, consumer):
-    """
-    Continuously bridges blocking Pulsar message ingestion to the async queue using thread-safe event loop scheduling.
-    """
-    while not stop_listener.is_set():
-        try:
-            msg = consumer.receive(timeout_millis=5000)
-            if msg:
-                fut = asyncio.run_coroutine_threadsafe(queue.put(msg), loop)
-                fut.result()
-        except Exception:
-            continue
-
-# SHUTDOWN -------------------------------------------------------------------------------------------------------------
-
-async def shutdown():
-    """Signals stop, waits for the queue to drain, and gracefully cancels all active tasks."""   
-    
-    logging.info("shutdown started")
-    shutdown_event.set()
-    stop_listener.set()  
-
-    await queue.join()
-
-    for task in _active_tasks:
-        task.cancel()
-        
-    # The '*' unpacks the list into individual arguments for gather.
-    # 'gather' runs the termination of all tasks concurrently.
-    await asyncio.gather(*_active_tasks, return_exceptions=True)
-    
-    await close_s3()
-    logging.info("shutdown complete")
-
-# MAIN -----------------------------------------------------------------------------------------------------------------
+# ─── Main ─────────────────────────────────────────────────────────────────────
 
 async def main():
-    # 1. Database Initialization: Creates a connection pool for high-performance PostgreSQL access.
-    pool = await asyncpg.create_pool(
-        dsn=DATABASE_URL,
-        min_size=5,
-        max_size=20 #CONCURRENCY
-    )
-    
-    # 2. Storage Setup: Initializes the S3 client connection for file storage or retrieval.
-    await init_s3() 
-    
-    # 3. Messaging Configuration: Subscribes to the Pulsar topic using a Shared consumer type for load balancing.
-    client = pulsar.Client(PULSAR_URL)
-    consumer = client.subscribe(
-        TOPIC,
-        subscription_name=SUBSCRIPTION_NAME,
-        consumer_type=pulsar.ConsumerType.Shared,
-        receiver_queue_size=200,
+    cfg = Config()
+
+    logging.basicConfig(
+        level=getattr(logging, cfg.log_level.upper(), logging.INFO),
+        format="%(asctime)s %(levelname)s %(message)s",
+        stream=sys.stdout,
     )
 
+    worker = Worker(cfg)
+
     loop = asyncio.get_running_loop()
-    
-    # 4. Bridge Thread: Spawns a daemon thread to bridge blocking Pulsar message ingestion with the async event loop.
-    threading.Thread(
-        target=listener,
-        args=(loop, consumer),
-        daemon=True
-    ).start()
-    
-    # 5. Worker Spawning: Creates a set of concurrent tasks to process messages using the connection pool.
-    workers = [
-        asyncio.create_task(worker_loop(consumer, pool))
-        for _ in range(2)
-    ]
-    
-    # 6. Signal Handling: Registers shutdown handlers to ensure clean termination on SIGINT or SIGTERM.
+
     for sig in (signal.SIGINT, signal.SIGTERM):
-        loop.add_signal_handler(sig, lambda: asyncio.create_task(shutdown()))
-        
-    # 7. Execution: Concurrently runs all worker tasks and keeps the application alive.
-    await asyncio.gather(*workers)
+        loop.add_signal_handler(sig, worker.stop)
+
+    await worker.run()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
