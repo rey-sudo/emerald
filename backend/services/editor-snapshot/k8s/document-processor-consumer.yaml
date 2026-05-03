@@ -1,0 +1,9 @@
+spec:
+  containers:
+    - name: worker
+      image: opengems/emerald-worker-document:latest
+
+    - name: tiptap
+      image: opengems/emerald-worker-document-tiptap:latest
+      ports:
+        - containerPort: 3000
