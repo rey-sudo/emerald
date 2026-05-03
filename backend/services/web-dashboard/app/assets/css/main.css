@@ -261,7 +261,15 @@ rounded-3xl
   --editor-bg: var(--ui-bg);
   --tab-bg: var(--ui-bg);
   --split-bg: var(--ui-bg);
-  --header-bg: var(--ui-bg);
+  --header-bg: transparent;
+  --layout-bg: linear-gradient(
+    135deg,
+    #fff6e5 0%,
+    #fbe8f9 0%,
+    #e3f0ff 25%,
+    #e8f4fc 80%,
+    #e9fff0 100%
+  );
 }
 
 .dark {
@@ -269,4 +277,5 @@ rounded-3xl
   --tab-bg: var(--ui-color-neutral-925);
   --split-bg: var(--ui-color-neutral-925);
   --header-bg: var(--ui-color-neutral-900);
+  --layout-bg: var(--ui-bg);
 }

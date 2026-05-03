@@ -115,7 +115,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="flex flex-1 h-screen"
+    class="wrapper flex flex-1 h-screen"
     :class="[
       variant === 'inset' && 'bg',
       side === 'right' && 'flex-row-reverse',
@@ -127,7 +127,7 @@ onUnmounted(() => {
       collapsible="icon"
       :side="side"
       :ui="{
-        container: 'h-full',
+        container: 'bg-default h-full',
         header:
           'flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
       }"
@@ -167,7 +167,7 @@ onUnmounted(() => {
       class="bg-[var(--header-bg)] flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-[var(--header-bg)]"
     >
       <div
-        class="h-(--ui-header-height) shrink-0 flex items-center px-4 window-drag "
+        class="h-(--ui-header-height) shrink-0 flex items-center px-4 window-drag"
         :class="[
           variant !== 'floating' && 'border-b border-default',
           side === 'right' && 'justify-end',
@@ -224,5 +224,9 @@ onUnmounted(() => {
 .no-drag {
   -webkit-app-region: no-drag !important;
   cursor: pointer;
+}
+
+.wrapper {
+  background: var(--layout-bg);
 }
 </style>
