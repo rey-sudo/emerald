@@ -297,15 +297,15 @@ onBeforeUnmount(() => {
       <UButton
         :class="{ 'is-active': selectionCount > 0 }"
         size="sm"
+        icon="i-lucide-eraser"
         color="neutral"
         variant="ghost"
         :disabled="!selectionCount"
         @click="editor.commands.clearAllSelections()"
       >
-        Clean
         <template #trailing>
           <UBadge
-            class="flex items-center text-center rounded-xs"
+            class="flex items-center text-center rounded-sm"
             color="neutral"
             variant="subtle"
             size="xs"
@@ -336,7 +336,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-
 /* Contenedor principal para organizar Header y Editor */
 .editor-layout {
   display: flex;
@@ -352,8 +351,8 @@ onBeforeUnmount(() => {
   align-items: center;
   padding: 0.25rem 1rem;
   border-bottom: 1px solid var(--ui-border);
-  border-bottom-left-radius: calc(var(--ui-radius) * 2);
-  border-bottom-right-radius: calc(var(--ui-radius) * 2);
+  border-bottom-left-radius: calc(var(--ui-radius) * 0);
+  border-bottom-right-radius: calc(var(--ui-radius) * 0);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
