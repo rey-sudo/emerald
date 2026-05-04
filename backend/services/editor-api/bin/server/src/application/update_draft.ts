@@ -63,9 +63,10 @@ export interface OutboxEvent {
   event_type: string;
   entity_type: string;
   data: {
+    chunk_id: string;
     document_id: string;
     status: "PENDING";
-    chunk: null | string;
+    data: null | string;
     source: string;
     created_at: number;
   };
@@ -94,14 +95,17 @@ async function processChunk(
     },
   };
 
+  const eventId = uuid7()
+
   const outboxPayload: OutboxEvent = {
-    event_id: uuid7(),
+    event_id: eventId,
     event_type: "chunk.created",
     entity_type: "chunk",
     data: {
+      chunk_id: eventId,
       document_id: documentId,
       status: "PENDING",
-      chunk: null,
+      data: null,
       source: "editor-api-server",
       created_at: timestamp,
     },
@@ -126,7 +130,7 @@ async function processChunk(
         throw new AbortError("Empty buffer: unrecoverable error");
       }
 
-      outboxPayload.data.chunk = updateBuffer.toString("base64");
+      outboxPayload.data.data = updateBuffer.toString("base64");
 
       // 2. Pulsar publication -----------------------------------------------------------------------------------------
 
