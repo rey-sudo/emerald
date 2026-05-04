@@ -336,9 +336,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-* {
-  font-family: "Open Sans", sans-serif !important;
-}
+
 /* Contenedor principal para organizar Header y Editor */
 .editor-layout {
   display: flex;

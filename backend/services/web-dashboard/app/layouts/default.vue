@@ -127,9 +127,10 @@ onUnmounted(() => {
       collapsible="icon"
       :side="side"
       :ui="{
-        container: 'bg-default h-full',
+        container: 'h-full',
         header:
           'flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
+        body: 'bg-default',
       }"
     >
       <template #header>
@@ -178,12 +179,7 @@ onUnmounted(() => {
         <UFieldGroup class="ml-auto">
           <UColorModeButton class="no-drag" />
 
-          <UButton
-            class="no-drag"
-            icon="material-symbols:settings-outline-rounded"
-            color="neutral"
-            variant="ghost"
-          />
+
           <UButton
             size="sm"
             color="neutral"
