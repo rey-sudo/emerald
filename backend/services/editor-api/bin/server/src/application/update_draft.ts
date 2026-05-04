@@ -19,12 +19,13 @@ import { pulsarProducer } from "../app.js";
 import pRetry, { AbortError } from "p-retry";
 import { AppError } from "./error.js";
 import * as Y from "yjs";
-import Redis from "ioredis";
+
+// TYPES ---------------------------------------------------------------------------------------------------------------
 
 export const UpdateDocumentSchema = z.object({
   command: z.literal("update_document"),
   params: z.object({
-    documentId: z.uuid(),
+    document_id: z.uuid(),
     binario: z.instanceof(Uint8Array).refine(
       (data) => {
         try {
@@ -45,38 +46,32 @@ export interface UpdateDocumentResponse {
   command: "update_document";
   message: string;
   data: {
-    draftId: string;
+    document_id: string;
   };
 }
 
 export interface OutboxPayload {
-  draftId: string;
-  chunkId: null | string;
+  document_id: string;
+  status: "PENDING";
   chunk: null | string;
   source: string;
   created_at: number;
 }
 
 // PROCESS CHUNK -------------------------------------------------------------------------------------------------------
+
 /**
  *
- * @param redis
- * @param draftId
+ * @param log
+ * @param documentId
  * @param deltaBinary
- * @param binaryKey
- * @param streamKey
- * @param expireValue
  * @param timestamp
  * @returns
  */
 async function processChunk(
   log: FastifyBaseLogger,
-  redis: Redis.Redis,
-  draftId: string,
+  documentId: string,
   deltaBinary: Uint8Array<ArrayBuffer>,
-  binaryKey: string,
-  streamKey: string,
-  expireValue: number,
   timestamp: number,
 ) {
   const retryConfig = {
@@ -87,10 +82,10 @@ async function processChunk(
   };
 
   const outboxPayload: OutboxPayload = {
-    draftId,
-    chunkId: null,
+    document_id: documentId,
+    status: "PENDING",
     chunk: null,
-    source: "factory-api-server",
+    source: "editor-api-server",
     created_at: timestamp,
   };
 
@@ -115,30 +110,16 @@ async function processChunk(
 
       outboxPayload.chunk = updateBuffer.toString("base64");
 
-      // 2. Redis operation --------------------------------------------------------------------------------------------
-
-      const pipeline = redis.pipeline();
-
-      pipeline.xadd(streamKey, "*", "data", updateBuffer);
-      pipeline.expire(streamKey, expireValue);
-      pipeline.expire(binaryKey, expireValue);
-
-      const results = await pipeline.exec();
-      if (!results) {
-        throw new Error("Error in the redis pipeline");
-      }
-
-      const [err, chunkId] = results[0];
-      if (err) throw new Error(`Redis XADD failed: ${err.message}`);
-
-      // 3. Pulsar publication -----------------------------------------------------------------------------------------
-
-      outboxPayload.chunkId = chunkId as string;
+      // 2. Pulsar publication -----------------------------------------------------------------------------------------
 
       const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
       await pulsarProducer.send({
         data: pulsarPayload,
-        partitionKey: draftId
+        partitionKey: documentId,
+        properties: {
+          document_id: documentId,
+          created_at: timestamp.toString(),
+        },
       });
     }, retryConfig);
 
@@ -157,7 +138,7 @@ export async function handleUpdateDocument(
   app: FastifyInstance,
   params: any,
 ): Promise<UpdateDocumentResponse> {
-  const { redis, pg_pool, log } = app;
+  const { pg_pool, log } = app;
 
   // 1. Params validation. ---------------------------------------------------------------------------------------------
 
@@ -168,13 +149,12 @@ export async function handleUpdateDocument(
     throw new AppError("Invalid request parameters", false);
   }
 
-  const { binario: deltaBinary } = result.data;
+  const { document_id: documentId, binario: deltaBinary } = result.data;
 
   const timestamp = Date.now();
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
-  const draftId = params.documentId;
-  const binaryKey = `doc:${draftId}:state`;
-  const streamKey = `doc:${draftId}:chunks`;
+  const binaryKey = `doc:${documentId}:state`;
+  const streamKey = `doc:${documentId}:chunks`;
   const expireValue = 3600;
 
   try {
@@ -182,7 +162,7 @@ export async function handleUpdateDocument(
 
     const documentResult = await pg_pool.query(
       "SELECT 1 FROM documents WHERE id = $1 AND user_id = $2",
-      [draftId, userId],
+      [documentId, userId],
     );
 
     // The original document does not exist
@@ -195,12 +175,8 @@ export async function handleUpdateDocument(
 
     const { success, outboxPayload } = await processChunk(
       log,
-      redis,
-      draftId,
+      documentId,
       deltaBinary,
-      binaryKey,
-      streamKey,
-      expireValue,
       timestamp,
     );
 
@@ -215,7 +191,7 @@ export async function handleUpdateDocument(
         success: false,
         command: "update_document",
         message: "queued_for_retry",
-        data: { draftId },
+        data: { document_id: documentId },
       };
     }
 
@@ -223,7 +199,7 @@ export async function handleUpdateDocument(
       success: true,
       command: "update_document",
       message: "chunk_processed",
-      data: { draftId },
+      data: { document_id: documentId },
     };
   } catch (err) {
     if (err instanceof AppError) {

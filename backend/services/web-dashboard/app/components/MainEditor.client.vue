@@ -180,7 +180,7 @@ async function processChanges() {
     const result = await editorStore.send({
       command: "update_document",
       params: {
-        documentId: documentId,
+        document_id: documentId,
         binario: mergedUpdate,
         page: "default",
       },
