@@ -19,6 +19,14 @@ import { pulsarProducer } from "../app.js";
 import pRetry, { AbortError } from "p-retry";
 import { AppError } from "./error.js";
 import * as Y from "yjs";
+import { v7 as uuid7 } from "uuid";
+
+const SQL_INSERT_EVENT = `
+  INSERT INTO events (
+    specversion, event_type, source, id, time,
+    entity_type, entity_id, data, metadata)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+  `;
 
 // TYPES ---------------------------------------------------------------------------------------------------------------
 
@@ -50,12 +58,17 @@ export interface UpdateDocumentResponse {
   };
 }
 
-export interface OutboxPayload {
-  document_id: string;
-  status: "PENDING";
-  chunk: null | string;
-  source: string;
-  created_at: number;
+export interface OutboxEvent {
+  event_id: string;
+  event_type: string;
+  entity_type: string;
+  data: {
+    document_id: string;
+    status: "PENDING";
+    chunk: null | string;
+    source: string;
+    created_at: number;
+  };
 }
 
 // PROCESS CHUNK -------------------------------------------------------------------------------------------------------
@@ -81,12 +94,17 @@ async function processChunk(
     },
   };
 
-  const outboxPayload: OutboxPayload = {
-    document_id: documentId,
-    status: "PENDING",
-    chunk: null,
-    source: "editor-api-server",
-    created_at: timestamp,
+  const outboxPayload: OutboxEvent = {
+    event_id: uuid7(),
+    event_type: "chunk.created",
+    entity_type: "chunk",
+    data: {
+      document_id: documentId,
+      status: "PENDING",
+      chunk: null,
+      source: "editor-api-server",
+      created_at: timestamp,
+    },
   };
 
   let response = {
@@ -108,7 +126,7 @@ async function processChunk(
         throw new AbortError("Empty buffer: unrecoverable error");
       }
 
-      outboxPayload.chunk = updateBuffer.toString("base64");
+      outboxPayload.data.chunk = updateBuffer.toString("base64");
 
       // 2. Pulsar publication -----------------------------------------------------------------------------------------
 
