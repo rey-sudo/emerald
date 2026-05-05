@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS editor_chunks (
-    id UUID PRIMARY KEY NOT NULL,
+    id UUID PRIMARY KEY,
     document_id UUID NOT NULL,
-    chunk TEXT NOT NULL,
     status VARCHAR(100) NOT NULL,
-    source VARCHAR(100),
+    data TEXT NOT NULL,
+    source VARCHAR(100) NOT NULL,
     created_at BIGINT NOT NULL,
     processed_at BIGINT DEFAULT NULL
 );

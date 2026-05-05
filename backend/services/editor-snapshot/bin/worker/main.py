@@ -4,6 +4,9 @@ import logging
 import signal
 import time
 from collections import defaultdict
+from uuid6 import uuid7
+import uuid
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 import pulsar
 import asyncpg
@@ -40,6 +43,39 @@ class SnapshotWorker:
 
 # CONSUME CHUNKS TASK --------------------------------------------------------------------------------------------------
 
+    @retry(
+        stop=stop_after_attempt(2),
+        wait=wait_exponential(multiplier=1, min=2, max=10),  
+        retry=retry_if_exception_type(Exception), 
+        reraise=True 
+    )
+    async def insert_outbox(conn, document, ts, checksum, metadata):
+            payload = {
+                "id": document.get("id"),
+                "status": "PROCESSED",
+                "checksum": checksum,
+                "metadata": {},
+                "v": document.get("v")
+            }
+            return await conn.execute(
+                """
+                INSERT INTO events (
+                    specversion, event_type, source, id, time,
+                    entity_type, entity_id, data, metadata
+                )
+                VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+                """,
+                0,
+                "document.processed",
+                "document-processor-worker",
+                uuid7(),
+                ts,
+                "document",
+                document.get("id"),
+                json.dumps(payload),
+                json.dumps(metadata),
+            )
+
     async def _consume_task(self):
         """Tarea resiliente que persiste chunks en Postgres"""
         logger.info("Consumidor iniciado.")
@@ -52,11 +88,8 @@ class SnapshotWorker:
                     continue
 
                 try: 
-                    #await self._persist_to_db(messages)
-                    for msg in messages:
-                        data = json.loads(msg.data())
-                        logger.info(data)
-                    
+                    await self._persist_to_db(messages)        
+                        
                     for msg in messages:
                         self.consumer.acknowledge(msg)
                         
@@ -73,23 +106,70 @@ class SnapshotWorker:
                 await asyncio.sleep(2)
 
     async def _persist_to_db(self, messages):
-        """Escribe chunks en la tabla con estado 'PENDING'"""
-        async with self.pg_pool.acquire() as conn:
-            async with conn.transaction():
-                query = """
-                    INSERT INTO editor_chunks (id, document_id, chunk, status, source, created_at)
-                    VALUES ($1,$2,$3,$4,$5,$6)
-                """
-                batch_data = []
-                for msg in messages:
-                    try:
-                        data = json.loads(msg.data())
-                        batch_data.append((msg.partition_key(), json.dumps(data)))
-                    except Exception:
-                        logger.error("Error parseando JSON del mensaje")
+        """
+        Estrategia optimizada para 100M+ registros.
+        Maneja el desempaquetado de columnas para el UNNEST de Postgres.
+        """
+        # Listas independientes para cada columna (requerido por el unnest de asyncpg)
+        ids, doc_ids, statuses, datas, sources, created_ats = [], [], [], [], [], []
+        msg_map = {}
+
+        for msg in messages:
+            try:
+                event = json.loads(msg.data())
+                event_id = event.get("event_id")
+                event_data = event.get("data")
                 
-                if batch_data:
-                    await conn.executemany(query, batch_data)
+                logger.info(event)
+                
+                #ADD TYPE VALIATION OF DATA AND EVENT
+                
+                ids.append(uuid.UUID(event_id))
+                doc_ids.append(uuid.UUID(event_data.get("document_id")))
+                statuses.append(event_data.get("status"))
+                datas.append(event_data.get("data"))
+                sources.append(event_data.get("source"))
+                created_ats.append(event_data.get("created_at"))
+                
+                # El mapa usa el objeto UUID para comparar con el RETURNING de la DB
+                msg_map[event_id] = msg
+                
+            except Exception as e:
+                logger.error(f"Error parseando mensaje: {e}")
+
+        if not ids:
+            return
+
+        query = """
+            INSERT INTO editor_chunks (id, document_id, status, data, source, created_at)
+            SELECT * FROM unnest(
+                $1::uuid[], $2::uuid[], $3::varchar[], $4::text[], $5::varchar[], $6::bigint[]
+            )
+            ON CONFLICT (id) DO NOTHING
+            RETURNING id;
+        """
+
+        async with self.pg_pool.acquire() as conn:
+            try:
+                # Pasamos las listas directamente como argumentos
+                rows = await conn.fetch(
+                    query, 
+                    ids, doc_ids, statuses, datas, sources, created_ats
+                )
+                
+                inserted_ids = {str(row['id']) for row in rows}
+
+                for event_id, msg in msg_map.items():
+                    
+                    if event_id not in inserted_ids:
+                        logger.warning(f"Evento duplicado ignorado: {event_id}")
+                    
+                    # ACK tanto si es nuevo como si ya existía (idempotencia cumplida)
+                    self.consumer.acknowledge(msg)
+                    
+            except Exception as e:
+                logger.error(f"Error en persistencia batch: {e}")
+                # Importante: No hagas ACK aquí para que el sistema de mensajería reintente el lote
 
 # PROCESS CHUNKS TASK --------------------------------------------------------------------------------------------------
 
