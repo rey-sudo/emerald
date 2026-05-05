@@ -50,13 +50,15 @@ export const useEditorStore = defineStore("editor", () => {
     if (!import.meta.client) return;
 
     const encoded = encode(cmd);
-    return wsSend(
-      encoded.buffer.slice(
-        encoded.byteOffset,
-        encoded.byteOffset + encoded.byteLength,
-      ),
-      true,
+
+    const arrayBuffer = encoded.buffer.slice(
+      encoded.byteOffset,
+      encoded.byteOffset + encoded.byteLength,
     );
+
+    console.log(arrayBuffer.byteLength)
+
+    return wsSend(arrayBuffer, true);
   }
 
   return {

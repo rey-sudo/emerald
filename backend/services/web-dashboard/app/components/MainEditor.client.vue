@@ -186,8 +186,6 @@ async function processChanges() {
       },
     });
 
-    console.log(mergedUpdate.length);
-
     if (!result) {
       throw new Error("El servidor no confirmó la recepción");
     }

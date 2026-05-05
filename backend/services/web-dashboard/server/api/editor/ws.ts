@@ -1,65 +1,72 @@
+import { defineWebSocketHandler } from "h3";
+import { WebSocket } from "ws";
+
 export default defineWebSocketHandler({
   open(peer) {
-    const ws = new WebSocket("ws://localhost:8002/api/editor/ws");
-    ws.binaryType = "arraybuffer";
+    const request = (peer as any).request ?? (peer as any)._request;
+    const headers: Record<string, string> = {};
 
-    (peer as any)._buffer = [];
-    (peer as any)._upstream = ws;
+    if (request?.headers) {
+      for (const key of ["cookie", "authorization", "x-forwarded-for"]) {
+        const val = request.headers[key];
+        if (val) headers[key] = val;
+      }
+    }
 
-    ws.onopen = () => {
-      const buffer = (peer as any)._buffer;
-      for (const msg of buffer) ws.send(msg);
-      (peer as any)._buffer = [];
-    };
+    const upstream = new WebSocket("ws://localhost:8002/api/editor/ws", {
+      headers,
+    });
 
-    ws.onmessage = (event) => {
-      peer.send(event.data);
-    };
+    const messageQueue: Buffer[] = [];
+    (peer as any)._upstream = upstream;
+    (peer as any)._messageQueue = messageQueue;
 
-    ws.onclose = (event) => {
-      const code = event.code >= 1000 ? event.code : 1000;
-      peer.close(code, event.reason || "upstream closed");
-    };
+    upstream.on("open", () => {
+      for (const msg of messageQueue) upstream.send(msg);
+      messageQueue.length = 0;
+    });
 
-    ws.onerror = () => {
+    upstream.on("message", (data: Buffer, isBinary: boolean) => {
+      // Reenviar al cliente manteniendo el binario intacto
+      peer.send(isBinary ? data : data.toString());
+    });
+
+    upstream.on("close", (code, reason) => {
+      peer.close(code, reason.toString());
+    });
+
+    upstream.on("error", (err) => {
+      console.error("[WS upstream error]", err.message);
       peer.close(1011, "Upstream error");
-    };
+    });
   },
 
-  message(peer, message) {
-    const upstream = (peer as any)._upstream as WebSocket;
-    const data = message.rawData;
+  async message(peer, message) {
+    const upstream: WebSocket = (peer as any)._upstream;
+    const queue: Buffer[] = (peer as any)._messageQueue ?? [];
 
-    if (!upstream) return;
+    const buffer = (message as any)._data ?? (message as any).rawData;
 
-    if (upstream.readyState !== WebSocket.OPEN) {
-      const buf = (peer as any)._buffer;
-
-      if (buf.length >= 1000) {
-        peer.close(1013, "Backpressure");
-        return;
-      }
-
-      buf.push(data);
+    if (!upstream || upstream.readyState === WebSocket.CONNECTING) {
+      queue.push(buffer);
       return;
     }
 
-    if (data instanceof ArrayBuffer || ArrayBuffer.isView(data)) {
-      upstream.send(data);
+    if (upstream.readyState === WebSocket.OPEN) {
+      upstream.send(buffer);
     }
   },
 
-  close(peer, event) {
-    const upstream = (peer as any)._upstream as WebSocket;
-
-    const code = (event?.code ?? 0) >= 1000 ? event.code! : 1000;
-    upstream?.close(code, event?.reason);
-
-    delete (peer as any)._upstream;
-    delete (peer as any)._buffer;
+  close(peer, details) {
+    const upstream: WebSocket = (peer as any)._upstream;
+    if (upstream && upstream.readyState < WebSocket.CLOSING) {
+      upstream.close(details?.code ?? 1000, details?.reason ?? "Client closed");
+    }
   },
 
   error(peer, error) {
-    ((peer as any)._upstream as WebSocket)?.close(1011, error.message);
+    console.error("[WS peer error]", error);
+    const upstream: WebSocket = (peer as any)._upstream;
+    upstream?.close(1011, "Peer error");
   },
 });
