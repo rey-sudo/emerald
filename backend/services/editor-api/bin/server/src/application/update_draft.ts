@@ -13,13 +13,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import { z } from "zod";
 import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { pulsarProducer } from "../app.js";
 import pRetry, { AbortError } from "p-retry";
 import { AppError } from "./error.js";
-import * as Y from "yjs";
 import { v7 as uuid7 } from "uuid";
+import { z } from "zod";
+import * as Y from "yjs";
+
+//----------------------------------------------------------------------------------------------------------------------
+// SQL
+//----------------------------------------------------------------------------------------------------------------------
 
 const SQL_INSERT_EVENT = `
   INSERT INTO events (
@@ -28,26 +32,9 @@ const SQL_INSERT_EVENT = `
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
   `;
 
-// TYPES ---------------------------------------------------------------------------------------------------------------
-
-export const UpdateDocumentSchema = z.object({
-  command: z.literal("update_document"),
-  params: z.object({
-    document_id: z.uuid(),
-    binario: z.instanceof(Uint8Array).refine(
-      (data) => {
-        try {
-          const doc = new Y.Doc();
-          Y.applyUpdate(doc, data);
-          return true;
-        } catch {
-          return false;
-        }
-      },
-      { message: "Invalid Yjs binary" },
-    ),
-  }),
-});
+//----------------------------------------------------------------------------------------------------------------------
+// SCHEMAS
+//----------------------------------------------------------------------------------------------------------------------
 
 export interface UpdateDocumentResponse {
   success: boolean;
@@ -72,8 +59,28 @@ export interface OutboxEvent {
   };
 }
 
-// PROCESS CHUNK -------------------------------------------------------------------------------------------------------
+export const UpdateDocumentSchema = z.object({
+  command: z.literal("update_document"),
+  params: z.object({
+    document_id: z.uuid(),
+    binario: z.instanceof(Uint8Array).refine(
+      (data) => {
+        try {
+          const doc = new Y.Doc();
+          Y.applyUpdate(doc, data);
+          return true;
+        } catch {
+          return false;
+        }
+      },
+      { message: "Invalid Yjs binary" },
+    ),
+  }),
+});
 
+//----------------------------------------------------------------------------------------------------------------------
+// CHUNK PROCESSOR
+//----------------------------------------------------------------------------------------------------------------------
 /**
  *
  * @param log
@@ -88,6 +95,8 @@ async function processChunk(
   deltaBinary: Uint8Array<ArrayBuffer>,
   timestamp: number,
 ) {
+  // 1. Configuration --------------------------------------------------------------------------------------------------
+
   const retryConfig = {
     retries: 5,
     onFailedAttempt: (error: any) => {
@@ -95,7 +104,7 @@ async function processChunk(
     },
   };
 
-  const eventId = uuid7()
+  const eventId = uuid7();
 
   const outboxPayload: OutboxEvent = {
     event_id: eventId,
@@ -118,7 +127,7 @@ async function processChunk(
 
   try {
     await pRetry(async () => {
-      // 1. Buffer convertion ------------------------------------------------------------------------------------------
+      // 2. Buffer convertion ------------------------------------------------------------------------------------------
 
       const updateBuffer = Buffer.from(
         deltaBinary.buffer,
@@ -132,7 +141,7 @@ async function processChunk(
 
       outboxPayload.data.data = updateBuffer.toString("base64");
 
-      // 2. Pulsar publication -----------------------------------------------------------------------------------------
+      // 3. Pulsar publication -----------------------------------------------------------------------------------------
 
       const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
       await pulsarProducer.send({
@@ -154,33 +163,32 @@ async function processChunk(
   }
 }
 
-// UPDATE DOCUMENT HANDLER ---------------------------------------------------------------------------------------------
-
+//----------------------------------------------------------------------------------------------------------------------
+// UPDATE DOCUMENT HANDLER
+//----------------------------------------------------------------------------------------------------------------------
 export async function handleUpdateDocument(
   app: FastifyInstance,
   params: any,
+  receivedAt: number,
 ): Promise<UpdateDocumentResponse> {
-  const { pg_pool, log } = app;
 
   // 1. Params validation. ---------------------------------------------------------------------------------------------
+
+  const { pg_pool, log } = app;
 
   const result = UpdateDocumentSchema.shape.params.safeParse(params);
   if (!result.success) {
     log.error({ errors: z.treeifyError(result.error) }, "Invalid params error");
-
     throw new AppError("Invalid request parameters", false);
   }
 
   const { document_id: documentId, binario: deltaBinary } = result.data;
-
-  const timestamp = Date.now();
+  const timestamp = receivedAt;
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
-  const binaryKey = `doc:${documentId}:state`;
-  const streamKey = `doc:${documentId}:chunks`;
-  const expireValue = 3600;
 
   try {
-    // 2. Check authorization. -----------------------------------------------------------------------------------------
+
+    // 2. Check authorization ------------------------------------------------------------------------------------------
 
     const documentResult = await pg_pool.query(
       "SELECT 1 FROM documents WHERE id = $1 AND user_id = $2",
@@ -207,6 +215,7 @@ export async function handleUpdateDocument(
     // 4. Fallback: Persist in database --------------------------------------------------------------------------------
 
     if (success === false) {
+
       //OUTBOX EVENT
 
       return {

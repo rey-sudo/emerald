@@ -2,8 +2,9 @@ import type { FastifyInstance } from "fastify";
 import { decode, encode } from "@msgpack/msgpack";
 import { handleUpdateDocument, UpdateDocumentSchema } from "./update_draft.js";
 import { GetDocumentSchema, handleGetDocument } from "./get_draft.js";
-import { z } from "zod";
 import { getFoldersHandler } from "./get-folders.js";
+import { z } from "zod";
+
 
 export const ClientMessageSchema = z.discriminatedUnion("command", [
   GetDocumentSchema,
@@ -14,12 +15,12 @@ export type ClientMessage = z.infer<typeof ClientMessageSchema>;
 
 // ── Dispatcher ────────────────────────────────────────────────────────────────
 
-function dispatch(app: FastifyInstance, message: ClientMessage) {
+function dispatch(app: FastifyInstance, message: ClientMessage, receivedAt: number) {
   switch (message.command) {
     case "get_document":
       return handleGetDocument(app, message.params);
     case "update_document":
-      return handleUpdateDocument(app, message.params);
+      return handleUpdateDocument(app, message.params, receivedAt);
   }
 }
 
@@ -42,10 +43,9 @@ export async function router(app: FastifyInstance) {
 
     socket.on("message", async (rawMsg: Buffer, isBinary: boolean) => {
       try {
+        const receivedAt = Date.now()
+
         console.log(
-          "[backend] recibido - isBinary:",
-          isBinary,
-          "bytes:",
           rawMsg.byteLength,
         );
 
@@ -63,7 +63,7 @@ export async function router(app: FastifyInstance) {
 
         app.log.info(`Command received: ${parsed.data.command}`);
 
-        const result = await dispatch(app, parsed.data);
+        const result = await dispatch(app, parsed.data, receivedAt);
 
         socket.send(encode({ ...result, timestamp: new Date().toISOString() }));
       } catch (err: any) {
