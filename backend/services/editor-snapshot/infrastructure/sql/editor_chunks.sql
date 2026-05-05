@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS editor_chunks (
 );
 
 CREATE INDEX IF NOT EXISTS idx_chunks_affinity_status 
-ON editor_chunk (document_id, status) 
+ON editor_chunks (document_id, status) 
 WHERE status = 'PENDING';
 
 CREATE INDEX IF NOT EXISTS idx_chunks_created_at 
-ON editor_chunk (created_at);
+ON editor_chunks (created_at);

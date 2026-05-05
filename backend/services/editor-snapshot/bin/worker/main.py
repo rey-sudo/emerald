@@ -1,3 +1,4 @@
+from collections import defaultdict
 from uuid6 import uuid7
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
@@ -9,6 +10,7 @@ import uuid
 import pulsar
 import asyncpg
 import aioboto3
+import y_py as Y
 
 # ================= CONFIG =================
 PULSAR_URL = "pulsar://broker:6650"
@@ -28,13 +30,14 @@ class SnapshotWorker:
             TOPIC,
             subscription_name=SUBSCRIPTION,
             consumer_type=pulsar.ConsumerType.KeyShared,
-            receiver_queue_size=2000,
+            receiver_queue_size=500,
             unacked_messages_timeout_ms=30000
         )
         self.pg_pool = None
         self.s3_session = aioboto3.Session()
         self.stop_event = asyncio.Event()
-
+        self._pending_chunk_ids: set[str] = set()
+        
     async def init(self):
         logger.info("Connecting to Postgres...")
         self.pg_pool = await asyncpg.create_pool(dsn=POSTGRES_DSN, min_size=5, max_size=20)
@@ -88,7 +91,7 @@ class SnapshotWorker:
                     continue
 
                 try: 
-                    await self._persist_to_db(messages)        
+                    await self._persist_chunks(messages)        
                 
                 except Exception as e:
                     logger.error(f"Error persistiendo batch: {e}")
@@ -102,7 +105,7 @@ class SnapshotWorker:
                 logger.exception(f"Error fatal en consumidor: {e}")
                 await asyncio.sleep(2)
 
-    async def _persist_to_db(self, messages):
+    async def _persist_chunks(self, messages):
         """
         Estrategia optimizada para 100M+ registros.
         Maneja el desempaquetado de columnas para el UNNEST de Postgres.
@@ -165,11 +168,10 @@ class SnapshotWorker:
                     inserted_ids = {str(row['id']) for row in rows}
 
                     for event_id, msg in msg_map.items():
-                        
                         if event_id not in inserted_ids:
                             logger.warning(f"Evento duplicado ignorado: {event_id}")
                             
-                #TX COMMIT IMPLICIT                      
+                #TX COMMIT IMPLICIT!                      
                 except Exception as e:
                     logger.error(f"Error en persistencia batch: {e}")
                     # Importante: No hagas ACK aquí para que el sistema de mensajería reintente el lote
@@ -178,7 +180,10 @@ class SnapshotWorker:
         for msg in msg_map.values():
             self.consumer.acknowledge(msg)
             
+        for event_id in inserted_ids:
+            self._pending_chunk_ids.add(event_id) 
             
+        #redis.xadd    
             
 # TASK #2 PROCESS CHUNKS -----------------------------------------------------------------------------------------------
 
@@ -194,63 +199,88 @@ class SnapshotWorker:
                 except asyncio.TimeoutError:
                     pass
 
-                await self._process_pending_chunks()
-
+                await self._process_chunks()
+            
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 logger.error(f"Error en procesador: {e}")
                 await asyncio.sleep(5)
 
-    async def _process_pending_chunks(self):
-        """Lógica de negocio: Procesa de PENDING -> PROCESSING -> COMPLETED"""
-        async with self.pg_pool.acquire() as conn:
-            # 1. Marcamos registros para procesar (Atomicidad)
-            ids = await conn.fetch("""
-                UPDATE editor_chunk 
-                SET status = 'PROCESSING'
-                WHERE id IN (
-                    SELECT id FROM editor_chunk 
-                    WHERE status = 'PENDING' 
-                    LIMIT 1000
-                    FOR UPDATE SKIP LOCKED
-                )
-                RETURNING id, doc_id, data
-            """)
-
-            if not ids:
+    async def _process_chunks(self):
+            """Lógica de negocio: PENDING -> PROCESSING -> COMPLETED con Transacción"""
+            
+            chunk_ids = list(self._pending_chunk_ids)
+            if not chunk_ids:
                 return
 
-            logger.info(f"Procesando {len(ids)} chunks...")
-            
-            # --- Aquí iría tu lógica de S3 con aioboto3 ---
-            # ...
-            
-            # 2. Finalizamos
-            chunk_ids = [r['id'] for r in ids]
-            await conn.execute("UPDATE editor_chunk SET status = 'COMPLETED' WHERE id = ANY($1)", chunk_ids)
-            logger.info(f"Batch de {len(ids)} procesado con éxito.")
+            async with self.pg_pool.acquire() as conn:
+                # Iniciamos la transacción de DB
+                async with conn.transaction():
+                    try:
+                        # 1. Bloqueamos los chunks (Si falla la función, el rollback los vuelve a PENDING)
+                        rows = await conn.fetch("""
+                            UPDATE editor_chunks
+                            SET status = 'PROCESSING'
+                            WHERE id = ANY($1::uuid[])
+                            AND status = 'PENDING'
+                            RETURNING id, document_id, data, created_at
+                        """, chunk_ids)
 
-# RUN ------------------------------------------------------------------------------------------------------------------
+                        if not rows:
+                            self._pending_chunk_ids.difference_update(chunk_ids)
+                            return #ROLLBACK ? 
+
+                        # 2. Agrupar y procesar en memoria
+                        chunks_by_doc = defaultdict(list)
+                        for row in rows:
+                            chunks_by_doc[row['document_id']].append(row)
+                        
+                        processed_ids = []
+
+                        for doc_id, doc_chunks in chunks_by_doc.items():
+                            # Ordenar por fecha para asegurar consistencia CRDT
+                            doc_chunks.sort(key=lambda x: x['created_at'])
+
+                            if doc_id not in self.doc_cache:
+                                # NOTA: Aquí deberías cargar el snapshot de S3 primero 
+                                # si el doc no está en memoria
+                                self.doc_cache[doc_id] = Y.YDoc()
+                            
+                            ydoc = self.doc_cache[doc_id]
+
+                            for chunk in doc_chunks:
+                                Y.apply_update(ydoc, chunk['data'])
+                                processed_ids.append(chunk['id'])
+
+                        # 3. Marcar como COMPLETED dentro de la misma transacción
+                        if processed_ids:
+                            await conn.execute("""
+                                UPDATE editor_chunks
+                                SET status = 'COMPLETED'
+                                WHERE id = ANY($1::uuid[])
+                            """, processed_ids)
+
+                        # Al salir del bloque 'async with conn.transaction()', se hace el COMMIT
+                        logger.info(f"Transacción exitosa: {len(processed_ids)} chunks procesados.")
+
+                    except Exception as e:
+                        # Si algo falla aquí, la transacción hace ROLLBACK automáticamente
+                        # Los chunks regresan a 'PENDING' en la DB
+                        logger.error(f"Error procesando lote. Rollback ejecutado: {e}")
+                        raise # Re-lanzamos para evitar limpiar los IDs de la memoria
+
+            # Solo si la transacción fue exitosa, limpiamos los IDs del set de memoria
+            self._pending_chunk_ids.difference_update(chunk_ids)
+
 
     def _shutdown(self):
         logger.info("Shutdown signal received...")
         self.stop_event.set()
         
         
-    async def close(self):
-        logger.info("Limpiando recursos...")
-        if self.consumer:
-            self.consumer.close()
-        if self.client:
-            self.client.close()
-        if self.pg_pool:
-            await self.pg_pool.close()
-        logger.info("Worker apagado correctamente.")   
-   
-   
     async def run(self):
-        # 1. Add signal handlers ---------------------------------------------------------------------------------------
+        # 1. Add signal handlers. --------------------------------------------------------------------------------------
 
         loop = asyncio.get_running_loop()
         for sig in (signal.SIGINT, signal.SIGTERM):
@@ -259,21 +289,34 @@ class SnapshotWorker:
             except NotImplementedError: 
                 pass
             
-        # 2. Create worker tasks ---------------------------------------------------------------------------------------
+        # 2. Create worker tasks. --------------------------------------------------------------------------------------
         
         try:
             async with asyncio.TaskGroup() as tg:
                 t1 = tg.create_task(self._consume_task())
-                #t2 = tg.create_task(self._processor_task())
+                t2 = tg.create_task(self._processor_task())
                 
                 await self.stop_event.wait()
                 logger.info("Cerrando tareas concurrentes...")
                 t1.cancel()
-                #t2.cancel()
+                t2.cancel()
         except Exception as e:
             logger.error(f"Error en el TaskGroup: {e}")
-
-# MAIN -----------------------------------------------------------------------------------------------------------------
+            
+            
+    async def close(self):
+        logger.info("Limpiando recursos...")
+        if self.consumer:
+            self.consumer.close()
+        if self.client:
+            self.client.close()
+        if self.pg_pool:
+            await self.pg_pool.close()
+        logger.info("Worker apagado correctamente.")               
+            
+#-----------------------------------------------------------------------------------------------------------------------
+# MAIN 
+#-----------------------------------------------------------------------------------------------------------------------
 
 async def main():
     worker = SnapshotWorker()
