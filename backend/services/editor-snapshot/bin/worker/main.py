@@ -52,7 +52,7 @@ class SnapshotWorker:
         retry=retry_if_exception_type(Exception), 
         reraise=True 
     )
-    async def insert_outbox(conn, document, ts, checksum, metadata):
+    async def insert_outbox(self, conn, document, ts, checksum, metadata):
             payload = {
                 "id": document.get("id"),
                 "status": "PROCESSED",
@@ -179,12 +179,14 @@ class SnapshotWorker:
                     # Importante: No hagas ACK aquí para que el sistema de mensajería reintente el lote
                     raise 
                 
+        # Outside of the implicit commit        
         for msg in msg_map.values():
             self.consumer.acknowledge(msg)
-        
+            
+        # IF TX COMMIT SUCCESSFUL
+        all_chunk_ids = set(msg_map.keys())    
         async with self._pending_chunk_ids_lock:
-            self._pending_chunk_ids.update(inserted_ids)          
-        
+            self._pending_chunk_ids.update(all_chunk_ids)          
         
         #redis.xadd 
            
@@ -214,7 +216,9 @@ class SnapshotWorker:
     async def _process_chunks(self):
             """Lógica de negocio: PENDING -> PROCESSING -> COMPLETED con Transacción"""
             
-            chunk_ids = list(self._pending_chunk_ids)
+            async with self._pending_chunk_ids_lock:
+                chunk_ids = list(self._pending_chunk_ids)
+                
             if not chunk_ids:
                 return
 
