@@ -1,13 +1,11 @@
+from uuid6 import uuid7
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+
 import asyncio
 import json
 import logging
 import signal
-import time
-from collections import defaultdict
-from uuid6 import uuid7
 import uuid
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
-
 import pulsar
 import asyncpg
 import aioboto3
@@ -41,7 +39,7 @@ class SnapshotWorker:
         logger.info("Connecting to Postgres...")
         self.pg_pool = await asyncpg.create_pool(dsn=POSTGRES_DSN, min_size=5, max_size=20)
 
-# CONSUME CHUNKS TASK --------------------------------------------------------------------------------------------------
+# DATABASE METHODS -----------------------------------------------------------------------------------------------------
 
     @retry(
         stop=stop_after_attempt(2),
@@ -75,6 +73,8 @@ class SnapshotWorker:
                 json.dumps(payload),
                 json.dumps(metadata),
             )
+
+# TASK #1 EVENT CONSUMER -----------------------------------------------------------------------------------------------
 
     async def _consume_task(self):
         """Tarea resiliente que persiste chunks en Postgres"""
@@ -180,7 +180,7 @@ class SnapshotWorker:
             
             
             
-# PROCESS CHUNKS TASK --------------------------------------------------------------------------------------------------
+# TASK #2 PROCESS CHUNKS -----------------------------------------------------------------------------------------------
 
     async def _processor_task(self):
         """Tarea que procesa chunks persistidos (ej. subir a S3)"""
@@ -231,8 +231,13 @@ class SnapshotWorker:
             await conn.execute("UPDATE editor_chunk SET status = 'COMPLETED' WHERE id = ANY($1)", chunk_ids)
             logger.info(f"Batch de {len(ids)} procesado con éxito.")
 
-    # ---------- ORQUESTACIÓN Y CIERRE SEGURO ----------
-   
+# RUN ------------------------------------------------------------------------------------------------------------------
+
+    def _shutdown(self):
+        logger.info("Shutdown signal received...")
+        self.stop_event.set()
+        
+        
     async def close(self):
         logger.info("Limpiando recursos...")
         if self.consumer:
@@ -243,10 +248,7 @@ class SnapshotWorker:
             await self.pg_pool.close()
         logger.info("Worker apagado correctamente.")   
    
-    def _shutdown(self):
-        logger.info("Shutdown signal received...")
-        self.stop_event.set()
-
+   
     async def run(self):
         # 1. Add signal handlers ---------------------------------------------------------------------------------------
 
