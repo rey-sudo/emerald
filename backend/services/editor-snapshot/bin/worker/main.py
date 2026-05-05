@@ -1,4 +1,20 @@
+# Emerald
+# Copyright (C) 2026 Juan José Caballero Rey - https://github.com/rey-sudo
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 from collections import defaultdict
+import os
 from uuid6 import uuid7
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
@@ -10,7 +26,7 @@ import uuid
 import pulsar
 import asyncpg
 import aioboto3
-
+from botocore.config import Config
 
 # ================= CONFIG =================
 PULSAR_URL = "pulsar://broker:6650"
@@ -34,7 +50,8 @@ class SnapshotWorker:
             unacked_messages_timeout_ms=30000
         )
         self.pg_pool = None
-        self.s3_session = aioboto3.Session()
+        self._s3 = None                         
+        self._s3_cm = None
         self.stop_event = asyncio.Event()
         self._pending_chunk_ids: set[uuid.UUID] = set()
         self._pending_chunk_ids_lock = asyncio.Lock()
@@ -43,6 +60,41 @@ class SnapshotWorker:
     async def init(self):
         logger.info("Connecting to Postgres...")
         self.pg_pool = await asyncpg.create_pool(dsn=POSTGRES_DSN, min_size=5, max_size=20)
+
+        logger.info("Connecting to S3...")
+        self._s3_cm = aioboto3.Session().client(
+            "s3",
+            endpoint_url=os.environ.get("S3_ENDPOINT"),
+            aws_access_key_id=os.environ.get("S3_ACCESS_KEY"),
+            aws_secret_access_key=os.environ.get("S3_SECRET_KEY"),
+            region_name=os.environ.get("S3_REGION"),
+            config=Config(
+                retries={"max_attempts": 3, "mode": "standard"},
+                max_pool_connections=12,
+                connect_timeout=5,
+                read_timeout=30,
+            )
+        )
+        self._s3 = await self._s3_cm.__aenter__()
+
+#------------------------------------------------------------------------------
+# S3 SNAPSHOT
+#------------------------------------------------------------------------------
+
+    async def _upload_document_snapshot(self, doc_id, new_chunks):
+        # 1. Descargar estado actual
+        try:
+            response = await self._s3.get_object(
+                Bucket="documents",
+                Key=f"snapshots/{doc_id}/latest.bin"
+            )
+            existing = await response['Body'].read()
+        except self._s3.exceptions.NoSuchKey:
+            logger.info("NO EXISTE EL BINARIO!!!!!!!!!!!!!!!!")
+            existing = None  # Primera vez
+            
+            
+
 
 # DATABASE METHODS -----------------------------------------------------------------------------------------------------
 
@@ -252,7 +304,7 @@ class SnapshotWorker:
                             
                             logger.info(f"{doc_id} -> {doc_chunks}")
                             
-                            #S3 IMPLEMENTATION
+                            await self._upload_document_snapshot(doc_id, doc_chunks)
                             
                             for chunk in doc_chunks:
                                 processed_ids.append(chunk['id'])
@@ -265,8 +317,9 @@ class SnapshotWorker:
                                 SET status = 'COMPLETED'
                                 WHERE id = ANY($1::uuid[])
                             """, processed_ids)
-
-                        # Al salir del bloque 'async with conn.transaction()', se hace el COMMIT
+                            
+                        # IMPLICIT TX COMMIT !
+                        
                         logger.info(f"Transacción exitosa: {len(processed_ids)} chunks procesados.")
 
                     except Exception as e:
@@ -317,7 +370,9 @@ class SnapshotWorker:
             self.client.close()
         if self.pg_pool:
             await self.pg_pool.close()
-        logger.info("Worker apagado correctamente.")               
+        if self._s3_cm:                         
+            await self._s3_cm.__aexit__(None, None, None)
+        logger.info("Worker apagado correctamente.")           
             
 #-----------------------------------------------------------------------------------------------------------------------
 # MAIN 
