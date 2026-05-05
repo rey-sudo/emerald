@@ -3,32 +3,60 @@ export default defineWebSocketHandler({
     const ws = new WebSocket("ws://localhost:8002/api/editor/ws");
     ws.binaryType = "arraybuffer";
 
-    ws.onmessage = (event) => peer.send(event.data);
+    (peer as any)._buffer = [];
+    (peer as any)._upstream = ws;
+
+    ws.onopen = () => {
+      const buffer = (peer as any)._buffer;
+      for (const msg of buffer) ws.send(msg);
+      (peer as any)._buffer = [];
+    };
+
+    ws.onmessage = (event) => {
+      peer.send(event.data);
+    };
+
     ws.onclose = (event) => {
       const code = event.code >= 1000 ? event.code : 1000;
       peer.close(code, event.reason || "upstream closed");
     };
-    ws.onerror = () => peer.close(1011, "Upstream error");
 
-    (peer as any)._upstream = ws;
+    ws.onerror = () => {
+      peer.close(1011, "Upstream error");
+    };
   },
 
   message(peer, message) {
     const upstream = (peer as any)._upstream as WebSocket;
-    console.log(
-      "[proxy] rawData type:",
-      typeof message.rawData,
-      message.rawData?.constructor?.name,
-    );
-    console.log("[proxy] upstream readyState:", upstream?.readyState);
+    const data = message.rawData;
 
-    if (upstream?.readyState !== WebSocket.OPEN) return;
-    upstream.send(message.rawData as ArrayBuffer);
+    if (!upstream) return;
+
+    if (upstream.readyState !== WebSocket.OPEN) {
+      const buf = (peer as any)._buffer;
+
+      if (buf.length >= 1000) {
+        peer.close(1013, "Backpressure");
+        return;
+      }
+
+      buf.push(data);
+      return;
+    }
+
+    if (data instanceof ArrayBuffer || ArrayBuffer.isView(data)) {
+      upstream.send(data);
+    }
   },
 
   close(peer, event) {
+    const upstream = (peer as any)._upstream as WebSocket;
+
     const code = (event?.code ?? 0) >= 1000 ? event.code! : 1000;
-    ((peer as any)._upstream as WebSocket)?.close(code, event?.reason);
+    upstream?.close(code, event?.reason);
+
+    delete (peer as any)._upstream;
+    delete (peer as any)._buffer;
   },
 
   error(peer, error) {
