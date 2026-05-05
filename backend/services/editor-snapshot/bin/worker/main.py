@@ -10,7 +10,7 @@ import uuid
 import pulsar
 import asyncpg
 import aioboto3
-import y_py as Y
+
 
 # ================= CONFIG =================
 PULSAR_URL = "pulsar://broker:6650"
@@ -36,7 +36,9 @@ class SnapshotWorker:
         self.pg_pool = None
         self.s3_session = aioboto3.Session()
         self.stop_event = asyncio.Event()
-        self._pending_chunk_ids: set[str] = set()
+        self._pending_chunk_ids: set[uuid.UUID] = set()
+        self._pending_chunk_ids_lock = asyncio.Lock()
+        self.doc_cache = {}
         
     async def init(self):
         logger.info("Connecting to Postgres...")
@@ -117,7 +119,7 @@ class SnapshotWorker:
         for msg in messages:
             try:
                 event = json.loads(msg.data())
-                event_id = event.get("event_id")
+                event_id = uuid.UUID(event.get("event_id"))
                 event_data = event.get("data")
                 
                  #TODO: ADD TYPE VALIATION OF DATA AND EVENT - TO DLQ
@@ -129,7 +131,7 @@ class SnapshotWorker:
                 
                 logger.info(event)
                 
-                ids.append(uuid.UUID(event_id))
+                ids.append(event_id) #event_id == chunk_id
                 doc_ids.append(uuid.UUID(event_data.get("document_id")))
                 statuses.append(event_data.get("status"))
                 datas.append(event_data.get("data"))
@@ -165,12 +167,12 @@ class SnapshotWorker:
                         ids, doc_ids, statuses, datas, sources, created_ats
                     )
                     
-                    inserted_ids = {str(row['id']) for row in rows}
+                    inserted_ids = {row['id'] for row in rows}
 
                     for event_id, msg in msg_map.items():
                         if event_id not in inserted_ids:
                             logger.warning(f"Evento duplicado ignorado: {event_id}")
-                            
+                              
                 #TX COMMIT IMPLICIT!                      
                 except Exception as e:
                     logger.error(f"Error en persistencia batch: {e}")
@@ -179,11 +181,13 @@ class SnapshotWorker:
                 
         for msg in msg_map.values():
             self.consumer.acknowledge(msg)
-            
-        for event_id in inserted_ids:
-            self._pending_chunk_ids.add(event_id) 
-            
-        #redis.xadd    
+        
+        async with self._pending_chunk_ids_lock:
+            self._pending_chunk_ids.update(inserted_ids)          
+        
+        
+        #redis.xadd 
+           
             
 # TASK #2 PROCESS CHUNKS -----------------------------------------------------------------------------------------------
 
@@ -229,7 +233,7 @@ class SnapshotWorker:
 
                         if not rows:
                             self._pending_chunk_ids.difference_update(chunk_ids)
-                            return #ROLLBACK ? 
+                            return
 
                         # 2. Agrupar y procesar en memoria
                         chunks_by_doc = defaultdict(list)
@@ -241,18 +245,15 @@ class SnapshotWorker:
                         for doc_id, doc_chunks in chunks_by_doc.items():
                             # Ordenar por fecha para asegurar consistencia CRDT
                             doc_chunks.sort(key=lambda x: x['created_at'])
-
-                            if doc_id not in self.doc_cache:
-                                # NOTA: Aquí deberías cargar el snapshot de S3 primero 
-                                # si el doc no está en memoria
-                                self.doc_cache[doc_id] = Y.YDoc()
                             
-                            ydoc = self.doc_cache[doc_id]
-
+                            logger.info(f"{doc_id} -> {doc_chunks}")
+                            
+                            #S3 IMPLEMENTATION
+                            
                             for chunk in doc_chunks:
-                                Y.apply_update(ydoc, chunk['data'])
                                 processed_ids.append(chunk['id'])
-
+                            
+                            
                         # 3. Marcar como COMPLETED dentro de la misma transacción
                         if processed_ids:
                             await conn.execute("""
@@ -271,8 +272,8 @@ class SnapshotWorker:
                         raise # Re-lanzamos para evitar limpiar los IDs de la memoria
 
             # Solo si la transacción fue exitosa, limpiamos los IDs del set de memoria
-            self._pending_chunk_ids.difference_update(chunk_ids)
-
+            async with self._pending_chunk_ids_lock:
+                self._pending_chunk_ids.difference_update(chunk_ids)
 
     def _shutdown(self):
         logger.info("Shutdown signal received...")
