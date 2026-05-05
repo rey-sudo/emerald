@@ -89,10 +89,7 @@ class SnapshotWorker:
 
                 try: 
                     await self._persist_to_db(messages)        
-                        
-                    for msg in messages:
-                        self.consumer.acknowledge(msg)
-                        
+                
                 except Exception as e:
                     logger.error(f"Error persistiendo batch: {e}")
                     for msg in messages:
@@ -120,9 +117,14 @@ class SnapshotWorker:
                 event_id = event.get("event_id")
                 event_data = event.get("data")
                 
-                logger.info(event)
+                 #TODO: ADD TYPE VALIATION OF DATA AND EVENT - TO DLQ
+                 
+                if not event_id or not event_data:
+                    logger.warning(f"Event malformed: {event_id}")
+                    self.consumer.negative_acknowledge(msg)
+                    continue
                 
-                #ADD TYPE VALIATION OF DATA AND EVENT
+                logger.info(event)
                 
                 ids.append(uuid.UUID(event_id))
                 doc_ids.append(uuid.UUID(event_data.get("document_id")))
@@ -136,11 +138,13 @@ class SnapshotWorker:
                 
             except Exception as e:
                 logger.error(f"Error parseando mensaje: {e}")
+                self.consumer.negative_acknowledge(msg)
+                continue
 
         if not ids:
             return
 
-        query = """
+        SQL_INSERT_QUERY = """
             INSERT INTO editor_chunks (id, document_id, status, data, source, created_at)
             SELECT * FROM unnest(
                 $1::uuid[], $2::uuid[], $3::varchar[], $4::text[], $5::varchar[], $6::bigint[]
@@ -150,27 +154,32 @@ class SnapshotWorker:
         """
 
         async with self.pg_pool.acquire() as conn:
-            try:
-                # Pasamos las listas directamente como argumentos
-                rows = await conn.fetch(
-                    query, 
-                    ids, doc_ids, statuses, datas, sources, created_ats
-                )
+            async with conn.transaction():
+                try:
+                    # Pasamos las listas directamente como argumentos
+                    rows = await conn.fetch(
+                        SQL_INSERT_QUERY, 
+                        ids, doc_ids, statuses, datas, sources, created_ats
+                    )
+                    
+                    inserted_ids = {str(row['id']) for row in rows}
+
+                    for event_id, msg in msg_map.items():
+                        
+                        if event_id not in inserted_ids:
+                            logger.warning(f"Evento duplicado ignorado: {event_id}")
+                            
+                #TX COMMIT IMPLICIT                      
+                except Exception as e:
+                    logger.error(f"Error en persistencia batch: {e}")
+                    # Importante: No hagas ACK aquí para que el sistema de mensajería reintente el lote
+                    raise 
                 
-                inserted_ids = {str(row['id']) for row in rows}
-
-                for event_id, msg in msg_map.items():
-                    
-                    if event_id not in inserted_ids:
-                        logger.warning(f"Evento duplicado ignorado: {event_id}")
-                    
-                    # ACK tanto si es nuevo como si ya existía (idempotencia cumplida)
-                    self.consumer.acknowledge(msg)
-                    
-            except Exception as e:
-                logger.error(f"Error en persistencia batch: {e}")
-                # Importante: No hagas ACK aquí para que el sistema de mensajería reintente el lote
-
+        for msg in msg_map.values():
+            self.consumer.acknowledge(msg)
+            
+            
+            
 # PROCESS CHUNKS TASK --------------------------------------------------------------------------------------------------
 
     async def _processor_task(self):
