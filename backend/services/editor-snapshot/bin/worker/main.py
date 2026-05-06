@@ -85,18 +85,19 @@ class SnapshotWorker:
 
     async def _upload_document_snapshot(self, doc_id, new_chunks):
         # 1. Descargar estado actual
-        try:
-            response = await self._s3.get_object(
-                Bucket="documents",
-                Key=f"{doc_id}/{doc_id}.yjs"
-            )
-            existing = await response['Body'].read()
-        except self._s3.exceptions.NoSuchKey:
-            raise ValueError(f"Original YJS binary not found for doc_id={doc_id}")
+        if doc_id in self.doc_cache:
+            doc = self.doc_cache[doc_id]
+        else:
+            try:
+                response = await self._s3.get_object(
+                    Bucket="documents",
+                    Key=f"{doc_id}/{doc_id}.yjs"
+                )
+                existing = await response['Body'].read()
+            except self._s3.exceptions.NoSuchKey:
+                raise ValueError(f"Original YJS binary not found for doc_id={doc_id}")
 
-        # 2. Cargar el Doc y aplicar estado existente
-        doc = Doc()
-        if existing:
+            doc = Doc()
             doc.apply_update(existing)
 
         # 3. Aplicar los nuevos chunks en orden
@@ -106,7 +107,9 @@ class SnapshotWorker:
 
         # 4. Serializar el estado final
         snapshot = doc.get_update()
-
+        
+        self.doc_cache[doc_id] = doc
+        
         # 5. Subir snapshot a S3
         snapshot_id = uuid7()  
         
