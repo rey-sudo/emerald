@@ -133,7 +133,7 @@ export async function uploadFileHandler(
 
   const docId = uuidv7();
   const internalName = `${docId}.${extension}`;
-  const storagePath = `${userId}/${folderId}/${internalName}`;
+  const storagePath = `${docId}/${internalName}`;
   const createdAt = timestamp;
   const metadata = buildMetadata(originalName, sizeBytes, folderId);
   const v = 0;
