@@ -15,11 +15,11 @@
 
 import type { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { pulsarProducer } from "../app.js";
-import pRetry, { AbortError } from "p-retry";
 import { AppError } from "./error.js";
 import { v7 as uuid7 } from "uuid";
 import { z } from "zod";
 import * as Y from "yjs";
+import pRetry from "p-retry";
 
 //----------------------------------------------------------------------------------------------------------------------
 // SQL
@@ -36,9 +36,12 @@ const SQL_INSERT_EVENT = `
 // SCHEMAS
 //----------------------------------------------------------------------------------------------------------------------
 
+type WS_COMMAND = "edit_document"
+const WS_COMMAND_VALUE: WS_COMMAND = "edit_document";
+
 export interface UpdateDocumentResponse {
   success: boolean;
-  command: "update_document";
+  command: WS_COMMAND;
   message: string;
   data: {
     document_id: string;
@@ -53,19 +56,21 @@ export interface OutboxEvent {
     chunk_id: string;
     document_id: string;
     status: "PENDING";
-    data: null | string;
+    data: string;
     source: string;
     created_at: number;
   };
 }
 
 export const UpdateDocumentSchema = z.object({
-  command: z.literal("update_document"),
+  command: z.literal(WS_COMMAND_VALUE),
   params: z.object({
     document_id: z.uuid(),
     binario: z.instanceof(Uint8Array).refine(
       (data) => {
         try {
+          if (data.byteLength === 0) return false;
+
           const doc = new Y.Doc();
           Y.applyUpdate(doc, data);
           return true;
@@ -92,10 +97,10 @@ export const UpdateDocumentSchema = z.object({
 async function processChunk(
   log: FastifyBaseLogger,
   documentId: string,
-  deltaBinary: Uint8Array<ArrayBuffer>,
+  updateBuffer: Buffer<ArrayBuffer>,
   timestamp: number,
 ) {
-  // 1. Configuration --------------------------------------------------------------------------------------------------
+  // 1. Configuration. --------------------------------------------------------------------------------------------------
 
   const retryConfig = {
     retries: 5,
@@ -114,7 +119,7 @@ async function processChunk(
       chunk_id: eventId,
       document_id: documentId,
       status: "PENDING",
-      data: null,
+      data: updateBuffer.toString("base64"),
       source: "editor-api-server",
       created_at: timestamp,
     },
@@ -125,24 +130,10 @@ async function processChunk(
     outboxPayload,
   };
 
+  // 2. Pulsar publication. -----------------------------------------------------------------------------------------
+
   try {
     await pRetry(async () => {
-      // 2. Buffer convertion ------------------------------------------------------------------------------------------
-
-      const updateBuffer = Buffer.from(
-        deltaBinary.buffer,
-        deltaBinary.byteOffset,
-        deltaBinary.byteLength,
-      );
-
-      if (updateBuffer.length === 0) {
-        throw new AbortError("Empty buffer: unrecoverable error");
-      }
-
-      outboxPayload.data.data = updateBuffer.toString("base64");
-
-      // 3. Pulsar publication -----------------------------------------------------------------------------------------
-
       const pulsarPayload = Buffer.from(JSON.stringify(outboxPayload));
       await pulsarProducer.send({
         data: pulsarPayload,
@@ -166,12 +157,11 @@ async function processChunk(
 //----------------------------------------------------------------------------------------------------------------------
 // UPDATE DOCUMENT HANDLER
 //----------------------------------------------------------------------------------------------------------------------
-export async function handleUpdateDocument(
+export async function handleEditDocument(
   app: FastifyInstance,
   params: any,
   receivedAt: number,
 ): Promise<UpdateDocumentResponse> {
-
   // 1. Params validation. ---------------------------------------------------------------------------------------------
 
   const { pg_pool, log } = app;
@@ -181,13 +171,11 @@ export async function handleUpdateDocument(
     log.error({ errors: z.treeifyError(result.error) }, "Invalid params error");
     throw new AppError("Invalid request parameters", false);
   }
-
   const { document_id: documentId, binario: deltaBinary } = result.data;
   const timestamp = receivedAt;
   const userId = "019d2612-a01d-734c-ab63-917106f31187"; // TODO: Replace with dynamic user context from request
 
   try {
-
     // 2. Check authorization ------------------------------------------------------------------------------------------
 
     const documentResult = await pg_pool.query(
@@ -201,12 +189,18 @@ export async function handleUpdateDocument(
       throw new AppError("Document not found", false);
     }
 
+    const updateBuffer = Buffer.from(
+      deltaBinary.buffer,
+      deltaBinary.byteOffset,
+      deltaBinary.byteLength,
+    );
+
     // 3. Process diff chunk -------------------------------------------------------------------------------------------
 
     const { success, outboxPayload } = await processChunk(
       log,
       documentId,
-      deltaBinary,
+      updateBuffer,
       timestamp,
     );
 
@@ -215,21 +209,20 @@ export async function handleUpdateDocument(
     // 4. Fallback: Persist in database --------------------------------------------------------------------------------
 
     if (success === false) {
-
-      //OUTBOX EVENT
+      //OUTBOX EVENT FALLBACK
 
       return {
         success: false,
-        command: "update_document",
-        message: "queued_for_retry",
+        command: WS_COMMAND_VALUE,
+        message: "queued for retry",
         data: { document_id: documentId },
       };
     }
 
     return {
       success: true,
-      command: "update_document",
-      message: "chunk_processed",
+      command: WS_COMMAND_VALUE,
+      message: "chunk processed",
       data: { document_id: documentId },
     };
   } catch (err) {

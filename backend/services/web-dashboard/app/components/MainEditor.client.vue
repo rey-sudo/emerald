@@ -178,7 +178,7 @@ async function processChanges() {
 
     // 3. Send a SINGLE network request to the backend.
     const result = await editorStore.send({
-      command: "update_document",
+      command: "edit_document",
       params: {
         document_id: documentId,
         binario: mergedUpdate,

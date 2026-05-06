@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { decode, encode } from "@msgpack/msgpack";
-import { handleUpdateDocument, UpdateDocumentSchema } from "./update_draft.js";
+import { handleEditDocument, UpdateDocumentSchema } from "./edit_document.js";
 import { GetDocumentSchema, handleGetDocument } from "./get_draft.js";
 import { getFoldersHandler } from "./get-folders.js";
 import { z } from "zod";
@@ -19,8 +19,8 @@ function dispatch(app: FastifyInstance, message: ClientMessage, receivedAt: numb
   switch (message.command) {
     case "get_document":
       return handleGetDocument(app, message.params);
-    case "update_document":
-      return handleUpdateDocument(app, message.params, receivedAt);
+    case "edit_document":
+      return handleEditDocument(app, message.params, receivedAt);
   }
 }
 
