@@ -6,3 +6,4 @@ tenacity
 aiofiles
 aiohttp
 uuid6
+pycrdt

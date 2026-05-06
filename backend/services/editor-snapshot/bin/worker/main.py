@@ -14,10 +14,12 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from collections import defaultdict
-import os
 from uuid6 import uuid7
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from pycrdt import Doc
+from botocore.config import Config
 
+import os
 import asyncio
 import json
 import logging
@@ -26,7 +28,7 @@ import uuid
 import pulsar
 import asyncpg
 import aioboto3
-from botocore.config import Config
+import base64
 
 # ================= CONFIG =================
 PULSAR_URL = "pulsar://broker:6650"
@@ -86,15 +88,44 @@ class SnapshotWorker:
         try:
             response = await self._s3.get_object(
                 Bucket="documents",
-                Key=f"snapshots/{doc_id}/latest.bin"
+                Key=f"{doc_id}/{doc_id}.yjs"
             )
             existing = await response['Body'].read()
         except self._s3.exceptions.NoSuchKey:
-            logger.info("NO EXISTE EL BINARIO!!!!!!!!!!!!!!!!")
-            existing = None  # Primera vez
-            
-            
+            raise ValueError(f"Original YJS binary not found for doc_id={doc_id}")
 
+        # 2. Cargar el Doc y aplicar estado existente
+        doc = Doc()
+        if existing:
+            doc.apply_update(existing)
+
+        # 3. Aplicar los nuevos chunks en orden
+        for chunk in new_chunks:
+            logger.info(chunk["created_at"])
+            doc.apply_update(base64.b64decode(chunk["data"]))
+
+        # 4. Serializar el estado final
+        snapshot = doc.get_update()
+
+        # 5. Subir snapshot a S3
+        snapshot_id = uuid7()  
+        
+        await asyncio.gather(
+            self._s3.put_object(
+                Bucket="documents",
+                Key=f"{doc_id}/snapshots/{snapshot_id}.yjs",
+                Body=snapshot,
+                ContentType="application/octet-stream"
+            ),
+            self._s3.put_object(
+                Bucket="documents",
+                Key=f"{doc_id}/{doc_id}.yjs",  
+                Body=snapshot,
+                ContentType="application/octet-stream"
+            )
+        )
+        
+        return snapshot_id
 
 # DATABASE METHODS -----------------------------------------------------------------------------------------------------
 
@@ -239,10 +270,7 @@ class SnapshotWorker:
         all_chunk_ids = set(msg_map.keys())    
         async with self._pending_chunk_ids_lock:
             self._pending_chunk_ids.update(all_chunk_ids)          
-        
-        #redis.xadd 
-           
-            
+         
 # TASK #2 PROCESS CHUNKS -----------------------------------------------------------------------------------------------
 
     async def _processor_task(self):
