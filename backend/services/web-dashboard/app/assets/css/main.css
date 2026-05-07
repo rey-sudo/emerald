@@ -41,11 +41,29 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("assets/fonts/IBMPlexSans.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("assets/fonts/IBMPlexSansItalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 * {
-  font-family: "Inter", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
 }
 
 /**
@@ -88,20 +106,19 @@ rounded-3xl
 */
 
 :root {
-  /* Gris puro — sin tinte, compatible con cualquier primario */
-  --ui-color-neutral-50: #f8f9fb;
-  --ui-color-neutral-100: #f1f3f7;
-  --ui-color-neutral-200: #e2e5ed;
-  --ui-color-neutral-300: #ced2dc;
-  --ui-color-neutral-400: #adb2bf;
-  --ui-color-neutral-500: #7d8494;
-  --ui-color-neutral-600: #5c6270;
-  --ui-color-neutral-700: #4a4f5c;
-  --ui-color-neutral-800: #313540;
-  --ui-color-neutral-900: #22252e;
-  --ui-color-neutral-925: #1a1d24;
-  --ui-color-neutral-950: #15171e;
-  --ui-color-neutral-1000: #0c0e13;
+  --ui-color-neutral-50: #fafbfc;
+  --ui-color-neutral-100: #f3f5f7;
+  --ui-color-neutral-200: #e7eaf0;
+  --ui-color-neutral-300: #d6dbe4;
+  --ui-color-neutral-400: #b3bac7;
+  --ui-color-neutral-500: #8b93a3;
+  --ui-color-neutral-600: #667085;
+  --ui-color-neutral-700: #4b5565;
+  --ui-color-neutral-800: #353c48;
+  --ui-color-neutral-900: #242932;
+  --ui-color-neutral-925: #1c2027;
+  --ui-color-neutral-950: #14171d;
+  --ui-color-neutral-1000: #0b0d12;
 
   /* ========== Escala Primary ========== */
   --ui-color-primary-50: #eff6ff;

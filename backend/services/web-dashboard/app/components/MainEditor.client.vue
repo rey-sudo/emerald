@@ -232,7 +232,7 @@ onBeforeUnmount(() => {
     <div v-if="editor" class="editor-header">
       <UButton
         icon="i-lucide-undo-2"
-        size="sm"
+        size="xs"
         color="neutral"
         variant="ghost"
         :disabled="!editor.can().undo()"
@@ -241,7 +241,7 @@ onBeforeUnmount(() => {
 
       <UButton
         icon="i-lucide-redo-2"
-        size="sm"
+        size="xs"
         color="neutral"
         variant="ghost"
         :disabled="!editor.can().redo()"
@@ -254,7 +254,7 @@ onBeforeUnmount(() => {
         class="rounded-sm"
         :class="{ 'is-active': editor.isActive('bold') }"
         icon="i-lucide-bold"
-        size="sm"
+        size="xs"
         color="neutral"
         :variant="editor.isActive('bold') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleBold().run()"
@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
         class="rounded-sm"
         :class="{ 'is-active': editor.isActive('italic') }"
         icon="i-lucide-italic"
-        size="sm"
+        size="xs"
         color="neutral"
         :variant="editor.isActive('italic') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleItalic().run()"
@@ -274,7 +274,7 @@ onBeforeUnmount(() => {
         class="rounded-sm"
         :class="{ 'is-active': editor.isActive('highlight') }"
         icon="i-lucide-highlighter"
-        size="sm"
+        size="xs"
         color="neutral"
         :variant="editor.isActive('highlight') ? 'outline' : 'ghost'"
         @click="editor.chain().focus().toggleHighlight().run()"
@@ -285,7 +285,7 @@ onBeforeUnmount(() => {
       <UButton
         :class="{ 'is-active': editor.isActive('multiSelect') }"
         icon="i-lucide-mouse-pointer-click"
-        size="sm"
+        size="xs"
         color="neutral"
         :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleSelection().run()"
@@ -294,7 +294,7 @@ onBeforeUnmount(() => {
 
       <UButton
         :class="{ 'is-active': selectionCount > 0 }"
-        size="sm"
+        size="xs"
         icon="i-lucide-eraser"
         color="neutral"
         variant="ghost"
