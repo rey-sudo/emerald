@@ -8,6 +8,16 @@ services:
       - ./bin/worker/.env
     networks:
       - shared-network
+  document-state-cache:
+    build:
+      context: ./bin/cache
+      dockerfile: Dockerfile
+    container_name: document_state_cache
+    env_file:
+      - ./bin/cache/.env
+    networks:
+      - shared-network
+
 
 #  document-processor-tiptap:
 #    build:

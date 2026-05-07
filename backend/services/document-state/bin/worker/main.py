@@ -143,7 +143,6 @@ class SnapshotWorker:
 
         # 3. Aplicar los nuevos chunks en orden
         for chunk in new_chunks:
-            log.info(chunk["created_at"])
             doc.apply_update(base64.b64decode(chunk["data"]))
 
         # 4. Serializar el estado final
@@ -265,7 +264,7 @@ class SnapshotWorker:
                     self.consumer.negative_acknowledge(msg)
                     continue
                 
-                log.info(event)
+                log.info(event_id)
                 
                 ids.append(event_id) #event_id == chunk_id
                 doc_ids.append(uuid.UUID(event_data.get("document_id")))
@@ -385,8 +384,6 @@ class SnapshotWorker:
                         for doc_id, doc_chunks in chunks_by_doc.items():
                             # Ordenar por fecha para asegurar consistencia CRDT
                             doc_chunks.sort(key=lambda x: x['created_at'])
-                            
-                            log.info(f"{doc_id} -> {doc_chunks}")
                             
                             await self._upload_document_snapshot(doc_id, doc_chunks)
                             
