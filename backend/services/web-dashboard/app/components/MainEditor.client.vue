@@ -303,9 +303,9 @@ onBeforeUnmount(() => {
       >
         <template #trailing>
           <UBadge
-            class="flex items-center text-center rounded-sm"
+            class="flex items-center text-center rounded-xs"
             color="neutral"
-            variant="subtle"
+            variant="outline"
             size="xs"
             >{{ selectionCount }}</UBadge
           >

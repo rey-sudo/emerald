@@ -129,12 +129,12 @@ onUnmounted(() => {
       :ui="{
         container: 'h-full',
         header:
-          'flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
+          'bg-default flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
         body: 'bg-default',
       }"
     >
       <template #header>
-        <div class="bg-[var(--header-bg)] window-drag flex items-center pl-4">
+        <div class="window-drag flex items-center pl-4">
           <span class="[webkit-app-region:no-drag] z-20">
             <UButton
               class="no-drag"
