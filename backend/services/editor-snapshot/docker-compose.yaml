@@ -1,9 +1,9 @@
 services:
-  editor-snapshot-worker:
+  document-state-worker:
     build:
       context: ./bin/worker
       dockerfile: Dockerfile
-    container_name: editor_snapshot_worker
+    container_name: document_state_worker
     env_file:
       - ./bin/worker/.env
     networks:

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS editor_chunks (
+CREATE TABLE IF NOT EXISTS document_chunks (
     id UUID PRIMARY KEY,
     document_id UUID NOT NULL,
     status VARCHAR(100) NOT NULL,
@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS editor_chunks (
 );
 
 CREATE INDEX IF NOT EXISTS idx_chunks_affinity_status 
-ON editor_chunks (document_id, status) 
+ON document_chunks (document_id, status) 
 WHERE status = 'PENDING';
 
 CREATE INDEX IF NOT EXISTS idx_chunks_created_at 
-ON editor_chunks (created_at);
+ON document_chunks (created_at);

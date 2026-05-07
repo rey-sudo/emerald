@@ -37,7 +37,7 @@ SUBSCRIPTION = "snapshot-worker"
 POSTGRES_DSN = "postgresql://postgres:password@postgres_global:5432/editor_snapshot"
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
-logger = logging.getLogger("SnapshotWorker")
+log = logging.getLogger("SnapshotWorker")
 
 # ================= WORKER =================
 
@@ -50,6 +50,7 @@ class SnapshotWorker:
             consumer_type=pulsar.ConsumerType.KeyShared,
             receiver_queue_size=500,
             unacked_messages_timeout_ms=30000
+            #TODO: ADD DLQ
         )
         self.pg_pool = None
         self._s3 = None                         
@@ -60,10 +61,10 @@ class SnapshotWorker:
         self.doc_cache = {}
         
     async def init(self):
-        logger.info("Connecting to Postgres...")
+        log.info("Connecting to Postgres...")
         self.pg_pool = await asyncpg.create_pool(dsn=POSTGRES_DSN, min_size=5, max_size=20)
 
-        logger.info("Connecting to S3...")
+        log.info("Connecting to S3...")
         self._s3_cm = aioboto3.Session().client(
             "s3",
             endpoint_url=os.environ.get("S3_ENDPOINT"),
@@ -102,7 +103,7 @@ class SnapshotWorker:
 
         # 3. Aplicar los nuevos chunks en orden
         for chunk in new_chunks:
-            logger.info(chunk["created_at"])
+            log.info(chunk["created_at"])
             doc.apply_update(base64.b64decode(chunk["data"]))
 
         # 4. Serializar el estado final
@@ -127,6 +128,10 @@ class SnapshotWorker:
                 ContentType="application/octet-stream"
             )
         )
+        
+        #WRITE: document_snapshots.sql with retry
+        #WRITE: snapshot.created outbox event 
+        #WRITE: redis binary cache.
         
         return snapshot_id
 
@@ -165,45 +170,50 @@ class SnapshotWorker:
                 json.dumps(metadata),
             )
 
-# TASK #1 EVENT CONSUMER -----------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
+# TASK #1 EVENT CONSUMER
+#-----------------------------------------------------------------------------------------------------------------------
 
     async def _consume_task(self):
-        """Tarea resiliente que persiste chunks en Postgres"""
-        logger.info("Consumidor iniciado.")
+        """Resilient consumer loop: receives message batches and persists chunks to Postgres."""
+        log.info("Consumer loop started.")
         while not self.stop_event.is_set():
             try:
-                # Pulsar batch_receive es bloqueante, lo movemos a un thread
+                # 1. batch_receive is blocking, so execute it in a worker thread
                 messages = await asyncio.to_thread(self.consumer.batch_receive)
                 if not messages:
                     await asyncio.sleep(0.1)
                     continue
-
+                
+                 # 2. Persist received chunks into Postgres
                 try: 
                     await self._persist_chunks(messages)        
-                
                 except Exception as e:
-                    logger.error(f"Error persistiendo batch: {e}")
+                    log.error(f"Error persisting in batch: {e}")
+                    
                     for msg in messages:
                         self.consumer.negative_acknowledge(msg)
-                    await asyncio.sleep(1) # Backoff
-
+                        
+                    await asyncio.sleep(1) 
+                    
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.exception(f"Error fatal en consumidor: {e}")
+                log.exception(f"Fatal consumer error: {e}")
                 await asyncio.sleep(2)
 
     async def _persist_chunks(self, messages):
-        """
-        Estrategia optimizada para 100M+ registros.
-        Maneja el desempaquetado de columnas para el UNNEST de Postgres.
-        """
-        # Listas independientes para cada columna (requerido por el unnest de asyncpg)
+        """Parse, validate, batch insert, acknowledge, and track chunk events using optimized Postgres UNNEST persistence."""
+
+        # 1. Column-oriented buffers required for asyncpg UNNEST batch insertion
         ids, doc_ids, statuses, datas, sources, created_ats = [], [], [], [], [], []
+        
+        # 2. Map event IDs to original messages for ACK/NACK handling
         msg_map = {}
 
         for msg in messages:
             try:
+                # 3. Deserialize incoming event payload
                 event = json.loads(msg.data())
                 event_id = uuid.UUID(event.get("event_id"))
                 event_data = event.get("data")
@@ -211,11 +221,11 @@ class SnapshotWorker:
                  #TODO: ADD TYPE VALIATION OF DATA AND EVENT - TO DLQ
                  
                 if not event_id or not event_data:
-                    logger.warning(f"Event malformed: {event_id}")
+                    log.warning(f"Event malformed: {event_id}")
                     self.consumer.negative_acknowledge(msg)
                     continue
                 
-                logger.info(event)
+                log.info(event)
                 
                 ids.append(event_id) #event_id == chunk_id
                 doc_ids.append(uuid.UUID(event_data.get("document_id")))
@@ -228,7 +238,7 @@ class SnapshotWorker:
                 msg_map[event_id] = msg
                 
             except Exception as e:
-                logger.error(f"Error parseando mensaje: {e}")
+                log.error(f"Error parseando mensaje: {e}")
                 self.consumer.negative_acknowledge(msg)
                 continue
 
@@ -236,7 +246,7 @@ class SnapshotWorker:
             return
 
         SQL_INSERT_QUERY = """
-            INSERT INTO editor_chunks (id, document_id, status, data, source, created_at)
+            INSERT INTO document_chunks (id, document_id, status, data, source, created_at)
             SELECT * FROM unnest(
                 $1::uuid[], $2::uuid[], $3::varchar[], $4::text[], $5::varchar[], $6::bigint[]
             )
@@ -257,11 +267,11 @@ class SnapshotWorker:
 
                     for event_id, msg in msg_map.items():
                         if event_id not in inserted_ids:
-                            logger.warning(f"Evento duplicado ignorado: {event_id}")
+                            log.warning(f"Evento duplicado ignorado: {event_id}")
                               
                 #TX COMMIT IMPLICIT!                      
                 except Exception as e:
-                    logger.error(f"Error en persistencia batch: {e}")
+                    log.error(f"Error en persistencia batch: {e}")
                     # Importante: No hagas ACK aquí para que el sistema de mensajería reintente el lote
                     raise 
                 
@@ -274,11 +284,13 @@ class SnapshotWorker:
         async with self._pending_chunk_ids_lock:
             self._pending_chunk_ids.update(all_chunk_ids)          
          
-# TASK #2 PROCESS CHUNKS -----------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
+# TASK #2 PROCESS CHUNKS
+#-----------------------------------------------------------------------------------------------------------------------
 
     async def _processor_task(self):
         """Tarea que procesa chunks persistidos (ej. subir a S3)"""
-        logger.info("Procesador de snapshots iniciado.")
+        log.info("Procesador de snapshots iniciado.")
         while not self.stop_event.is_set():
             try:
                 # Espera 30s o hasta que se pida cerrar
@@ -293,7 +305,7 @@ class SnapshotWorker:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.error(f"Error en procesador: {e}")
+                log.error(f"Error en procesador: {e}")
                 await asyncio.sleep(5)
 
     async def _process_chunks(self):
@@ -311,7 +323,7 @@ class SnapshotWorker:
                     try:
                         # 1. Bloqueamos los chunks (Si falla la función, el rollback los vuelve a PENDING)
                         rows = await conn.fetch("""
-                            UPDATE editor_chunks
+                            UPDATE document_chunks
                             SET status = 'PROCESSING'
                             WHERE id = ANY($1::uuid[])
                             AND status = 'PENDING'
@@ -333,7 +345,7 @@ class SnapshotWorker:
                             # Ordenar por fecha para asegurar consistencia CRDT
                             doc_chunks.sort(key=lambda x: x['created_at'])
                             
-                            logger.info(f"{doc_id} -> {doc_chunks}")
+                            log.info(f"{doc_id} -> {doc_chunks}")
                             
                             await self._upload_document_snapshot(doc_id, doc_chunks)
                             
@@ -344,33 +356,36 @@ class SnapshotWorker:
                         # 3. Marcar como COMPLETED dentro de la misma transacción
                         if processed_ids:
                             await conn.execute("""
-                                UPDATE editor_chunks
+                                UPDATE document_chunks
                                 SET status = 'COMPLETED'
                                 WHERE id = ANY($1::uuid[])
                             """, processed_ids)
                             
                         # IMPLICIT TX COMMIT !
                         
-                        logger.info(f"Transacción exitosa: {len(processed_ids)} chunks procesados.")
+                        log.info(f"Transacción exitosa: {len(processed_ids)} chunks procesados.")
 
                     except Exception as e:
                         # Si algo falla aquí, la transacción hace ROLLBACK automáticamente
                         # Los chunks regresan a 'PENDING' en la DB
-                        logger.error(f"Error procesando lote. Rollback ejecutado: {e}")
+                        log.error(f"Error procesando lote. Rollback ejecutado: {e}")
                         raise # Re-lanzamos para evitar limpiar los IDs de la memoria
 
             # Solo si la transacción fue exitosa, limpiamos los IDs del set de memoria
             async with self._pending_chunk_ids_lock:
                 self._pending_chunk_ids.difference_update(chunk_ids)
+                
+#-----------------------------------------------------------------------------------------------------------------------
+# RUN
+#-----------------------------------------------------------------------------------------------------------------------
 
     def _shutdown(self):
-        logger.info("Shutdown signal received...")
+        log.info("Shutdown signal received...")
         self.stop_event.set()
         
         
     async def run(self):
-        # 1. Add signal handlers. --------------------------------------------------------------------------------------
-
+        # 1. Add signal handlers.
         loop = asyncio.get_running_loop()
         for sig in (signal.SIGINT, signal.SIGTERM):
             try:
@@ -378,32 +393,36 @@ class SnapshotWorker:
             except NotImplementedError: 
                 pass
             
-        # 2. Create worker tasks. --------------------------------------------------------------------------------------
-        
+        # 2. Create worker tasks. 
         try:
             async with asyncio.TaskGroup() as tg:
                 t1 = tg.create_task(self._consume_task())
                 t2 = tg.create_task(self._processor_task())
                 
                 await self.stop_event.wait()
-                logger.info("Cerrando tareas concurrentes...")
+                log.info("Closing concurrent tasks...")
                 t1.cancel()
                 t2.cancel()
         except Exception as e:
-            logger.error(f"Error en el TaskGroup: {e}")
+            log.error(f"TaskGroup Error: {e}")
             
             
     async def close(self):
-        logger.info("Limpiando recursos...")
+        log.info("Initiating the closing process...")
+        
         if self.consumer:
             self.consumer.close()
+            
         if self.client:
             self.client.close()
+            
         if self.pg_pool:
             await self.pg_pool.close()
+            
         if self._s3_cm:                         
             await self._s3_cm.__aexit__(None, None, None)
-        logger.info("Worker apagado correctamente.")           
+            
+        log.info("Worker shut down properly.")           
             
 #-----------------------------------------------------------------------------------------------------------------------
 # MAIN 
