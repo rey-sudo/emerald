@@ -324,8 +324,8 @@ onBeforeUnmount(() => {
         <UBadge
           class="flex items-center text-center"
           color="neutral"
-          variant="subtle"
-          size="xs"
+          variant="ghost"
+          size="sm"
           >Page 23 of 253</UBadge
         >
       </span>
@@ -405,7 +405,7 @@ onBeforeUnmount(() => {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1100px; /* Muy importante para el scrollbar */
   min-height: 100px;
-  border-bottom: 1px solid var(--ui-border-muted);
+  border-bottom: 1px solid var(--ui-border);
 }
 
 /* --- INDICADOR DE PÁGINA (ESTÉTICO) --- */
@@ -446,7 +446,7 @@ h1 {
   gap: 0.5rem;
   display: flex;
   align-items: center;
-  padding: 0.25rem 1rem;
-  border-top: 1px solid var(--ui-border-muted);
+  padding: 0rem 1rem;
+  border-top: 1px solid var(--ui-border);
 }
 </style>
