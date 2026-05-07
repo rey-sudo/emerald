@@ -18,9 +18,9 @@ const open = ref(true);
 
 const activeTabId = ref(1);
 const myTabs = ref([
-  { id: 1, label: "Decreto 1080 de..." },
+  { id: 1, label: "Decreto 1080 de 2020" },
   { id: 2, label: "Acuerdo 001 de 2024" },
-  { id: 3, label: "Resolucion 5402 de..." },
+  { id: 3, label: "Resolucion 5402 de 2025" },
 ]);
 
 const handleClose = (id: any) => {

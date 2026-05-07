@@ -70,11 +70,10 @@ const isDocumentRoute = computed(() => {
   display: flex;
   align-items: center;
   padding: 0.75rem;
-  min-width: 120px;
-  max-width: 200px;
+  width: 12rem;
   cursor: pointer;
   color: var(--ui-text-muted);
-  font-size: 13px;
+  font-size: var(--text-xs);
   border-radius: calc(var(--ui-radius) * 1);
   border-bottom-left-radius: initial;
   border-bottom-right-radius: initial;
