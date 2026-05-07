@@ -7,3 +7,5 @@ aiofiles
 aiohttp
 uuid6
 pycrdt
+redis[hiredis]>=7.1.1
+python-dotenv

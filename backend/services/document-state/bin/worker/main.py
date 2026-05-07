@@ -13,12 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from collections import defaultdict
-from uuid6 import uuid7
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from dotenv import load_dotenv
+load_dotenv()
 from pycrdt import Doc
+from uuid6 import uuid7
+from collections import defaultdict
 from botocore.config import Config
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
+import redis.asyncio as aioredis
 import os
 import asyncio
 import json
@@ -34,7 +37,8 @@ import base64
 PULSAR_URL = "pulsar://broker:6650"
 TOPIC = "persistent://public/default/chunk.created"
 SUBSCRIPTION = "snapshot-worker"
-POSTGRES_DSN = "postgresql://postgres:password@postgres_global:5432/editor_snapshot"
+POSTGRES_DSN = "postgresql://postgres:password@postgres_global:5432/document_state"
+REDIS_DOC_TTL = 60 * 60 * 2 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 log = logging.getLogger("SnapshotWorker")
@@ -55,11 +59,12 @@ class SnapshotWorker:
         self.pg_pool = None
         self._s3 = None                         
         self._s3_cm = None
+        self._redis: aioredis.Redis | None = None
+        
         self.stop_event = asyncio.Event()
         self._pending_chunk_ids: set[uuid.UUID] = set()
         self._pending_chunk_ids_lock = asyncio.Lock()
-        self.doc_cache = {}
-        
+    
     async def init(self):
         log.info("Connecting to Postgres...")
         self.pg_pool = await asyncpg.create_pool(dsn=POSTGRES_DSN, min_size=5, max_size=20)
@@ -79,27 +84,62 @@ class SnapshotWorker:
             )
         )
         self._s3 = await self._s3_cm.__aenter__()
+        
+        log.info("Connecting to Redis...")
+        self._redis = aioredis.Redis.from_url(
+            os.environ.get("REDIS_URL"), 
+            decode_responses=False,
+            max_connections=10,
+            socket_connect_timeout=5,
+            socket_timeout=10,
+            retry_on_timeout=True,
+        )
+        await self._redis.ping()
+        
 
+#------------------------------------------------------------------------------
+# REDIS
+#------------------------------------------------------------------------------
+
+    async def _get_doc(self, doc_id: uuid.UUID) -> Doc:
+        """Carga el Doc Yjs desde Redis o S3, en ese orden."""
+        cache_key = f"doc:{doc_id}:state"
+        
+        try:
+            cached = await self._redis.get(cache_key)
+            if cached:
+                log.info(f"Cache HIT para doc_id={doc_id}")
+                doc = Doc()
+                doc.apply_update(cached)
+                return doc
+        except Exception as e:
+            log.info(f"Cache MISS para doc_id={doc_id}, cargando desde S3...")
+        
+        try:
+            response = await self._s3.get_object(
+                Bucket="documents",
+                Key=f"{doc_id}/{doc_id}.yjs"
+            )
+            existing = await response['Body'].read()
+            doc = Doc()
+            doc.apply_update(existing)
+            return doc
+        except self._s3.exceptions.NoSuchKey:
+            raise ValueError(f"Original YJS binary not found for doc_id={doc_id}")
+            
+    async def _set_doc(self, doc_id: uuid.UUID, snapshot: bytes):
+        """Persiste el snapshot en Redis con TTL."""
+        cache_key = f"doc:{doc_id}:state"
+        await self._redis.set(cache_key, snapshot, ex=REDIS_DOC_TTL)
+        
 #------------------------------------------------------------------------------
 # S3 SNAPSHOT
 #------------------------------------------------------------------------------
 
     async def _upload_document_snapshot(self, doc_id, new_chunks):
         # 1. Descargar estado actual
-        if doc_id in self.doc_cache:
-            doc = self.doc_cache[doc_id]
-        else:
-            try:
-                response = await self._s3.get_object(
-                    Bucket="documents",
-                    Key=f"{doc_id}/{doc_id}.yjs"
-                )
-                existing = await response['Body'].read()
-            except self._s3.exceptions.NoSuchKey:
-                raise ValueError(f"Original YJS binary not found for doc_id={doc_id}")
-
-            doc = Doc()
-            doc.apply_update(existing)
+        
+        doc = await self._get_doc(doc_id)
 
         # 3. Aplicar los nuevos chunks en orden
         for chunk in new_chunks:
@@ -108,8 +148,6 @@ class SnapshotWorker:
 
         # 4. Serializar el estado final
         snapshot = doc.get_update()
-        
-        self.doc_cache[doc_id] = doc
         
         # 5. Subir snapshot a S3
         snapshot_id = uuid7()  
@@ -126,9 +164,11 @@ class SnapshotWorker:
                 Key=f"{doc_id}/{doc_id}.yjs",  
                 Body=snapshot,
                 ContentType="application/octet-stream"
-            )
+            ),
+            self._set_doc(doc_id, snapshot)
         )
         
+        #TODO:
         #WRITE: document_snapshots.sql with retry
         #WRITE: snapshot.created outbox event 
         #WRITE: redis binary cache.
@@ -331,8 +371,9 @@ class SnapshotWorker:
                         """, chunk_ids)
 
                         if not rows:
-                            self._pending_chunk_ids.difference_update(chunk_ids)
-                            return
+                            async with self._pending_chunk_ids_lock:
+                                self._pending_chunk_ids.difference_update(chunk_ids)
+                                return
 
                         # 2. Agrupar y procesar en memoria
                         chunks_by_doc = defaultdict(list)
@@ -421,7 +462,10 @@ class SnapshotWorker:
             
         if self._s3_cm:                         
             await self._s3_cm.__aexit__(None, None, None)
-            
+
+        if self._redis:
+            await self._redis.aclose()
+                        
         log.info("Worker shut down properly.")           
             
 #-----------------------------------------------------------------------------------------------------------------------
