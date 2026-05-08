@@ -219,7 +219,7 @@ rounded-3xl
   --ui-text-inverted: white;
 
   /* ========== Borders ========== */
-  --ui-border: var(--ui-color-neutral-200);
+  --ui-border: var(--ui-color-neutral-100);
   --ui-border-muted: var(--ui-color-neutral-200);
   --ui-border-accented: var(--ui-color-neutral-300);
   --ui-border-inverted: var(--ui-color-neutral-900);
