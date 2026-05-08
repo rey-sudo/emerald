@@ -286,14 +286,15 @@ onBeforeUnmount(() => {
         :class="{ 'is-active': editor.isActive('multiSelect') }"
         icon="i-lucide-mouse-pointer-click"
         size="xs"
-        color="neutral"
+        label="Select"
+        color="primary"
         :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleSelection().run()"
-        >Select</UButton
-      >
+        />
 
       <UButton
         :class="{ 'is-active': selectionCount > 0 }"
+        label="Clean"
         size="xs"
         icon="i-lucide-eraser"
         color="neutral"
