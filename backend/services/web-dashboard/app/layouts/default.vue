@@ -129,7 +129,7 @@ onUnmounted(() => {
       :ui="{
         container: 'h-full',
         header:
-          'bg-default flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
+          'flex items-center gap-1.5 overflow-hidden  px-0 min-h-(--ui-header-height)',
         body: 'bg-default',
       }"
     >

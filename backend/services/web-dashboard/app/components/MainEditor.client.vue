@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
   <div class="editor-layout">
     <div v-if="editor" class="editor-header">
       <UButton
-        icon="i-lucide-undo-2"
+        icon="lucide:undo"
         size="xs"
         color="neutral"
         variant="ghost"
@@ -240,7 +240,7 @@ onBeforeUnmount(() => {
       />
 
       <UButton
-        icon="i-lucide-redo-2"
+        icon="lucide:redo"
         size="xs"
         color="neutral"
         variant="ghost"
@@ -253,7 +253,7 @@ onBeforeUnmount(() => {
       <UButton
         class="rounded-sm"
         :class="{ 'is-active': editor.isActive('bold') }"
-        icon="i-lucide-bold"
+        icon="lucide:bold"
         size="xs"
         color="neutral"
         :variant="editor.isActive('bold') ? 'outline' : 'ghost'"
@@ -263,7 +263,7 @@ onBeforeUnmount(() => {
       <UButton
         class="rounded-sm"
         :class="{ 'is-active': editor.isActive('italic') }"
-        icon="i-lucide-italic"
+        icon="lucide:italic"
         size="xs"
         color="neutral"
         :variant="editor.isActive('italic') ? 'outline' : 'ghost'"
@@ -273,10 +273,30 @@ onBeforeUnmount(() => {
       <UButton
         class="rounded-sm"
         :class="{ 'is-active': editor.isActive('highlight') }"
-        icon="i-lucide-highlighter"
+        icon="lucide:highlighter"
         size="xs"
         color="neutral"
         :variant="editor.isActive('highlight') ? 'outline' : 'ghost'"
+        @click="editor.chain().focus().toggleHighlight().run()"
+      />
+
+      <UButton
+        class="rounded-sm"
+        :class="{ 'is-active': editor.isActive('test') }"
+        icon="i-lucide-list"
+        size="xs"
+        color="neutral"
+        variant="ghost"
+        @click="editor.chain().focus().toggleHighlight().run()"
+      />
+
+      <UButton
+        class="rounded-sm"
+        :class="{ 'is-active': editor.isActive('test') }"
+        icon="i-lucide-code"
+        size="xs"
+        color="neutral"
+        variant="ghost"
         @click="editor.chain().focus().toggleHighlight().run()"
       />
 
@@ -284,19 +304,19 @@ onBeforeUnmount(() => {
 
       <UButton
         :class="{ 'is-active': editor.isActive('multiSelect') }"
-        icon="i-lucide-mouse-pointer-click"
+        icon="lucide:mouse-pointer-click"
         size="xs"
         label="Select"
         color="primary"
         :variant="editor.isActive('multiSelect') ? 'subtle' : 'ghost'"
         @click="editor.chain().focus().toggleSelection().run()"
-        />
+      />
 
       <UButton
         :class="{ 'is-active': selectionCount > 0 }"
         label="Clean"
         size="xs"
-        icon="i-lucide-eraser"
+        icon="lucide:brush-cleaning"
         color="neutral"
         variant="ghost"
         :disabled="!selectionCount"
@@ -347,11 +367,12 @@ onBeforeUnmount(() => {
   gap: 0.5rem;
   z-index: 10;
   display: flex;
+  min-height: 2.5rem;
   align-items: center;
-  padding: 0.25rem 1rem;
+  padding: 0rem 1rem;
   border-bottom: 1px solid var(--ui-border);
-  border-bottom-left-radius: calc(var(--ui-radius) * 0);
-  border-bottom-right-radius: calc(var(--ui-radius) * 0);
+  border-bottom-left-radius: calc(var(--ui-radius) * 1);
+  border-bottom-right-radius: calc(var(--ui-radius) * 1);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
@@ -446,6 +467,7 @@ h1 {
   z-index: 10;
   gap: 0.5rem;
   display: flex;
+  min-height: 1.5rem;
   align-items: center;
   padding: 0rem 1rem;
   border-top: 1px solid var(--ui-border);
