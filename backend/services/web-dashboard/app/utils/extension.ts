@@ -280,7 +280,7 @@ export const MultiSelect = Mark.create<MultiSelectOptions, MultiSelectStorage>({
         parseHTML: (el) => el.getAttribute("data-ms-color"),
         renderHTML: (attrs) => ({
           "data-ms-color": attrs.color,
-          style: `background-color: ${attrs.color}40; border-bottom: 2px solid ${attrs.color};`,
+          style: `background-color: ${attrs.color}30; border-bottom: 2px solid ${attrs.color};`,
         }),
       },
     };

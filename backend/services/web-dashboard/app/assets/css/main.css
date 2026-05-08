@@ -106,19 +106,19 @@ rounded-3xl
 */
 
 :root {
-  --ui-color-neutral-50: #fafbfc;
-  --ui-color-neutral-100: #f3f5f7;
-  --ui-color-neutral-200: #e7eaf0;
-  --ui-color-neutral-300: #d6dbe4;
-  --ui-color-neutral-400: #b3bac7;
-  --ui-color-neutral-500: #8b93a3;
-  --ui-color-neutral-600: #667085;
-  --ui-color-neutral-700: #4b5565;
-  --ui-color-neutral-800: #353c48;
-  --ui-color-neutral-900: #242932;
-  --ui-color-neutral-925: #1c2027;
-  --ui-color-neutral-950: #14171d;
-  --ui-color-neutral-1000: #0b0d12;
+  --ui-color-neutral-50: #e9edf2;
+  --ui-color-neutral-100: #dce2ea;
+  --ui-color-neutral-200: #c3ccd8;
+  --ui-color-neutral-300: #a1adbd;
+  --ui-color-neutral-400: #7d8899;
+  --ui-color-neutral-500: #5f6979;
+  --ui-color-neutral-600: #49515f;
+  --ui-color-neutral-700: #353b46;
+  --ui-color-neutral-800: #262b33;
+  --ui-color-neutral-900: #1b1f26;
+  --ui-color-neutral-925: #15181e;
+  --ui-color-neutral-950: #101216;
+  --ui-color-neutral-1000: #08090c;
 
   /* ========== Escala Primary ========== */
   --ui-color-primary-50: #eff6ff;
