@@ -1,0 +1,15 @@
+services:
+  quiz-worker:
+    build:
+      context: ./bin/worker
+      dockerfile: Dockerfile
+    container_name: quiz_worker
+    env_file:
+      - ./bin/worker/.env
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
+    name: global-infra-net
