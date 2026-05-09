@@ -26,19 +26,7 @@ def decode(raw: bytes) -> str:
     return "\n".join(parts)
 
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python extract_raw.py file.yjs")
-        sys.exit(1)
-
-    path = Path(sys.argv[1])
-    text = decode(path.read_bytes())
-
-    out = path.with_name(f"{path.stem}_raw.txt")
-    out.write_text(text, encoding="utf-8")
-
-    print(f"✅ {len(text)} chars → {out}")
-
-
-if __name__ == "__main__":
-    main()
+def extract_raw_text(data):
+    text = decode(data)
+    
+    return text

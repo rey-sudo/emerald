@@ -52,21 +52,14 @@ def parse(strings: list[str]) -> list[dict]:
     return sorted(items.values(), key=lambda x: (x["order"], x["id"]))
 
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python extract.py file.yjs")
-        sys.exit(1)
-
-    path = Path(sys.argv[1])
-    items = parse(decode(path.read_bytes()))
-
-    out = path.with_name(f"{path.stem}_multiselects.json")
-    out.write_text(json.dumps(items, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"✅ {len(items)} items → {out}\n")
+def extract_multiselect(data):
+    items = parse(decode(data))
 
     for item in items:
         preview = item["text"].replace("\n", " ").strip()[:100]
         print(f"[{item['order']:03}] {item['color']:<10} {preview}")
+ 
+
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ questionsAdapter = TypeAdapter(List[QuestionItem])
 formato_preguntas = questionsAdapter.json_schema()
 
 
-class PromptConfig(BaseModel):
+class Prompt(BaseModel):
     index: int
     debug: bool
     append: bool
@@ -26,7 +26,7 @@ class PromptConfig(BaseModel):
     type_adapter: Any 
     content: str
     
-def get_create_questions_prompts(context: str, article: str, filename: str) -> list[PromptConfig]:
+def get_create_questions_prompts(context: str, article: str, filename: str) -> list[Prompt]:
     p1_data = {
         "index": 0,
         "debug": False,
@@ -96,9 +96,9 @@ def get_create_questions_prompts(context: str, article: str, filename: str) -> l
     }
     
     prompts = [
-        PromptConfig(**p1_data),
-        PromptConfig(**p2_data),
-        PromptConfig(**p3_data)  
+        Prompt(**p1_data),
+        Prompt(**p2_data),
+        Prompt(**p3_data)  
     ]
 
     return prompts
