@@ -6,7 +6,6 @@ import os
 
 import spacy
 import yake
-import opendataloader_pdf
 
 from langdetect import detect, LangDetectException
 
@@ -53,29 +52,6 @@ def obtener_nlp(idioma):
             return None
 
     return modelos_cargados[idioma]
-
-
-# =========================
-# PDF -> MARKDOWN
-# =========================
-def convert_pdf_to_markdown(pdf_path):
-
-    opendataloader_pdf.convert(
-        input_path=[str(pdf_path)],
-        output_dir="output/",
-        image_output="off",
-        html_page_separator="<div data-type='page' data-number='%page-number%' id='page-%page-number%' class='page-virtual'></div>",
-        format="html,markdown",
-    )
-
-    md_file = OUTPUT_DIR / f"{pdf_path.stem}.md"
-
-    if not md_file.exists():
-        raise FileNotFoundError(
-            f"No se generó markdown para {pdf_path.name}"
-        )
-
-    return md_file
 
 
 # =========================
@@ -145,7 +121,7 @@ def extract_spacy_keywords(texto):
 # YAKE trabaja SOLO sobre
 # el output generado por spaCy
 # =========================
-def filter_keywords_with_yake(spacy_text, top_n=50):
+def filter_keywords_with_yake(spacy_text, top_n=100):
 
     kw_extractor = yake.KeywordExtractor(
         lan="auto",
@@ -166,19 +142,7 @@ def filter_keywords_with_yake(spacy_text, top_n=50):
 # =========================
 # PROCESAMIENTO PRINCIPAL
 # =========================
-def process_pdf(pdf_path):
-
-    print(f"\n📄 Procesando: {pdf_path.name}")
-
-    # 1. PDF -> MD
-    md_path = convert_pdf_to_markdown(pdf_path)
-
-    text = md_path.read_text(encoding="utf-8")
-
-    if not text.strip():
-        print("❌ No se pudo extraer texto")
-        return
-
+def extract_keywords(text):
     # 2. spaCy
     spacy_keywords = extract_spacy_keywords(text)
 
@@ -203,7 +167,7 @@ def process_pdf(pdf_path):
     # ordenar opcionalmente
     keywords_finales = sorted(keywords_finales)
 
-    output_txt = OUTPUT_DIR / f"{pdf_path.stem}_keywords.txt"
+    output_txt = OUTPUT_DIR / f"test_keywords.txt"
 
     with open(output_txt, "w", encoding="utf-8") as f:
 
@@ -213,17 +177,3 @@ def process_pdf(pdf_path):
     print(f"✅ Keywords guardadas en: {output_txt}")
 
 
-# =========================
-# MAIN
-# =========================
-if __name__ == "__main__":
-
-    pdf_files = list(INPUT_DIR.glob("*.pdf"))
-
-    if not pdf_files:
-        print("❌ No se encontraron PDFs en /input")
-
-    else:
-
-        for pdf in pdf_files:
-            process_pdf(pdf)
