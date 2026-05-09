@@ -46,6 +46,11 @@
             fill="var(--ui-primary)"
             opacity="1"
           />
+          <path
+            d="M0 42 Q0 14 28 14 L96 14 Q120 14 124 28 L124 56 Q92 56 28 56 Q0 56 0 42 Z"
+            fill="var(--ui-primary)"
+            opacity=".9"
+          />
           <rect
             x="0"
             y="28"
@@ -55,12 +60,15 @@
             fill="url(#fold)"
             opacity="0.18"
           />
-          <path
-            d="M0 42 Q0 14 28 14 L96 14 Q120 14 124 28 L124 56 Q92 56 28 56 Q0 56 0 42 Z"
-            fill="var(--ui-primary)"
+
+          <rect
+            x="40"
+            y="20"
+            width="50"
+            height="10"
+            :fill="folder.color"
             opacity="1"
           />
-          <circle cx="265" cy="60" r="10" :fill="folder.color" opacity="1" />
         </svg>
       </div>
 
@@ -144,7 +152,6 @@ const contextMenuItems = ref<ContextMenuItem[]>([
   padding-right: 0.25rem;
   display: flex;
   align-items: center;
-  cursor: pointer;
   position: relative;
   flex-direction: column;
   user-select: none;
