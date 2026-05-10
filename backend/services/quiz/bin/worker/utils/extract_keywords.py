@@ -166,14 +166,9 @@ def extract_keywords(text):
 
     # ordenar opcionalmente
     keywords_finales = sorted(keywords_finales)
+    
+    return ", ".join(keywords_finales)
 
-    output_txt = OUTPUT_DIR / f"test_keywords.txt"
 
-    with open(output_txt, "w", encoding="utf-8") as f:
-
-        for keyword in keywords_finales:
-            f.write(f"{keyword}\n")
-
-    print(f"✅ Keywords guardadas en: {output_txt}")
 
 

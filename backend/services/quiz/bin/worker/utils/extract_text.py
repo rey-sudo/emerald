@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 from pycrdt import Doc, XmlFragment, Text, Map, Array
-
+from markdownify import markdownify as md
 
 def decode(raw: bytes) -> str:
     doc = Doc()
@@ -26,7 +26,7 @@ def decode(raw: bytes) -> str:
     return "\n".join(parts)
 
 
-def extract_raw_text(data):
+def convert_yjs_to_markdown(data):
     text = decode(data)
-    
-    return text
+    result = md(text, strip=['a', 'img', 'script', 'style', 'button', 'nav', 'footer'])
+    return result

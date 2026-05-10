@@ -9,11 +9,9 @@ archivístico
 artículo
 autoridad
 bienes
-bulletlist
-capítulo
+cargo
 carácter
 caso
-central
 clasificación
 comité
 competente
@@ -26,7 +24,6 @@ criterio
 cultural
 cumplimiento
 cumplir
-dato
 decreto
 derecho
 derechos
@@ -46,6 +43,7 @@ establecer
 establecido
 expediente
 fecha
+firma
 formato
 función
 físico
@@ -56,7 +54,6 @@ gestión
 históricos
 humanos
 identificar
-implementación
 información
 institucional
 instrumento
@@ -65,19 +62,18 @@ internacional
 interés
 inventario
 jorge
-listitem
+jurídico
+legal
+lineamiento
 nacional
 nación
 nombre
 norma
 número
 obligado
-oficina
 orden
 organización
-page
 palacios
-paragraph
 parágrafo
 patrimonio
 persona
@@ -85,7 +81,6 @@ plan
 plazo
 política
 preciado
-preciar
 presente
 preservación
 principio
@@ -100,7 +95,6 @@ registro
 requisito
 responsable
 retención
-sección
 serie
 sistema
 solicitud
@@ -111,7 +105,7 @@ sujeto
 tablas
 tiempo
 tipo
-transferencio
+transferencia
 trámite
 técnico
 unidad

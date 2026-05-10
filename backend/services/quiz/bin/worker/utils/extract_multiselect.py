@@ -54,13 +54,9 @@ def parse(strings: list[str]) -> list[dict]:
 
 def extract_multiselect(data):
     items = parse(decode(data))
+    resultado = "\n".join([item['text'] for item in items])
+    return resultado
 
-    for item in items:
-        preview = item["text"].replace("\n", " ").strip()[:100]
-        print(f"[{item['order']:03}] {item['color']:<10} {preview}")
+
  
 
-
-
-if __name__ == "__main__":
-    main()
