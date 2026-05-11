@@ -1,46 +1,35 @@
 [
   {
-    "question": "¿Cuál es el ámbito de aplicación del presente Acuerdo?",
+    "question": "Según el Artículo 1.1.2 del Acuerdo, ¿cuál es el ámbito de aplicación integral que define a los sujetos obligados?",
     "options": [
-      "Sólo para entidades públicas",
-      "Para entidades privadas que cumplen funciones públicas y organismos regulados por la Ley 594 de 2000",
-      "Solo para servidores públicos y trabajadores oficiales",
-      "Para todas las entidades sin excepción"
-    ],
-    "correct": 2,
-    "explanation": "El presente Acuerdo comprende a la administración pública, en sus diferentes niveles: nacional, departamental, distrital, municipal, así como las entidades privadas que cumplen funciones públicas y demás organismos regulados por la Ley 594 de 2000."
-  },
-  {
-    "question": "¿Qué tipo de entidades se consideran sujetas obligadas para efectos del presente Acuerdo?",
-    "options": [
-      "Servidores públicos y trabajadores oficiales",
-      "Personas naturales o jurídicas de derecho privado que cumplen una función pública",
-      "Entidades privadas sin funciones públicas",
-      "Organismos regulados por la Ley 594 de 2000"
-    ],
-    "correct": 2,
-    "explanation": "Para efectos del presente Acuerdo, se hará referencia al término de sujetos obligados, en concordancia con el ámbito de aplicación de la Ley 594 de 2000, para referir a las entidades públicas o privadas que cumplen funciones públicas."
-  },
-  {
-    "question": "¿Qué tipo de documentación se considera como documentos históricos y legales relevantes para Colombia?",
-    "options": [
-      "Documentos producidos por la administración pública",
-      "Documentos recibidos por la administración pública",
-      "Documentos históricos y legales relevantes para Colombia",
-      "Todas las formas de documentación"
-    ],
-    "correct": 3,
-    "explanation": "El Archivo General de la Nación es una institución pública que alberga documentos históricos y legales relevantes para Colombia."
-  },
-  {
-    "question": "¿Qué tipo de información se considera como información institucional?",
-    "options": [
-      "Información sobre la administración pública",
-      "Información sobre entidades privadas",
-      "Información sobre documentos históricos y legales relevantes para Colombia",
-      "Todas las formas de información"
+      "Únicamente la administración pública en sus niveles nacional y departamental.",
+      "La administración pública en todos sus niveles, las entidades privadas que cumplen funciones públicas y otros organismos regulados por la Ley 594 de 2000.",
+      "Exclusivamente las entidades privadas que, por mandato legal, cumplen una función pública.",
+      "Solo los servidores públicos y trabajadores oficiales de entidades públicas."
     ],
     "correct": 1,
-    "explanation": "La gestión documental debe ser llevada a cabo por responsables del área gestión documental y el secretario general o funcionario administrativo de igual o superior jerarquía."
+    "explanation": "El Artículo 1.1.2 establece que el Acuerdo comprende a la administración pública en sus diferentes niveles (nacional, departamental, distrital, municipal), así como a las entidades privadas que cumplen funciones públicas y demás organismos regulados por la Ley 594 de 2000. La opción B abarca todos estos elementos."
+  },
+  {
+    "question": "Conforme al Parágrafo del Artículo 1.1.2, ¿quiénes están específicamente incluidos en el término 'sujetos obligados' en concordancia con la Ley 594 de 2000?",
+    "options": [
+      "Solamente las entidades públicas que gestionan archivos históricos.",
+      "Servidores públicos, trabajadores oficiales, y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública.",
+      "Únicamente las entidades privadas reguladas directamente por el Archivo General de la Nación.",
+      "Cualquier persona natural o jurídica que posea documentos de interés cultural."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 1.1.2 detalla que los 'sujetos obligados' incluyen a servidores públicos, trabajadores oficiales, y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública, además de las entidades públicas o privadas que cumplen funciones públicas."
+  },
+  {
+    "question": "Según el Artículo 1.1.3, ¿cuáles son las fuentes primarias para las definiciones que se deben tener en cuenta para los efectos del presente Acuerdo?",
+    "options": [
+      "Exclusivamente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "Las definiciones del anexo 1 'Definiciones' y el glosario de términos del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Cualquier norma internacional sobre gestión documental y administración de archivos.",
+      "Las definiciones establecidas por el comité de gestión documental de cada entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.1.3 indica claramente que se tendrán en cuenta las definiciones del anexo 1 'Definiciones' y, así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado."
   }
 ]

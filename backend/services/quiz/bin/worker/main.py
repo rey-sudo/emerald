@@ -63,8 +63,6 @@ def generate_quiz():
     result: Quiz = create_quiz(prompt, 13_000)
     
     output_path = OUTPUT_PATH / "questions.json"
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
     new_questions = result.model_dump()
 
     if output_path.exists():
