@@ -1,0 +1,46 @@
+[
+    {
+        "question": "Conforme al Artículo 1.1.2 del Acuerdo, ¿cuál de las siguientes afirmaciones describe con mayor precisión el alcance de la aplicación de la normativa en relación con las entidades privadas?",
+        "options": [
+            "El Acuerdo aplica exclusivamente a las entidades privadas que, por su naturaleza jurídica, tienen un vínculo contractual directo con la administración pública, independientemente de la función que cumplan.",
+            "El ámbito de aplicación se extiende a todas las entidades privadas que operan dentro del territorio nacional, siempre y cuando manejen información de interés público, sin importar si cumplen funciones públicas.",
+            "La normativa abarca a las entidades privadas que ejercen funciones públicas por mandato legal, así como a otros organismos que, sin ser estrictamente públicos, están regulados por la Ley 594 de 2000.",
+            "El Acuerdo solo es aplicable a las entidades privadas cuando estas gestionan archivos históricos que son declarados patrimonio cultural de la nación, bajo la supervisión del Archivo General de la Nación."
+        ],
+        "correct": 2,
+        "explanation": "El Artículo 1.1.2 establece que el Acuerdo comprende a 'las entidades privadas que cumplen funciones públicas y demás organismos regulados por la Ley 594 de 2000'. La opción correcta captura esta dualidad y la condición de cumplir funciones públicas por mandato legal, que es el criterio clave para las entidades privadas, además de la referencia a la Ley 594 de 2000 para otros organismos."
+    },
+    {
+        "question": "Según el Parágrafo del Artículo 1.1.2, la categoría de 'sujetos obligados' se define en concordancia con la Ley 594 de 2000. ¿Cuál de los siguientes escenarios representa un 'sujeto obligado' bajo esta interpretación, que no sería obvio por su naturaleza pública directa?",
+        "options": [
+            "Una empresa de servicios públicos domiciliarios de carácter mixto que gestiona su propia documentación interna, sin delegación expresa de funciones archivísticas por parte del Estado.",
+            "Una fundación sin ánimo de lucro que recibe financiación estatal para proyectos culturales y, por ende, debe rendir cuentas sobre el uso de dichos fondos, pero no ejecuta una función pública delegada.",
+            "Un notario público que, en virtud de su cargo y la ley, da fe pública de actos y contratos, y cuya función implica la creación y custodia de documentos con valor legal y administrativo.",
+            "Un contratista privado que presta servicios de consultoría a una entidad estatal, generando informes técnicos que son propiedad de la entidad contratante, pero sin asumir una función pública inherente."
+        ],
+        "correct": 2,
+        "explanation": "El Parágrafo del Artículo 1.1.2 especifica que 'sujetos obligados' incluye a 'personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. Un notario público, aunque es una persona natural o jurídica de derecho privado, cumple una función pública (dar fe pública) por mandato legal, lo que lo encuadra perfectamente en esta categoría. Las otras opciones describen entidades o personas que, si bien pueden interactuar con el sector público o manejar información relevante, no cumplen una función pública delegada o inherente por mandato legal en el sentido que lo hace un notario."
+    },
+    {
+        "question": "El Artículo 1.1.2 establece el ámbito de aplicación del Acuerdo. Si una entidad privada es regulada por la Ley 594 de 2000, pero no cumple directamente una 'función pública' en el sentido estricto de delegación estatal, ¿cómo se interpreta su inclusión dentro del alcance del presente Acuerdo?",
+        "options": [
+            "Su inclusión se da únicamente si la entidad privada decide voluntariamente adherirse a las directrices del Archivo General de la Nación, dada su naturaleza no pública.",
+            "La entidad privada estaría obligada a cumplir el Acuerdo si la Ley 594 de 2000 la designa explícitamente como sujeto de regulación archivística, independientemente de si cumple una función pública delegada.",
+            "La regulación por la Ley 594 de 2000 implica que la entidad privada debe adoptar las políticas archivísticas solo para los documentos que se relacionen directamente con su interacción con el sector público.",
+            "En este caso, la entidad privada solo estaría sujeta al Acuerdo si sus archivos son declarados de interés cultural o histórico por una autoridad competente, lo que justificaría la intervención del Archivo General de la Nación."
+        ],
+        "correct": 1,
+        "explanation": "El Artículo 1.1.2 menciona 'las entidades privadas que cumplen funciones públicas Y demás organismos regulados por la Ley 594 de 2000'. La conjunción 'y' implica que la segunda parte es una categoría adicional. Por lo tanto, si una entidad privada está regulada por la Ley 594 de 2000, su inclusión en el ámbito de aplicación del Acuerdo se justifica por esa regulación específica, incluso si no cumple una función pública delegada directamente. La Ley 594 de 2000, como Ley General de Archivos, puede establecer obligaciones archivísticas para ciertas entidades privadas por otras razones."
+    },
+    {
+        "question": "Considerando el Artículo 1.1.2 y su Parágrafo, ¿cuál es la implicación fundamental de la referencia a la Ley 594 de 2000 para la interpretación del término 'sujetos obligados'?",
+        "options": [
+            "La Ley 594 de 2000 sirve como un marco legal supletorio que solo se aplica cuando el presente Acuerdo no especifica claramente las responsabilidades archivísticas de una entidad.",
+            "La mención de la Ley 594 de 2000 restringe el alcance de 'sujetos obligados' únicamente a aquellas entidades que la Ley General de Archivos haya definido explícitamente como tales, sin posibilidad de interpretación extensiva.",
+            "La Ley 594 de 2000 actúa como el fundamento normativo que define el universo de entidades y personas (públicas y privadas con función pública) que deben acatar las disposiciones archivísticas, incluyendo las del presente Acuerdo.",
+            "La referencia a la Ley 594 de 2000 implica que los 'sujetos obligados' deben consultar primero dicha ley para determinar si sus funciones son consideradas públicas antes de aplicar cualquier disposición del presente Acuerdo."
+        ],
+        "correct": 2,
+        "explanation": "El Parágrafo del Artículo 1.1.2 establece que 'Para efectos del presente Acuerdo, se hará referencia al término de sujetos obligados, en concordancia con el ámbito de aplicación de la Ley 594 de 2000, Ley General de Archivos'. Esto significa que la Ley 594 de 2000 es el marco legal principal que define quiénes son los sujetos obligados en materia archivística, y el presente Acuerdo se alinea con esa definición. No es un marco supletorio ni restrictivo en el sentido de excluir interpretaciones, sino que es el referente que establece el universo de aplicación."
+    }
+]
