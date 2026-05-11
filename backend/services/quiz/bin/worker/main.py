@@ -1,3 +1,4 @@
+import re
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -16,7 +17,7 @@ import json
 import os
 import langcodes
 import aioboto3
-
+import xml.etree.ElementTree as ET
 
 OUTPUT_PATH = Path("tmp/output")
 OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
@@ -38,7 +39,32 @@ async def download_s3(s3, doc_id: str) -> bytes:
         )
 
 
-async def build_context(s3, doc_id: str):
+def replace_xml_content(file_path, tag, new_text):
+    if not new_text:
+        return
+    
+    file_path = Path(file_path)
+
+    if not file_path.exists():
+        file_path.write_text("", encoding="utf-8")
+
+    content = file_path.read_text(encoding="utf-8")
+
+    pattern = rf"<{tag}>.*?</{tag}>"
+
+    new_block = f"<{tag}>{new_text}</{tag}>"
+
+    if re.search(pattern, content, flags=re.DOTALL):
+        # reemplaza si existe
+        content = re.sub(pattern, new_block, content, flags=re.DOTALL)
+    else:
+        # si no existe, lo agrega
+        content += new_block + "\n"
+
+    file_path.write_text(content, encoding="utf-8")
+
+    
+async def build_context(s3, doc_id: str, bypass_summary: bool = False):
     try:
         print("Downloading S3 binary...")
 
@@ -47,32 +73,50 @@ async def build_context(s3, doc_id: str):
         print("Converting YJS to markdown...")
         md = convert_yjs_to_markdown(data)
 
-        print("Generating summary...")
-        context = summarize_to_three_paragraphs(
-            md,
-            verbose=True,
-            request_delay=1.0
-        )
-
         print("Extracting keywords...")
         keywords = extract_keywords(md)
-
+        
         detected_language = detect(keywords)
         language = langcodes.Language.get(
             detected_language
         ).display_name()
+        
+        print("Generating summary...")
+        context = summarize_to_three_paragraphs(
+            md,
+            language,
+            bypass=bypass_summary,
+            verbose=True,
+            request_delay=1.0
+        )
 
         print("Extracting multiselects...")
         multiselects = extract_multiselect(data)
 
-        context_path = OUTPUT_PATH / "context.txt"
+        context_path = OUTPUT_PATH / "context.xml"
 
-        with open(context_path, "w", encoding="utf-8") as f:
-            f.write(f"LANGUAGE_RULE: {language}\n\n")
-            f.write(f"GENERAL_CONTEXT: {context}\n\n")
-            f.write(f"GENERAL_CONTEXT_KEYWORDS: {keywords}\n\n")
-            f.write(f"QUIZ_CONTENT: {multiselects}\n\n")
-
+        replace_xml_content(
+            context_path,
+            "LanguageRule",
+            language
+        )
+        replace_xml_content(
+            context_path,
+            "GeneralContext",
+            context
+        )
+        
+        replace_xml_content(
+            context_path,
+            "GeneralContextKeywords",
+            keywords
+        )        
+        replace_xml_content(
+            context_path,
+            "QuizContent",
+            multiselects
+        )             
+         
         print(f"Context saved at: {context_path}")
 
     except FileNotFoundError:
@@ -82,7 +126,7 @@ async def build_context(s3, doc_id: str):
 
 
 def generate_quiz():
-    context_path = OUTPUT_PATH / "context.txt"
+    context_path = OUTPUT_PATH / "context.xml"
 
     if not context_path.exists():
         raise FileNotFoundError(
@@ -146,9 +190,9 @@ async def main():
         config=config
     ) as s3:
 
-        await build_context(s3, doc_id)
+        await build_context(s3, doc_id, True)
 
-    # generate_quiz()
+    generate_quiz()
 
 
 if __name__ == "__main__":

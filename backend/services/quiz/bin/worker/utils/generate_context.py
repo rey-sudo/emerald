@@ -129,9 +129,11 @@ def _final_three_paragraphs(intermediate: str) -> str:
 # ── Función principal ─────────────────────────────────────────────────────────
 def summarize_to_three_paragraphs(
     document: Union[str, bytes],
+    language: str,
+    bypass: bool,
     request_delay: float = 2.0, 
     verbose: bool = False,
-) -> str:
+)-> str | None:
     """
     Recibe un documento markdown completo (str o bytes) y retorna
     3 párrafos que lo resumen usando resumen en cascada con liteLLM.
@@ -143,6 +145,10 @@ def summarize_to_three_paragraphs(
     Returns:
         String con los 3 párrafos finales separados por línea en blanco.
     """
+    
+    if bypass:
+        return None
+    
     text = _decode(document)
 
     if not text.strip():
@@ -177,5 +183,4 @@ def summarize_to_three_paragraphs(
         print("✍️  Generando 3 párrafos finales…")
 
     result = _final_three_paragraphs(intermediate)
-
     return result
