@@ -1,186 +1,220 @@
 """
 summarizer.py
-Résumé en cascade (chunking jerárquico) usando liteLLM router.
-Recibe un documento markdown (str o bytes) y retorna 3 párrafos.
+Hierarchical cascade summarizer using a liteLLM router.
+Accepts a markdown document (str | bytes) and returns 3 prose paragraphs
+in the language specified by the `language` argument.
 """
 
 from __future__ import annotations
-import math
-import re
-import time
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+
+import asyncio
 from typing import Union
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from litellm.router import Router
-import litellm
+
+# ── Router setup ──────────────────────────────────────────────────────────────
 
 model_list = [
     {
         "model_name": "models-1",
-        "litellm_params": {
-            "model": "gemini/gemini-2.5-flash"
-        }
+        "litellm_params": {"model": "gemini/gemini-2.5-flash"},
     },
     {
         "model_name": "models-1",
         "litellm_params": {
             "model": "ollama/llama3.2:3b",
-            "api_base": "http://localhost:11434"
-        }
-    }
+            "api_base": "http://localhost:11434",
+        },
+    },
 ]
 
-router = Router(model_list=model_list)
-# ─────────────────────────────────────────────────────────────────────────────
+router = Router(
+    model_list=model_list,
+    num_retries=6,
+    retry_after=4,
+    allowed_fails=2,
+)
 
+# ── Pipeline constants ────────────────────────────────────────────────────────
 
-# ── Constantes ────────────────────────────────────────────────────────────────
-CHUNK_CHARS   = 12_000   # ~10-12 páginas por chunk (≈ 3 000 tokens)
-MAX_CHUNKS    = 40       # límite de seguridad
-MINI_SUMMARY_SENTENCES = 4
-# ─────────────────────────────────────────────────────────────────────────────
+CHUNK_CHARS        = 12_000
+CHUNK_OVERLAP      = 200
+MAX_CHUNKS         = 40
+MERGE_BATCH_SIZE   = 8
+MINI_SUMMARY_SENTS = 3
+MAX_CONCURRENCY    = 4
+
+# ── Splitter (singleton) ──────────────────────────────────────────────────────
+
+_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=CHUNK_CHARS,
+    chunk_overlap=CHUNK_OVERLAP,
+    separators=["\n\n", "\n", ". ", " "],
+)
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
 
 def _decode(document: Union[str, bytes]) -> str:
-    """Acepta str o bytes y devuelve str."""
     if isinstance(document, (bytes, bytearray)):
         return document.decode("utf-8", errors="replace")
     return document
 
 
-def _split_chunks(text: str, chunk_size: int = CHUNK_CHARS) -> list[str]:
-    """
-    Divide el texto en chunks respetando saltos de línea.
-    Nunca corta a mitad de párrafo si puede evitarlo.
-    """
-    chunks, start = [], 0
-    while start < len(text):
-        end = start + chunk_size
-        if end >= len(text):
-            chunks.append(text[start:])
-            break
-        # retrocede hasta el último salto de línea doble (párrafo)
-        boundary = text.rfind("\n\n", start, end)
-        if boundary == -1:
-            boundary = text.rfind("\n", start, end)
-        if boundary == -1:
-            boundary = end
-        chunks.append(text[start:boundary])
-        start = boundary
-    return chunks[:MAX_CHUNKS]
+def _split_chunks(text: str) -> list[str]:
+    return _splitter.split_text(text)[:MAX_CHUNKS]
 
-@retry(
-    retry=retry_if_exception_type(litellm.RateLimitError),
-    wait=wait_exponential(multiplier=1, min=4, max=60),
-    stop=stop_after_attempt(5),
-)
-def _llm(prompt: str, max_tokens: int = 512) -> str:
-    """Wrapper mínimo sobre tu router."""
-    response = router.completion(
+
+# ── Async LLM wrapper ─────────────────────────────────────────────────────────
+
+
+async def _llm(system: str, user: str, max_tokens: int = 512) -> str:
+    response = await router.acompletion(
         model="models-1",
-        messages=[{"role": "user", "content": prompt}],
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user",   "content": user},
+        ],
         max_tokens=max_tokens,
-        temperature=0.3,
+        temperature=0.2,
     )
     return response.choices[0].message.content.strip()
 
 
-def _summarize_chunk(chunk: str, index: int, total: int) -> str:
-    """Paso 1 – mini-resumen de cada chunk."""
-    prompt = (
-        f"Eres un asistente experto en síntesis de textos.\n"
-        f"Este es el fragmento {index + 1} de {total} de un documento extenso.\n\n"
-        f"---\n{chunk}\n---\n\n"
-        f"Escribe exactamente {MINI_SUMMARY_SENTENCES} oraciones que capturen "
-        f"las ideas principales de este fragmento. Sin listas, solo prosa continua."
+# ── Pipeline stages ───────────────────────────────────────────────────────────
+
+
+async def _summarize_chunk(
+    chunk: str, index: int, total: int, language: str, sem: asyncio.Semaphore
+) -> str:
+    system = (
+        f"You are an expert summarizer. Always respond in {language}. "
+        "Be concise and factual. Output only plain prose, no lists or markdown."
     )
-    return _llm(prompt, max_tokens=300)
-
-
-def _merge_summaries(mini_summaries: list[str]) -> str:
-    """Paso 2 – consolida los mini-resúmenes en un resumen intermedio."""
-    joined = "\n\n".join(
-        f"[Fragmento {i + 1}]: {s}" for i, s in enumerate(mini_summaries)
+    user = (
+        f"Chunk {index + 1} of {total}:\n\n{chunk}\n\n"
+        f"Write exactly {MINI_SUMMARY_SENTS} sentences capturing the key ideas."
     )
-    prompt = (
-        "Tienes los resúmenes de cada sección de un documento extenso.\n\n"
-        f"{joined}\n\n"
-        "Redacta un resumen intermedio de máximo 300 palabras que integre "
-        "todos los fragmentos de forma coherente, eliminando repeticiones. "
-        "Sin listas, solo prosa."
+    async with sem:
+        return await _llm(system, user, max_tokens=200)
+
+
+async def _merge_batch(summaries: list[str], language: str) -> str:
+    joined = "\n".join(f"[{i + 1}] {s}" for i, s in enumerate(summaries))
+    system = (
+        f"You are an expert at synthesizing information. Always respond in {language}. "
+        "Output only plain prose, no lists or markdown."
     )
-    return _llm(prompt, max_tokens=600)
-
-
-def _final_three_paragraphs(intermediate: str) -> str:
-    prompt = (
-        "A partir del siguiente resumen, redacta exactamente 3 párrafos en prosa continua.\n\n"
-        f"{intermediate}\n\n"
-        "Reglas estrictas:\n"
-        "- Solo texto plano, sin títulos, sin listas, sin markdown, sin numeración.\n"
-        "- Primer párrafo: contexto y tema central.\n"
-        "- Segundo párrafo: argumentos o hallazgos principales.\n"
-        "- Tercer párrafo: conclusiones o cierre.\n"
-        "- Cada párrafo de 4 a 6 oraciones.\n"
-        "- Separa los párrafos con exactamente una línea en blanco.\n"
-        "- No agregues introducción ni comentarios fuera de los 3 párrafos."
+    user = (
+        "Merge these section summaries into a single coherent paragraph "
+        f"(max 150 words), removing repetition:\n\n{joined}"
     )
-    return _llm(prompt, max_tokens=700)
+    return await _llm(system, user, max_tokens=300)
 
-# ── Función principal ─────────────────────────────────────────────────────────
-def summarize_to_three_paragraphs(
+
+async def _intermediate_summary(merged_blocks: list[str], language: str) -> str:
+    joined = "\n\n".join(merged_blocks)
+    system = (
+        f"You are an expert summarizer. Always respond in {language}. "
+        "Output only plain prose, no lists or markdown."
+    )
+    user = (
+        "Consolidate the following blocks into a single coherent summary "
+        f"(max 300 words), preserving the main argument and key findings:\n\n{joined}"
+    )
+    return await _llm(system, user, max_tokens=500)
+
+
+async def _final_three_paragraphs(intermediate: str, language: str) -> str:
+    system = (
+        f"You are a skilled writer. Always respond in {language}. "
+        "Output only plain prose paragraphs — no titles, no lists, no markdown, no numbering."
+    )
+    user = (
+        "Using the summary below, write exactly 3 paragraphs separated by a blank line.\n\n"
+        "Rules:\n"
+        "- Paragraph 1 (4-5 sentences): context and central theme.\n"
+        "- Paragraph 2 (4-5 sentences): main arguments or findings.\n"
+        "- Paragraph 3 (3-4 sentences): conclusions or takeaways.\n"
+        "- No intro sentence, no commentary outside the 3 paragraphs.\n\n"
+        f"Summary:\n{intermediate}"
+    )
+    return await _llm(system, user, max_tokens=600)
+
+
+# ── Core async pipeline ───────────────────────────────────────────────────────
+
+
+async def summarize_to_three_paragraphs(
     document: Union[str, bytes],
-    language: str,
-    bypass: bool,
-    request_delay: float = 2.0, 
+    language: str = "English",
     verbose: bool = False,
-)-> str | None:
+    bypass: bool = False,
+) -> str | None:
     """
-    Recibe un documento markdown completo (str o bytes) y retorna
-    3 párrafos que lo resumen usando resumen en cascada con liteLLM.
+    Async entrypoint. Use this directly when inside FastAPI, async workers,
+    or any context with a running event loop:
+
+        result = await summarize_to_three_paragraphs(doc, language="Spanish")
 
     Args:
-        document: Texto completo en markdown (str o bytes UTF-8).
-        verbose:  Si True, imprime el progreso en consola.
+        document: Full markdown text (str or UTF-8 bytes).
+        language: Target language for all outputs, e.g. "English", "Spanish".
+        verbose:  Print progress to stdout when True.
 
     Returns:
-        String con los 3 párrafos finales separados por línea en blanco.
+        Three prose paragraphs separated by a blank line, in `language`.
     """
     
     if bypass:
         return None
     
     text = _decode(document)
-
     if not text.strip():
-        raise ValueError("El documento está vacío.")
+        raise ValueError("Document is empty.")
 
     chunks = _split_chunks(text)
     total  = len(chunks)
 
     if verbose:
-        print(f"📄 Documento: {len(text):,} caracteres → {total} chunks")
+        print(f"📄 {len(text):,} chars → {total} chunk(s) | language: {language}")
 
-    # ── Paso 1: mini-resúmenes por chunk ─────────────────────────────────────
-    mini_summaries: list[str] = []
-    for i, chunk in enumerate(chunks):
-        if verbose:
-            print(f"  ↳ Resumiendo chunk {i + 1}/{total}…")
-        mini_summaries.append(_summarize_chunk(chunk, i, total))
-        
-        if i < total - 1:
-            time.sleep(request_delay)
-        
-    # ── Paso 2: consolidar (si hay muchos chunks, segunda pasada) ─────────────
-    if len(mini_summaries) > 1:
-        if verbose:
-            print("🔗 Consolidando mini-resúmenes…")
-        intermediate = _merge_summaries(mini_summaries)
-    else:
-        intermediate = mini_summaries[0]
+    # Stage 1: parallel chunk summarization
+    sem = asyncio.Semaphore(MAX_CONCURRENCY)
+    mini_summaries: list[str] = await asyncio.gather(*[
+        _summarize_chunk(chunk, i, total, language, sem)
+        for i, chunk in enumerate(chunks)
+    ])
 
-    # ── Paso 3: 3 párrafos finales ────────────────────────────────────────────
     if verbose:
-        print("✍️  Generando 3 párrafos finales…")
+        print(f"  ✓ {total} chunk(s) summarized")
 
-    result = _final_three_paragraphs(intermediate)
-    return result
+    # Stage 2: hierarchical merge
+    if total == 1:
+        intermediate = mini_summaries[0]
+    else:
+        batches = [
+            mini_summaries[i : i + MERGE_BATCH_SIZE]
+            for i in range(0, total, MERGE_BATCH_SIZE)
+        ]
+        if verbose:
+            print(f"🔗 Merging in {len(batches)} batch(es)…")
+
+        merged_blocks: list[str] = await asyncio.gather(*[
+            _merge_batch(batch, language) for batch in batches
+        ])
+
+        intermediate = (
+            merged_blocks[0]
+            if len(merged_blocks) == 1
+            else await _intermediate_summary(list(merged_blocks), language)
+        )
+
+    # Stage 3: final output
+    if verbose:
+        print("✍️  Generating final 3 paragraphs…")
+
+    return await _final_three_paragraphs(intermediate, language)
+
+

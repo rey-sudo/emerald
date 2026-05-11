@@ -64,7 +64,7 @@ def replace_xml_content(file_path, tag, new_text):
     file_path.write_text(content, encoding="utf-8")
 
     
-async def build_context(s3, doc_id: str, bypass_summary: bool = False):
+async def build_context(s3, doc_id: str, bypass_summary: bool):
     try:
         print("Downloading S3 binary...")
 
@@ -82,12 +82,11 @@ async def build_context(s3, doc_id: str, bypass_summary: bool = False):
         ).display_name()
         
         print("Generating summary...")
-        context = summarize_to_three_paragraphs(
+        context = await summarize_to_three_paragraphs(
             md,
             language,
-            bypass=bypass_summary,
             verbose=True,
-            request_delay=1.0
+            bypass=bypass_summary
         )
 
         print("Extracting multiselects...")
@@ -105,7 +104,6 @@ async def build_context(s3, doc_id: str, bypass_summary: bool = False):
             "GeneralContext",
             context
         )
-        
         replace_xml_content(
             context_path,
             "GeneralContextKeywords",
@@ -130,14 +128,14 @@ def generate_quiz():
 
     if not context_path.exists():
         raise FileNotFoundError(
-            "context.txt no existe. Ejecuta build_context primero."
+            "context.xml no existe. Ejecuta build context primero."
         )
 
     with open(context_path, "r", encoding="utf-8") as f:
         context = f.read()
 
     prompt = build_quiz_prompt(context)
-
+    print(prompt)
     print("Generating quiz...")
 
     result: Quiz = create_quiz(prompt, 13_000)
@@ -190,7 +188,7 @@ async def main():
         config=config
     ) as s3:
 
-        await build_context(s3, doc_id, True)
+        await build_context(s3, doc_id, False)
 
     generate_quiz()
 
