@@ -112,25 +112,19 @@ def _merge_summaries(mini_summaries: list[str]) -> str:
 
 
 def _final_three_paragraphs(intermediate: str) -> str:
-    """Paso 3 – 3 párrafos finales con estructura clara."""
     prompt = (
-        "A partir del siguiente resumen de un documento extenso, "
-        "redacta EXACTAMENTE 3 párrafos bien desarrollados:\n\n"
+        "A partir del siguiente resumen, redacta exactamente 3 párrafos en prosa continua.\n\n"
         f"{intermediate}\n\n"
-        "Estructura obligatoria:\n"
-        "  Párrafo 1 – Contexto y tema central del documento.\n"
-        "  Párrafo 2 – Argumentos, hallazgos o contenido principal.\n"
-        "  Párrafo 3 – Conclusiones, implicaciones o cierre.\n\n"
-        "Sé preciso y claro. Separa cada párrafo con una línea en blanco."
+        "Reglas estrictas:\n"
+        "- Solo texto plano, sin títulos, sin listas, sin markdown, sin numeración.\n"
+        "- Primer párrafo: contexto y tema central.\n"
+        "- Segundo párrafo: argumentos o hallazgos principales.\n"
+        "- Tercer párrafo: conclusiones o cierre.\n"
+        "- Cada párrafo de 4 a 6 oraciones.\n"
+        "- Separa los párrafos con exactamente una línea en blanco.\n"
+        "- No agregues introducción ni comentarios fuera de los 3 párrafos."
     )
     return _llm(prompt, max_tokens=700)
-
-
-def normalizar_parrafos(texto: str) -> str:
-    # Divide por bloques de líneas vacías (con o sin espacios)
-    parrafos = re.split(r'\n[ \t]*\n[ \t\n]*', texto)
-    # Limpia cada párrafo internamente y reune
-    return '\n\n'.join(p.strip() for p in parrafos if p.strip())
 
 # ── Función principal ─────────────────────────────────────────────────────────
 def summarize_to_three_paragraphs(
@@ -183,7 +177,5 @@ def summarize_to_three_paragraphs(
         print("✍️  Generando 3 párrafos finales…")
 
     result = _final_three_paragraphs(intermediate)
-
-    result = normalizar_parrafos(result)
 
     return result
