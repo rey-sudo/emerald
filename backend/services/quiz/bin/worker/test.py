@@ -6,10 +6,11 @@
 
 #PROMPT1 -> context
 
+from typing import List
 from dotenv import load_dotenv
 load_dotenv()
 from pathlib import Path
-from utils.prompts import create_quiz, quiz_prompt
+from utils.prompts import QuestionItem, create_quiz, build_quiz_prompt, questionsAdapter
 from utils.extract_multiselect import extract_multiselect
 from utils.extract_text import convert_yjs_to_markdown
 from utils.extract_keywords import extract_keywords
@@ -30,7 +31,7 @@ def download_S3(ruta_str: str) -> bytes:
         raise
     
     
-def run():
+def build_context():
     try:
         binary_path = INPUT_PATH / "019e0dba-48e9-707a-a17e-c9aeb3ce5c95.yjs"
         data = download_S3(binary_path)
@@ -59,21 +60,25 @@ def run():
     
 
 def generate_quiz():
-    with open("context.txt", "r", encoding="utf-8") as archivo:
+    context_path = OUTPUT_PATH / "context.txt"
+    
+    with open(context_path, "r", encoding="utf-8") as archivo:
         context = archivo.read()
     
-    prompt = quiz_prompt(context)
+    prompt = build_quiz_prompt(context)
     print(prompt)
     
-    for token in create_quiz(prompt):
-        print(token, end="", flush=True)
+    result: List[QuestionItem] = create_quiz(prompt, 13_000)
+    
+    json_output = questionsAdapter.dump_json(result, indent=2).decode()
+        
+    print(json_output)
+    
        
     
-    
-    
-    
+
 def main():
-    #run()
+    #build_context()
     generate_quiz() 
     
     

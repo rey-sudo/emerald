@@ -1,7 +1,8 @@
 import json
-from pydantic import BaseModel, Field, TypeAdapter
+from pydantic import BaseModel, Field, TypeAdapter, ValidationError
 from typing import List, Any
-
+from litellm.router import Router
+import litellm
 
 class QuestionItem(BaseModel):
     question: str = Field(..., description="Enunciado de la pregunta tipo caso con mención de artículo y normativa")
@@ -10,23 +11,9 @@ class QuestionItem(BaseModel):
     explanation: str = Field(..., description="Explicación completa de la respuesta")
 
 questionsAdapter = TypeAdapter(List[QuestionItem])
+quiz_response_scheme = questionsAdapter.json_schema()
 
-formato_preguntas = questionsAdapter.json_schema()
-
-class Prompt(BaseModel):
-    index: int
-    debug: bool
-    append: bool
-    save_output: bool
-    output_path: str
-    output_format: str
-    filename: str
-    # Usamos Any porque TypeAdapter es un objeto de clase complejo de Pydantic
-    type_adapter: Any 
-    content: str
-
-
-def quiz_prompt(domain: str):
+def build_quiz_prompt(domain: str):
     p = f"""
 SYSTEM ROLE:
 You are an expert quiz generation system specialized in creating high-quality professional and academic assessments from source documents.
@@ -134,12 +121,9 @@ Generate:
 - Respond in plain text without code blocks or Markdown formatting.
 - The output will be processed automatically by another system.
 
-Structure:
+pydantic Structure:
 
-{json.dumps(formato_preguntas, indent=4, ensure_ascii=False)}
-
-Correct Answer:
-Explanation:
+{json.dumps(quiz_response_scheme, indent=4, ensure_ascii=False)}
 
 ====
 
@@ -147,8 +131,7 @@ Explanation:
     """
     return p
     
-from litellm.router import Router
-import litellm
+
     
 model_list = [
     {
@@ -170,29 +153,22 @@ router = Router(model_list=model_list)
 
 def _llm(prompt: str, max_tokens: int = 512) -> str:
     """Wrapper mínimo sobre tu router."""
+    
     response = router.completion(
         model="models-1",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=max_tokens,
         temperature=0.3,
     )
-    return response.choices[0].message.content.strip()
 
-def _llm_stream(prompt: str, max_tokens: int = 512):
-    stream = router.completion(
-        model="models-1",
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=max_tokens,
-        temperature=0.3,
-        stream=True,
-    )
+    content = response.choices[0].message.content.strip()
+    try:
+        validated = questionsAdapter.validate_json(content)
+        return validated
+    except ValidationError as e:
+        raise ValueError(
+            f"El modelo devolvió un JSON inválido:\n{e.json(indent=2)}\n\nContenido recibido:\n{content}"
+        )
 
-    for chunk in stream:
-        delta = chunk.choices[0].delta
-
-        if getattr(delta, "content", None):
-            yield delta.content
-
-
-def create_quiz(prompt: str):
-    yield from _llm_stream(prompt, 3000)
+def create_quiz(prompt: str, max_tokens: int) -> List[QuestionItem]:
+    return _llm(prompt, max_tokens)
