@@ -31,5 +31,49 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 1.1.3 indica explícitamente que 'se tendrán en cuenta las definiciones del anexo. (Ver anexo 1 “Definiciones”)' y que 'Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado'. Esto establece dos fuentes de definiciones, siendo el anexo la principal y el glosario un referente complementario."
+  },
+  {
+    "question": "Conforme al Artículo 1.1.2 del Acuerdo, ¿cuál de las siguientes afirmaciones describe con mayor precisión el alcance del término 'sujetos obligados' en relación con la Ley 594 de 2000 y las funciones públicas?",
+    "options": [
+      "Incluye exclusivamente a las entidades públicas de nivel nacional, departamental, distrital y municipal, excluyendo a cualquier actor privado.",
+      "Se refiere a todas las entidades públicas y a las personas naturales o jurídicas de derecho privado que, por un mandato legal específico, ejercen una función pública, abarcando así a servidores y trabajadores oficiales.",
+      "Comprende únicamente a los servidores públicos y trabajadores oficiales, sin considerar a las entidades privadas que, aunque cumplan funciones públicas, no son parte de la administración directa.",
+      "Designa a cualquier organismo regulado por la Ley 594 de 2000, siempre que sea de naturaleza pública, sin importar si sus empleados son servidores o trabajadores oficiales."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.1.2, en su parágrafo, define 'sujetos obligados' en concordancia con la Ley 594 de 2000, incluyendo a las entidades públicas o privadas que cumplen funciones públicas. Específicamente, detalla que esto abarca a 'servidores públicos; trabajadores oficiales; personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. La opción correcta integra todos estos elementos de manera precisa."
+  },
+  {
+    "question": "Según el Artículo 1.1.2 del Acuerdo, si una entidad privada es contratada para gestionar un archivo público bajo un mandato legal específico, ¿cómo se clasificaría a esta entidad y a su personal en el contexto del ámbito de aplicación del Acuerdo?",
+    "options": [
+      "La entidad privada sería un 'sujeto obligado' si cumple funciones públicas por mandato legal, y su personal relevante se consideraría 'personas naturales de derecho privado que cumplen una función pública'.",
+      "La entidad privada no sería un 'sujeto obligado' directamente, pero su personal que interactúa con el archivo público sí lo sería como 'trabajadores oficiales'.",
+      "Solo la administración pública contratante sería el 'sujeto obligado', mientras que la entidad privada y su personal operarían bajo un régimen exclusivamente privado, sin las obligaciones del Acuerdo.",
+      "La entidad privada sería un 'organismo regulado por la Ley 594 de 2000', pero su personal no estaría directamente cubierto por la definición de 'sujetos obligados' al no ser servidores públicos."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 1.1.2 establece que el Acuerdo comprende a 'las entidades privadas que cumplen funciones públicas' y el parágrafo aclara que 'sujetos obligados' incluye a 'personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. Por lo tanto, tanto la entidad privada como persona jurídica, como su personal relevante como personas naturales, serían considerados sujetos obligados bajo esta condición."
+  },
+  {
+    "question": "El Artículo 1.1.3 del Acuerdo establece una referencia fundamental para la interpretación de términos. ¿Cuál es la implicación principal de esta disposición para los usuarios y aplicadores del Acuerdo?",
+    "options": [
+      "Las definiciones contenidas en el anexo son las únicas válidas, y cualquier otro glosario es meramente complementario sin carácter vinculante.",
+      "Se debe consultar prioritariamente el glosario del Archivo General de la Nación Jorge Palacios Preciado, ya que el anexo solo provee un resumen de este.",
+      "La interpretación de los términos debe basarse en las definiciones del anexo y, de manera complementaria y referencial, en el glosario publicado por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "El Acuerdo delega completamente la definición de sus términos a futuras publicaciones del Archivo General de la Nación, haciendo que el anexo sea una guía provisional."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.1.3 indica que 'se tendrán en cuenta las definiciones del anexo' y 'Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado'. Esto implica que el anexo es la fuente principal, pero el glosario del AGN es un referente importante para una comprensión más profunda o para términos no cubiertos exhaustivamente en el anexo."
+  },
+  {
+    "question": "Considerando el 'Ámbito de aplicación' del Artículo 1.1.2, ¿cuál de las siguientes situaciones NO calificaría a una entidad o individuo como 'sujeto obligado' bajo el presente Acuerdo?",
+    "options": [
+      "Un servidor público que trabaja en una entidad del nivel departamental.",
+      "Una empresa privada que, sin un mandato legal específico, decide voluntariamente gestionar sus propios archivos históricos con criterios archivísticos.",
+      "Una entidad distrital encargada de la administración de bienes públicos.",
+      "Una persona jurídica de derecho privado que, mediante un contrato de concesión, asume la prestación de un servicio público esencial."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.1.2 y su parágrafo definen 'sujetos obligados' como entidades públicas, entidades privadas que cumplen funciones públicas, servidores públicos, trabajadores oficiales y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública. Una empresa privada que voluntariamente gestiona sus archivos sin un mandato legal específico para cumplir una función pública no encaja en ninguna de estas categorías, ya que la voluntariedad no sustituye el 'mandato legal' requerido."
   }
 ]

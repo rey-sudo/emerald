@@ -162,7 +162,6 @@ def _llm(prompt: str, max_tokens: int = 1000) -> Quiz:
     )
 
     content = response.choices[0].message.content.strip()
-    print(content)
     try:
         validated = Quiz.model_validate_json(content)
         return validated

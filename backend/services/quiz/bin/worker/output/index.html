@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - Política de Gestión Documental ANCP-CCE</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      const QuizApp = () => {
+        const [currentQuestion, setCurrentQuestion] = useState(() => {
+          const saved = localStorage.getItem("quiz_currentQuestion");
+          return saved !== null ? JSON.parse(saved) : 0;
+        });
+
+        const [score, setScore] = useState(() => {
+          const saved = localStorage.getItem("quiz_score");
+          return saved !== null ? JSON.parse(saved) : 0;
+        });
+
+        const [selectedAnswer, setSelectedAnswer] = useState(() => {
+          const saved = localStorage.getItem("quiz_selectedAnswer");
+          return saved !== null ? JSON.parse(saved) : null;
+        });
+
+        const [showResult, setShowResult] = useState(() => {
+          const saved = localStorage.getItem("quiz_showResult");
+          return saved !== null ? JSON.parse(saved) : false;
+        });
+
+        const [quizCompleted, setQuizCompleted] = useState(() => {
+          const saved = localStorage.getItem("quiz_quizCompleted");
+          return saved !== null ? JSON.parse(saved) : false;
+        });
+
+        useEffect(() => {
+          localStorage.setItem(
+            "quiz_currentQuestion",
+            JSON.stringify(currentQuestion),
+          );
+          localStorage.setItem("quiz_score", JSON.stringify(score));
+          localStorage.setItem(
+            "quiz_selectedAnswer",
+            JSON.stringify(selectedAnswer),
+          );
+          localStorage.setItem("quiz_showResult", JSON.stringify(showResult));
+          localStorage.setItem(
+            "quiz_quizCompleted",
+            JSON.stringify(quizCompleted),
+          );
+        }, [currentQuestion, score, selectedAnswer, showResult, quizCompleted]);
+
+        const CheckCircle = () => (
+          <svg
+            className="w-6 h-6 text-green-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        );
+
+        const XCircle = () => (
+          <svg
+            className="w-6 h-6 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        );
+
+        const Award = () => (
+          <svg
+            className="w-24 h-24 mx-auto text-yellow-500 mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+            />
+          </svg>
+        );
+
+        const RefreshCw = () => (
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+        );
+
+        const handleAnswerClick = (index) => {
+          if (selectedAnswer !== null) return;
+
+          setSelectedAnswer(index);
+          setShowResult(true);
+
+          if (index === questions[currentQuestion].correct) {
+            setScore(score + 1);
+          }
+        };
+
+        const [isNavigating, setIsNavigating] = useState(false);
+
+        const handleNextQuestion = () => {
+          if (isNavigating) return;
+          setIsNavigating(true);
+
+          setTimeout(() => {
+            if (currentQuestion < questions.length - 1) {
+              setCurrentQuestion(currentQuestion + 1);
+              setSelectedAnswer(null);
+              setShowResult(false);
+            } else {
+              setQuizCompleted(true);
+            }
+            setIsNavigating(false);
+          }, 200);
+        };
+
+        const restartQuiz = () => {
+          setCurrentQuestion(0);
+          setScore(0);
+          setSelectedAnswer(null);
+          setShowResult(false);
+          setQuizCompleted(false);
+
+          localStorage.removeItem("quiz_currentQuestion");
+          localStorage.removeItem("quiz_score");
+          localStorage.removeItem("quiz_selectedAnswer");
+          localStorage.removeItem("quiz_showResult");
+          localStorage.removeItem("quiz_quizCompleted");
+        };
+
+        const getScorePercentage = () => {
+          if (questions.length === 0) return 0;
+          return Math.round((score / questions.length) * 100);
+        };
+
+        const getScoreColor = () => {
+          if (questions.length === 0) return "text-gray-200";
+
+          const percentage = Math.round((score / questions.length) * 100);
+
+          if (percentage >= 70) return "text-green-300";
+          if (percentage >= 40) return "text-yellow-300";
+          return "text-red-300";
+        };
+
+        const getScoreMessage = () => {
+          const percentage = getScorePercentage();
+          if (percentage >= 90) return "¡Excelente! Dominas el conocimiento.";
+          if (percentage >= 70)
+            return "¡Muy bien! Tienes un buen conocimiento del tema.";
+          if (percentage >= 50)
+            return "Bien. Considera repasar algunos conceptos.";
+          return "Necesitas revisar más el documento de la política.";
+        };
+
+        const [questions, setQuestions] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+
+        const params = new URLSearchParams(window.location.search);
+        const INPUT_NAME = params.get("input") || 'questions';
+
+        React.useEffect(() => {
+           if (!INPUT_NAME) return;
+           
+          fetch(`${INPUT_NAME}.json?t=${new Date().getTime()}`)
+            .then((response) => {
+              if (!response.ok) throw new Error("No se pudo cargar el archivo");
+              return response.json();
+            })
+            .then((data) => {
+              const sort = false;
+
+              // Fisher-Yates
+              const shuffled = [...data];
+
+              if (sort) {
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+              }
+              setQuestions(shuffled);
+              setLoading(false);
+            })
+            .catch((err) => {
+              setError(err.message);
+              setLoading(false);
+            });
+        }, []);
+
+        if (loading) {
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mx-auto mb-4"></div>
+                <p className="text-xl text-gray-700">Cargando preguntas...</p>
+              </div>
+            </div>
+          );
+        }
+
+        if (error) {
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-8">
+              <div className="max-w-md bg-white rounded-2xl shadow-2xl p-8 text-center">
+                <svg
+                  className="w-16 h-16 text-red-500 mx-auto mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  Error al cargar
+                </h2>
+                <p className="text-gray-600 mb-4">{error}</p>
+                <p className="text-sm text-gray-500">
+                  Asegúrate de que el archivo 'questions.json' esté en la misma
+                  carpeta.
+                </p>
+              </div>
+            </div>
+          );
+        }
+
+        if (questions.length === 0) {
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+              <div className="text-center text-gray-700">
+                <p className="text-xl">No hay preguntas disponibles</p>
+              </div>
+            </div>
+          );
+        }
+
+        if (quizCompleted) {
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+              <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+                <div className="text-center">
+                  <Award />
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                    ¡Quiz Completado!
+                  </h2>
+
+                  <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-6 mb-6">
+                    <p className="text-5xl font-bold mb-2">
+                      {score}/{questions.length}
+                    </p>
+                    <p className="text-xl">
+                      {getScorePercentage()}% de respuestas correctas
+                    </p>
+                  </div>
+
+                  <p className="text-xl text-gray-700 mb-8">
+                    {getScoreMessage()}
+                  </p>
+
+                  <button
+                    onClick={restartQuiz}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg flex items-center gap-2 mx-auto transition-colors"
+                  >
+                    <RefreshCw />
+                    Reiniciar Quiz
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6">
+                  <h1 className="text-2xl font-bold mb-2">
+                    Quiz: Concurso De Merito
+                  </h1>
+                  <p className="text-blue-100">Preguntas importantes</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    <span className="text-sm">
+                      Pregunta {currentQuestion + 1} de {questions.length}
+                    </span>
+                    <span
+                      className={`text-sm font-semibold ${getScoreColor()}`}
+                    >
+                      Puntuación: {score}/{questions.length} (
+                      {Math.round((score / questions.length) * 100)}%)
+                    </span>
+                  </div>
+                  <div className="w-full bg-blue-400 h-2 rounded-full mt-2">
+                    <div
+                      className="bg-white h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="p-8">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-6">
+                    {questions[currentQuestion].question}
+                  </h2>
+
+                  <div className="space-y-3">
+                    {questions[currentQuestion].options.map((option, index) => {
+                      const isSelected = selectedAnswer === index;
+                      const isCorrect =
+                        index === questions[currentQuestion].correct;
+
+                      let buttonClass =
+                        "w-full text-left p-4 rounded-lg border-2 transition-all ";
+
+                      if (!showResult) {
+                        buttonClass +=
+                          "border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer";
+                      } else {
+                        if (isCorrect) {
+                          buttonClass += "border-green-500 bg-green-50";
+                        } else if (isSelected && !isCorrect) {
+                          buttonClass += "border-red-500 bg-red-50";
+                        } else {
+                          buttonClass += "border-gray-200 bg-gray-50";
+                        }
+                      }
+
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => handleAnswerClick(index)}
+                          className={buttonClass}
+                          disabled={showResult}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{option}</span>
+                            {showResult && isCorrect && <CheckCircle />}
+                            {showResult && isSelected && !isCorrect && (
+                              <XCircle />
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {showResult && (
+                    <div
+                      className={`mt-6 p-4 rounded-lg ${
+                        selectedAnswer === questions[currentQuestion].correct
+                          ? "bg-green-50 border-l-4 border-green-500"
+                          : "bg-blue-50 border-l-4 border-blue-500"
+                      }`}
+                    >
+                      <p className="font-semibold mb-2">
+                        {selectedAnswer === questions[currentQuestion].correct
+                          ? "¡Correcto!"
+                          : "Información:"}
+                      </p>
+                      <p className="text-gray-700">
+                        {questions[currentQuestion].explanation}
+                      </p>
+                    </div>
+                  )}
+
+                  {showResult && (
+                    <button
+                      onClick={handleNextQuestion}
+                      className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      {currentQuestion < questions.length - 1
+                        ? "Siguiente Pregunta"
+                        : "Ver Resultados"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      ReactDOM.render(<QuizApp />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
