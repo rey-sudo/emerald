@@ -6,11 +6,12 @@
 
 #PROMPT1 -> context
 
+import json
 from typing import List
 from dotenv import load_dotenv
 load_dotenv()
 from pathlib import Path
-from utils.prompts import QuestionItem, create_quiz, build_quiz_prompt, questionsAdapter
+from utils.prompts import Quiz, create_quiz, build_quiz_prompt
 from utils.extract_multiselect import extract_multiselect
 from utils.extract_text import convert_yjs_to_markdown
 from utils.extract_keywords import extract_keywords
@@ -68,12 +69,32 @@ def generate_quiz():
     prompt = build_quiz_prompt(context)
     print(prompt)
     
-    result: List[QuestionItem] = create_quiz(prompt, 13_000)
+    result: Quiz = create_quiz(prompt, 13_000)
     
-    json_output = questionsAdapter.dump_json(result, indent=2).decode()
-        
-    print(json_output)
-    
+    output_path = Path("output/questions.json")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    new_questions = result.model_dump()
+
+    if output_path.exists():
+        with open(output_path, "r", encoding="utf-8") as f:
+            existing_questions = json.load(f)
+
+        existing_questions.extend(new_questions)
+
+    else:
+        existing_questions = new_questions
+
+    # guardar actualizado
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(
+            existing_questions,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
+
+    print(f"Guardado en: {output_path}")
        
     
 

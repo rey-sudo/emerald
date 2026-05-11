@@ -1,0 +1,35 @@
+[
+  {
+    "question": "Según el Artículo 1.1.2 del Acuerdo, ¿cuál de las siguientes afirmaciones describe con mayor precisión el alcance del término 'sujetos obligados' en el contexto de la Ley 594 de 2000?",
+    "options": [
+      "Comprende exclusivamente a la administración pública en sus niveles nacional, departamental, distrital y municipal.",
+      "Incluye a todas las entidades privadas, independientemente de si cumplen o no funciones públicas.",
+      "Abarca a la administración pública en todos sus niveles, a las entidades privadas que ejercen funciones públicas y a las personas naturales o jurídicas de derecho privado que cumplen una función pública por mandato legal.",
+      "Se refiere únicamente a los servidores públicos y trabajadores oficiales de entidades públicas."
+    ],
+    "correct": 2,
+    "explanation": "La definición de 'sujetos obligados' en el Artículo 1.1.2, Parágrafo, del Acuerdo, en concordancia con la Ley 594 de 2000, es amplia e incluye explícitamente a la administración pública en sus diferentes niveles, a las entidades privadas que cumplen funciones públicas, y específicamente a los servidores públicos, trabajadores oficiales, y personas naturales o jurídicas de derecho privado que cumplen una función pública por mandato legal. La opción C es la única que abarca todas estas categorías de manera precisa."
+  },
+  {
+    "question": "Con base en el Artículo 1.1.2 del Acuerdo, ¿cuál es el criterio fundamental para que una entidad privada sea considerada un 'sujeto obligado' en el marco de la Ley 594 de 2000?",
+    "options": [
+      "Que su capital sea mayoritariamente público.",
+      "Que esté regulada por cualquier ley colombiana, sin importar su naturaleza.",
+      "Que cumpla funciones públicas o que sus personas naturales o jurídicas de derecho privado cumplan una función pública por mandato legal.",
+      "Que sea una organización sin ánimo de lucro con impacto social."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.1.2 del Acuerdo establece claramente que las entidades privadas son consideradas 'sujetos obligados' si 'cumplen funciones públicas'. El parágrafo refuerza esto al incluir a las 'personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. Por lo tanto, el criterio fundamental es la ejecución de funciones públicas, ya sea como entidad o a través de personas jurídicas o naturales de derecho privado por mandato legal."
+  },
+  {
+    "question": "Según el Artículo 1.1.3 del Acuerdo, ¿cuáles son las fuentes autorizadas para la interpretación de las definiciones en el contexto de este documento?",
+    "options": [
+      "Exclusivamente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "El anexo 1 'Definiciones' y, de manera complementaria, el glosario de términos del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Cualquier diccionario jurídico reconocido y el anexo 1 'Definiciones'.",
+      "Las definiciones establecidas por la Ley 594 de 2000 y el glosario del Archivo General de la Nación."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.1.3 indica explícitamente que 'se tendrán en cuenta las definiciones del anexo. (Ver anexo 1 “Definiciones”)' y que 'Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado'. Esto establece dos fuentes de definiciones, siendo el anexo la principal y el glosario un referente complementario."
+  }
+]

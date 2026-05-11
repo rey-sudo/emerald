@@ -1,5 +1,5 @@
 import json
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError
+from pydantic import BaseModel, Field, TypeAdapter, ValidationError, RootModel
 from typing import List, Any
 from litellm.router import Router
 import litellm
@@ -9,12 +9,14 @@ class QuestionItem(BaseModel):
     options: List[str] = Field(..., min_items=4, max_items=4, description="Lista de opciones posibles")
     correct: int = Field(..., ge=0, le=3, description="Índice de la opción correcta")
     explanation: str = Field(..., description="Explicación completa de la respuesta")
+    
+class Quiz(RootModel[List[QuestionItem]]):
+    pass
 
-questionsAdapter = TypeAdapter(List[QuestionItem])
-quiz_response_scheme = questionsAdapter.json_schema()
+quiz_response_scheme = Quiz.model_json_schema()
 
 def build_quiz_prompt(domain: str):
-    p = f"""
+    return f"""
 SYSTEM ROLE:
 You are an expert quiz generation system specialized in creating high-quality professional and academic assessments from source documents.
 
@@ -120,18 +122,16 @@ Generate:
 - Do not use Markdown, do not use ```json, and do not add explanations.
 - Respond in plain text without code blocks or Markdown formatting.
 - The output will be processed automatically by another system.
+- Use the pydantic structure only as a reference.
 
-pydantic Structure:
+pydantic structure:
 
 {json.dumps(quiz_response_scheme, indent=4, ensure_ascii=False)}
 
 ====
 
 {domain}
-    """
-    return p
-    
-
+"""
     
 model_list = [
     {
@@ -151,7 +151,7 @@ model_list = [
 
 router = Router(model_list=model_list)
 
-def _llm(prompt: str, max_tokens: int = 512) -> str:
+def _llm(prompt: str, max_tokens: int = 1000) -> Quiz:
     """Wrapper mínimo sobre tu router."""
     
     response = router.completion(
@@ -162,13 +162,14 @@ def _llm(prompt: str, max_tokens: int = 512) -> str:
     )
 
     content = response.choices[0].message.content.strip()
+    print(content)
     try:
-        validated = questionsAdapter.validate_json(content)
+        validated = Quiz.model_validate_json(content)
         return validated
     except ValidationError as e:
         raise ValueError(
             f"El modelo devolvió un JSON inválido:\n{e.json(indent=2)}\n\nContenido recibido:\n{content}"
         )
 
-def create_quiz(prompt: str, max_tokens: int) -> List[QuestionItem]:
+def create_quiz(prompt: str, max_tokens: int)-> Quiz:
     return _llm(prompt, max_tokens)
