@@ -32,16 +32,18 @@ def run():
         data = download_S3("input/019e0dba-48e9-707a-a17e-c9aeb3ce5c95.yjs")
         md = convert_yjs_to_markdown(data)
         
+        
+        multiselects =  extract_multiselect(data)
+
         context = summarize_to_three_paragraphs(md, verbose=True, request_delay=1.0)
         keywords = extract_keywords(md)
         
         detected_language = detect(keywords)
         language = langcodes.Language.get(detected_language).display_name()
         
-        multiselects =  extract_multiselect(data)
         
         with open("context.txt", "w", encoding="utf-8") as f:
-            f.write(f"LANGUAGE RULE:{language}\n\n")
+            f.write(f"LANGUAGE RULE: {language}\n\n")
             f.write(f"GENERAL CONTEXT: {context}\n\n")
             f.write(f"CONTEXT KEYWORDS: {keywords}\n\n")
             f.write(f"QUIZ CONTENT: {multiselects}\n\n")
@@ -66,8 +68,8 @@ def generate_quiz():
     
     
 def main():
-    run()
-    #generate_quiz() 
+    #run()
+    generate_quiz() 
     
     
 main()    

@@ -54,7 +54,7 @@ def parse(strings: list[str]) -> list[dict]:
 
 def extract_multiselect(data):
     items = parse(decode(data))
-    resultado = "\n".join([item['text'] for item in items])
+    resultado = "\n\n".join([item['text'] for item in items])
     return resultado
 
 

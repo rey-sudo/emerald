@@ -1,4 +1,4 @@
-def quiz_prompt(domain: str, language: str):
+def quiz_prompt(domain: str):
     p = f"""
 SYSTEM ROLE:
 You are an expert quiz generation system specialized in creating high-quality professional and academic assessments from source documents.
