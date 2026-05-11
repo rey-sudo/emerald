@@ -1,3 +1,31 @@
+import json
+from pydantic import BaseModel, Field, TypeAdapter
+from typing import List, Any
+
+
+class QuestionItem(BaseModel):
+    question: str = Field(..., description="Enunciado de la pregunta tipo caso con mención de artículo y normativa")
+    options: List[str] = Field(..., min_items=4, max_items=4, description="Lista de opciones posibles")
+    correct: int = Field(..., ge=0, le=3, description="Índice de la opción correcta")
+    explanation: str = Field(..., description="Explicación completa de la respuesta")
+
+questionsAdapter = TypeAdapter(List[QuestionItem])
+
+formato_preguntas = questionsAdapter.json_schema()
+
+class Prompt(BaseModel):
+    index: int
+    debug: bool
+    append: bool
+    save_output: bool
+    output_path: str
+    output_format: str
+    filename: str
+    # Usamos Any porque TypeAdapter es un objeto de clase complejo de Pydantic
+    type_adapter: Any 
+    content: str
+
+
 def quiz_prompt(domain: str):
     p = f"""
 SYSTEM ROLE:
@@ -95,14 +123,20 @@ Generate:
 - Only 1 correct answer.
 - Include the correct answer.
 - Include a short explanation justifying why the answer is correct.
+- Respond in plain text without Markdown code blocks.
+- Do not use ```json or triple backticks.
+- Return only the raw JSON.
+- Provide the response without Markdown formatting.
+- Do not wrap the output in a code block.
+- Return the response directly, not inside a code block.
+- Return only valid JSON in a single response.
+- Do not use Markdown, do not use ```json, and do not add explanations.
+- Respond in plain text without code blocks or Markdown formatting.
+- The output will be processed automatically by another system.
 
 Structure:
 
-Question:
-A.
-B.
-C.
-D.
+{json.dumps(formato_preguntas, indent=4, ensure_ascii=False)}
 
 Correct Answer:
 Explanation:
