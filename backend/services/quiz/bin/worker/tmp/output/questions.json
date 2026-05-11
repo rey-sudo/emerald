@@ -1,101 +1,46 @@
 [
   {
-    "question": "Según el Artículo 1.1.2 del Acuerdo, ¿cuál de las siguientes afirmaciones describe con mayor precisión el alcance del término 'sujetos obligados' en el contexto de la Ley 594 de 2000?",
+    "question": "¿Cuál es el ámbito de aplicación del presente Acuerdo?",
     "options": [
-      "Comprende exclusivamente a la administración pública en sus niveles nacional, departamental, distrital y municipal.",
-      "Incluye a todas las entidades privadas, independientemente de si cumplen o no funciones públicas.",
-      "Abarca a la administración pública en todos sus niveles, a las entidades privadas que ejercen funciones públicas y a las personas naturales o jurídicas de derecho privado que cumplen una función pública por mandato legal.",
-      "Se refiere únicamente a los servidores públicos y trabajadores oficiales de entidades públicas."
+      "Sólo para entidades públicas",
+      "Para entidades privadas que cumplen funciones públicas y organismos regulados por la Ley 594 de 2000",
+      "Solo para servidores públicos y trabajadores oficiales",
+      "Para todas las entidades sin excepción"
     ],
     "correct": 2,
-    "explanation": "La definición de 'sujetos obligados' en el Artículo 1.1.2, Parágrafo, del Acuerdo, en concordancia con la Ley 594 de 2000, es amplia e incluye explícitamente a la administración pública en sus diferentes niveles, a las entidades privadas que cumplen funciones públicas, y específicamente a los servidores públicos, trabajadores oficiales, y personas naturales o jurídicas de derecho privado que cumplen una función pública por mandato legal. La opción C es la única que abarca todas estas categorías de manera precisa."
+    "explanation": "El presente Acuerdo comprende a la administración pública, en sus diferentes niveles: nacional, departamental, distrital, municipal, así como las entidades privadas que cumplen funciones públicas y demás organismos regulados por la Ley 594 de 2000."
   },
   {
-    "question": "Con base en el Artículo 1.1.2 del Acuerdo, ¿cuál es el criterio fundamental para que una entidad privada sea considerada un 'sujeto obligado' en el marco de la Ley 594 de 2000?",
+    "question": "¿Qué tipo de entidades se consideran sujetas obligadas para efectos del presente Acuerdo?",
     "options": [
-      "Que su capital sea mayoritariamente público.",
-      "Que esté regulada por cualquier ley colombiana, sin importar su naturaleza.",
-      "Que cumpla funciones públicas o que sus personas naturales o jurídicas de derecho privado cumplan una función pública por mandato legal.",
-      "Que sea una organización sin ánimo de lucro con impacto social."
+      "Servidores públicos y trabajadores oficiales",
+      "Personas naturales o jurídicas de derecho privado que cumplen una función pública",
+      "Entidades privadas sin funciones públicas",
+      "Organismos regulados por la Ley 594 de 2000"
     ],
     "correct": 2,
-    "explanation": "El Artículo 1.1.2 del Acuerdo establece claramente que las entidades privadas son consideradas 'sujetos obligados' si 'cumplen funciones públicas'. El parágrafo refuerza esto al incluir a las 'personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. Por lo tanto, el criterio fundamental es la ejecución de funciones públicas, ya sea como entidad o a través de personas jurídicas o naturales de derecho privado por mandato legal."
+    "explanation": "Para efectos del presente Acuerdo, se hará referencia al término de sujetos obligados, en concordancia con el ámbito de aplicación de la Ley 594 de 2000, para referir a las entidades públicas o privadas que cumplen funciones públicas."
   },
   {
-    "question": "Según el Artículo 1.1.3 del Acuerdo, ¿cuáles son las fuentes autorizadas para la interpretación de las definiciones en el contexto de este documento?",
+    "question": "¿Qué tipo de documentación se considera como documentos históricos y legales relevantes para Colombia?",
     "options": [
-      "Exclusivamente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado.",
-      "El anexo 1 'Definiciones' y, de manera complementaria, el glosario de términos del Archivo General de la Nación Jorge Palacios Preciado.",
-      "Cualquier diccionario jurídico reconocido y el anexo 1 'Definiciones'.",
-      "Las definiciones establecidas por la Ley 594 de 2000 y el glosario del Archivo General de la Nación."
+      "Documentos producidos por la administración pública",
+      "Documentos recibidos por la administración pública",
+      "Documentos históricos y legales relevantes para Colombia",
+      "Todas las formas de documentación"
+    ],
+    "correct": 3,
+    "explanation": "El Archivo General de la Nación es una institución pública que alberga documentos históricos y legales relevantes para Colombia."
+  },
+  {
+    "question": "¿Qué tipo de información se considera como información institucional?",
+    "options": [
+      "Información sobre la administración pública",
+      "Información sobre entidades privadas",
+      "Información sobre documentos históricos y legales relevantes para Colombia",
+      "Todas las formas de información"
     ],
     "correct": 1,
-    "explanation": "El Artículo 1.1.3 indica explícitamente que 'se tendrán en cuenta las definiciones del anexo. (Ver anexo 1 “Definiciones”)' y que 'Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado'. Esto establece dos fuentes de definiciones, siendo el anexo la principal y el glosario un referente complementario."
-  },
-  {
-    "question": "Conforme al Artículo 1.1.2 del Acuerdo, ¿cuál de las siguientes afirmaciones describe con mayor precisión el alcance del término 'sujetos obligados' en relación con la Ley 594 de 2000 y las funciones públicas?",
-    "options": [
-      "Incluye exclusivamente a las entidades públicas de nivel nacional, departamental, distrital y municipal, excluyendo a cualquier actor privado.",
-      "Se refiere a todas las entidades públicas y a las personas naturales o jurídicas de derecho privado que, por un mandato legal específico, ejercen una función pública, abarcando así a servidores y trabajadores oficiales.",
-      "Comprende únicamente a los servidores públicos y trabajadores oficiales, sin considerar a las entidades privadas que, aunque cumplan funciones públicas, no son parte de la administración directa.",
-      "Designa a cualquier organismo regulado por la Ley 594 de 2000, siempre que sea de naturaleza pública, sin importar si sus empleados son servidores o trabajadores oficiales."
-    ],
-    "correct": 1,
-    "explanation": "El Artículo 1.1.2, en su parágrafo, define 'sujetos obligados' en concordancia con la Ley 594 de 2000, incluyendo a las entidades públicas o privadas que cumplen funciones públicas. Específicamente, detalla que esto abarca a 'servidores públicos; trabajadores oficiales; personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. La opción correcta integra todos estos elementos de manera precisa."
-  },
-  {
-    "question": "Según el Artículo 1.1.2 del Acuerdo, si una entidad privada es contratada para gestionar un archivo público bajo un mandato legal específico, ¿cómo se clasificaría a esta entidad y a su personal en el contexto del ámbito de aplicación del Acuerdo?",
-    "options": [
-      "La entidad privada sería un 'sujeto obligado' si cumple funciones públicas por mandato legal, y su personal relevante se consideraría 'personas naturales de derecho privado que cumplen una función pública'.",
-      "La entidad privada no sería un 'sujeto obligado' directamente, pero su personal que interactúa con el archivo público sí lo sería como 'trabajadores oficiales'.",
-      "Solo la administración pública contratante sería el 'sujeto obligado', mientras que la entidad privada y su personal operarían bajo un régimen exclusivamente privado, sin las obligaciones del Acuerdo.",
-      "La entidad privada sería un 'organismo regulado por la Ley 594 de 2000', pero su personal no estaría directamente cubierto por la definición de 'sujetos obligados' al no ser servidores públicos."
-    ],
-    "correct": 0,
-    "explanation": "El Artículo 1.1.2 establece que el Acuerdo comprende a 'las entidades privadas que cumplen funciones públicas' y el parágrafo aclara que 'sujetos obligados' incluye a 'personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública'. Por lo tanto, tanto la entidad privada como persona jurídica, como su personal relevante como personas naturales, serían considerados sujetos obligados bajo esta condición."
-  },
-  {
-    "question": "El Artículo 1.1.3 del Acuerdo establece una referencia fundamental para la interpretación de términos. ¿Cuál es la implicación principal de esta disposición para los usuarios y aplicadores del Acuerdo?",
-    "options": [
-      "Las definiciones contenidas en el anexo son las únicas válidas, y cualquier otro glosario es meramente complementario sin carácter vinculante.",
-      "Se debe consultar prioritariamente el glosario del Archivo General de la Nación Jorge Palacios Preciado, ya que el anexo solo provee un resumen de este.",
-      "La interpretación de los términos debe basarse en las definiciones del anexo y, de manera complementaria y referencial, en el glosario publicado por el Archivo General de la Nación Jorge Palacios Preciado.",
-      "El Acuerdo delega completamente la definición de sus términos a futuras publicaciones del Archivo General de la Nación, haciendo que el anexo sea una guía provisional."
-    ],
-    "correct": 2,
-    "explanation": "El Artículo 1.1.3 indica que 'se tendrán en cuenta las definiciones del anexo' y 'Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado'. Esto implica que el anexo es la fuente principal, pero el glosario del AGN es un referente importante para una comprensión más profunda o para términos no cubiertos exhaustivamente en el anexo."
-  },
-  {
-    "question": "Considerando el 'Ámbito de aplicación' del Artículo 1.1.2, ¿cuál de las siguientes situaciones NO calificaría a una entidad o individuo como 'sujeto obligado' bajo el presente Acuerdo?",
-    "options": [
-      "Un servidor público que trabaja en una entidad del nivel departamental.",
-      "Una empresa privada que, sin un mandato legal específico, decide voluntariamente gestionar sus propios archivos históricos con criterios archivísticos.",
-      "Una entidad distrital encargada de la administración de bienes públicos.",
-      "Una persona jurídica de derecho privado que, mediante un contrato de concesión, asume la prestación de un servicio público esencial."
-    ],
-    "correct": 1,
-    "explanation": "El Artículo 1.1.2 y su parágrafo definen 'sujetos obligados' como entidades públicas, entidades privadas que cumplen funciones públicas, servidores públicos, trabajadores oficiales y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública. Una empresa privada que voluntariamente gestiona sus archivos sin un mandato legal específico para cumplir una función pública no encaja en ninguna de estas categorías, ya que la voluntariedad no sustituye el 'mandato legal' requerido."
-  },
-  {
-    "question": "De acuerdo con el Artículo 1.1.2 del Acuerdo, la categoría de \"sujetos obligados\" se define con una precisión legal y funcional específica. ¿Cuál de las siguientes opciones describe de manera más exhaustiva y precisa a quiénes abarca esta categoría, en concordancia con la Ley 594 de 2000?",
-    "options": [
-      "Exclusivamente a las administraciones públicas en sus niveles nacional, departamental, distrital y municipal, excluyendo a las entidades privadas.",
-      "A las entidades públicas y a las entidades privadas que, sin importar su función, estén reguladas por la Ley 594 de 2000.",
-      "A las entidades públicas, así como a las personas naturales o jurídicas de derecho privado que, por un mandato legal explícito, desempeñan una función pública.",
-      "A todos los servidores públicos y trabajadores oficiales, sin incluir a las personas jurídicas de derecho privado."
-    ],
-    "correct": 2,
-    "explanation": "El Artículo 1.1.2, en su parágrafo, establece que los \"sujetos obligados\" comprenden a \"las entidades públicas o privadas que cumplen funciones públicas\", y especifica que esto incluye a \"servidores públicos; trabajadores oficiales; personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública\". La opción C es la única que abarca tanto a las entidades públicas como a las personas jurídicas de derecho privado que cumplen funciones públicas por mandato legal, reflejando la amplitud y la condición legal de la función pública. Las otras opciones son restrictivas o imprecisas respecto al texto."
-  },
-  {
-    "question": "Para la interpretación y aplicación uniforme de los términos en el presente Acuerdo, el Artículo 1.1.3 establece un marco de referencia específico para las definiciones. ¿Cuál es la jerarquía y el conjunto de fuentes que deben considerarse para este propósito?",
-    "options": [
-      "Se utilizarán únicamente las definiciones del glosario publicado por el Archivo General de la Nación Jorge Palacios Preciado, por su carácter oficial.",
-      "Las definiciones primarias se encuentran en el anexo 1 \"Definiciones\" del Acuerdo, complementadas por el glosario de términos del Archivo General de la Nación Jorge Palacios Preciado.",
-      "Las definiciones se derivarán directamente de la Ley 594 de 2000, dado que el Acuerdo se enmarca en su ámbito de aplicación.",
-      "Cualquier término no definido explícitamente en el Acuerdo se interpretará según el uso común en la administración pública."
-    ],
-    "correct": 1,
-    "explanation": "El Artículo 1.1.3 indica claramente: \"Para todos los efectos del presente Acuerdo, se tendrán en cuenta las definiciones del anexo. (Ver anexo 1 “Definiciones”). Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado.\" Esto establece una doble fuente, con el anexo como la primera referencia y el glosario como un referente adicional, lo cual la opción B describe con precisión. Las otras opciones son incompletas o incorrectas."
+    "explanation": "La gestión documental debe ser llevada a cabo por responsables del área gestión documental y el secretario general o funcionario administrativo de igual o superior jerarquía."
   }
 ]

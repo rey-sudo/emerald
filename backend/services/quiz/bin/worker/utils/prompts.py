@@ -4,7 +4,7 @@ from typing import List
 from litellm.router import Router
 
 class QuestionItem(BaseModel):
-    question: str = Field(..., description="Question statement based on the document content")
+    question: str = Field(..., description="Versbose question statement based on the QUIZ_CONTENT")
     options: List[str] = Field(..., min_length=4, max_length=4, description="List of possible answer choices")
     correct: int = Field(..., ge=0, le=3, description="Index of the correct option (0-3)")
     explanation: str = Field(..., description="Full explanation of why the answer is correct")
@@ -121,9 +121,6 @@ Generate:
 - Do not use Markdown, do not use ```json, and do not add explanations.
 - Respond in plain text without code blocks or Markdown formatting.
 - The output will be processed automatically by another system.
-- Use the pydantic structure only as a type reference without exception.
-
-{json.dumps(quiz_response_scheme, indent=4, ensure_ascii=False)}
 
 ====
 
@@ -156,6 +153,13 @@ def _llm(prompt: str, max_tokens: int = 1000) -> Quiz:
         messages=[{"role": "user", "content": prompt}],
         max_tokens=max_tokens,
         temperature=0.3,
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "Quiz",
+                "schema": Quiz.model_json_schema()  
+        }
+    }
     )
 
     content = response.choices[0].message.content.strip()

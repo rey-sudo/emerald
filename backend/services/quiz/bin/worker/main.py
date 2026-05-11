@@ -1,13 +1,4 @@
-#get binary from S3
-
-#extract entire document
-#extract multiSelect
-#extract keywords
-
-#PROMPT1 -> context
-
 import json
-from typing import List
 from dotenv import load_dotenv
 load_dotenv()
 from pathlib import Path
@@ -16,7 +7,7 @@ from utils.extract_multiselect import extract_multiselect
 from utils.extract_text import convert_yjs_to_markdown
 from utils.extract_keywords import extract_keywords
 from utils.generate_context import summarize_to_three_paragraphs
-from langdetect import detect, LangDetectException
+from langdetect import detect
 import langcodes
 
 INPUT_PATH = Path("tmp/input")
@@ -52,7 +43,7 @@ def build_context():
         with open(context_path, "w", encoding="utf-8") as f:
             f.write(f"LANGUAGE_RULE: {language}\n\n")
             f.write(f"GENERAL_CONTEXT: {context}\n\n")
-            f.write(f"CONTEXT_KEYWORDS: {keywords}\n\n")
+            f.write(f"GENERAL_CONTEXT_KEYWORDS: {keywords}\n\n")
             f.write(f"QUIZ_CONTENT: {multiselects}\n\n")
             
         
