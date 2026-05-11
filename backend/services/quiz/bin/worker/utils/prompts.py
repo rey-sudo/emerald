@@ -1,14 +1,13 @@
 import json
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError, RootModel
-from typing import List, Any
+from pydantic import BaseModel, Field, ValidationError, RootModel
+from typing import List
 from litellm.router import Router
-import litellm
 
 class QuestionItem(BaseModel):
-    question: str = Field(..., description="Enunciado de la pregunta tipo caso con mención de artículo y normativa")
-    options: List[str] = Field(..., min_items=4, max_items=4, description="Lista de opciones posibles")
-    correct: int = Field(..., ge=0, le=3, description="Índice de la opción correcta")
-    explanation: str = Field(..., description="Explicación completa de la respuesta")
+    question: str = Field(..., description="Question statement based on the document content")
+    options: List[str] = Field(..., min_length=4, max_length=4, description="List of possible answer choices")
+    correct: int = Field(..., ge=0, le=3, description="Index of the correct option (0-3)")
+    explanation: str = Field(..., description="Full explanation of why the answer is correct")
     
 class Quiz(RootModel[List[QuestionItem]]):
     pass
@@ -42,7 +41,7 @@ The generated questions must resemble evaluations used in:
 ====
 
 QUIZ GENERATION RULES:
-Generate quizzes exclusively from the provided QUIZ CONTENT.
+Generate quizzes exclusively from the provided QUIZ_CONTENT.
 
 Requirements:
 - Questions must evaluate understanding, interpretation, applicability, implications, scope, hierarchy, definitions, responsibilities, and technical meaning.
@@ -122,9 +121,7 @@ Generate:
 - Do not use Markdown, do not use ```json, and do not add explanations.
 - Respond in plain text without code blocks or Markdown formatting.
 - The output will be processed automatically by another system.
-- Use the pydantic structure only as a reference.
-
-pydantic structure:
+- Use the pydantic structure only as a type reference without exception.
 
 {json.dumps(quiz_response_scheme, indent=4, ensure_ascii=False)}
 

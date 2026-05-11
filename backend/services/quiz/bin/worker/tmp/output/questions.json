@@ -75,5 +75,27 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 1.1.2 y su parágrafo definen 'sujetos obligados' como entidades públicas, entidades privadas que cumplen funciones públicas, servidores públicos, trabajadores oficiales y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública. Una empresa privada que voluntariamente gestiona sus archivos sin un mandato legal específico para cumplir una función pública no encaja en ninguna de estas categorías, ya que la voluntariedad no sustituye el 'mandato legal' requerido."
+  },
+  {
+    "question": "De acuerdo con el Artículo 1.1.2 del Acuerdo, la categoría de \"sujetos obligados\" se define con una precisión legal y funcional específica. ¿Cuál de las siguientes opciones describe de manera más exhaustiva y precisa a quiénes abarca esta categoría, en concordancia con la Ley 594 de 2000?",
+    "options": [
+      "Exclusivamente a las administraciones públicas en sus niveles nacional, departamental, distrital y municipal, excluyendo a las entidades privadas.",
+      "A las entidades públicas y a las entidades privadas que, sin importar su función, estén reguladas por la Ley 594 de 2000.",
+      "A las entidades públicas, así como a las personas naturales o jurídicas de derecho privado que, por un mandato legal explícito, desempeñan una función pública.",
+      "A todos los servidores públicos y trabajadores oficiales, sin incluir a las personas jurídicas de derecho privado."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.1.2, en su parágrafo, establece que los \"sujetos obligados\" comprenden a \"las entidades públicas o privadas que cumplen funciones públicas\", y especifica que esto incluye a \"servidores públicos; trabajadores oficiales; personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública\". La opción C es la única que abarca tanto a las entidades públicas como a las personas jurídicas de derecho privado que cumplen funciones públicas por mandato legal, reflejando la amplitud y la condición legal de la función pública. Las otras opciones son restrictivas o imprecisas respecto al texto."
+  },
+  {
+    "question": "Para la interpretación y aplicación uniforme de los términos en el presente Acuerdo, el Artículo 1.1.3 establece un marco de referencia específico para las definiciones. ¿Cuál es la jerarquía y el conjunto de fuentes que deben considerarse para este propósito?",
+    "options": [
+      "Se utilizarán únicamente las definiciones del glosario publicado por el Archivo General de la Nación Jorge Palacios Preciado, por su carácter oficial.",
+      "Las definiciones primarias se encuentran en el anexo 1 \"Definiciones\" del Acuerdo, complementadas por el glosario de términos del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Las definiciones se derivarán directamente de la Ley 594 de 2000, dado que el Acuerdo se enmarca en su ámbito de aplicación.",
+      "Cualquier término no definido explícitamente en el Acuerdo se interpretará según el uso común en la administración pública."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.1.3 indica claramente: \"Para todos los efectos del presente Acuerdo, se tendrán en cuenta las definiciones del anexo. (Ver anexo 1 “Definiciones”). Así mismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado.\" Esto establece una doble fuente, con el anexo como la primera referencia y el glosario como un referente adicional, lo cual la opción B describe con precisión. Las otras opciones son incompletas o incorrectas."
   }
 ]

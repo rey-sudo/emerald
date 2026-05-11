@@ -50,10 +50,10 @@ def build_context():
         context_path = OUTPUT_PATH / "context.txt"
         
         with open(context_path, "w", encoding="utf-8") as f:
-            f.write(f"LANGUAGE RULE: {language}\n\n")
-            f.write(f"GENERAL CONTEXT: {context}\n\n")
-            f.write(f"CONTEXT KEYWORDS: {keywords}\n\n")
-            f.write(f"QUIZ CONTENT: {multiselects}\n\n")
+            f.write(f"LANGUAGE_RULE: {language}\n\n")
+            f.write(f"GENERAL_CONTEXT: {context}\n\n")
+            f.write(f"CONTEXT_KEYWORDS: {keywords}\n\n")
+            f.write(f"QUIZ_CONTENT: {multiselects}\n\n")
             
         
     except FileNotFoundError:
@@ -71,7 +71,7 @@ def generate_quiz():
     
     result: Quiz = create_quiz(prompt, 13_000)
     
-    output_path = Path("output/questions.json")
+    output_path = OUTPUT_PATH / "questions.json"
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     new_questions = result.model_dump()
