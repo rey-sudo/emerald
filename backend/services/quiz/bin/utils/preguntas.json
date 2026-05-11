@@ -1,0 +1,13 @@
+[
+  {
+    "question": "Un asesor jurídico de un ministerio afirma que la Ley 594 de 2000 solo sirve para organizar papeles viejos y no tiene impacto en la gestión actual. Según el Artículo 1, ¿cuál es el objeto real de esta ley?",
+    "options": [
+      "Establecer exclusivamente las sanciones penales para los funcionarios que pierdan documentos durante su ejercicio profesional.",
+      "Definir las reglas y principios generales que regulan la función archivística del Estado para asegurar una gestión transparente.",
+      "Crear un manual de procedimientos para la compra de estanterías y cajas de cartón destinadas a los depósitos de archivos centrales.",
+      "Regular únicamente la preservación de documentos históricos que tengan más de cincuenta años de antigüedad en el territorio nacional."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1 define que el objeto de la ley es establecer las reglas y principios generales que regulan la función archivística del Estado, no solo la conservación."
+  }
+]
