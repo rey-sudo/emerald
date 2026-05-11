@@ -6,6 +6,7 @@ Recibe un documento markdown (str o bytes) y retorna 3 párrafos.
 
 from __future__ import annotations
 import math
+import re
 import time
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 from typing import Union
@@ -125,6 +126,12 @@ def _final_three_paragraphs(intermediate: str) -> str:
     return _llm(prompt, max_tokens=700)
 
 
+def normalizar_parrafos(texto: str) -> str:
+    # Divide por bloques de líneas vacías (con o sin espacios)
+    parrafos = re.split(r'\n[ \t]*\n[ \t\n]*', texto)
+    # Limpia cada párrafo internamente y reune
+    return '\n\n'.join(p.strip() for p in parrafos if p.strip())
+
 # ── Función principal ─────────────────────────────────────────────────────────
 def summarize_to_three_paragraphs(
     document: Union[str, bytes],
@@ -177,5 +184,6 @@ def summarize_to_three_paragraphs(
 
     result = _final_three_paragraphs(intermediate)
 
-    return result
+    result = normalizar_parrafos(result)
 
+    return result
