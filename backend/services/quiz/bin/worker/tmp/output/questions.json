@@ -383,5 +383,49 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 1.3.3 aborda la 'omisión' como un incumplimiento de un deber funcional relacionado con la gestión y transferencia de documentos. En contraste, el Parágrafo prohíbe 'llevarse la documentación', lo cual se fundamenta en la propiedad estatal de los documentos, implicando una acción de apropiación indebida o sustracción de bienes públicos, lo cual es una distinción crucial en la naturaleza de la infracción."
+  },
+  {
+    "question": "Según el Artículo 1.3.4 del Acuerdo, ¿cuál es la responsabilidad primordial de los sujetos obligados en relación con la gestión de archivos en el contexto de las tecnologías de la información?",
+    "options": [
+      "Delegar completamente la gestión de archivos electrónicos a las áreas de tecnologías de la información, limitando su propia intervención a la supervisión general y la aprobación de presupuestos.",
+      "Implementar acciones en articulación con las áreas de tecnologías de la información para garantizar la conformación de expedientes, organización, conservación, preservación y acceso a los documentos y archivos gestionados mediante sistemas de información o plataformas transaccionales.",
+      "Establecer políticas de acceso y seguridad para los documentos, sin necesidad de coordinación con las áreas de tecnologías, ya que su rol se limita a la infraestructura técnica y el mantenimiento de equipos.",
+      "Desarrollar exclusivamente sistemas de información propios para la gestión documental, evitando el uso de plataformas transaccionales comunes en las entidades del Estado para mantener la autonomía y el control total de la información."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.3.4 establece claramente que es responsabilidad de los sujetos obligados implementar acciones en articulación con las áreas de tecnologías de la información para garantizar la conformación, organización, conservación, preservación y acceso a los documentos y archivos que se gestionan a través de sistemas de información o plataformas transaccionales de uso común en las entidades del Estado."
+  },
+  {
+    "question": "En el marco de la gestión de expedientes electrónicos, ¿qué deben garantizar los sujetos obligados y bajo qué criterios fundamentales, según el Artículo 1.3.4?",
+    "options": [
+      "La implementación de un Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA) que atienda el ciclo vital de los documentos, conforme a los Cuadros de Clasificación Documental y Tablas de Retención Documental.",
+      "La creación de expedientes electrónicos únicamente para documentos de valor histórico o patrimonial, desatendiendo el ciclo vital de los documentos administrativos de menor relevancia.",
+      "La digitalización masiva de todos los documentos físicos existentes, sin necesidad de un SGDEA específico, siempre que se garantice la accesibilidad y la integridad de la información digitalizada.",
+      "La gestión de expedientes electrónicos priorizando la velocidad de acceso y la interoperabilidad sobre la observancia estricta del ciclo vital y los instrumentos archivísticos como los Cuadros de Clasificación Documental."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 1.3.4 especifica que los sujetos obligados deben garantizar la implementación del Sistema de Gestión de Documentos Electrónicos de Archivo para la conformación y gestión de los expedientes electrónicos, atendiendo el ciclo vital de los documentos y de conformidad con los Cuadros de Clasificación Documental y Tablas de Retención Documental."
+  },
+  {
+    "question": "Conforme al Parágrafo del Artículo 1.3.4, ¿dónde deben estar señaladas las condiciones o restricciones aplicables al acceso y seguridad de los documentos?",
+    "options": [
+      "Exclusivamente en los manuales de procedimientos internos de cada entidad, sin necesidad de divulgación pública, para proteger la información sensible y evitar usos indebidos.",
+      "Claramente en los instrumentos de acceso a la información pública, en concordancia con lo establecido en el Título 7 “Acceso y consulta de documentos” del presente Acuerdo.",
+      "En documentos clasificados como reservados, accesibles solo para el personal autorizado de tecnologías de la información y los responsables de la seguridad documental de la entidad.",
+      "Mediante acuerdos bilaterales con los usuarios que soliciten acceso a la información, estableciendo las condiciones de seguridad y las restricciones de uso caso por caso, según la naturaleza del documento."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 1.3.4 establece que las condiciones o restricciones para el acceso y seguridad aplicables a los documentos deben estar claramente señaladas en los instrumentos de acceso a la información pública, en concordancia con lo establecido en el Título 7 “Acceso y consulta de documentos” del Acuerdo."
+  },
+  {
+    "question": "El Artículo 1.3.4 establece que la responsabilidad de los sujetos obligados, en articulación con las áreas de tecnologías de la información, abarca la gestión de documentos y archivos que se administran mediante:",
+    "options": [
+      "Únicamente sistemas de información especializados en gestión documental archivística, excluyendo explícitamente las plataformas transaccionales de uso general en las entidades del Estado.",
+      "Exclusivamente plataformas transaccionales de uso común en las entidades del Estado, sin considerar la necesidad de sistemas de información dedicados a la gestión archivística.",
+      "Sistemas de información o plataformas transaccionales de uso común en las entidades del Estado.",
+      "Cualquier sistema de almacenamiento digital, independientemente de su propósito o de si es de uso común en entidades del Estado, siempre que cumpla con estándares mínimos de seguridad."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.3.4 especifica que la responsabilidad de los sujetos obligados se aplica a los documentos y archivos que se gestionan a través de 'sistemas de información o plataformas transaccionales de uso común en las entidades del Estado', abarcando ambos tipos de herramientas."
   }
 ]
