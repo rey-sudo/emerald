@@ -284,5 +284,60 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo del Artículo 1.3.1 especifica que la responsabilidad de los sujetos obligados recae sobre 'los documentos y archivos que se deriven del ejercicio de sus funciones u obligaciones', estableciendo un vínculo directo entre la actividad institucional y la responsabilidad archivística."
+  },
+  {
+    "question": "Según el Artículo 1.3.2, ¿cuál es el propósito fundamental que debe lograrse al requerir que todo servidor público, al ser vinculado, trasladado o desvinculado de su cargo, realice la recepción o entrega de documentos y archivos mediante inventarios documentales?",
+    "options": [
+      "A. Asegurar el cumplimiento de las obligaciones contractuales específicas, siguiendo los lineamientos del Decreto 1080 de 2015.",
+      "B. Determinar el valor histórico y la disposición final de los documentos, siguiendo el Cuadro de Clasificación Documental (CCD).",
+      "C. Garantizar la continuidad de la gestión pública mediante la documentación formal de los activos archivísticos.",
+      "D. Establecer los procedimientos internos de la entidad, los cuales deben ser revisados por la Unidad de Gestión Documental."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.3.2 establece que el objetivo de recibir o entregar documentos y archivos mediante inventarios documentales es 'con el fin de garantizar la continuidad de la gestión pública'. Las otras opciones describen procesos relacionados, pero no el propósito principal señalado en el texto."
+  },
+  {
+    "question": "¿Qué mecanismo institucional debe utilizar la entidad, apoyándose en la Política Institucional de Gestión Documental, para que las áreas de Gestión Humana o sus sustitutos puedan cumplir con la disposición del Artículo 1.3.2?",
+    "options": [
+      "A. La creación de un procedimiento interno específico que debe ser formalizado en un anexo al Cuadro de Clasificación Documental (CCD).",
+      "B. La inclusión de las acciones en los procedimientos y minutas de contrato, conforme al Decreto 1080 de 2015.",
+      "C. El desarrollo de procedimientos internos que deben estar obligatoriamente incluidos en el Sistema Integrado de Gestión (SIG).",
+      "D. La elaboración de un Formato Único de Inventario Documental (FUID) que sirva como base para la transferencia de archivos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.3.2 especifica que las áreas de Gestión Humana deben establecer procedimientos internos que permitan cumplir con la disposición, y que estos procedimientos 'deben estar incluidos en el Sistema Integrado de Gestión – SIG'."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 1, ¿qué responsabilidad específica recae sobre los sujetos obligados en relación con la gestión de documentos derivados de obligaciones contractuales?",
+    "options": [
+      "A. Realizar la valoración documental y la disposición final de los archivos, siguiendo el Artículo 2.8.2.2.4 del Decreto 1080 de 2015.",
+      "B. Incorporar acciones en los procedimientos y minutas de contrato para asegurar la entrega de dichos documentos, conforme al Decreto 1080 de 2015.",
+      "C. Mantener un registro actualizado de los documentos en el Formato Único de Inventario Documental (FUID) para su trazabilidad.",
+      "D. Asignar la responsabilidad de la conservación de los archivos a la Unidad de Gestión Documental de la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 establece que los sujetos obligados son responsables de 'incorporar acciones en los procedimientos y minutas de contrato para garantizar la entrega de los documentos de archivos derivados de las obligaciones contractuales, de conformidad con lo establecido en el artículo 2.8.2.2.4 del Decreto 1080 de 2015'."
+  },
+  {
+    "question": "¿Qué instrumento debe utilizarse para llevar a cabo el inventario documental destinado a la entrega y recibo de documentos y archivos, según lo estipulado en el Parágrafo 2?",
+    "options": [
+      "A. El Cuadro de Clasificación Documental (CCD), ya que es la herramienta oficial para la gestión de archivos.",
+      "B. El Sistema Integrado de Gestión (SIG), dado que debe contener todos los procedimientos de la entidad.",
+      "C. El Formato Único de Inventario Documental (FUID), el cual debe ser consultado en el anexo 3.",
+      "D. La hoja de control o índice electrónico, que es el soporte primario para el registro de la documentación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 indica explícitamente que 'El inventario documental para la entrega y recibo de los documentos y archivos se hará de conformidad con el Formato Único de Inventario Documental- FUID'."
+  },
+  {
+    "question": "Respecto al registro de los documentos en el proceso de inventario documental, ¿cuál es el requisito operativo que debe cumplirse, según el Parágrafo 2, una vez que se ha determinado el inventario?",
+    "options": [
+      "A. La documentación debe ser revisada por la Unidad de Gestión Documental para su validación formal.",
+      "B. Los documentos deben ser clasificados utilizando el Cuadro de Clasificación Documental (CCD) antes del registro.",
+      "C. El inventario debe ser aprobado mediante una minuta de contrato que lo respalde legalmente.",
+      "D. Los documentos deben estar registrados en la respectiva hoja de control o índice electrónico."
+    ],
+    "correct": 3,
+    "explanation": "El Parágrafo 2 concluye indicando que 'Los documentos deben estar registrados en la respectiva hoja de control o índice electrónico', lo cual es el requisito operativo de registro."
   }
 ]
