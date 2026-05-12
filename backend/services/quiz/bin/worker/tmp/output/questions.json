@@ -251,5 +251,38 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo detalla que 'Los sujetos obligados serán responsables de la adecuada recepción, gestión, conservación, organización, uso, manejo y entrega de los documentos y archivos que se deriven del ejercicio de sus funciones u obligaciones', abarcando un espectro completo de la gestión documental operativa."
+  },
+  {
+    "question": "Conforme al Artículo 1.3.1 del Capítulo 3, ¿cuál es la responsabilidad primordial asignada a los representantes legales, secretarias/os generales, funcionarias/os de jerarquía superior y jefes de oficina en relación con la normatividad archivística?",
+    "options": [
+      "Implementar directamente los procesos de digitalización y restauración de todos los documentos históricos de la entidad.",
+      "Establecer los criterios de valoración documental para la disposición final de las series y subseries archivísticas.",
+      "Velar por el cumplimiento y seguimiento de las disposiciones establecidas en la normatividad archivística vigente.",
+      "Realizar la adquisición por compra o expropiación administrativa de archivos privados de interés público o social."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.3.1 establece explícitamente que la responsabilidad de estos funcionarios es 'velar por el cumplimiento y seguimiento de las disposiciones establecidas en la normatividad archivística', lo cual implica una función de supervisión y garantía de la aplicación de las normas, no la ejecución directa de procesos específicos como digitalización, valoración o adquisición."
+  },
+  {
+    "question": "Según el Parágrafo del Artículo 1.3.1, ¿cuál es el alcance integral de la responsabilidad de los sujetos obligados respecto a los documentos y archivos generados en el ejercicio de sus funciones?",
+    "options": [
+      "Se limita exclusivamente a la conservación y entrega de los documentos que posean valor histórico o cultural declarado.",
+      "Abarca la recepción, gestión, conservación, organización, uso, manejo y entrega adecuada de dichos documentos y archivos.",
+      "Se centra únicamente en la identificación documental y la aplicación de tablas de retención para su eliminación o transferencia.",
+      "Consiste primordialmente en la reproducción y restauración de documentos dañados, sin implicar su gestión inicial."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo detalla que los sujetos obligados 'serán responsables de la adecuada recepción, gestión, conservación, organización, uso, manejo y entrega de los documentos y archivos que se deriven del ejercicio de sus funciones u obligaciones', cubriendo un espectro completo desde la creación hasta la disposición final de los documentos."
+  },
+  {
+    "question": "Considerando el marco de responsabilidades establecido en el Capítulo 3, ¿qué característica define la procedencia de los documentos y archivos sobre los cuales los sujetos obligados asumen una responsabilidad directa y exhaustiva?",
+    "options": [
+      "Deben ser documentos clasificados como bienes de interés público o social por una autoridad competente.",
+      "Corresponden a aquellos que son adquiridos por compra o expropiación administrativa de particulares.",
+      "Son los documentos y archivos que se derivan específicamente del ejercicio de sus funciones u obligaciones institucionales.",
+      "Se refiere a cualquier documento que forme parte del patrimonio documental de la nación, independientemente de su origen."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo del Artículo 1.3.1 especifica que la responsabilidad de los sujetos obligados recae sobre 'los documentos y archivos que se deriven del ejercicio de sus funciones u obligaciones', estableciendo un vínculo directo entre la actividad institucional y la responsabilidad archivística."
   }
 ]
