@@ -1,6 +1,4 @@
-import sys
-from pathlib import Path
-from pycrdt import Doc, XmlFragment, Text, Map, Array
+from pycrdt import Doc, XmlFragment, Text
 from markdownify import markdownify as md
 
 def decode(raw: bytes) -> str:
@@ -11,7 +9,7 @@ def decode(raw: bytes) -> str:
     seen = set()
 
     for key in doc.keys():
-        for typ in (XmlFragment, Text):  # solo tipos de texto — Map/Array son metadatos
+        for typ in (XmlFragment, Text):
             try:
                 value = str(doc.get(key, type=typ))
             except Exception:

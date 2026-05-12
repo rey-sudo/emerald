@@ -67,7 +67,6 @@ def replace_xml_content(file_path, tag, new_text):
 async def build_context(s3, doc_id: str, bypass_summary: bool):
     try:
         print("Downloading S3 binary...")
-
         data = await download_s3(s3, doc_id)
 
         print("Converting YJS to markdown...")

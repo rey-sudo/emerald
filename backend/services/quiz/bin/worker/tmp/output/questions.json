@@ -42,5 +42,60 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo del Artículo 1.1.3 establece que los anexos que hacen parte integral del Acuerdo se podrán actualizar sin que sea necesaria su aprobación a través de un nuevo Acuerdo por parte del Consejo Directivo del Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "¿Cuál es el propósito principal de las estrategias organizacionales que los sujetos obligados deben establecer en relación con la planeación de la función archivística?",
+    "options": [
+      "Garantizar la adquisición de recursos financieros y tecnológicos sin depender de planes superiores.",
+      "Dirigir exclusivamente la conservación de documentos físicos y la restauración de archivos históricos.",
+      "Diseñar, elaborar, aprobar y evaluar lineamientos de gestión documental y administración de archivos, alineados con planes superiores.",
+      "Limitar la gestión documental únicamente a los recursos humanos y el talento especializado del sector público."
+    ],
+    "correct": 2,
+    "explanation": "El texto establece que las estrategias organizacionales deben estar dirigidas al diseño, elaboración, aprobación y evaluación de lineamientos de gestión documental y administración de archivos, y deben estar en concordancia con el plan nacional de desarrollo, el plan sectorial, el plan territorial, el plan estratégico institucional y los planes de acción."
+  },
+  {
+    "question": "¿Con qué marco normativo debe articularse la planeación y desarrollo de la función archivística, según lo estipulado en el artículo 1.2.1?",
+    "options": [
+      "Únicamente con el Plan Nacional de Desarrollo y el Plan Estratégico Institucional.",
+      "Exclusivamente con el Modelo de Gestión Documental y Administración de Archivos (MGDA).",
+      "Con las políticas de gestión y desempeño institucional definidas en el Modelo Integrado de Planeación y Gestión (MIPG), o las normas que lo modifiquen.",
+      "Priorizando la legislación de patrimonio cultural y el derecho internacional humanitario."
+    ],
+    "correct": 2,
+    "explanation": "El artículo 1.2.1. exige que la planeación de la función archivística se articule con las políticas de gestión y desempeño institucional definidas en el Modelo Integrado de Planeación y Gestión (MIPG), de conformidad con el Decreto 1083 de 2015 y sus modificaciones."
+  },
+  {
+    "question": "¿Qué mecanismo deben utilizar las entidades que no están obligadas al cumplimiento del Modelo Integrado de Planeación y Gestión (MIPG) para planear su función archivística?",
+    "options": [
+      "Deben suspender temporalmente la planeación hasta que se les exija el cumplimiento del MIPG.",
+      "Deben seguir únicamente los lineamientos del Plan Nacional de Desarrollo, sin considerar planes internos.",
+      "Pueden considerar armonizar la planeación de la función archivística con los planes estratégicos adoptados por su máximo órgano de gobierno.",
+      "Deben asumir la obligación de implementar el MIPG, independientemente de su estatus legal."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 especifica que las entidades no obligadas al MIPG pueden considerar armonizar la planeación de la función archivística con los planes estratégicos que se adopten por el máximo órgano de gobierno."
+  },
+  {
+    "question": "¿Qué rol específico se le asigna a los representantes legales o secretarios generales en el desarrollo de la función archivística, según el texto?",
+    "options": [
+      "Solo deben velar por la ejecución de los recursos financieros y tecnológicos.",
+      "Son responsables de la adquisición de bienes de interés público o social para el archivo.",
+      "Deben velar por la debida planeación y ejecución de los recursos en concordancia con los componentes del Modelo de Gestión Documental y Administración de Archivos (MGDA).",
+      "Tienen la función de modificar o derogar las normas que rigen la gestión documental."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 indica que los representantes legales o secretarios generales deben velar por la debida planeación y ejecución de los recursos tendientes al desarrollo de la función archivística, en concordancia con los componentes del Modelo de Gestión Documental y Administración de Archivos (MGDA)."
+  },
+  {
+    "question": "Según el Artículo 1.2.2 del Acuerdo, ¿cuál es el propósito fundamental de la \"Investigación institucional\" y qué elementos analíticos son esenciales para su desarrollo?",
+    "options": [
+      "Determinar la disposición final de los documentos mediante un análisis de su valor estético y su antigüedad, con el fin de priorizar la eliminación de aquellos sin relevancia cultural.",
+      "Establecer una línea de tiempo exhaustiva de las reformas legales de la entidad para justificar la adquisición de archivos privados y su declaratoria de Bienes de Interés Público.",
+      "Comprender la procedencia, el contexto y los valores testimoniales de los documentos generados por la entidad, a través de un análisis funcional y con un enfoque sociocultural, político y económico, para elaborar la \"Historia Institucional\" que sustenta los instrumentos archivísticos.",
+      "Recopilar únicamente los organigramas y las fechas extremas de la entidad para cumplir con los requisitos mínimos de descripción archivística y facilitar el acceso público a la información."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.2.2 establece que la investigación institucional tiene como objetivo comprender la procedencia, contexto y valores testimoniales de los documentos, utilizando un análisis funcional y un enfoque sociocultural, político y económico. El resultado es la \"Historia Institucional\", que sirve de soporte para la elaboración y actualización de los instrumentos archivísticos. La opción C integra todos estos componentes clave de manera precisa."
   }
 ]
