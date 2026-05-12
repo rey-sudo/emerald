@@ -185,5 +185,71 @@
     ],
     "correct": 1,
     "explanation": "El texto establece que estos instrumentos (PINAR, PGD y planes de conservación) deben formularse para la 'armonización de la planeación de la función archivística con la planeación estratégica institucional', lo que implica asegurar la coherencia con los objetivos estratégicos de la entidad."
+  },
+  {
+    "question": "Según el Artículo 1.2.5, ¿cuál es el propósito principal que deben cumplir los sujetos obligados al formular su Política Institucional de Gestión Documental?",
+    "options": [
+      "A. Asegurar la adhesión a los lineamientos generales del Archivo General de la Nación Jorge Palacios Preciado, sin necesidad de armonizarla con otras políticas internas.",
+      "B. Establecer el direccionamiento estratégico de la alta dirección, garantizando el cumplimiento de la Política Nacional de Archivos y de Gestión Documental, y armonizándola con sistemas de gestión de información.",
+      "C. Limitar la aplicación de la Política Institucional únicamente a los requisitos del Decreto 1080 de 2015, sin considerar otras normas que la modifiquen o sustituyan.",
+      "D. Delegar la responsabilidad de la formulación de la política al Comité de archivo o Comité institucional de Gestión y Desempeño, sin requerir la aprobación previa de la alta dirección."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece que el propósito de formular la Política Institucional es 'establecer el direccionamiento estratégico de la alta dirección frente al cumplimiento de la Política Nacional de Archivos y de Gestión Documental', y que esto debe hacerse 'armonizando' con otras políticas de gestión y seguridad de la información, lo cual requiere un entendimiento integral y estratégico."
+  },
+  {
+    "question": "Al formular la Política Institucional de Gestión Documental, los sujetos obligados deben considerar una convergencia normativa y de gestión. ¿Qué elementos deben armonizarse obligatoriamente, además de las normas específicas del Decreto 1080 de 2015?",
+    "options": [
+      "A. Únicamente las políticas de gestión y desempeño institucional, sin necesidad de considerar los sistemas administrativos y de gestión.",
+      "B. Exclusivamente los lineamientos del Archivo General de la Nación y las normas de derecho internacional humanitario.",
+      "C. Las políticas de gestión y desempeño institucional, los sistemas administrativos y de gestión, y el Modelo de Gestión Documental y Administración de Archivos (MGDA).",
+      "D. Solo las normas que modifiquen o deroguen el Decreto 1080 de 2015, sin considerar la armonización con el direccionamiento estratégico de la alta dirección."
+    ],
+    "correct": 2,
+    "explanation": "El artículo requiere que la política debe armonizarse con 'las políticas de gestión y desempeño institucional relacionadas con el manejo y seguridad de la información, sistemas administrativos y de gestión, y con el Modelo de Gestión Documental y Administración de Archivos – MGDA'."
+  },
+  {
+    "question": "Respecto a la referencia normativa para la formulación de la Política Institucional de Gestión Documental, ¿cuál es la fuente de lineamientos generales que debe ser considerada por los sujetos obligados?",
+    "options": [
+      "A. El Decreto Único Reglamentario del Sector Cultura, como fuente primaria y única de lineamientos generales.",
+      "B. Los lineamientos generales establecidos por el Archivo General de la Nación Jorge Palacios Preciado, tal como se detalla en el Parágrafo 1.",
+      "C. Las políticas de gestión y desempeño institucional, ya que estas representan la fuente más actualizada de direccionamiento estratégico.",
+      "D. Las normas que regulan la expropiación administrativa de archivos privados, dado su carácter de interés público."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 especifica claramente que 'Se tendrá como referencia para la formulación de la Política Institucional de Gestión Documental los lineamientos generales establecidos por el Archivo General de la Nación Jorge Palacios Preciado'."
+  },
+  {
+    "question": "Según el procedimiento de aprobación y difusión de la Política Institucional de Gestión Documental, ¿qué órganos o entidades son responsables de su validación y publicación?",
+    "options": [
+      "A. Debe ser aprobada directamente por la alta dirección, sin requerir la intervención de un comité específico.",
+      "B. Debe ser aprobada por el Comité de archivo o Comité institucional de Gestión y Desempeño, o quien haga sus veces, y publicada en la página web de la respectiva entidad.",
+      "C. Su aprobación depende únicamente de la publicación de las normas que la modifiquen o deroguen, sin necesidad de un comité interno.",
+      "D. La aprobación debe ser gestionada por el Archivo General de la Nación, que tiene la potestad de validar la política antes de su publicación."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que la Política debe ser 'aprobada por el Comité de archivo o Comité institucional de Gestión y Desempeño, o quien haga sus veces, y publicada en la página web de la respectiva entidad'."
+  },
+  {
+    "question": "Según el Artículo 1.3.1 del Capítulo 3, ¿cuál es la responsabilidad primordial asignada a los representantes legales, secretarias/os generales, funcionarias/os de igual o superior jerarquía, y jefes de oficina en relación con la normatividad archivística?",
+    "options": [
+      "La ejecución directa de los procesos de clasificación y descripción archivística de todos los documentos institucionales.",
+      "La supervisión y el aseguramiento del cumplimiento y seguimiento continuo de las disposiciones establecidas en la normatividad archivística.",
+      "El desarrollo y la implementación de nuevas políticas y procedimientos para la gestión de archivos digitales.",
+      "La restauración física y la migración a formatos electrónicos de todos los archivos históricos bajo su custodia."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.3.1 establece explícitamente que estos funcionarios 'tienen la responsabilidad de velar por el cumplimiento y seguimiento de las disposiciones establecidas en la normatividad archivística', lo que implica una función de supervisión y aseguramiento de la adherencia a la normativa."
+  },
+  {
+    "question": "Conforme al Parágrafo del Artículo 1.3.1, ¿cuál es el conjunto integral de responsabilidades que recae sobre los sujetos obligados respecto a los documentos y archivos generados en el ejercicio de sus funciones u obligaciones?",
+    "options": [
+      "Exclusivamente la disposición final y la eliminación de los documentos una vez cumplido su periodo de retención legal.",
+      "Principalmente la adquisición y expropiación de archivos privados que sean declarados de interés público.",
+      "La adecuada recepción, gestión, conservación, organización, uso, manejo y entrega de los documentos y archivos.",
+      "Únicamente el desarrollo de metodologías para la aplicación de criterios de disposición final de las series documentales."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo detalla que 'Los sujetos obligados serán responsables de la adecuada recepción, gestión, conservación, organización, uso, manejo y entrega de los documentos y archivos que se deriven del ejercicio de sus funciones u obligaciones', abarcando un espectro completo de la gestión documental operativa."
   }
 ]
