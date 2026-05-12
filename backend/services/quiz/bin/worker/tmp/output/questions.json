@@ -97,5 +97,38 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 1.2.2 establece que la investigación institucional tiene como objetivo comprender la procedencia, contexto y valores testimoniales de los documentos, utilizando un análisis funcional y un enfoque sociocultural, político y económico. El resultado es la \"Historia Institucional\", que sirve de soporte para la elaboración y actualización de los instrumentos archivísticos. La opción C integra todos estos componentes clave de manera precisa."
+  },
+  {
+    "question": "Según el Artículo 1.2.2, ¿cuál es el propósito fundamental de la investigación institucional en la gestión documental, y qué enfoque debe adoptar para asegurar la calidad de la información generada?",
+    "options": [
+      "Garantizar el cumplimiento de las normas de retención documental mediante la identificación de los sujetos obligados y sus funciones administrativas.",
+      "Establecer la procedencia, el contexto y los valores testimoniales de los documentos, abordando su origen, desarrollo y transformación desde una perspectiva multidisciplinaria.",
+      "Determinar el valor histórico y sociocultural de los documentos para facilitar su disposición final, siguiendo únicamente criterios de valorización científica.",
+      "Actualizar los instrumentos archivísticos mediante el análisis exclusivo de los documentos legales de creación de la entidad, sin considerar el contexto operativo."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece que la investigación institucional debe comprender la procedencia, contexto y valores testimoniales, y que debe abordar el origen, desarrollo y transformación a partir de un análisis funcional y desde un enfoque sociocultural, político, económico, entre otros. La opción 2 captura de manera precisa este alcance y propósito."
+  },
+  {
+    "question": "¿Qué tipo de documentos y fuentes de información deben considerarse obligatoriamente para la elaboración de la Historia Institucional, según lo estipulado en el Parágrafo 1 del Artículo 1.2.2?",
+    "options": [
+      "Únicamente los documentos legales de creación y transformación, junto con los inventarios físicos de los archivos productivos.",
+      "Los procedimientos operativos estándar y los informes de auditoría interna, ya que estos reflejan el funcionamiento diario de las unidades administrativas.",
+      "Documentos legales de creación o transformación, procedimientos, documentos que permitan el estudio del contexto, y entrevistas a los productores de documentos.",
+      "Los registros de transferencia documental y los actas de disposición final, ya que estos demuestran el ciclo de vida completo de la documentación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 especifica que para elaborar la Historia Institucional se deben tener en cuenta los documentos legales de creación o transformación, los procedimientos, los documentos que permitan el estudio y análisis de contexto, y las entrevistas a los productores de documentos, entre otros."
+  },
+  {
+    "question": "Respecto a los requisitos técnicos de la Historia Institucional, ¿qué elementos debe incluir, como mínimo, según el Parágrafo 2 del Artículo 1.2.2, para fundamentarse adecuadamente en las normas técnicas de descripción?",
+    "options": [
+      "Un análisis detallado de la estructura de los fondos documentales, incluyendo la clasificación de las series y subseries, y su relación con el organigrama actual.",
+      "La línea del tiempo y las fechas extremas, organigramas, la descripción y análisis del contexto de la creación o transformación, y el análisis de la producción documental por periodos orgánico-funcionales.",
+      "Un catálogo exhaustivo de todos los documentos legales y normativos emitidos desde la fundación de la entidad, con su fecha de publicación y alcance.",
+      "Un informe financiero que detalle los recursos asignados a la gestión documental y la evolución del personal responsable de los archivos a lo largo del tiempo."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 exige que la Historia Institucional debe fundamentarse en las normas técnicas de descripción y presentar, como mínimo, la línea del tiempo y fechas extremas, organigramas, descripción y análisis del contexto de la creación o transformación, y análisis de la producción documental, por cada periodo orgánico-funcional."
   }
 ]

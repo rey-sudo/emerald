@@ -316,21 +316,12 @@ onBeforeUnmount(() => {
         :class="{ 'is-active': selectionCount > 0 }"
         label="Clean"
         size="xs"
-        icon="lucide:brush-cleaning"
+        icon="lucide:eraser"
         color="neutral"
         variant="ghost"
         :disabled="!selectionCount"
         @click="editor.commands.clearAllSelections()"
       >
-        <template #trailing>
-          <UBadge
-            class="flex items-center text-center rounded-xs"
-            color="neutral"
-            variant="outline"
-            size="xs"
-            >{{ selectionCount }}</UBadge
-          >
-        </template>
       </UButton>
 
       <button style="display: none" @click="logSelections">ver</button>
@@ -341,6 +332,14 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="footer">
+      <UBadge
+        class="flex items-center text-center rounded-2xl"
+        color="neutral"
+        variant="ghost"
+        size="sm"
+        >Selected {{ selectionCount }}</UBadge
+      >
+
       <span class="ml-auto">
         <UBadge
           class="flex items-center text-center"
@@ -367,12 +366,11 @@ onBeforeUnmount(() => {
   gap: 0.5rem;
   z-index: 10;
   display: flex;
-  min-height: 2.5rem;
   align-items: center;
-  padding: 0rem 1rem;
+  padding: 0.25rem 1rem;
   border-bottom: 1px solid var(--ui-border);
-  border-bottom-left-radius: calc(var(--ui-radius) * 1);
-  border-bottom-right-radius: calc(var(--ui-radius) * 1);
+  border-bottom-left-radius: calc(var(--ui-radius) * 0.5);
+  border-bottom-right-radius: calc(var(--ui-radius) * 0.5);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
@@ -467,7 +465,6 @@ h1 {
   z-index: 10;
   gap: 0.5rem;
   display: flex;
-  min-height: 1.5rem;
   align-items: center;
   padding: 0rem 1rem;
   border-top: 1px solid var(--ui-border);

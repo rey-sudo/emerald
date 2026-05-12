@@ -3,7 +3,7 @@ from typing import List
 from litellm.router import Router
 
 class QuestionItem(BaseModel):
-    question: str = Field(..., description="Versbose question statement based on the QUIZ_CONTENT")
+    question: str = Field(..., description="Versbose question statement based on the <QuizContent></QuizContent> tag")
     options: List[str] = Field(..., min_length=4, max_length=4, description="List of possible answer choices")
     correct: int = Field(..., ge=0, le=3, description="Index of the correct option (0-3)")
     explanation: str = Field(..., description="Full explanation of why the answer is correct")
@@ -40,13 +40,12 @@ The generated questions must resemble evaluations used in:
 ====
 
 QUIZ GENERATION RULES:
-Generate quizzes exclusively from the provided QUIZ_CONTENT.
+Generate quizzes exclusively from the provided <QuizContent></QuizContent> tag.
 
 Requirements:
 - Questions must evaluate understanding, interpretation, applicability, implications, scope, hierarchy, definitions, responsibilities, and technical meaning.
 - Prioritize reasoning and interpretation over memorization.
 - Avoid superficial questions.
-- Avoid simple sentence extraction.
 - Avoid obvious or weak distractors.
 - Every question must be self-contained and understandable without external context.
 - Maintain technical precision and semantic consistency with the source document.
@@ -57,24 +56,35 @@ Requirements:
 - Preserve institutional, legal, procedural, and technical meaning when applicable.
 - If the source contains legal or regulatory language, preserve interpretive precision.
 
-====
+VERBOSITY AND PROFESSIONAL REGISTER:
+Questions and answer options must reflect the language standards of professional certification and expert-level academic assessment.
 
-NEGATIVE RULES:
-DO NOT:
-- generate trivial questions,
-- generate purely literal copy-paste questions,
-- use yes/no questions,
-- generate redundant questions,
-- create vague distractors,
-- oversimplify technical concepts,
-- invent unsupported interpretations,
-- generate opinion-based questions,
-- produce ambiguous answers,
-- rely only on factual recall,
-- create questions whose answer is obvious from keyword matching alone.
+Language and Style Requirements:
+- Questions must be fully developed, contextually framed, and technically
+  precise. Avoid telegraphic or oversimplified phrasing.
+- Each question stem must provide sufficient technical context to require
+  interpretation, not just recognition.
+- Answer options must be semantically dense and domain-specific. Avoid
+  short, vague, or colloquial options.
+- Distractors must be plausible at an expert level: they should reflect
+  common misinterpretations, partial truths, or conceptual confusions a
+  professional might realistically hold.
+- Do not use answer options that consist of a single word or a generic
+  phrase. Each option must express a complete technical idea.
+  
+CONTENT COVERAGE:
+Every distinct concept, rule, definition, procedure, condition,
+or institutional implication present in <QuizContent></QuizContent>
+must be represented by at least one question.
 
-====
-
+Coverage Requirements:
+- Analyze the source content exhaustively before generating questions.
+  Do not skip sections, paragraphs, clauses, or subordinate conditions.
+- Each paragraph, article, numeral, or parágrafo in the source must originate at least one evaluable question.
+- Do not concentrate multiple questions on a single idea while leaving other concepts unaddressed.
+- If the source contains exceptions, conditions, hierarchies, or procedural steps, each must be evaluated independently.
+- The total set of questions must reflect the full semantic scope of the source, not a partial or convenient selection of it.
+    
 QUESTION QUALITY STANDARD:
 Questions should test one or more of the following:
 - interpretation,
@@ -89,8 +99,6 @@ Questions should test one or more of the following:
 - compliance understanding,
 - contextual reasoning.
 
-====
-
 DIFFICULTY:
 Difficulty level: Expert
 
@@ -100,6 +108,21 @@ Questions should require:
 - conceptual precision,
 - discrimination between similar concepts,
 - contextual understanding.
+    
+====
+
+NEGATIVE RULES:
+DO NOT:
+- generate trivial questions,
+- generate purely literal copy-paste questions,
+- use yes/no questions,
+- generate redundant questions,
+- oversimplify technical concepts,
+- invent unsupported interpretations,
+- generate opinion-based questions,
+- produce ambiguous answers,
+- rely only on factual recall,
+- create questions whose answer is obvious from keyword matching alone.
 
 ====
 
