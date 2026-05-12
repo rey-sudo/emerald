@@ -339,5 +339,49 @@
     ],
     "correct": 3,
     "explanation": "El Parágrafo 2 concluye indicando que 'Los documentos deben estar registrados en la respectiva hoja de control o índice electrónico', lo cual es el requisito operativo de registro."
+  },
+  {
+    "question": "Conforme al Artículo 1.3.3 del Acuerdo, ¿cuál es la implicación legal fundamental para un servidor público que, al trasladarse, retirarse o posesionarse, omite la debida gestión, entrega y recibo de los documentos y archivos bajo su responsabilidad?",
+    "options": [
+      "La omisión únicamente generará una amonestación administrativa, dado que el daño no es directamente patrimonial.",
+      "El servidor público será sujeto de responsabilidad exclusiva ante las autoridades disciplinarias por incumplimiento de deberes funcionales.",
+      "La omisión acarreará responsabilidad ante autoridades disciplinarias, penales, fiscales o administrativas, dependiendo de la naturaleza y las consecuencias del incumplimiento.",
+      "La sanción principal será la restitución de los documentos, sin que ello implique necesariamente una responsabilidad penal o fiscal."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.3.3 establece explícitamente que los servidores públicos que incurran en la omisión de la entrega, debida gestión y recibo de documentos y archivos, responderán ante las autoridades disciplinarias, penales, fiscales o administrativas por las consecuencias de dicha omisión. Esto indica un espectro amplio de responsabilidades, no limitado a una sola jurisdicción."
+  },
+  {
+    "question": "El Parágrafo del Artículo 1.3.3 establece que los documentos públicos son propiedad del Estado. ¿Cuál es la prohibición directa que se deriva de este principio para un servidor público o contratista en relación con la documentación generada en el ejercicio de sus funciones u obligaciones contractuales?",
+    "options": [
+      "Se prohíbe la divulgación de cualquier información contenida en los documentos sin autorización expresa de la entidad.",
+      "Está estrictamente prohibido que el servidor público o contratista se lleve la documentación producida, bajo pena de incurrir en sanciones legales.",
+      "La documentación solo puede ser consultada en las instalaciones de la entidad, impidiendo su extracción para cualquier propósito.",
+      "El servidor público o contratista debe garantizar la custodia física de los documentos, pero puede llevárselos temporalmente para fines laborales específicos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo es categórico al indicar que 'Por ningún motivo el servidor público o contratista podrá llevarse la documentación producida en ejercicio de sus funciones u obligaciones contractuales', fundamentándose en que 'los documentos públicos son de propiedad del Estado', y advirtiendo sobre las 'sanciones previstas por la Ley'."
+  },
+  {
+    "question": "Un servidor público se retira de su cargo sin haber realizado la transferencia adecuada de los archivos y documentos bajo su custodia, lo que resulta en la pérdida de información crítica para la continuidad de los procesos. Según el Artículo 1.3.3, ¿ante qué tipos de autoridades podría ser llamado a responder por esta omisión?",
+    "options": [
+      "Exclusivamente ante la autoridad administrativa interna de la entidad para la cual trabajaba.",
+      "Únicamente ante la Contraloría General de la República, debido a la posible afectación del patrimonio público.",
+      "Ante las autoridades disciplinarias, penales, fiscales o administrativas, dependiendo de la naturaleza y el impacto de la omisión.",
+      "Solamente ante la Procuraduría General de la Nación, por tratarse de una falta disciplinaria grave."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.3.3 especifica claramente que los servidores públicos que omitan la entrega, gestión y recibo de documentos 'responderán ante las autoridades disciplinarias, penales, fiscales o administrativas por las consecuencias de esta omisión'. Esto subraya la multiplicidad de jurisdicciones competentes para evaluar y sancionar tales conductas."
+  },
+  {
+    "question": "Analizando el Artículo 1.3.3 y su Parágrafo, ¿cuál es la distinción fundamental entre la 'omisión en la recepción, gestión y entrega de documentos' y la acción de 'llevarse la documentación producida en ejercicio de sus funciones'?",
+    "options": [
+      "La omisión se refiere a una negligencia en el cumplimiento de un deber, mientras que llevarse la documentación implica una apropiación indebida de bienes del Estado.",
+      "La omisión solo genera responsabilidad administrativa, mientras que llevarse documentos siempre conlleva responsabilidad penal.",
+      "La omisión aplica únicamente a servidores públicos, mientras que llevarse documentos solo es relevante para contratistas.",
+      "La omisión se relaciona con documentos físicos, y llevarse la documentación se refiere exclusivamente a archivos electrónicos."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 1.3.3 aborda la 'omisión' como un incumplimiento de un deber funcional relacionado con la gestión y transferencia de documentos. En contraste, el Parágrafo prohíbe 'llevarse la documentación', lo cual se fundamenta en la propiedad estatal de los documentos, implicando una acción de apropiación indebida o sustracción de bienes públicos, lo cual es una distinción crucial en la naturaleza de la infracción."
   }
 ]
