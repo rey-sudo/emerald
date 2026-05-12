@@ -136,7 +136,7 @@ model_list = [
     {
         "model_name": "models-1",
         "litellm_params": {
-            "model": "ollama/llama3.2:3b",
+            "model": "ollama/gemma4:e4b",
             "api_base": "http://localhost:11434"
         }
     }

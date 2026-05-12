@@ -188,7 +188,7 @@ async def main():
         config=config
     ) as s3:
 
-        await build_context(s3, doc_id, False)
+        await build_context(s3, doc_id, True)
 
     generate_quiz()
 

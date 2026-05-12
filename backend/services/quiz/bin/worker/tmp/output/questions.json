@@ -1,0 +1,46 @@
+[
+  {
+    "question": "¿Cuál es el alcance de aplicación del Acuerdo, según el Artículo 1.1.2, y qué categorías de entidades están incluidas?",
+    "options": [
+      "Solo la administración pública en sus niveles nacional, departamental y distrital.",
+      "Todas las entidades privadas, independientemente de si cumplen funciones públicas o no.",
+      "La administración pública en sus niveles nacional, departamental, distrital y municipal, además de entidades privadas que cumplen funciones públicas y organismos regulados por la Ley 594 de 2000.",
+      "Únicamente los servidores públicos y trabajadores oficiales, sin considerar las entidades jurídicas de derecho privado."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.1.2 establece que el Acuerdo comprende a la administración pública en sus diferentes niveles (nacional, departamental, distrital, municipal) y a las entidades privadas que cumplen funciones públicas y demás organismos regulados por la Ley 594 de 2000."
+  },
+  {
+    "question": "¿Qué se entiende por 'sujetos obligados' para los efectos de este Acuerdo, según el Parágrafo del Artículo 1.1.2?",
+    "options": [
+      "Exclusivamente las entidades públicas que operan a nivel nacional y departamental.",
+      "Cualquier persona natural o jurídica que maneje documentos históricos del país.",
+      "Las entidades públicas o privadas que cumplen funciones públicas, incluyendo servidores públicos, trabajadores oficiales y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública.",
+      "Solo las entidades privadas que han sido expropiadas por el Estado para fines de archivo."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo del Artículo 1.1.2 define 'sujetos obligados' como las entidades públicas o privadas que cumplen funciones públicas, lo cual incluye específicamente a servidores públicos, trabajadores oficiales y personas naturales o jurídicas de derecho privado que por mandato legal cumplen una función pública."
+  },
+  {
+    "question": "¿Cuál es el referente principal para la interpretación de las definiciones dentro del marco de este Acuerdo, según el Artículo 1.1.3?",
+    "options": [
+      "Únicamente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "Las definiciones contenidas en el anexo 1, sin necesidad de consultar otros documentos.",
+      "El Acuerdo mismo, y en caso de duda, la jurisprudencia más reciente del Consejo Directivo.",
+      "El glosario de términos y las definiciones del anexo 1, además de considerar el referente del Archivo General de la Nación Jorge Palacios Preciado."
+    ],
+    "correct": 3,
+    "explanation": "El Artículo 1.1.3 indica que se tendrán en cuenta las definiciones del anexo (Anexo 1) y, asimismo, se tendrá como referente el glosario de términos publicado por el Archivo General de la Nación Jorge Palacios Preciado, lo que requiere la consideración de ambos elementos."
+  },
+  {
+    "question": "¿Qué implicación legal tiene la actualización de los anexos que forman parte integral del Acuerdo, según el Parágrafo del Artículo 1.1.3?",
+    "options": [
+      "Requiere la aprobación de un nuevo Acuerdo por parte del Consejo Directivo del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Puede actualizarse sin necesidad de una nueva aprobación del Consejo Directivo, siempre que se ajuste al glosario vigente.",
+      "Solo puede ser actualizado por el Archivo General de la Nación, sin intervención de ningún otro órgano.",
+      "Su actualización está sujeta a la aprobación de la administración pública en sus diferentes niveles."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo del Artículo 1.1.3 establece que los anexos que hacen parte integral del Acuerdo se podrán actualizar sin que sea necesaria su aprobación a través de un nuevo Acuerdo por parte del Consejo Directivo del Archivo General de la Nación Jorge Palacios Preciado."
+  }
+]
