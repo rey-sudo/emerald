@@ -1,62 +1,52 @@
 import re
-import sys
-import json
-from pathlib import Path
 from bs4 import BeautifulSoup
 from pycrdt import Doc, XmlFragment, Text, Map, Array
+
+MULTISELECT_RE = re.compile(r"<multiSelect\b[^>]*>.*?</multiSelect>", re.DOTALL | re.IGNORECASE)
+
 
 def int_attr(tag, attr, default=0):
     m = re.search(r'\d+', str(tag.get(attr, "")))
     return int(m.group()) if m else default
 
-def decode(raw: bytes) -> list[str]:
-    doc = Doc()
-    doc.apply_update(raw)
-
-    seen = set()
-    results = []
-
-    for key in doc.keys():
-        for typ in (XmlFragment, Text, Map, Array):
-            try:
-                value = str(doc.get(key, type=typ)).replace('\\"', '"')  # 👈
-            except Exception:
-                continue
-
-            if "<multiselect" not in value.lower() or value in seen:
-                continue
-
-            seen.add(value)
-            results.append(value)
-
-    return results
-
 
 def parse(strings: list[str]) -> list[dict]:
-    """Parsea los tags <multiselect> y devuelve los items ordenados."""
-    soup = BeautifulSoup(" ".join(strings), "html.parser")  # 👈 un solo parse
+    soup = BeautifulSoup(" ".join(strings), "html.parser")
     items = {}
 
     for tag in soup.find_all("multiselect"):
         uid = tag.get("id", "").strip()
-        if not uid or uid in items:
+        if not uid:
             continue
 
-        items[uid] = {
-            "order": int_attr(tag, "order"),
-            "id": uid,
-            "color": tag.get("color", "").strip(),
-            "text": tag.get_text().strip(),
+        text = tag.get_text().strip()
+
+        if uid in items:
+            items[uid]["text"] += "\n" + text
+        else:
+            items[uid] = {
+                "order": int_attr(tag, "order"),
+                "id": uid,
+                "color": tag.get("color", "").strip(),
+                "text": text,
             }
 
     return sorted(items.values(), key=lambda x: (x["order"], x["id"]))
 
 
-def extract_multiselect(data):
-    items = parse(decode(data))
-    resultado = "\n\n".join([item['text'] for item in items])
-    return resultado
+def extract_multiselect(raw: bytes) -> str:
+    doc = Doc()
+    doc.apply_update(raw)
 
+    full_text = ""
+    for key in doc.keys():
+        for typ in (XmlFragment, Text, Map, Array):
+            try:
+                full_text += str(doc.get(key, type=typ)).replace('\\"', '"') + "\n"
+                break
+            except Exception:
+                continue
 
- 
-
+    matches = list(dict.fromkeys(MULTISELECT_RE.findall(full_text)))
+    items = parse(matches)
+    return "\n\n".join(item["text"] for item in items)
