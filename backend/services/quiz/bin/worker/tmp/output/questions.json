@@ -174,5 +174,16 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 3 indica que el diagnóstico debe ser actualizado periódicamente de acuerdo con la planeación, seguimiento y evaluación que realice la entidad, lo que implica un proceso continuo y dinámico."
+  },
+  {
+    "question": "Según el Artículo 1.2.4, ¿cuál es el propósito fundamental de la formulación, actualización e implementación del Plan Institucional de Archivos (PINAR), el Programa de Gestión Documental (PGD) y los planes del Sistema Integrado de Conservación?",
+    "options": [
+      "Garantizar la estandarización de los procedimientos de disposición final de documentos a nivel nacional, independientemente del tipo de sujeto obligado.",
+      "Asegurar la coherencia y la articulación de la planeación archivística con los objetivos estratégicos generales de la institución.",
+      "Establecer un marco legal único para la adquisición y expropiación de archivos privados, limitando la autonomía de los sujetos obligados.",
+      "Definir la jerarquía de los fondos documentales, priorizando la conservación de documentos de valor legal sobre el valor histórico."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece que estos instrumentos (PINAR, PGD y planes de conservación) deben formularse para la 'armonización de la planeación de la función archivística con la planeación estratégica institucional', lo que implica asegurar la coherencia con los objetivos estratégicos de la entidad."
   }
 ]
