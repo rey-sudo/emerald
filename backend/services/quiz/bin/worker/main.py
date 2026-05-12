@@ -1,17 +1,18 @@
-import re
+
 from dotenv import load_dotenv
 load_dotenv()
 
 from pathlib import Path
-from utils.prompts import Quiz, create_quiz, build_quiz_prompt
+from utils.prompts import Quiz, create_quiz
 from utils.extract_multiselect import extract_multiselect
 from utils.extract_text import convert_yjs_to_markdown
 from utils.extract_keywords import extract_keywords
 from utils.generate_context import summarize_to_three_paragraphs
-
+from utils.infographic_prompt import create_infographic
 from langdetect import detect
 from botocore.config import Config
 
+import re
 import asyncio
 import json
 import os
@@ -124,43 +125,47 @@ async def build_context(s3, doc_id: str, bypass_summary: bool):
 
 def generate_quiz():
     context_path = OUTPUT_PATH / "context.xml"
-
     if not context_path.exists():
         raise FileNotFoundError(
             "context.xml no existe. Ejecuta build context primero."
         )
-
     with open(context_path, "r", encoding="utf-8") as f:
         context = f.read()
-
-    prompt = build_quiz_prompt(context)
-    print(prompt)
+        
+    #-----------------------------------------------------------
+         
     print("Generating quiz...")
-
-    result: Quiz = create_quiz(prompt, 13_000)
-
-    output_path = OUTPUT_PATH / "questions.json"
-
+    result: Quiz = create_quiz(context, 13_000)
+    questions_path = OUTPUT_PATH / "questions.json"
     new_questions = result.model_dump()
-
-    if output_path.exists():
-        with open(output_path, "r", encoding="utf-8") as f:
+    if questions_path.exists():
+        with open(questions_path, "r", encoding="utf-8") as f:
             existing_questions = json.load(f)
 
         existing_questions.extend(new_questions)
 
     else:
         existing_questions = new_questions
-
-    with open(output_path, "w", encoding="utf-8") as f:
+    with open(questions_path, "w", encoding="utf-8") as f:
         json.dump(
             existing_questions,
             f,
             ensure_ascii=False,
             indent=2
         )
-
-    print(f"Quiz guardado en: {output_path}")
+    print(f"Quiz guardado en: {questions_path}")
+    
+    #-----------------------------------------------------------
+    
+    pattern = r"<QuizContent>(.*?)</QuizContent>"
+    match = re.search(pattern, context, re.DOTALL)
+    if match:
+        quiz_content = match.group(1).strip()
+    infog = create_infographic(quiz_content, 13_000)
+    print("Crea una infografía perfecta con esto:")
+    print(infog)
+    
+    #-----------------------------------------------------------
 
 
 async def main():

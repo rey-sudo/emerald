@@ -130,5 +130,49 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 exige que la Historia Institucional debe fundamentarse en las normas técnicas de descripción y presentar, como mínimo, la línea del tiempo y fechas extremas, organigramas, descripción y análisis del contexto de la creación o transformación, y análisis de la producción documental, por cada periodo orgánico-funcional."
+  },
+  {
+    "question": "Según el Artículo 1.2.3, ¿cuál es el propósito fundamental del diagnóstico integral de la gestión documental y administración de archivos, y qué alcance debe tener en relación con los documentos considerados?",
+    "options": [
+      "Su objetivo principal es determinar el valor histórico de los documentos para su posible expropiación, limitándose a los archivos físicos de más de cincuenta años de antigüedad.",
+      "Busca establecer un inventario preliminar de los documentos electrónicos para su migración a nuevas plataformas, excluyendo los soportes físicos por su obsolescencia.",
+      "Tiene como finalidad primordial la adecuada planeación de la función archivística, abarcando la totalidad de los documentos producidos o gestionados en cualquier soporte físico o formato electrónico, y en diversos medios y sistemas de información.",
+      "Se enfoca en la identificación de documentos que requieren restauración urgente debido a su deterioro, priorizando aquellos con valor estético reconocido por expertos externos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.2.3 establece claramente que el diagnóstico integral se realiza para una adecuada planeación de la función archivística y debe considerar la totalidad de los documentos producidos o gestionados, sin importar su soporte o formato."
+  },
+  {
+    "question": "El Parágrafo 1 del Artículo 1.2.3 detalla los elementos mínimos que deben evaluarse en el diagnóstico integral. ¿Cuál de las siguientes opciones agrupa correctamente estos componentes obligatorios de evaluación?",
+    "options": [
+      "Exclusivamente los procesos de digitalización de documentos y la capacidad de almacenamiento en la nube, sin considerar aspectos administrativos o de conservación.",
+      "Los procesos de la gestión documental, los aspectos administrativos, la conservación y preservación de los documentos, la infraestructura física y tecnológica, y el estado de las políticas de gestión y desempeño institucional que inciden en el manejo de la información y la función archivística.",
+      "Únicamente la clasificación de documentos según su nivel de confidencialidad y la frecuencia de su consulta por parte de los usuarios internos y externos.",
+      "La calidad del papel utilizado en los documentos físicos, la antigüedad de los equipos informáticos y el número de personal asignado a tareas de archivo, sin evaluar las políticas institucionales."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 especifica que el diagnóstico debe evaluar como mínimo: los procesos de la gestión documental, aspectos administrativos, de conservación y preservación, infraestructura física y tecnológica, y el estado de las políticas de gestión y desempeño institucional que afectan el manejo de la información y la función archivística."
+  },
+  {
+    "question": "Según el Parágrafo 2 del Artículo 1.2.3, ¿qué insumos específicos deben utilizarse para la elaboración del diagnóstico integral de la gestión documental y administración de archivos?",
+    "options": [
+      "Solamente los informes de auditorías financieras externas y las encuestas de satisfacción de los usuarios sobre el acceso a la información pública.",
+      "Los resultados del índice de medición de desempeño institucional (IDI), el índice de transparencia y acceso a la información pública (ITA), los resultados del autodiagnóstico del Modelo de Gestión Documental y Administración de Archivos (MGDA), u otros modelos de madurez o mediciones realizadas a la entidad.",
+      "Exclusivamente los registros de asistencia a capacitaciones en gestión documental y los inventarios de equipos de oficina disponibles.",
+      "Únicamente las actas de reuniones del comité de archivos y las solicitudes de información recibidas por la entidad en el último año."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que servirán de insumo para el diagnóstico los resultados del IDI, el ITA, el autodiagnóstico del MGDA u otros modelos de madurez o mediciones realizadas a la entidad."
+  },
+  {
+    "question": "El Parágrafo 3 del Artículo 1.2.3 establece una condición fundamental para el mantenimiento del diagnóstico integral de la gestión documental y administración de archivos. ¿Cuál es esta condición?",
+    "options": [
+      "El diagnóstico es un documento estático que, una vez elaborado, no requiere actualizaciones a menos que haya una reforma legal que lo exija explícitamente.",
+      "Debe ser actualizado anualmente por una firma consultora externa, independientemente de las actividades internas de la entidad.",
+      "Debe ser actualizado periódicamente de acuerdo con la planeación, seguimiento y evaluación que realice la entidad.",
+      "Su actualización solo es necesaria si se produce un cambio significativo en la dirección de la entidad o una reestructuración organizacional mayor."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 indica que el diagnóstico debe ser actualizado periódicamente de acuerdo con la planeación, seguimiento y evaluación que realice la entidad, lo que implica un proceso continuo y dinámico."
   }
 ]

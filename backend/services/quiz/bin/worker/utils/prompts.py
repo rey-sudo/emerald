@@ -13,7 +13,7 @@ class Quiz(RootModel[List[QuestionItem]]):
 
 quiz_response_scheme = Quiz.model_json_schema()
 
-def build_quiz_prompt(domain: str):
+def get_system_prompt() -> str:
     return f"""
 SYSTEM ROLE:
 You are an expert quiz generation system specialized in creating high-quality professional and academic assessments from source documents.
@@ -145,8 +145,6 @@ Generate:
 - The output will be processed automatically by another system.
 
 ====
-
-{domain}
 """
     
 model_list = [
@@ -172,7 +170,10 @@ def _llm(prompt: str, max_tokens: int = 1000) -> Quiz:
     
     response = router.completion(
         model="models-1",
-        messages=[{"role": "user", "content": prompt}],
+        messages=[
+            {"role": "system", "content": get_system_prompt() },  
+            {"role": "user", "content": prompt}       
+        ],
         max_tokens=max_tokens,
         temperature=0.3,
         response_format={
