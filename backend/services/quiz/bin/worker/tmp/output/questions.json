@@ -493,5 +493,38 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 35 Ley 594 de 2000, literal d), establece que los documentos y archivos históricos públicos exportados o sustraídos ilegalmente serán decomisados y puestos a órdenes del Ministerio de la Cultura, y que el Estado realizará esfuerzos para repatriarlos."
+  },
+  {
+    "question": "Conforme al Artículo 1.4.2 del Acuerdo, ¿cuál es el fundamento legal explícito para el desarrollo de los documentos técnicos y cuál es su propósito principal en el marco de la gestión documental?",
+    "options": [
+      "La directriz del Ministerio de Cultura para la armonización de los sistemas de clasificación, con el fin de estandarizar la terminología archivística nacional.",
+      "Las facultades conferidas por el artículo 34 de la Ley 594 de 2000, con el objetivo de posibilitar la implementación efectiva del presente Acuerdo.",
+      "La necesidad de cumplir con los requisitos de certificación internacional en gestión de archivos, priorizando la interoperabilidad de los sistemas.",
+      "Una resolución del Consejo Nacional de Archivos que busca establecer un marco común para la valoración documental en todas las entidades públicas."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.4.2 establece claramente que los documentos técnicos se desarrollan 'Con base en las facultades otorgadas en el artículo 34 de la Ley 594 de 2000' y 'para la implementación del presente Acuerdo', lo que define tanto su fundamento legal como su propósito."
+  },
+  {
+    "question": "Según lo estipulado en el Artículo 1.4.2, ¿qué tipo de instrumentos se consideran 'documentos técnicos' y cuál es el mecanismo oficial para su expedición y divulgación?",
+    "options": [
+      "Informes de auditoría interna y actas de comités técnicos, que se distribuyen a través de canales de comunicación internos del Archivo General de la Nación.",
+      "Directrices generales emitidas por el Ministerio de Tecnologías de la Información y las Comunicaciones, publicadas en el Diario Oficial de la República.",
+      "Lineamientos tales como procedimientos, manuales, guías o instructivos, los cuales son expedidos y publicados en la página web del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Estudios de caso y análisis comparativos de buenas prácticas internacionales, divulgados en publicaciones académicas especializadas del sector archivístico."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.4.2 especifica que los documentos técnicos son 'tales como, procedimientos, manuales, guías o instructivos', y que estos son 'expedidos y publicados en la página web del Archivo General de la Nación Jorge Palacios Preciado'."
+  },
+  {
+    "question": "En el contexto de la implementación de la Política de Archivos y de Gestión Documental, ¿cuál es el rol que el Parágrafo del Artículo 1.4.2 asigna a las normas técnicas colombianas (NTC) y a los estándares internacionales?",
+    "options": [
+      "Constituyen requisitos de cumplimiento obligatorio que deben ser adoptados sin excepción por todas las entidades sujetas al Acuerdo.",
+      "Sirven como criterios de evaluación para la certificación de sistemas de gestión documental, pero no son vinculantes para la operación diaria.",
+      "Establecen parámetros que pueden ser considerados para la implementación efectiva de dicha política, ofreciendo un marco de referencia complementario.",
+      "Son la base para la derogación de normativas nacionales preexistentes que presenten inconsistencias con las prácticas archivísticas globales."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo indica que 'Se podrán considerar para la implementación de la Política de Archivos y de Gestión Documental los parámetros establecidos por las normas técnicas colombianas (NTC) y estándares internacionales'. Esto implica que son un referente o una guía a considerar, no una obligación ineludible o un instrumento de derogación."
   }
 ]
