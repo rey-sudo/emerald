@@ -570,5 +570,38 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 establece que los resultados deben ser remitidos al nominador para que se adopten las decisiones a que haya lugar, así como establecer acciones correctivas a través de planes de mejoramiento."
+  },
+  {
+    "question": "Según el Artículo 2.1.1, ¿cuál es el rol principal del Comité Evaluador de Documentos dentro del Sistema Nacional de Archivos?",
+    "options": [
+      "Gestionar la transferencia de documentos físicos entre diferentes entidades públicas, asegurando la continuidad operativa del archivo.",
+      "Asesorar a la dirección general del Archivo General de la Nación Jorge Palacios Preciado en la valoración documental, la convalidación de Tablas de Retención y Valoración, y la declaratoria de bienes de interés cultural.",
+      "Establecer los procedimientos de disposición final para las subseries documentales, garantizando la interoperabilidad de los registros electrónicos.",
+      "Coordinar la expropiación administrativa de archivos privados, determinando el valor máximo de adquisición mediante avalúos especializados."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.1.1 define explícitamente que el Comité Evaluador de Documentos es la instancia de articulación nacional responsable de asesorar a la dirección general del Archivo General de la Nación en temas específicos, incluyendo la valoración de documentos, la convalidación de Tablas de Retención Documental y Tablas de Valoración Documental, y la declaratoria de bienes de interés cultural."
+  },
+  {
+    "question": "En el contexto de la Ley 594 de 2000, ¿qué funciones específicas debe asumir el Comité Evaluador de Documentos para la protección del patrimonio documental?",
+    "options": [
+      "Supervisar la implementación de los Planes Especiales de Manejo y Protección (PEMP) y garantizar el cumplimiento de los sujetos obligados en la gestión documental.",
+      "Determinar los criterios de eliminación de documentos que han cumplido su ciclo de vida legal, priorizando la disposición final segura e interoperable.",
+      "Realizar la adquisición de archivos privados mediante la Declaratoria de Bienes de Interés Público o Social, estableciendo el precio de compra.",
+      "Articular la coordinación entre los órganos asesores, coordinadores y ejecutores para la correcta transferencia de información electrónica."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 2.1.1 establece que el Comité Evaluador de Documentos es responsable de la declaratoria de bienes de interés cultural y los Planes Especiales de Manejo y Protección (PEMP), lo cual es una función de protección y articulación directa del patrimonio documental, además de la valoración y convalidación de tablas."
+  },
+  {
+    "question": "¿Cuál es el propósito general de establecer directrices para la articulación y el cumplimiento de las funciones de los órganos asesores del Sistema Nacional de Archivos, según el Artículo 2.1?",
+    "options": [
+      "Garantizar que todos los sujetos obligados cumplan con la Ley 594 de 2000 en materia de gestión documental y conservación de archivos.",
+      "Establecer un marco legal que regule la transferencia de documentos físicos y electrónicos entre las distintas entidades territoriales.",
+      "Articular y asegurar el cumplimiento de las funciones de los órganos asesores para la correcta gestión y protección del patrimonio documental nacional.",
+      "Definir los procedimientos técnicos para la identificación documental y la sistematización de las categorías administrativas de los fondos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 2.1 tiene como objetivo establecer directrices para la articulación y el cumplimiento de las funciones de los órganos asesores del Sistema Nacional de Archivos, lo que implica la coordinación de sus roles para la gestión del patrimonio."
   }
 ]
