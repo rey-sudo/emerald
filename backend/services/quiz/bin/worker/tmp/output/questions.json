@@ -526,5 +526,49 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo indica que 'Se podrán considerar para la implementación de la Política de Archivos y de Gestión Documental los parámetros establecidos por las normas técnicas colombianas (NTC) y estándares internacionales'. Esto implica que son un referente o una guía a considerar, no una obligación ineludible o un instrumento de derogación."
+  },
+  {
+    "question": "Según el Artículo 1.4.3, ¿cuál es la obligación específica de los jefes de control interno, o sus sustitutos, en relación con la planificación de auditorías internas?",
+    "options": [
+      "Limitar las auditorías únicamente a la verificación del cumplimiento del Decreto 1080 de 2015, sin considerar el Programa de Gestión Documental.",
+      "Incorporar en su plan anual de auditorías acciones que verifiquen el cumplimiento del Acuerdo, articulando con las herramientas del MIPG.",
+      "Realizar auditorías de forma discrecional, enfocándose solo en las áreas que presenten mayores riesgos financieros, independientemente del Programa de Gestión Documental.",
+      "Delegar la verificación del cumplimiento del Acuerdo exclusivamente al Comité Institucional de Coordinación de Control Interno, sin necesidad de planificación anual."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 1.4.3 establece que los jefes de control interno deben incorporar en su plan anual de auditorías las acciones tendientes a verificar el cumplimiento del Acuerdo, y esto debe hacerse en articulación con las herramientas o instrumentos del MIPG."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 1 del Artículo 1.4.3, ¿cuál debe ser el referente principal para el desarrollo de las auditorías internas de gestión documental y archivos?",
+    "options": [
+      "La revisión exhaustiva de los registros contables de la entidad, priorizando el cumplimiento de las normativas financieras vigentes.",
+      "El autodiagnóstico del Modelo de Gestión Documental y Administración de Archivos (MGDA), en coordinación con la Política Institucional de Gestión Documental.",
+      "La comparación directa con los estándares nacionales de gestión documental, sin necesidad de considerar el contexto interno de la entidad.",
+      "La evaluación de los procedimientos de adquisición y expropiación de bienes, independientemente del estado del Modelo de Gestión Documental."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 especifica que el referente para el desarrollo de auditorías internas debe ser el autodiagnóstico del Modelo de Gestión Documental y Administración de Archivos (MGDA), en articulación con la Política Institucional de Gestión Documental de la entidad."
+  },
+  {
+    "question": "Respecto a la presentación de los resultados de las auditorías internas, ¿cuáles son los destinatarios obligatorios de la información, según el Parágrafo 2 del Artículo 1.4.3?",
+    "options": [
+      "Únicamente el representante legal de la entidad y el Comité Institucional de Coordinación de Control Interno.",
+      "El Comité de Auditoría y la Junta Directiva, quienes deben tomar las decisiones y establecer planes de mejoramiento.",
+      "El representante legal de la entidad, el Comité Institucional de Coordinación de Control Interno, y/o el Comité de Auditoría y/o Junta Directiva. Y deben ser remitidos al nominador.",
+      "El nominador, quien es el único responsable de recibir los resultados para la adopción de decisiones y la implementación de acciones correctivas."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 indica que los resultados deben ser presentados ante el representante legal, el Comité Institucional de Coordinación de Control Interno y/o Comité de Auditoría y/o Junta Directiva, y además deben ser remitidos al nominador."
+  },
+  {
+    "question": "Tras la presentación de los resultados de las auditorías internas ante los órganos de dirección, ¿cuál es la acción subsiguiente y el propósito de la remisión de dicha información al nominador, según el Parágrafo 2?",
+    "options": [
+      "Permitir que el nominador realice una auditoría de seguimiento para verificar la implementación de las acciones correctivas sugeridas.",
+      "Que el nominador adopte las decisiones pertinentes y establezca acciones correctivas mediante la elaboración de planes de mejoramiento.",
+      "Garantizar que el nominador archive los resultados para fines de rendición de cuentas, sin implicaciones operativas inmediatas.",
+      "Solicitar al nominador que modifique el Programa de Gestión Documental basándose en las deficiencias detectadas en la auditoría."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que los resultados deben ser remitidos al nominador para que se adopten las decisiones a que haya lugar, así como establecer acciones correctivas a través de planes de mejoramiento."
   }
 ]
