@@ -427,5 +427,71 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 1.3.4 especifica que la responsabilidad de los sujetos obligados se aplica a los documentos y archivos que se gestionan a través de 'sistemas de información o plataformas transaccionales de uso común en las entidades del Estado', abarcando ambos tipos de herramientas."
+  },
+  {
+    "question": "Según el Artículo 1.4.1., ¿cuál es el propósito principal de las facultades que el Archivo General de la Nación Jorge Palacios Preciado ejercerá, en concordancia con la Ley 594 de 2000?",
+    "options": [
+      "Establecer la metodología para la disposición final de series documentales, garantizando la interoperabilidad entre las entidades territoriales.",
+      "Dirigir la adquisición y expropiación de archivos privados, asegurando el cumplimiento de los avalúos de Bienes de Interés Público.",
+      "Prevenir y sancionar el incumplimiento de las disposiciones del Acuerdo y de la Ley General de Archivos.",
+      "Coordinar las visitas de inspección a los archivos de las entidades del Estado para verificar la correcta identificación documental."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 1.4.1. establece explícitamente que el Archivo General de la Nación ejercerá facultades dirigidas a prevenir y sancionar el incumplimiento del Acuerdo y de la Ley General de Archivos."
+  },
+  {
+    "question": "De acuerdo con el Artículo 32 de la Ley 594 de 2000, ¿cuáles son los procedimientos que el Archivo General de la Nación debe seguir al detectar una situación irregular durante una visita de inspección a los archivos de las entidades del Estado?",
+    "options": [
+      "Proceder inmediatamente a la suspensión de las prácticas documentales y emitir una orden de corrección directa a la entidad responsable.",
+      "Requerir a la entidad para que adelante los correctivos necesarios y, si es pertinente, dar traslado a los órganos competentes para establecer responsabilidades.",
+      "Instaurar de manera automática una denuncia ante el Ministerio Público y suspender el uso de los documentos hasta que se resuelva la situación.",
+      "Realizar un inventario exhaustivo de los documentos afectados y solicitar la intervención del Consejo de Archivos para la valoración inmediata."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 32 establece que, al advertir una situación irregular, el Archivo General de la Nación requerirá a la respectiva entidad para que adelante los correctivos y dará traslado, según el caso, a los órganos competentes para establecer responsabilidades."
+  },
+  {
+    "question": "Según el Artículo 33 de la Ley 594 de 2000, ¿qué tipo de control y vigilancia debe ejercer el Estado, a través del Archivo General de la Nación, respecto a los documentos declarados de interés cultural?",
+    "options": [
+      "Solo sobre los archivos públicos de las entidades territoriales, garantizando la aplicación de las normas de conservación y restauración.",
+      "Sobre cualquier documento físico o electrónico que se encuentre en posesión de cualquier persona natural o jurídica, sin importar su carácter.",
+      "Sobre los documentos cuyos propietarios, tenedores o poseedores sean personas naturales o jurídicas de carácter privado.",
+      "Limitándose únicamente a los documentos que estén en proceso de transferencia de una entidad pública a otra."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 33 especifica que el Estado, a través del Archivo General de la Nación, ejercerá control y vigilancia sobre los documentos declarados de interés cultural cuyos propietarios, tenedores o poseedores sean personas naturales o jurídicas de carácter privado."
+  },
+  {
+    "question": "En el contexto de las facultades de prevención y sanción (Artículo 35 Ley 594 de 2000), ¿qué acción debe tomarse si se detecta que una falta contra el patrimonio documental es realizada por un servidor público?",
+    "options": [
+      "Será considerada una falta grave, requiriendo la intervención inmediata del Ministerio de Cultura para su decomiso.",
+      "Debe ser tratada como una falta gravísima, de conformidad con el artículo 25 de la Ley 200 de 1995.",
+      "Solo será sancionable si se demuestra que la falta ha causado un daño económico cuantificable al patrimonio documental.",
+      "Se debe iniciar un proceso administrativo de suspensión de funciones hasta que se determine la responsabilidad civil del servidor."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 35 Ley 594 de 2000, literal b), establece que las faltas contra el patrimonio documental serán tenidas como faltas gravísimas cuando fueren realizadas por servidores públicos, de conformidad con el artículo 25 de la Ley 200 de 1995."
+  },
+  {
+    "question": "De acuerdo con el Artículo 35 de la Ley 594 de 2000, si la falta contra el patrimonio documental constituye un hecho punible, ¿cuáles son los pasos obligatorios que deben seguir las autoridades competentes?",
+    "options": [
+      "Solo se debe iniciar un proceso de negociación civil y se debe notificar al Ministerio de la Cultura sobre el daño.",
+      "Se debe instaurar la respectiva denuncia y, si hay flagrancia, poner inmediatamente al retenido a órdenes de la autoridad de policía más cercana.",
+      "Se debe suspender la práctica documentales y esperar la emisión de una orden de corrección por parte del Gobierno Nacional.",
+      "Se debe realizar un avalúo forense para determinar el valor económico del daño antes de cualquier acción legal."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 35 Ley 594 de 2000, literal c), exige que si la falta constituye hecho punible, es obligación instaurar la respectiva denuncia y, si hubiere flagrancia, poner inmediatamente el retenido a órdenes de la autoridad de policía más cercana."
+  },
+  {
+    "question": "Según el Artículo 35 de la Ley 594 de 2000, ¿qué destino legal y procedimental tienen los documentos y archivos históricos públicos que son exportados o sustraídos ilegalmente del territorio colombiano?",
+    "options": [
+      "Serán objeto de una investigación penal y se procederá a la multa de hasta veinte salarios mínimos legales mensuales.",
+      "Serán decomisados y puestos a órdenes del Ministerio de la Cultura, con el compromiso del Estado de realizar esfuerzos de repatriación.",
+      "El propietario deberá asumir la responsabilidad legal y económica por el daño, sin intervención estatal.",
+      "Se procederá a la suspensión de las prácticas documentales en el país hasta que se resuelva la situación de extracción ilegal."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 35 Ley 594 de 2000, literal d), establece que los documentos y archivos históricos públicos exportados o sustraídos ilegalmente serán decomisados y puestos a órdenes del Ministerio de la Cultura, y que el Estado realizará esfuerzos para repatriarlos."
   }
 ]
