@@ -603,5 +603,71 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 2.1 tiene como objetivo establecer directrices para la articulación y el cumplimiento de las funciones de los órganos asesores del Sistema Nacional de Archivos, lo que implica la coordinación de sus roles para la gestión del patrimonio."
+  },
+  {
+    "question": "Según el Artículo 2.1.2 del Acuerdo, ¿quién ostenta la presidencia del Comité Evaluador de Documentos del Archivo General de la Nación Jorge Palacios Preciado?",
+    "options": [
+      "El Subdirector(a) del Sistema Nacional de Archivos, por su rol coordinador.",
+      "El Director(a) General del Archivo General de la Nación Jorge Palacios Preciado, en virtud de su cargo.",
+      "El Subdirector(a) de Política y Normativa Archivística, dado que ejerce la secretaría técnica.",
+      "Un archivista de reconocida experiencia designado por el Colegio Colombiano de Archivistas, por su experticia."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 1 del Artículo 2.1.2 establece claramente que el Director(a) General del Archivo General de la Nación Jorge Palacios Preciado es quien presidirá el Comité Evaluador de Documentos."
+  },
+  {
+    "question": "En el marco de la conformación del Comité Evaluador de Documentos, ¿cuál es la función específica asignada al Subdirector(a) de Política y Normativa Archivística?",
+    "options": [
+      "Presidir el Comité en ausencia del Director(a) General, asegurando la continuidad de las sesiones.",
+      "Actuar como secretario(a) técnico(a) del Comité, gestionando la documentación y el soporte operativo.",
+      "Representar al sector Cultura en las deliberaciones, aportando una perspectiva patrimonial.",
+      "Designar a los delegados de la Academia Colombiana de Historia y el Colegio Colombiano de Archivistas."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 2 del Artículo 2.1.2 especifica que el Subdirector(a) de Política y Normativa Archivística es quien actuará como secretario(a) técnico(a) del Comité."
+  },
+  {
+    "question": "Conforme al Parágrafo 1 del Artículo 2.1.2, ¿bajo qué condiciones puede la Oficina Asesora Jurídica del Archivo General de la Nación participar en el Comité Evaluador de Documentos?",
+    "options": [
+      "Como miembro permanente con derecho a voto en todas las deliberaciones.",
+      "Como invitado sin derecho a voto, únicamente cuando su asesoría sea específicamente requerida.",
+      "Como observador con voz pero sin voto, en todas las sesiones para garantizar la legalidad.",
+      "Como delegado del Director(a) General, asumiendo plenas facultades en su ausencia."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 del Artículo 2.1.2 indica que la Oficina Asesora Jurídica podrá participar 'como invitado sin voto, cuando así se requiera', lo que establece una condición de participación específica y sin derecho a voto."
+  },
+  {
+    "question": "Respecto a los representantes de que tratan los numerales 7, 8 y 9 del Artículo 2.1.2, ¿cuál es el procedimiento y la duración de su designación en el Comité Evaluador de Documentos? 7. Director(a) de Patrimonio del sector Cultura, o en su ausencia un delegado de este. 8. Presidente (a) de la Academia Colombiana de Historia o su delegado. 9. Un archivista de reconocida experiencia en valoración de patrimonio documental archivístico, designado por el Colegio Colombiano de Archivistas.",
+    "options": [
+      "Son designados directamente por el Director(a) General del Archivo General de la Nación por un periodo indefinido.",
+      "Son invitados por la secretaría del Comité para que sus respectivas entidades designen un delegado por un término de dos (2) años.",
+      "Se incorporan al Comité de forma permanente, sin necesidad de designación formal, dada su relevancia institucional.",
+      "Son seleccionados por el propio Comité Evaluador de Documentos por un periodo de un (1) año, renovable."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 del Artículo 2.1.2 establece que la secretaría del Comité invitará a los directivos de las entidades correspondientes para que designen a sus delegados por un término de dos (2) años, lo cual es reafirmado en el Parágrafo 3."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 3 del Artículo 2.1.2, ¿qué implicación tiene la inasistencia reiterada de los delegados de los numerales 7, 8 y 9 a las sesiones del Comité Evaluador de Documentos?",
+    "options": [
+      "La suspensión temporal de su derecho a voto hasta que regularicen su asistencia.",
+      "La solicitud al ente competente para proceder con su reemplazo, si superan dos (2) inasistencias.",
+      "Una amonestación formal por parte de la presidencia del Comité, sin mayores consecuencias inmediatas.",
+      "La pérdida automática de su membresía en el Comité tras la tercera ausencia consecutiva."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 del Artículo 2.1.2 estipula que 'Su inasistencia, a más de dos (2) sesiones, dará lugar a solicitar al ente competente su reemplazo', estableciendo una consecuencia directa para la inasistencia reiterada."
+  },
+  {
+    "question": "Según el Parágrafo 4 del Artículo 2.1.2, ¿cuál es la responsabilidad primordial de la secretaría técnica del Comité Evaluador de Documentos en relación con las Actas?",
+    "options": [
+      "La aprobación final de las Actas y su publicación en el portal institucional.",
+      "La elaboración de borradores de las Actas para revisión exclusiva del presidente del Comité.",
+      "Levantar las Actas de las sesiones y garantizar su custodia y protección.",
+      "La distribución de las Actas a todos los miembros del Comité antes de cada sesión."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 4 del Artículo 2.1.2 asigna a la secretaría técnica la responsabilidad de 'levantar las Actas y garantizar su custodia y protección', lo que abarca tanto la creación como la salvaguarda de estos documentos."
   }
 ]
