@@ -669,5 +669,104 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 4 del Artículo 2.1.2 asigna a la secretaría técnica la responsabilidad de 'levantar las Actas y garantizar su custodia y protección', lo que abarca tanto la creación como la salvaguarda de estos documentos."
+  },
+  {
+    "question": "Según el Artículo 2.1.3, ¿cuál es la función principal del Comité Evaluador de Documentos en relación con el valor secundario de los documentos?",
+    "options": [
+      "Establecer los criterios de disposición final para las subseries documentales en los sujetos obligados.",
+      "Servir como instancia asesora del Archivo General de la Nación para estudiar los asuntos relativos al valor secundario y la preparación de lineamientos de selección y eliminación.",
+      "Realizar la expropiación administrativa de archivos privados que carecen de Declaratoria de Bienes de Interés Público o Social.",
+      "Asesorar directamente a los Consejos Departamentales y Distritales de Archivos sobre la inscripción en el Registro Nacional de Archivos Históricos."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 1 establece explícitamente que el Comité Evaluador de Documentos debe servir de órgano o instancia asesora del Archivo General de la Nación para estudiar los asuntos relativos al valor secundario de los documentos y la preparación de lineamientos sobre selección y eliminación."
+  },
+  {
+    "question": "En el ámbito de la gestión documental, ¿bajo qué condición específica debe el Comité Evaluador de Documentos asesorar sobre la convalidación de Tablas de Retención Documental y Tablas de Valoración Documental?",
+    "options": [
+      "Únicamente cuando las entidades públicas sean del orden nacional y el proceso lo requiera por mandato legal.",
+      "Cuando las entidades públicas y los particulares que cumplen funciones públicas, en diferentes niveles territoriales, presenten controversias sobre su aplicación.",
+      "Cuando las entidades departamentales, distritales y municipales lo soliciten, o cuando el Comité asuma de oficio la competencia.",
+      "Exclusivamente cuando la Dirección General del Archivo General de la Nación lo requiera para fines de transferencia documental."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 2 indica que el Comité debe asesorar sobre la convalidación de las Tablas de Retención y Valoración Documental aprobadas por entidades públicas y particulares que cumplen funciones públicas, y que esta competencia puede ser asumida de oficio o a solicitud de las entidades."
+  },
+  {
+    "question": "Si existe una controversia sobre los resultados de la evaluación de las Tablas de Retención y Valoración Documental aprobadas por entidades departamentales, distritales y municipales, ¿quién debe conceptuar sobre dicha controversia, y bajo qué condición?",
+    "options": [
+      "El Archivo General de la Nación, de oficio, cuando las entidades lo requieran mediante un proceso de conciliación.",
+      "El Comité Evaluador de Documentos, a solicitud de la Dirección General del Archivo General de la Nación, cuando exista la controversia.",
+      "Los Consejos Departamentales y Distritales de Archivos, quienes deben resolver la controversia mediante un acuerdo colegiado.",
+      "La Dirección General del Archivo General de la Nación, cuando las entidades o los Consejos Departamentales y Distritales lo soliciten."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 3 establece que el Comité debe conceptuar sobre controversias entre entidades públicas y los Consejos Departamentales y Distritales de Archivos, a solicitud de la Dirección General del Archivo General de la Nación."
+  },
+  {
+    "question": "Respecto a la eliminación de documentos, ¿cuál es el procedimiento de pronunciamiento que debe realizar el Comité Evaluador de Documentos?",
+    "options": [
+      "Solo puede pronunciarse si la solicitud de eliminación proviene de una entidad pública del orden nacional.",
+      "Debe pronunciarse sobre los inventarios de documentos objeto de eliminación publicados por las entidades públicas de los órdenes nacional, departamental, distrital y municipal, cuando lo considere pertinente.",
+      "Su pronunciamiento es obligatorio y debe ser solicitado por la Dirección General del Archivo General de la Nación para todos los niveles territoriales.",
+      "Solo puede pronunciarse si existe una controversia legal que ponga en duda la idoneidad de los documentos a eliminar."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 4 establece que el Comité debe pronunciarse sobre los inventarios de documentos objeto de eliminación, publicados por las entidades públicas de los órdenes nacional, departamental, distrital y municipal, cuando lo considere pertinente."
+  },
+  {
+    "question": "Cuando los ciudadanos presentan observaciones u objeciones a las listas de eliminación de documentos, ¿qué función debe ejercer el Comité Evaluador de Documentos?",
+    "options": [
+      "Iniciar un proceso de apelación administrativa ante el Consejo Directivo del Archivo General de la Nación.",
+      "Requerir a las entidades públicas y privadas que cumplan funciones públicas la modificación inmediata de las listas de eliminación.",
+      "Conceptuar sobre dichas observaciones y objeciones, a solicitud de la Dirección General del Archivo General de la Nación.",
+      "Ordenar la suspensión de la eliminación de documentos hasta que se resuelva la controversia legal planteada."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 5 indica que el Comité debe conceptuar sobre las observaciones y objeciones presentadas por los ciudadanos a las listas de eliminación, a solicitud de la Dirección General del Archivo General de la Nación."
+  },
+  {
+    "question": "En el proceso de declaratoria de Bienes de Interés Cultural de Carácter Documental Archivístico (BIC – CDA), ¿qué tipo de recomendación debe formular el Comité Evaluador de Documentos?",
+    "options": [
+      "Recomendar únicamente la declaratoria de BIC – CDA del ámbito nacional, sin considerar el ámbito local.",
+      "Conceptuar y recomendar la declaratoria de BIC – CDA del ámbito nacional, y la inclusión en la Lista Indicativa de Candidatos (LIC – BIC), de entidades públicas y privadas.",
+      "Limitar su recomendación a la evaluación de la normatividad vigente, sin emitir un concepto sobre la declaratoria misma.",
+      "Solo puede recomendar la declaratoria si la solicitud proviene directamente del Consejo Directivo del Archivo General de la Nación."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 6 exige que el Comité conceptúe y recomiende la declaratoria de BIC – CDA del ámbito nacional, y la inclusión en la LIC – BIC, de entidades públicas y privadas, de conformidad con la normatividad vigente."
+  },
+  {
+    "question": "En el contexto de la gestión de riesgos patrimoniales, ¿cuál es la función específica del Comité Evaluador de Documentos respecto a los Planes Especiales de Manejo y Protección (PEMP – CDA)?",
+    "options": [
+      "Establecer los lineamientos técnicos para la formulación de los PEMP – CDA del orden nacional.",
+      "Aprobar directamente los PEMP – CDA, sin necesidad de solicitar la intervención de la Dirección General.",
+      "Conceptuar y recomendar a la Dirección General la necesidad de formular los PEMP – CDA del orden nacional y su posterior aprobación.",
+      "Asesorar a las entidades públicas en la implementación de los PEMP – CDA, sin asumir la responsabilidad de su formulación."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 7 establece que el Comité debe conceptuar y recomendar a la Dirección General la necesidad de formular Planes Especiales de Manejo y Protección (PEMP – CDA) del orden nacional y aprobarlos."
+  },
+  {
+    "question": "Si existen controversias sobre la viabilidad de la declaratoria de Bienes de Interés Cultural de Carácter Documental Archivístico (BIC), ¿quién debe intervenir y bajo qué condición?",
+    "options": [
+      "El Comité Evaluador de Documentos, a solicitud de las entidades o los Consejos Departamentales o Distritales de Archivos, cuando exista la controversia.",
+      "La Dirección General del Archivo Nacional, mediante un proceso judicial especializado, sin intervención del Comité.",
+      "Las autoridades departamentales, quienes deben resolver la controversia mediante un acuerdo regional.",
+      "El Comité, siempre que la solicitud provenga de una entidad pública de nivel nacional, independientemente de la existencia de controversia."
+    ],
+    "correct": 3,
+    "explanation": "El numeral 8 establece que el Comité debe intervenir en caso de controversia sobre la declaratoria, siempre que la solicitud provenga de las entidades departamentales, y no solo de las entidades nacionales."
+  },
+  {
+    "question": "Cuál es el ámbito de acción del Comité en relación con las entidades departamentales, según el numeral 8?",
+    "options": [
+      "Solo en casos de declaratoria de bienes de interés cultural que sean de carácter histórico.",
+      "En casos de controversia sobre la declaratoria de bienes de interés cultural, independientemente de su naturaleza.",
+      "En casos de controversia sobre la declaratoria de bienes de interés cultural, cuando la solicitud provenga de las entidades departamentales.",
+      "Solo cuando la controversia afecte a la administración departamental en su conjunto."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 8 especifica que el Comité debe intervenir en caso de controversia sobre la declaratoria, pero solo si la solicitud proviene de las entidades departamentales."
   }
 ]
