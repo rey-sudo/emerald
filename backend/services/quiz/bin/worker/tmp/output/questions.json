@@ -768,5 +768,27 @@
     ],
     "correct": 2,
     "explanation": "El numeral 8 especifica que el Comité debe intervenir en caso de controversia sobre la declaratoria, pero solo si la solicitud proviene de las entidades departamentales."
+  },
+  {
+    "question": "Conforme a las disposiciones establecidas para el Comité Evaluador de Documentos del Archivo General de la Nación Jorge Palacios Preciado, ¿cuál es la periodicidad de sus reuniones ordinarias y bajo qué condición se convocan las reuniones extraordinarias?",
+    "options": [
+      "Las reuniones ordinarias se celebran trimestralmente, y las extraordinarias se convocan por iniciativa de cualquier miembro del Comité.",
+      "El Comité se reúne ordinariamente una vez al mes, y las sesiones extraordinarias se convocan únicamente cuando sea necesario, a solicitud expresa de la dirección general.",
+      "Las reuniones ordinarias tienen lugar cada dos meses, y las extraordinarias requieren la aprobación de la mayoría absoluta de los miembros del Comité.",
+      "El Comité sesiona ordinariamente de forma semanal, y las reuniones extraordinarias son programadas por la presidencia del Comité según la urgencia de los asuntos."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.1.4 establece claramente que el Comité se reunirá ordinariamente una vez al mes, y extraordinariamente cuando sea necesario, a solicitud de la dirección general. Las demás opciones presentan periodicidades o condiciones de convocatoria que no corresponden con lo estipulado en el texto."
+  },
+  {
+    "question": "En relación con el funcionamiento del Comité Evaluador de Documentos, ¿cuáles son los requisitos mínimos para que pueda sesionar válidamente y para la adopción de sus decisiones, según lo dispuesto en el Parágrafo del Artículo 2.1.4?",
+    "options": [
+      "El Comité requiere la presencia de dos tercios de sus miembros para sesionar, y las decisiones se toman por mayoría calificada de los asistentes.",
+      "Para sesionar y decidir, el Comité debe contar con la presencia de la mitad más uno de los miembros que lo conforman, y las decisiones se adoptan con el voto favorable de la mayoría simple de los asistentes.",
+      "La validez de una sesión exige la asistencia de la totalidad de los miembros, y las decisiones deben ser unánimes para ser aprobadas.",
+      "El Comité puede sesionar con la presencia de un tercio de sus miembros, pero las decisiones requieren el voto favorable de la mayoría absoluta del total de sus integrantes."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 2.1.4 especifica que el Comité podrá sesionar y decidir con la presencia de la mitad más uno de los miembros que lo conforman, y que las decisiones se adoptarán con el voto favorable de la mayoría simple de los asistentes. Las otras opciones describen umbrales de quórum o mayorías para la toma de decisiones que no se ajustan a la norma."
   }
 ]

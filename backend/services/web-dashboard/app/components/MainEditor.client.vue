@@ -369,8 +369,8 @@ onBeforeUnmount(() => {
   align-items: center;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid var(--ui-border);
-  border-bottom-left-radius: calc(var(--ui-radius) * 1);
-  border-bottom-right-radius: calc(var(--ui-radius) * 1);
+  border-bottom-left-radius: calc(var(--ui-radius) * 0);
+  border-bottom-right-radius: calc(var(--ui-radius) * 0);
 }
 
 /* --- CAPA DE RENDIMIENTO (CRÍTICO) --- */
