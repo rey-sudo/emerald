@@ -999,5 +999,49 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo concluye que el periodo de transición es 'sin perjuicio del cumplimiento de las obligaciones que genera, de manera inmediata, dicha transformación', lo que subraya la continuidad de las responsabilidades."
+  },
+  {
+    "question": "Según el Artículo 2.3.1 del Capítulo 3, ¿qué órgano es el responsable de ejercer las funciones de los Comités Internos de Archivo en las entidades sujetas al Modelo Integrado de Planeación y Gestión (MIPG)?",
+    "options": [
+      "El Comité Interno de Archivo, manteniendo su autonomía funcional.",
+      "El Comité Institucional de Gestión y Desempeño, en articulación con el MIPG.",
+      "Directamente el representante legal de la entidad, mediante acto administrativo.",
+      "Un comité ad hoc designado por el Decreto 1080 de 2015 para cada caso específico."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.3.1 establece explícitamente que las funciones de los Comités Internos de Archivo deben ser ejercidas por el Comité Institucional de Gestión y Desempeño, en articulación con el Modelo Integrado de Planeación y Gestión (MIPG)."
+  },
+  {
+    "question": "Conforme al Parágrafo 1 del Artículo 2.3.1, ¿qué disposición aplica a las entidades que no están obligadas a cumplir con el Modelo Integrado de Planeación y Gestión (MIPG) en relación con los Comités Internos de Archivo?",
+    "options": [
+      "Deben delegar las funciones de archivo en un comité externo especializado.",
+      "Están exentas de establecer cualquier tipo de comité para la gestión de archivos.",
+      "Deben conformar obligatoriamente el Comité Interno de Archivo.",
+      "Sus funciones de archivo son asumidas directamente por el Archivo General de la Nación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 del Artículo 2.3.1 indica claramente que las entidades que no están obligadas al cumplimiento del Modelo Integrado de Planeación y Gestión (MIPG) deben conformar el Comité Interno de Archivo."
+  },
+  {
+    "question": "En el escenario donde la estructura administrativa de un sujeto obligado impide la conformación del Comité Interno de Archivo, ¿cuál es el mecanismo establecido por el Parágrafo 2 del Artículo 2.3.1 para la toma de decisiones pertinentes?",
+    "options": [
+      "Las decisiones deben ser validadas por el Comité Institucional de Gestión y Desempeño de una entidad superior.",
+      "Se debe solicitar una exención formal al Archivo General de la Nación para no conformar el comité.",
+      "Las decisiones se tomarán a través de un acto administrativo motivado y proferido por el representante legal.",
+      "Se debe establecer un comité provisional con funciones limitadas hasta que la estructura permita la conformación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 del Artículo 2.3.1 especifica que los sujetos obligados cuya estructura administrativa no permita la conformación del Comité Interno de Archivo tomarán las decisiones a que haya lugar a través de acto administrativo, motivado y proferido por el representante legal."
+  },
+  {
+    "question": "El Artículo 2.3.1 establece que las funciones de los Comités Internos de Archivo deben ser ejercidas por el Comité Institucional de Gestión y Desempeño. ¿Cuál es el marco normativo y el modelo de gestión con el que debe articularse este ejercicio funcional?",
+    "options": [
+      "El Decreto 1080 de 2015, que es el Decreto único del sector cultura, sin necesidad de articulación con otros modelos.",
+      "El Modelo Integrado de Planeación y Gestión (MIPG), establecido por el Decreto 1083 de 2015 y modificado por el Decreto 1499 de 2017.",
+      "Exclusivamente las normas que modifiquen, sustituyan o deroguen el Decreto 1080 de 2015, sin referencia al MIPG.",
+      "Las directrices emitidas anualmente por el Archivo General de la Nación, independientemente de los decretos mencionados."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.3.1 indica que las funciones deben ser ejercidas por el Comité Institucional de Gestión y Desempeño en articulación con el Modelo Integrado de Planeación y Gestión (MIPG), el cual fue establecido mediante Decreto 1083 de 2015 y modificado por el Decreto 1499 de 2017."
   }
 ]
