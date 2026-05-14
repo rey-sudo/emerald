@@ -823,5 +823,71 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 establece que los Archivos Generales Territoriales 'tienen como fin proteger y difundir el patrimonio documental de su jurisdicción', y para ello deben 'formular y ejecutar planes, programas o proyectos, que integren el uso de las tecnologías de la información y comunicación disponibles, con el propósito de promover y garantizar un acceso efectivo y oportuno al patrimonio documental bajo su custodia; así como, generar acciones para impulsar la implementación de la política de archivos y gestión documental en su territorio'. La opción 1 sintetiza correctamente todos estos elementos."
+  },
+  {
+    "question": "Según el Artículo 2.2.2, ¿cuál es el requisito fundamental que los Archivos Generales Territoriales deben verificar antes de recibir transferencias secundarias de las entidades bajo su jurisdicción?",
+    "options": [
+      "La presentación de un avalúo económico que determine el valor de mercado de los documentos a transferir.",
+      "La certificación de que las entidades han cumplido con los instrumentos archivísticos establecidos por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "La realización de una auditoría de cumplimiento que verifique la disposición final de las series documentales.",
+      "La elaboración de un plan de gestión documental que cubra tanto los fondos históricos como los activos electrónicos."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.2.2 establece que los Archivos Generales Territoriales deben garantizar que las entidades de su jurisdicción hayan dado aplicación a los instrumentos archivísticos establecidos por el Archivo General de la Nación Jorge Palacios Preciado, previo a la recepción de las transferencias secundarias."
+  },
+  {
+    "question": "Al elaborar la Guía de los fondos documentales recibidos producto de transferencias secundarias o de liquidación, fusión o supresión, ¿qué elementos mínimos debe contener este instrumento de descripción, según el Artículo 2.2.2?",
+    "options": [
+      "El nombre del fondo documental, el volumen en metros lineales, las fechas extremas, los soportes electrónicos y la descripción del contexto histórico de la entidad.",
+      "La identificación del responsable de la transferencia, el número de expediente, la fecha de recepción y el análisis de valor legal de los documentos.",
+      "El listado de las series documentales, el procedimiento de disposición final aplicado y la justificación de la transferencia ante el Archivo General.",
+      "La clasificación administrativa, el inventario detallado por unidad, el protocolo de conservación y la firma de los representantes legales de las entidades."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 2.2.2 especifica que la Guía de los fondos documentales debe contener como mínimo: nombre del fondo documental, volumen documental (metros lineales o tamaños de los documentos electrónicos), fechas extremas del fondo, soportes o formatos electrónicos, y fecha de la transferencia documental, además de la descripción del contexto o historia institucional de la entidad."
+  },
+  {
+    "question": "Respecto a la elaboración de la Guía de fondos documentales, ¿cuál es el propósito de su publicación en la página web de los Archivos Generales Territoriales, según el Artículo 2.2.2?",
+    "options": [
+      "Servir como requisito de cumplimiento legal para las entidades que han sufrido liquidación o fusión.",
+      "Facilitar la consulta y el acceso a los documentos recibidos, estandarizando la información de los fondos documentales.",
+      "Establecer el marco de valoración de los documentos para determinar su destino final y su posible expropiación.",
+      "Documentar el proceso de transferencia, sirviendo como soporte legal para la recepción de los acervos históricos."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.2.2 exige que los Archivos Generales Territoriales elaboren y publiquen la Guía de los fondos documentales para que este instrumento de descripción sirva para la consulta y el acceso."
+  },
+  {
+    "question": "Según el Parágrafo 1, ¿cómo se garantiza el acceso a los documentos provenientes de transferencias secundarias en relación con los Archivos Generales Territoriales?",
+    "options": [
+      "Mediante la realización de un inventario físico detallado y la asignación de un responsable de acervo para cada fondo documental.",
+      "A través de los instrumentos de descripción elaborados por la entidad que efectúa la transferencia y que deben ajustarse a las normas técnicas de descripción.",
+      "Exigiendo que las entidades de origen mantengan la custodia física de los documentos hasta que se complete el proceso de valoración.",
+      "Mediante la creación de un sistema digital integrado que permita la búsqueda por palabras clave y la visualización remota de los soportes."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 establece que los Archivos Generales Territoriales facilitarán la consulta y el acceso a los documentos recibidos producto de las transferencias secundarias, a través de los instrumentos de descripción elaborados por la respectiva entidad que efectúa la transferencia y conforme a las normas técnicas de descripción."
+  },
+  {
+    "question": "Si un Archivo General Territorial ha recibido transferencias secundarias antes de la entrada en vigencia del Acuerdo, y estos fondos carecen de los instrumentos de descripción requeridos, ¿cuál es la obligación procedimental que debe asumir, según el Parágrafo 2?",
+    "options": [
+      "Solicitar a las entidades de origen que realicen la descripción de manera inmediata, bajo pena de rechazo de los documentos.",
+      "Suspender temporalmente el acceso a dichos documentos hasta que se haya completado la documentación técnica requerida.",
+      "Elaborar los instrumentos de descripción utilizando las normas técnicas, con el objetivo de garantizar la consulta y el acceso a los documentos.",
+      "Delegar la tarea de descripción a un comité de expertos externos, sin que esto implique una obligación directa del Archivo General Territorial."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 indica que los Archivos Generales Territoriales que hayan recibido transferencias secundarias sin los instrumentos de descripción deben elaborarlos conforme a las normas técnicas, con el fin de garantizar la consulta y acceso."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 3, ¿cuál es la acción que deben tomar las entidades que, por otras disposiciones normativas, no efectúan transferencias documentales a los Archivos Generales?",
+    "options": [
+      "Deben someterse a un proceso de liquidación formal y transferir sus acervos a un repositorio nacional designado.",
+      "Deben garantizar la conservación de sus acervos históricos constituyendo archivos históricos institucionales para facilitar la consulta pública.",
+      "Deben actualizar sus programas de gestión documental para incluir un plan de disposición final de sus acervos de manera preventiva.",
+      "Deben establecer un convenio de colaboración con los Archivos Generales para el depósito temporal de sus documentos de valor histórico."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 establece que las entidades que no efectúen transferencias documentales deben conformar archivos históricos institucionales, con el fin de conservar sus acervos históricos y facilitar su consulta para el público."
   }
 ]
