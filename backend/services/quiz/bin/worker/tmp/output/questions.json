@@ -1043,5 +1043,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 2.3.1 indica que las funciones deben ser ejercidas por el Comité Institucional de Gestión y Desempeño en articulación con el Modelo Integrado de Planeación y Gestión (MIPG), el cual fue establecido mediante Decreto 1083 de 2015 y modificado por el Decreto 1499 de 2017."
+  },
+  {
+    "question": "Según el Artículo 2.3.2 del marco normativo, ¿cuál es la obligación fundamental de los Comités Internos de Archivo o Comités Institucionales de Gestión y Desempeño en relación con sus funciones y su rol asesor dentro de la organización?",
+    "options": [
+      "Concentrarse exclusivamente en la ejecución de tareas operativas de conservación documental, sin necesidad de formalizar sus deliberaciones en actas.",
+      "Garantizar un abordaje integral de la gestión documental y la administración de archivos, dejando constancia de sus acciones en las actas de comité como instancias asesoras de la alta dirección, en articulación con otras políticas de gestión y desempeño institucional.",
+      "Desarrollar y aprobar de manera autónoma nuevas políticas de seguridad de la información, sin requerir coordinación con los marcos de gestión institucional existentes.",
+      "Limitar su función a la supervisión del cumplimiento normativo por parte de las unidades de archivo, sin participar activamente en la formulación de estrategias documentales."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.3.2 establece que los Comités Internos de Archivo o Comités Institucionales de Gestión y Desempeño deben dejar constancia en las actas de comité sobre las acciones efectuadas en cumplimiento de sus funciones. Su rol es ser instancias asesoras de la alta dirección para garantizar un abordaje integral de la gestión documental y la administración de archivos, en articulación con las demás políticas de gestión y desempeño institucional relacionadas con el manejo y seguridad de la información."
   }
 ]
