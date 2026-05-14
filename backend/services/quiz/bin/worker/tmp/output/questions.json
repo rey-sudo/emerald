@@ -922,5 +922,38 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo especifica que los representantes de la Academia de Historia, Colegio Colombiano de Archivistas, instituciones de educación superior o del Servicio Nacional de Aprendizaje y Cámara de Comercio, deben ser elegidos por las mismas agremiaciones."
+  },
+  {
+    "question": "Según el Artículo 2.2.4 del Acuerdo, ¿cuál es la responsabilidad principal de los Consejos Territoriales de Archivo en relación con la rendición de cuentas sobre sus actividades, y dónde deben hacer pública esta información?",
+    "options": [
+      "Deben elaborar un informe anual de actividades y publicarlo en el portal de transparencia del Archivo General de la Nación, remitiéndolo a la Subdirección de Coordinación Archivística.",
+      "Tienen la obligación de generar un informe semestral detallado de sus avances, el cual debe ser publicado en la página web de la entidad que preside el Consejo, asegurando su sustentación y soporte.",
+      "Es su deber presentar un informe trimestral de gestión a la Dirección General del Archivo General de la Nación, con una relación de los logros y desafíos, sin necesidad de publicación web.",
+      "Deben compilar un resumen ejecutivo de sus actividades cada dos años y enviarlo directamente al Ministerio de Cultura para su revisión, sin requisitos de publicación específica."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.2.4 establece claramente que los Consejos Territoriales de Archivo deben elaborar y publicar un informe semestral de las actividades adelantadas en la página web de la entidad que lo preside, y que estos informes deben estar debidamente sustentados y soportados."
+  },
+  {
+    "question": "En el marco de la normativa archivística, ¿cuáles son los plazos específicos para la remisión de los informes semestrales de los Consejos Territoriales de Archivo a la Subdirección del Sistema Nacional de Archivos del Archivo General de la Nación Jorge Palacios Preciado?",
+    "options": [
+      "Los informes deben ser remitidos a más tardar la última semana de junio y la primera semana de diciembre de cada año, coincidiendo con el cierre de los periodos fiscales.",
+      "La remisión debe efectuarse a más tardar la primera semana de enero y la última semana de julio de cada año, para asegurar la evaluación oportuna de la gestión.",
+      "Los plazos establecidos son la segunda semana de enero y la última semana de julio de cada año, garantizando la cobertura de los dos semestres de la vigencia.",
+      "Se permite la remisión durante la primera quincena de febrero y la segunda quincena de agosto, ofreciendo flexibilidad para la consolidación de los datos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 2.2.4 especifica que los informes deben ser remitidos a la Subdirección del Sistema Nacional de Archivos del Archivo General de la Nación Jorge Palacios Preciado a más tardar la segunda semana de enero y la última semana de julio de cada año."
+  },
+  {
+    "question": "Respecto al contenido de los informes semestrales que deben presentar los Consejos Territoriales de Archivo, ¿qué elementos son imprescindibles para su validez y conformidad con el plan de acción establecido?",
+    "options": [
+      "Los informes deben incluir únicamente una descripción narrativa de las actividades realizadas, sin necesidad de anexos o soportes documentales, enfocándose en la percepción de los logros.",
+      "Es fundamental que los informes contengan una relación detallada de los avances logrados, los cuales deben estar debidamente sustentados y soportados, y reflejar lo gestionado y ejecutado conforme a sus funciones y procedimientos.",
+      "Se requiere que los informes presenten un análisis prospectivo de las futuras actividades planificadas, junto con un resumen de los recursos financieros utilizados, sin detallar los avances pasados.",
+      "Los informes deben centrarse en la identificación de los desafíos y obstáculos encontrados, proponiendo soluciones a nivel estratégico, sin la obligación de documentar exhaustivamente los avances."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.2.4 establece que los informes deben contener una relación detallada de los avances logrados por los Consejos Territoriales de Archivo, debidamente sustentados y soportados, de acuerdo con el plan de acción establecido, y deben precisar lo gestionado y ejecutado según sus funciones y procedimientos."
   }
 ]
