@@ -889,5 +889,38 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 3 establece que las entidades que no efectúen transferencias documentales deben conformar archivos históricos institucionales, con el fin de conservar sus acervos históricos y facilitar su consulta para el público."
+  },
+  {
+    "question": "Según la normativa citada, ¿qué tipo de acto administrativo o documento equivalente es el requisito indispensable para la constitución formal de un Consejo Territorial de Archivos?",
+    "options": [
+      "Un decreto presidencial que establezca la estructura orgánica y las funciones específicas del Consejo.",
+      "Una resolución emitida por la entidad coordinadora que determine la composición y el periodo de mandato de los miembros.",
+      "Un acto administrativo o documento equivalente que, además de conformar el Consejo, debe fijar su reglamento de funcionamiento.",
+      "Un acuerdo municipal aprobado por el Concejo local que valide la existencia y las competencias del Consejo a nivel territorial."
+    ],
+    "correct": 2,
+    "explanation": "El texto establece explícitamente que el acto administrativo o documento equivalente que conforme el Consejo Territorial de Archivos debe fijar el reglamento de funcionamiento para el cumplimiento de sus funciones."
+  },
+  {
+    "question": "En relación con la reglamentación operativa de los Consejos Territoriales de Archivos, ¿cuál es la fuente normativa de referencia que debe ser considerada al momento de establecer su reglamento de funcionamiento?",
+    "options": [
+      "El Decreto 1080 de 2015, específicamente en su artículo 2.8.2.1.9, o cualquier norma que lo modifique, sustituya o derogue.",
+      "El Código de Archivos Nacionales, que detalla los procedimientos de elección de sus representantes y la estructura de sus sesiones.",
+      "La Ley General de Cultura, que rige la administración de los archivos históricos y define sus competencias legales.",
+      "El reglamento interno de la entidad coordinadora, el cual establece los lineamientos de operación y las atribuciones de los miembros."
+    ],
+    "correct": 0,
+    "explanation": "El texto indica que el reglamento debe fijar el cumplimiento de las funciones establecidas en el artículo 2.8.2.1.9 del Decreto 1080 de 2015, o la norma que lo modifique, sustituya o derogue."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo, ¿cuál es el mecanismo de elección de los representantes de las agremiaciones profesionales y académicas que deben formar parte de los Consejos Territoriales de Archivos?",
+    "options": [
+      "Ser designados por la autoridad competente mediante un nombramiento formal que garantice la representación institucional.",
+      "Ser seleccionados por un proceso de concurso de méritos administrado por la entidad coordinadora del sistema de archivos.",
+      "Ser elegidos directamente por las mismas agremiaciones a las que pertenecen, garantizando su legitimidad interna.",
+      "Ser propuestos por las instituciones de educación superior y validados por la Cámara de Comercio local."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo especifica que los representantes de la Academia de Historia, Colegio Colombiano de Archivistas, instituciones de educación superior o del Servicio Nacional de Aprendizaje y Cámara de Comercio, deben ser elegidos por las mismas agremiaciones."
   }
 ]
