@@ -3,8 +3,13 @@ from typing import List
 from litellm.router import Router
 
 class QuestionItem(BaseModel):
-    question: str = Field(..., description="Versbose question statement based on the <QuizContent></QuizContent> tag")
-    options: List[str] = Field(..., min_length=4, max_length=4, description="List of possible answer choices")
+    question: str = Field(..., description="Verbose question statement based on the <QuizContent></QuizContent> tag")
+    options: List[str] = Field(..., min_length=4, max_length=4, description="""
+    Generate exactly 4 high-quality multiple-choice answer options.
+    All options should have a similar level of detail, specificity, and wording length.
+    Do not make the correct answer noticeably longer, more precise, or better written than the distractors.
+    Keep every option plausible and natural.
+    """)
     correct: int = Field(..., ge=0, le=3, description="Index of the correct option (0-3)")
     explanation: str = Field(..., description="Full explanation of why the answer is correct")
     
@@ -165,7 +170,7 @@ model_list = [
 
 router = Router(model_list=model_list)
 
-def _llm(prompt: str, max_tokens: int = 1000) -> Quiz:
+def _llm(prompt: str, max_tokens: int = 8000) -> Quiz:
     """Wrapper mínimo sobre tu router."""
     
     response = router.completion(

@@ -1054,5 +1054,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 2.3.2 establece que los Comités Internos de Archivo o Comités Institucionales de Gestión y Desempeño deben dejar constancia en las actas de comité sobre las acciones efectuadas en cumplimiento de sus funciones. Su rol es ser instancias asesoras de la alta dirección para garantizar un abordaje integral de la gestión documental y la administración de archivos, en articulación con las demás políticas de gestión y desempeño institucional relacionadas con el manejo y seguridad de la información."
+  },
+  {
+    "question": "Según el Artículo 3.1 TÍTULO 3 ADMINISTRACIÓN DE ARCHIVOS, ¿cuál es el propósito fundamental de establecer las especificaciones técnicas y requisitos mínimos?",
+    "options": [
+      "Garantizar únicamente la conservación física de documentos y archivos públicos, sin considerar el personal de apoyo.",
+      "Regular exclusivamente la disposición final de los documentos, estableciendo criterios de eliminación y descarte.",
+      "Asegurar las condiciones generales necesarias para las instalaciones que albergan documentos y archivos públicos, así como para los servicios de administración y custodia.",
+      "Limitar la administración de archivos históricos únicamente a las entidades gubernamentales, excluyendo a personas naturales o jurídicas."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 3.1 establece el objetivo de garantizar las condiciones generales de las instalaciones que contienen documentos y archivos públicos, y también incluye a las personas naturales o jurídicas que prestan servicios para la administración, depósito, custodia, organización, reprografía y conservación de estos documentos y archivos, salvo excepciones."
   }
 ]
