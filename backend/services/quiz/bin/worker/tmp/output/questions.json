@@ -1065,5 +1065,16 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 3.1 establece el objetivo de garantizar las condiciones generales de las instalaciones que contienen documentos y archivos públicos, y también incluye a las personas naturales o jurídicas que prestan servicios para la administración, depósito, custodia, organización, reprografía y conservación de estos documentos y archivos, salvo excepciones."
+  },
+  {
+    "question": "Según el Artículo 3.1.1., ¿qué requisitos deben cumplir los edificios y áreas destinados a la custodia, almacenamiento y conservación de documentos de archivo, independientemente del soporte o formato?",
+    "options": [
+      "Solo deben cumplir con los requisitos técnicos detallados en el Artículo 3.1.2., sin necesidad de considerar lineamientos adicionales.",
+      "Deben adherirse únicamente a las disposiciones establecidas en el Título 6, 'Conservación y preservación de documentos', sin considerar otros lineamientos.",
+      "Deben cumplir con los requisitos técnicos del Artículo 3.1.2., además de las disposiciones del Título 6 y los lineamientos del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Es suficiente con que cumplan con los lineamientos del Archivo General de la Nación, ya que estos engloban todos los requisitos técnicos y de conservación."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 3.1.1. establece que las instalaciones deben cumplir con los requisitos técnicos del Artículo 3.1.2., además de lo dispuesto en el Título 6 'Conservación y preservación de documentos' y los demás lineamientos del Archivo General de la Nación Jorge Palacios Preciado."
   }
 ]
