@@ -955,5 +955,49 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 2.2.4 establece que los informes deben contener una relación detallada de los avances logrados por los Consejos Territoriales de Archivo, debidamente sustentados y soportados, de acuerdo con el plan de acción establecido, y deben precisar lo gestionado y ejecutado según sus funciones y procedimientos."
+  },
+  {
+    "question": "Según el Artículo 2.2.5 del Acuerdo, ¿cuál es la implicación directa para una nueva jurisdicción administrativa que adquiere la categoría de departamento o distrito en relación con la gestión archivística?",
+    "options": [
+      "Tiene la facultad discrecional de establecer un Consejo Territorial de Archivos si lo considera pertinente para su desarrollo administrativo.",
+      "Debe integrar sus funciones archivísticas en un comité existente de gestión documental, sin necesidad de crear una nueva instancia.",
+      "Está obligada a crear un Consejo Territorial de Archivos, ajustándose a la normativa archivística vigente, para la administración del Estado.",
+      "Puede delegar la creación del Consejo Territorial de Archivos a la entidad territorial de mayor jerarquía dentro de su ámbito geográfico."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 2.2.5 establece explícitamente que ante la creación de nuevas entidades territoriales con categoría de departamento o distrito, la nueva jurisdicción 'debe crear el Consejo Territorial de Archivos, conforme a la normatividad archivística vigente', lo que denota una obligación directa y no una facultad discrecional o delegable."
+  },
+  {
+    "question": "Cuando un municipio experimenta una transformación jurídica para convertirse en distrito, ¿qué responsabilidad específica asume en el ámbito de la política de archivos y gestión documental, de acuerdo con el Parágrafo del Artículo 2.2.5?",
+    "options": [
+      "Se convierte en la entidad ejecutora principal de los procesos de conservación y restauración de documentos históricos a nivel nacional.",
+      "Asume las funciones de Consejo Distrital de Archivos, sirviendo como instancia asesora para la política de archivos y gestión documental en su jurisdicción.",
+      "Debe establecer un nuevo marco normativo para la gestión documental que sea independiente de la normatividad archivística nacional.",
+      "Su principal función es la de supervisar y auditar a los Consejos Territoriales de Archivo de departamentos vecinos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 2.2.5 indica claramente que cuando un municipio cambia su naturaleza jurídica a distrito, 'debe asumir las funciones como Consejo Distrital de Archivos, siendo la instancia asesora de la política de archivos y gestión documental en las entidades de su jurisdicción'."
+  },
+  {
+    "question": "El Parágrafo del Artículo 2.2.5 menciona un periodo de transición para los municipios que se transforman en distritos. ¿Cuál es el propósito fundamental de este periodo en el contexto de la gestión archivística?",
+    "options": [
+      "Permitir la suspensión temporal de todas las obligaciones archivísticas hasta que la nueva estructura esté completamente operativa.",
+      "Facilitar la adecuación de los procesos y procedimientos necesarios para asumir plenamente las funciones de Consejos Territoriales de Archivos.",
+      "Establecer un lapso para la redefinición de la política nacional de archivos y gestión documental por parte de la nueva jurisdicción.",
+      "Designar a los nuevos miembros del Consejo Distrital de Archivos a través de un proceso de selección competitivo y público."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo especifica que 'El periodo de transición que se establezca para tal efecto debe ser utilizado para la adecuación de los procesos y procedimientos necesarios, con el fin de asumir las funciones como Consejos Territoriales de Archivos'."
+  },
+  {
+    "question": "Respecto al periodo de transición establecido para la adecuación de funciones de un municipio a distrito en materia archivística, ¿qué principio fundamental se mantiene vigente en relación con las obligaciones generadas por dicha transformación?",
+    "options": [
+      "Todas las obligaciones archivísticas se posponen automáticamente hasta la finalización del periodo de transición.",
+      "Las obligaciones generadas por la transformación se consideran suspendidas hasta que los nuevos procesos y procedimientos estén completamente implementados.",
+      "El cumplimiento de las obligaciones que genera la transformación debe realizarse de manera inmediata, sin perjuicio del periodo de adecuación.",
+      "La nueva jurisdicción puede solicitar una exención temporal de las obligaciones archivísticas ante la autoridad nacional competente."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo concluye que el periodo de transición es 'sin perjuicio del cumplimiento de las obligaciones que genera, de manera inmediata, dicha transformación', lo que subraya la continuidad de las responsabilidades."
   }
 ]
