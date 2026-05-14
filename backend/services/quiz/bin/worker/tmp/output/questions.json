@@ -790,5 +790,38 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo del Artículo 2.1.4 especifica que el Comité podrá sesionar y decidir con la presencia de la mitad más uno de los miembros que lo conforman, y que las decisiones se adoptarán con el voto favorable de la mayoría simple de los asistentes. Las otras opciones describen umbrales de quórum o mayorías para la toma de decisiones que no se ajustan a la norma."
+  },
+  {
+    "question": "Según el Artículo 2.2.1, el acto administrativo que formaliza la creación de los Archivos Generales Territoriales debe especificar con precisión ciertos componentes esenciales. ¿Cuál de las siguientes opciones identifica correctamente los elementos que deben ser fijados en dicho acto para asegurar el cumplimiento de sus funciones?",
+    "options": [
+      "La estructura organizacional, los objetivos estratégicos y el presupuesto asignado para el primer quinquenio de operación.",
+      "Los recursos financieros y materiales, las actividades operativas y el personal requerido para la ejecución de las funciones establecidas en la normativa vigente.",
+      "El marco legal de referencia, los indicadores de gestión y los mecanismos de evaluación de desempeño del personal directivo.",
+      "La política de seguridad de la información, los protocolos de acceso a documentos y el plan de capacitación del talento humano."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 2.2.1 establece explícitamente que el acto administrativo de creación debe fijar 'los recursos, actividades y personal para el cumplimiento de las funciones establecidas en el artículo 2.8.2.1.6 del Decreto 1080 de 2015 o la norma que lo modifique, sustituya o derogue'. La opción 1 refleja directamente estos tres componentes esenciales."
+  },
+  {
+    "question": "Conforme al Parágrafo 1 del Artículo 2.2.1, los Archivos Generales Territoriales están sujetos a una obligación específica en relación con la rendición de cuentas de sus actividades. ¿Cuál de las siguientes afirmaciones describe con exactitud los requisitos para la elaboración, publicación y remisión de su informe anual?",
+    "options": [
+      "Deben elaborar un informe semestral de gestión, publicarlo en un repositorio institucional y remitirlo al Ministerio de Cultura durante el primer mes de la vigencia siguiente.",
+      "Deben elaborar y publicar en su página web un informe anual de las actividades adelantadas durante la vigencia, el cual debe ser remitido a la Subdirección del Sistema Nacional de Archivos del Archivo General de la Nación Jorge Palacios Preciado durante el primer bimestre de la vigencia siguiente, conforme a los procedimientos y formatos establecidos.",
+      "Deben presentar un balance financiero anual a la Contraloría General de la República y publicarlo en el Diario Oficial antes del 31 de marzo del año siguiente.",
+      "Deben compilar un registro de proyectos ejecutados, difundirlo a través de boletines informativos y enviarlo al Consejo Nacional de Archivos en el segundo trimestre del año fiscal."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 detalla que los Archivos Generales Territoriales deben 'elaborar y publicar en su página web un informe anual de las actividades adelantas durante la vigencia, el cual debe ser remitido a la Subdirección del Sistema Nacional de Archivos del Archivo General de la Nación Jorge Palacios Preciado durante el primer bimestre de la vigencia siguiente, de conformidad con los procedimientos y formatos establecidos para tal fin'. La opción 1 reproduce fielmente estos requisitos."
+  },
+  {
+    "question": "El Parágrafo 2 del Artículo 2.2.1 define el propósito fundamental de los Archivos Generales Territoriales y las estrategias clave para su consecución. ¿Cuál es la finalidad primordial de estas entidades y qué tipo de acciones deben emprender para cumplirla, según lo estipulado en la normativa?",
+    "options": [
+      "Su fin es exclusivamente la custodia física de documentos históricos, para lo cual deben implementar estrictos protocolos de seguridad y conservación preventiva.",
+      "Su propósito es proteger y difundir el patrimonio documental de su jurisdicción, lo que implica formular y ejecutar planes que integren tecnologías de la información y comunicación para garantizar un acceso efectivo, además de impulsar la política de archivos y gestión documental en su territorio.",
+      "Tienen como objetivo principal la digitalización masiva de todos los fondos documentales, con el fin de crear una base de datos centralizada para la investigación académica.",
+      "Buscan asesorar a las entidades públicas en la elaboración de sus tablas de retención documental, sin asumir responsabilidades directas sobre la difusión del patrimonio."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que los Archivos Generales Territoriales 'tienen como fin proteger y difundir el patrimonio documental de su jurisdicción', y para ello deben 'formular y ejecutar planes, programas o proyectos, que integren el uso de las tecnologías de la información y comunicación disponibles, con el propósito de promover y garantizar un acceso efectivo y oportuno al patrimonio documental bajo su custodia; así como, generar acciones para impulsar la implementación de la política de archivos y gestión documental en su territorio'. La opción 1 sintetiza correctamente todos estos elementos."
   }
 ]
