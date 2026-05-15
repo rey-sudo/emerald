@@ -1076,5 +1076,137 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 3.1.1. establece que las instalaciones deben cumplir con los requisitos técnicos del Artículo 3.1.2., además de lo dispuesto en el Título 6 'Conservación y preservación de documentos' y los demás lineamientos del Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "Según el Artículo 3.1.2, ¿qué tipo de cumplimiento normativo es mandatorio para los sujetos obligados y prestadores de servicios que administran documentos de archivo, en términos de condiciones físicas?",
+    "options": [
+      "Solo el cumplimiento del Reglamento Colombiano de Construcción Sismo Resistente vigente, dada su naturaleza de riesgo estructural.",
+      "La adhesión a las normas que reglamentan el artículo 13 de la Ley 594 de 2000, cubriendo aspectos estructurales, de ubicación y capacidad de almacenamiento.",
+      "La garantía de cumplimiento de las normas técnicas colombianas, sin necesidad de referenciar leyes específicas de construcción o riesgo.",
+      "La aplicación exclusiva de los lineamientos de diseño y adecuación locativa, sin considerar aspectos de mitigación de riesgos o servicios de red."
+    ],
+    "correct": 1,
+    "explanation": "El punto 1 establece que se deben cumplir las normas que reglamentan el artículo 13 de la Ley 594 de 2000, lo cual abarca condiciones físicas como ubicación, aspectos estructurales, capacidad de almacenamiento, y la mitigación de riesgos. La opción 1 es incompleta, la 2 es precisa y la 3 ignora la referencia legal específica."
+  },
+  {
+    "question": "En el contexto de la custodia documental, ¿cuál es el requisito estructural y de seguridad que deben cumplir los materiales utilizados en pisos, muros, techos, puertas y estanterías, según el Artículo 3.1.2?",
+    "options": [
+      "Deben ser de materiales resistentes a la humedad y con acabados estéticos que permitan la fácil identificación de zonas de trabajo.",
+      "Deben estar construidos con materiales ignífugos de alta resistencia mecánica y con un desgaste mínimo a la abrasión, además de que las puertas deben tener un sistema de apertura de emergencia interno.",
+      "Es suficiente que los materiales sean duraderos y que las puertas cuenten con mecanismos de cierre automático para prevenir el acceso no autorizado.",
+      "Deben utilizarse materiales de bajo costo y fácil mantenimiento, priorizando la funcionalidad sobre la resistencia al fuego y la abrasión."
+    ],
+    "correct": 1,
+    "explanation": "El punto 4 especifica de manera precisa que los materiales deben ser ignífugos de alta resistencia mecánica y desgaste mínimo a la abrasión, y que las puertas deben contar con un sistema de apertura de emergencia interno."
+  },
+  {
+    "question": "Respecto a la zonificación de áreas en instalaciones de archivo, ¿qué condición debe garantizarse para las zonas de conservación, restauración, trabajo archivístico, almacenamiento digital y áreas técnicas, según el Artículo 3.1.2?",
+    "options": [
+      "Deben estar ubicadas en el mismo nivel para facilitar el acceso del personal y la integración de servicios de red.",
+      "Deben estar separadas de otras áreas y contar con elementos de control y aislamiento que aseguren la seguridad de los documentos y su manipulación adecuada.",
+      "Solo es necesario que las zonas de trabajo archivístico y consulta estén separadas de las áreas de almacenamiento para mantener el control ambiental.",
+      "Deben compartir servicios de infraestructura para optimizar el uso del espacio, siempre que se cumplan las normativas de seguridad estructural."
+    ],
+    "correct": 1,
+    "explanation": "El punto 5 establece que estas zonas deben ser independientes de las otras áreas y deben contar con elementos de control y aislamiento para garantizar la seguridad y adecuada manipulación."
+  },
+  {
+    "question": "Según el Artículo 3.1.2, ¿cuál es el propósito específico del aislamiento requerido en las zonas de saneamiento de material documental con biodeterioro?",
+    "options": [
+      "Permitir la ventilación adecuada y el manejo de residuos biológicos sin comprometer la infraestructura general del edificio.",
+      "Evitar que los agentes microbiológicos contaminen las demás áreas, protegiendo tanto los documentos como la salud del personal que trabaja en otras dependencias.",
+      "Facilitar la disposición final de los materiales contaminados, cumpliendo con protocolos de gestión de residuos peligrosos.",
+      "Garantizar que el personal pueda realizar los procesos de saneamiento sin interferir con las actividades de consulta y administración de archivos."
+    ],
+    "correct": 1,
+    "explanation": "El punto 6 indica que el aislamiento es necesario para evitar que los agentes microbiológicos contaminen las demás áreas y poner en riesgo la salud del personal."
+  },
+  {
+    "question": "En términos de organización espacial, ¿qué relación debe existir entre las zonas de trabajo archivístico, consulta y prestación de servicios, y las áreas de almacenamiento, según el Artículo 3.1.2?",
+    "options": [
+      "Deben estar físicamente integradas para optimizar el flujo de trabajo y reducir la distancia de acceso al material custodiado.",
+      "Deben estar separadas de las áreas de almacenamiento, tanto por razones de seguridad como de regulación y mantenimiento de las condiciones ambientales en las áreas de custodia documental.",
+      "Solo deben estar separadas por razones de seguridad, ya que el control ambiental puede ser gestionado mediante sistemas de climatización centralizados.",
+      "Deben estar conectadas por pasillos de servicio, permitiendo el acceso directo y constante del personal a las áreas de custodia."
+    ],
+    "correct": 1,
+    "explanation": "El punto 7 establece la doble razón de separación: seguridad y regulación/mantenimiento de condiciones ambientales."
+  },
+  {
+    "question": "Según el Artículo 3.1.2, ¿cómo deben estar conectadas las áreas técnicas con las áreas de custodia documental, y qué consideración debe primar en esta conexión?",
+    "options": [
+      "Deben estar totalmente aisladas para evitar la interferencia de equipos tecnológicos con el ambiente de conservación, sin necesidad de accesibilidad directa.",
+      "Deben estar conectadas, teniendo en cuenta el necesario aislamiento funcional y su accesibilidad con las zonas de custodia, recepción, organización y tratamiento de los documentos.",
+      "Solo deben estar conectadas mediante servicios de red, sin requerir consideración de aislamiento físico, dado que la función es de soporte tecnológico.",
+      "La conexión debe ser mínima y limitada a la infraestructura de servicios, sin afectar la función desarrollada ni la accesibilidad física."
+    ],
+    "correct": 1,
+    "explanation": "El punto 8 exige que las áreas técnicas estén conectadas, pero siempre teniendo en cuenta el aislamiento funcional y la accesibilidad a las zonas clave (custodia, recepción, etc.)."
+  },
+  {
+    "question": "Desde la perspectiva de la seguridad operativa, ¿qué medida de control debe implementar el personal encargado en las instalaciones de archivo, según el Artículo 3.1.2?",
+    "options": [
+      "Garantizar que todos los documentos estén digitalizados y almacenados en servidores de acceso remoto para minimizar el riesgo físico.",
+      "Restringir el acceso a las áreas de almacenamiento y de procesos técnicos, con el objetivo de salvaguardar la seguridad de los documentos custodiados.",
+      "Establecer un sistema de turnos de acceso para el personal, limitando el ingreso solo a los usuarios autorizados para consulta.",
+      "Mantener un registro de entrada y salida de documentos, sin necesidad de restringir el acceso físico a las áreas técnicas."
+    ],
+    "correct": 1,
+    "explanation": "El punto 9 establece la obligación de restringir el acceso a las áreas de almacenamiento y procesos técnicos para garantizar la seguridad."
+  },
+  {
+    "question": "En relación con la gestión de la conservación, ¿qué requisito integral debe garantizarse en las instalaciones de archivo, según el Artículo 3.1.2?",
+    "options": [
+      "La implementación de un sistema de climatización avanzado que mantenga niveles constantes de humedad y temperatura en todas las zonas.",
+      "La realización de un inventario exhaustivo de todos los soportes documentales para determinar su valor histórico y su método de conservación.",
+      "Garantizar la implementación de todos los planes y programas del Sistema Integrado de Gestión Documental, sin importar el tipo de soporte.",
+      "Garantizar la implementación de los planes y programas del Sistema Integrado de Gestión Documental, incluyendo el manejo de riesgos y la preservación del patrimonio documental."
+    ],
+    "correct": 3,
+    "explanation": "El punto 10 establece la necesidad de garantizar la implementación de los planes y programas del Sistema Integrado de Gestión Documental, lo cual abarca el manejo de riesgos y la preservación del patrimonio documental."
+  },
+  {
+    "question": "Cuál es el objetivo principal de la gestión documental en el contexto de la preservación del patrimonio documental?",
+    "options": [
+      "Digitalizar todos los documentos físicos para reducir el espacio físico y el riesgo de deterioro.",
+      "Asegurar la accesibilidad y la integridad de la información a lo largo del tiempo, independientemente del formato.",
+      "Crear copias de seguridad digitales para prevenir la pérdida de información ante desastres naturales.",
+      "Cumplir con las normativas legales de retención y disposición final de los documentos."
+    ],
+    "correct": 1,
+    "explanation": "El objetivo principal es asegurar la accesibilidad y la integridad de la información a lo largo del tiempo, lo cual abarca más que solo la digitalización o la prevención de desastres."
+  },
+  {
+    "question": "En el contexto de la gestión documental, ¿qué papel juega la descripción archivística?",
+    "options": [
+      "Determinar el valor legal y administrativo de los documentos.",
+      "Facilitar la localización y comprensión del contexto de creación y uso de los documentos.",
+      "Definir los tiempos de retención y disposición final.",
+      "Asignar los niveles de seguridad y confidencialidad."
+    ],
+    "correct": 1,
+    "explanation": "La descripción archivística se enfoca en proporcionar el contexto (quién, cuándo, por qué) para que el usuario pueda localizar y entender el documento."
+  },
+  {
+    "question": "En la gestión documental, ¿qué es la Tabla de Retención Documental (TRD)?",
+    "options": [
+      "Un inventario detallado de todos los documentos físicos existentes.",
+      "Un instrumento que establece los tiempos de retención y disposición final de los documentos, según su valor administrativo y legal.",
+      "Un manual de procedimientos para la clasificación de expedientes.",
+      "Un listado de documentos que deben ser digitalizados en un plazo determinado."
+    ],
+    "correct": 1,
+    "explanation": "La TRD es el instrumento clave que define cuánto tiempo debe conservarse un tipo de documento antes de su disposición final."
+  },
+  {
+    "question": "En la gestión documental electrónica, ¿cuál es el principal desafío en términos de preservación digital?",
+    "options": [
+      "El alto costo de almacenamiento y la gestión de grandes volúmenes de datos.",
+      "La obsolescencia tecnológica y la necesidad de migrar formatos y soportes con el tiempo.",
+      "La falta de personal capacitado en el manejo de sistemas de gestión documental.",
+      "La dificultad para asegurar la autenticidad de los documentos electrónicos."
+    ],
+    "correct": 1,
+    "explanation": "El desafío más crítico en la preservación digital es la obsolescencia tecnológica, ya que los formatos y soportes cambian constantemente."
   }
 ]
