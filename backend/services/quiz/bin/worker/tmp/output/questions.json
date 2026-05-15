@@ -1208,5 +1208,60 @@
     ],
     "correct": 1,
     "explanation": "El desafío más crítico en la preservación digital es la obsolescencia tecnológica, ya que los formatos y soportes cambian constantemente."
+  },
+  {
+    "question": "Según el Artículo 3.1.3, ¿qué tipo de acreditación es requerida específicamente para el personal encargado de desarrollar procesos técnicos de conservación preventiva en documentos de archivo?",
+    "options": [
+      "Título universitario especializado en Conservación y Restauración de Bienes Muebles, emitido por instituciones acreditadas.",
+      "Experiencia certificada en procesos reprográficos, demostrando manejo de técnicas de reproducción documental.",
+      "Formación académica en Archivística o disciplinas relacionadas, que acredite la idoneidad para la organización de fondos.",
+      "Capacitación y experiencia certificada en procesos de conservación documental, garantizando el conocimiento de las mejores prácticas de preservación."
+    ],
+    "correct": 3,
+    "explanation": "El numeral 1 establece que para la conservación preventiva se debe contar con personal capacitado y que acredite experiencia certificada en procesos de conservación documental, lo cual es distinto de los requisitos de título o formación en otras áreas."
+  },
+  {
+    "question": "En el contexto de la conservación de documentos de archivo, ¿cuál es el requisito de cualificación profesional más estricto para el personal que debe ejecutar procesos técnicos de conservación-restauración?",
+    "options": [
+      "Acreditar experiencia certificada en procesos reprográficos, lo cual es suficiente para manejar daños estructurales y químicos.",
+      "Poseer formación académica en Archivística, ya que esta disciplina abarca el manejo integral de los bienes culturales.",
+      "Contar con un título universitario en Conservación y Restauración de Bienes Muebles o una formación especializada en el área, proveniente de instituciones reconocidas.",
+      "Demostrar capacidad de organización documental, lo cual es un requisito general para la gestión de archivos históricos."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 2 exige específicamente un título universitario en Conservación y Restauración de Bienes Muebles o formación especializada en esta área, proveniente de instituciones nacionales o extranjeras debidamente acreditadas, lo que representa el requisito más detallado y especializado."
+  },
+  {
+    "question": "Si una entidad debe llevar a cabo procesos técnicos reprográficos sobre documentos de archivo, ¿qué tipo de acreditación profesional debe demostrar su personal, según lo estipulado en el Artículo 3.1.3?",
+    "options": [
+      "Acreditar formación académica en Archivística, ya que la reprografía es una función de organización documental.",
+      "Contar con experiencia certificada en procesos de conservación documental, dado que la reproducción implica manejo de materiales sensibles.",
+      "Acreditar experiencia certificada en procesos reprográficos, lo cual es el requisito técnico específico para esta función.",
+      "Presentar un título universitario en Conservación y Restauración, pues la reproducción de documentos requiere conocimientos de materiales deteriorados."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 3 establece de manera precisa que para los procesos técnicos reprográficos se debe contar con personal que acredite experiencia certificada en procesos reprográficos."
+  },
+  {
+    "question": "Para el desarrollo de procesos técnicos de organización de documentos de archivo, ¿cuál es el perfil de formación académica que deben acreditar los sujetos obligados?",
+    "options": [
+      "Experiencia certificada en procesos de conservación documental, garantizando la preservación física del soporte.",
+      "Título universitario en Conservación y Restauración de Bienes Muebles, debido al manejo de la integridad material del fondo.",
+      "Formación académica en Archivística, o en disciplinas relacionadas con el desarrollo de los procesos de organización, según su especialidad.",
+      "Haber cumplido con los parámetros de la Ley 1409 de 2010, lo cual es un requisito general de gestión documental."
+    ],
+    "correct": 3,
+    "explanation": "El numeral 4 especifica que para los procesos técnicos de organización deben acreditar que cuentan con personal idóneo con formación académica en Archivística, o en las disciplinas relacionadas con el desarrollo de los procesos de organización, según su especialidad."
+  },
+  {
+    "question": "Según el Parágrafo del Artículo 3.1.3, ¿qué obligación general deben garantizar los sujetos obligados respecto a la gestión documental?",
+    "options": [
+      "Garantizar que el personal cuente con experiencia certificada en todas las áreas técnicas (conservación, reprografía y organización).",
+      "Asegurar que la gestión documental cumpla con los parámetros establecidos en la Ley 1409 de 2010 y la Resolución 629 de 2018.",
+      "Establecer un programa de gestión documental que incluya la adquisición y expropiación de archivos privados.",
+      "Mantener un inventario actualizado que detalle el valor histórico, sociocultural y científico de todos los documentos."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo establece que los sujetos obligados deben garantizar que para el desarrollo de los procesos de la gestión documental se cumpla con los parámetros establecidos en la Ley 1409 de 2010 y con la Resolución 629 de 2018."
   }
 ]

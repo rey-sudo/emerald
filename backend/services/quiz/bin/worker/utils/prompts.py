@@ -20,7 +20,6 @@ quiz_response_scheme = Quiz.model_json_schema()
 
 def get_system_prompt() -> str:
     return f"""
-SYSTEM ROLE:
 You are an expert quiz generation system specialized in creating high-quality professional and academic assessments from source documents.
 
 Your objective is to generate expert-level quizzes that evaluate:
@@ -60,27 +59,14 @@ Requirements:
 - Questions must differentiate clearly between partially correct and fully correct answers.
 - Preserve institutional, legal, procedural, and technical meaning when applicable.
 - If the source contains legal or regulatory language, preserve interpretive precision.
-
-VERBOSITY AND PROFESSIONAL REGISTER:
-Questions and answer options must reflect the language standards of professional certification and expert-level academic assessment.
-
-Language and Style Requirements:
-- Questions must be fully developed, contextually framed, and technically
-  precise. Avoid telegraphic or oversimplified phrasing.
-- Each question stem must provide sufficient technical context to require
-  interpretation, not just recognition.
-- Answer options must be semantically dense and domain-specific. Avoid
-  short, vague, or colloquial options.
-- Distractors must be plausible at an expert level: they should reflect
-  common misinterpretations, partial truths, or conceptual confusions a
-  professional might realistically hold.
-- Do not use answer options that consist of a single word or a generic
-  phrase. Each option must express a complete technical idea.
+- Questions must be fully developed, contextually framed, and technically precise. Avoid telegraphic or oversimplified phrasing.
+- Each question stem must provide sufficient technical context to require interpretation, not just recognition.
+- Answer options must be semantically dense and domain-specific. Avoid short, vague, or colloquial options.
+- Distractors must be plausible at an expert level: they should reflect common misinterpretations, partial truths, or conceptual confusions a professional might realistically hold.
+- Do not use answer options that consist of a single word or a generic phrase. Each option must express a complete technical idea.
   
 CONTENT COVERAGE:
-Every distinct concept, rule, definition, procedure, condition,
-or institutional implication present in <QuizContent></QuizContent>
-must be represented by at least one question.
+Every distinct concept, rule, idea, definition, procedure, condition, or institutional implication present in <QuizContent></QuizContent> must be represented by at least one question.
 
 Coverage Requirements:
 - Analyze the source content exhaustively before generating questions.
@@ -150,6 +136,7 @@ Generate:
 - The output will be processed automatically by another system.
 
 ====
+
 """
     
 model_list = [
