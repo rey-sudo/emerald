@@ -1461,5 +1461,49 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo del Artículo 3.2.1 exige que los pliegos de condiciones, invitaciones, contratos y anexos técnicos incluyan la normatividad archivística aplicable, la cual debe ser coherente con el objeto específico del contrato."
+  },
+  {
+    "question": "Según el Artículo 3.2.2, ¿cuál es la obligación fundamental de una persona natural o jurídica contratada para la prestación de servicios archivísticos, cuando una entidad pública o privada con funciones públicas solicita una inspección del Archivo General de la Nación?",
+    "options": [
+      "Facilitar el acceso únicamente a los documentos físicos, restringiendo la entrada a equipos tecnológicos de los inspectores.",
+      "Impedir el acceso a los funcionarios del Archivo General de la Nación si no presentan una orden judicial o una autorización explícita de la entidad contratante.",
+      "No obstaculizar el acceso de los funcionarios del Archivo General de la Nación, junto con sus equipos y elementos de trabajo, para las visitas de inspección y vigilancia programadas.",
+      "Permitir el acceso solo después de obtener la aprobación previa y por escrito de la entidad pública contratante, garantizando así la confidencialidad de la información."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 3.2.2 establece claramente que la persona contratada 'no podrá impedir el acceso de los funcionarios del Archivo General de la Nación Jorge Palacios Preciado, junto con sus equipos y elementos de trabajo para llevar a cabo las visitas de inspección y vigilancia'."
+  },
+  {
+    "question": "En el contexto de una visita de inspección y vigilancia por parte del Archivo General de la Nación a un contratista de servicios archivísticos, ¿qué condición se establece en el Artículo 3.2.2 respecto a la autorización de la entidad pública contratante?",
+    "options": [
+      "La inspección requerirá siempre una autorización previa y formal de la entidad pública contratante para proceder.",
+      "La visita de inspección y vigilancia se realizará sin necesidad de autorización previa de la entidad pública contratante.",
+      "La autorización de la entidad pública contratante será necesaria únicamente si la inspección implica el acceso a documentos clasificados.",
+      "La entidad pública contratante debe solicitar la inspección al Archivo General de la Nación, lo que constituye la autorización implícita."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.2.2 especifica que la 'inspección que no requerirá de autorización previa de la entidad pública contratante', eliminando este requisito para las visitas de control."
+  },
+  {
+    "question": "Según el Artículo 3.2.2, ¿cuál es la naturaleza de la entidad que, al contratar servicios archivísticos, genera la obligación para el contratista de permitir el acceso a los funcionarios del Archivo General de la Nación para inspección y vigilancia?",
+    "options": [
+      "Exclusivamente una entidad pública que gestione archivos de carácter histórico nacional.",
+      "Cualquier entidad privada, siempre y cuando el contrato de servicios archivísticos sea de gran envergadura económica.",
+      "Una entidad pública o una entidad privada que esté cumpliendo funciones públicas.",
+      "Únicamente entidades privadas que manejen información sensible o clasificada por motivos de seguridad nacional."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 3.2.2 define el alcance de la obligación al referirse a la contratación 'por una entidad pública o privada que cumple funciones públicas', abarcando ambos tipos de organizaciones bajo esa condición."
+  },
+  {
+    "question": "El Artículo 3.2.2 establece que las visitas de inspección y vigilancia del Archivo General de la Nación a un contratista de servicios archivísticos tienen un propósito específico. ¿Cuál es este propósito principal?",
+    "options": [
+      "Evaluar la eficiencia operativa y la rentabilidad económica del contrato estatal de servicios archivísticos.",
+      "Realizar el seguimiento y control al contrato estatal en lo concerniente a la función archivística.",
+      "Verificar exclusivamente el cumplimiento de las normativas de seguridad física de los archivos, sin considerar la gestión documental.",
+      "Auditar la contratación de personal y la capacitación técnica del equipo del contratista, sin injerencia en los procesos archivísticos."
+    ],
+    "correct": 1,
+    "explanation": "El texto indica que las visitas se realizan 'para llevar a cabo las visitas de inspección y vigilancia que se programen en el seguimiento y control al contrato estatal', lo que define su propósito principal."
   }
 ]
