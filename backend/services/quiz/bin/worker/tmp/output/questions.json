@@ -1406,5 +1406,38 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 3.1.5 indica explícitamente que la intervención se oficializará mediante acto administrativo, de conformidad con lo establecido en Capítulo 2 “Declaratoria de Bienes de Interés Cultural de carácter documental archivístico BIC – CDA”, del título 8 del presente Acuerdo."
+  },
+  {
+    "question": "Según el Artículo 3.1.6, ¿cuál es la restricción fundamental que se impone a los sujetos obligados respecto a la contratación de servicios de custodia de documentos de conservación permanente?",
+    "options": [
+      "Solo se permite la contratación con empresas privadas que demuestren experiencia en gestión de documentos electrónicos.",
+      "Está prohibido contratar con cualquier entidad privada para la custodia de documentos que deban ser transferidos al Archivo General de la Nación o a los archivos generales territoriales.",
+      "La contratación de custodia de documentos de conservación permanente solo puede realizarse con firmas privadas que posean certificaciones internacionales de gestión documental.",
+      "Los sujetos obligados pueden contratar con cualquier tercero siempre y cuando se garantice la interoperabilidad de los sistemas de almacenamiento físico y digital."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.1.6 establece explícitamente que los sujetos obligados no podrán contratar con empresas privadas la custodia de documentos de conservación permanente que deban ser transferidos al Archivo General de la Nación o a los archivos generales territoriales."
+  },
+  {
+    "question": "De acuerdo con el Artículo 3.1.6, ¿bajo qué condición específica está vetada la contratación de servicios de custodia o administración de documentos declarados como Bienes de Interés Cultural (BIC-CDA)?",
+    "options": [
+      "Solo se permite la contratación con instituciones académicas que cuenten con acreditación nacional de solvencia.",
+      "Está prohibido contratar con firmas privadas o terceros para la custodia o administración de estos documentos, independientemente de su valor histórico.",
+      "La contratación está limitada a entidades públicas que demuestren capacidad técnica en la preservación de materiales delicados.",
+      "Se permite la contratación con cualquier tercero siempre que se establezca un contrato de transferencia de conocimiento y manejo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.1.6 prohíbe específicamente contratar con firmas privadas o terceros la custodia o administración de documentos declarados como Bienes de Interés Cultural (BIC-CDA)."
+  },
+  {
+    "question": "Respecto a la administración de archivos históricos, el Artículo 3.1.6 establece un requisito de idoneidad para la contratación. ¿Con qué tipo de entidades se permite realizar esta administración, y qué cualificación debe poseer el personal asociado?",
+    "options": [
+      "Solo con empresas de tecnología documental, siempre que el personal cuente con un título universitario en archivística.",
+      "Con cualquier institución privada que demuestre capacidad financiera, siempre que el personal tenga experiencia mínima de cinco años en el sector.",
+      "Exclusivamente con instituciones de reconocida solvencia académica e idoneidad, y debe contar con personal que certifique idoneidad en las actividades a desarrollar.",
+      "Con entidades públicas o privadas, siempre y cuando se firme un convenio de colaboración que cubra todos los aspectos técnicos y legales."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 3.1.6 especifica que la administración de archivos históricos solo se puede contratar con instituciones de reconocida solvencia académica e idoneidad, y que es obligatorio contar con personal que certifique idoneidad en las actividades a desarrollar."
   }
 ]
