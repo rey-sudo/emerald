@@ -1362,5 +1362,49 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 3 establece que, aunque se contrate a terceros, el sujeto obligado es quien debe garantizar la continuidad y la calidad de la información, asumiendo la responsabilidad final."
+  },
+  {
+    "question": "Según el Artículo 3.1.5, ¿cuál es el requisito indispensable que debe cumplir una entidad que pretenda realizar labores de conservación y restauración documental en bienes declarados BIC-CDA, independientemente de su soporte?",
+    "options": [
+      "Obtener la aprobación de la autoridad competente nacional o territorial, la cual debe emitir un acto administrativo formalizando la intervención.",
+      "Contar con la certificación de un comité técnico especializado que avale la idoneidad de los profesionales involucrados en el proceso.",
+      "Presentar un plan detallado de manejo de riesgos y un avalúo económico que justifique la necesidad de la restauración ante la autoridad.",
+      "Demostrar la colaboración con instituciones académicas reconocidas, lo cual es suficiente para garantizar la calidad técnica de la intervención."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 3.1.5 establece claramente que, para cualquier intervención en conservación y restauración de bienes BIC-CDA (públicos o privados), la entidad debe contar con la aprobación de la autoridad competente nacional o territorial, y esta autorización se oficializará mediante un acto administrativo."
+  },
+  {
+    "question": "En el contexto de la intervención de Bienes de Interés Cultural de Carácter Documental Archivístico (BIC-CDA), ¿qué condiciones específicas rigen la ejecución de las labores de conservación y restauración, según el Artículo 3.1.5?",
+    "options": [
+      "La intervención debe ser realizada exclusivamente por personal interno de la entidad, bajo la supervisión de un experto externo en el campo archivístico.",
+      "La ejecución debe estar dirigida por profesionales idóneos en conservación y restauración de bienes muebles, y debe estar fundamentada en un procedimiento técnico detallado.",
+      "Se requiere la participación de al menos dos profesionales idóneos, uno especializados en el soporte físico y otro en la documentación histórica del bien.",
+      "La realización de la intervención está sujeta a la disponibilidad de recursos financieros y la aprobación de un comité de patrimonio cultural."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.1.5 especifica que la intervención solo podrá realizarse bajo la dirección de profesionales idóneos en conservación y restauración de bienes muebles, y además, esta autorización debe ser oficializada mediante acto administrativo."
+  },
+  {
+    "question": "¿Qué implicación legal o procedimental conlleva la autorización de una intervención en Bienes de Interés Cultural de Carácter Documental Archivístico (BIC-CDA) en relación con la autoridad competente, según el Artículo 3.1.5?",
+    "options": [
+      "La autoridad competente debe emitir una resolución que determine la viabilidad técnica y económica de la restauración, sin importar el tipo de soporte.",
+      "La aprobación debe ser otorgada por la autoridad competente nacional o territorial, dependiendo de si el bien es de ámbito nacional o territorial, respectivamente.",
+      "La autorización solo es aplicable a bienes de carácter público, requiriendo la intervención de la autoridad competente nacional en todos los casos.",
+      "La entidad debe presentar un informe de impacto cultural que justifique la necesidad de la intervención ante la autoridad competente."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.1.5 establece que la entidad debe contar con la aprobación de la autoridad competente nacional o territorial, según corresponda, lo cual implica una distinción jurisdiccional basada en el ámbito del bien (nacional o territorial)."
+  },
+  {
+    "question": "¿Qué fuente normativa específica debe seguirse para la formalización de la intervención de Bienes de Interés Cultural de Carácter Documental Archivístico (BIC-CDA)?",
+    "options": [
+      "Se debe seguir el Título 8 del presente Acuerdo, que detalla los procedimientos de intervención y restauración de bienes documentales.",
+      "La formalización se rige por el Capítulo 2 'Declaratoria de Bienes de Interés Cultural de carácter documental archivístico BIC – CDA', del título 8 del presente Acuerdo.",
+      "La intervención debe estar respaldada por un decreto ministerial que establezca los protocolos de manejo de bienes de interés cultural.",
+      "Se requiere la adhesión a las directrices internacionales de la UNESCO, las cuales deben ser incorporadas mediante un acto administrativo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.1.5 indica explícitamente que la intervención se oficializará mediante acto administrativo, de conformidad con lo establecido en Capítulo 2 “Declaratoria de Bienes de Interés Cultural de carácter documental archivístico BIC – CDA”, del título 8 del presente Acuerdo."
   }
 ]
