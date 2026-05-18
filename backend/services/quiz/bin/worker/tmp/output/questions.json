@@ -1439,5 +1439,27 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 3.1.6 especifica que la administración de archivos históricos solo se puede contratar con instituciones de reconocida solvencia académica e idoneidad, y que es obligatorio contar con personal que certifique idoneidad en las actividades a desarrollar."
+  },
+  {
+    "question": "Conforme al Artículo 3.2.1 del Capítulo 2, ¿cuál es la responsabilidad ineludible de un prestador de servicios bajo un contrato estatal de servicios archivísticos, independientemente de la configuración particular de dicho acuerdo?",
+    "options": [
+      "Implementar exclusivamente soluciones tecnológicas de vanguardia para la digitalización y acceso de la totalidad de los documentos públicos.",
+      "Garantizar la aplicación rigurosa de las directrices y regulaciones emitidas por el Archivo General de la Nación Jorge Palacios Preciado, dada su intervención en documentos públicos.",
+      "Desarrollar un sistema de clasificación documental propio que optimice la gestión y conservación de los archivos estatales.",
+      "Establecer un comité de valoración documental con autonomía para determinar la disposición final de las series documentales."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.2.1 establece claramente que el prestador de un contrato estatal de servicios archivísticos está obligado a cumplir las normas expedidas por el Archivo General de la Nación Jorge Palacios Preciado, debido a su intervención en documentos públicos, sin importar la duración, objeto, alcance o naturaleza del contrato."
+  },
+  {
+    "question": "El Parágrafo del Artículo 3.2.1 establece una condición específica para la documentación contractual en el ámbito de los servicios archivísticos. ¿Cuál es esta condición esencial que debe ser observada en los instrumentos contractuales?",
+    "options": [
+      "La inclusión de un cronograma detallado para la transferencia de archivos históricos a repositorios digitales centralizados.",
+      "La especificación de los criterios de valoración documental para la eliminación o conservación total de los fondos documentales.",
+      "La incorporación obligatoria de la normatividad archivística aplicable, ajustada al objeto particular de cada contrato.",
+      "La descripción pormenorizada de los procedimientos para la adquisición o expropiación de archivos privados de interés público."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo del Artículo 3.2.1 exige que los pliegos de condiciones, invitaciones, contratos y anexos técnicos incluyan la normatividad archivística aplicable, la cual debe ser coherente con el objeto específico del contrato."
   }
 ]
