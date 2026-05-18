@@ -121,8 +121,11 @@ OUTPUT FORMAT:
 Generate:
 - Multiple choice questions only.
 - Exactly 4 answer options per question.
-- Only 1 correct answer.
-- Include the correct answer.
+- For the 'correct' field, you MUST use a 0-based integer index:
+  * Use 0 for the 1st option.
+  * Use 1 for the 2nd option.
+  * Use 2 for the 3rd option.
+  * Use 3 for the 4th option.
 - Include a short explanation justifying why the answer is correct.
 - Respond in plain text without Markdown code blocks.
 - Do not use ```json or triple backticks.

@@ -1261,7 +1261,106 @@
       "Establecer un programa de gestión documental que incluya la adquisición y expropiación de archivos privados.",
       "Mantener un inventario actualizado que detalle el valor histórico, sociocultural y científico de todos los documentos."
     ],
-    "correct": 2,
+    "correct": 1,
     "explanation": "El Parágrafo establece que los sujetos obligados deben garantizar que para el desarrollo de los procesos de la gestión documental se cumpla con los parámetros establecidos en la Ley 1409 de 2010 y con la Resolución 629 de 2018."
+  },
+  {
+    "question": "Según el Artículo 3.1.4, ¿cuál es el requisito fundamental que los sujetos obligados deben garantizar respecto a los repositorios digitales de expedientes electrónicos?",
+    "options": [
+      "A. La implementación de un sistema de almacenamiento que solo permita el acceso físico, complementando el soporte digital.",
+      "B. La utilización de repositorios digitales confiables para la preservación a largo plazo, en concordancia con los tiempos de retención establecidos en la Tabla de Retención Documental.",
+      "C. La obligación de migrar todos los documentos electrónicos a formatos de baja complejidad técnica para facilitar su manejo.",
+      "D. La restricción del acceso a estos repositorios únicamente a personal técnico autorizado por la entidad, sin mecanismos de auditoría externa."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 3.1.4 establece explícitamente que los sujetos obligados deben garantizar la utilización de repositorios digitales confiables para la preservación a largo plazo de los documentos y expedientes electrónicos de archivo, de acuerdo con los tiempos de retención establecidos en la Tabla de Retención Documental."
+  },
+  {
+    "question": "¿Cuál es la estructura obligatoria que debe seguir el almacenamiento de los documentos electrónicos de archivo en los repositorios digitales, según el Artículo 3.1.4?",
+    "options": [
+      "A. Debe seguir la estructura de los expedientes físicos originales, manteniendo la organización por carpetas y foliación tradicional.",
+      "B. Debe estar conforme al cuadro de clasificación documental, asegurando la coherencia archivística del fondo digital.",
+      "C. Debe replicar la estructura jerárquica de la unidad administrativa que generó el documento, sin considerar la función documental.",
+      "D. Debe basarse en la clasificación temática de la información, independientemente de su origen administrativo o funcional."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 1 del Artículo 3.1.4 especifica que la estructura para el almacenamiento de los documentos electrónicos de archivo debe estar conforme al cuadro de clasificación documental."
+  },
+  {
+    "question": "¿Cuál es el propósito de la estructura de metadatos que debe implementarse en los repositorios digitales, según el Artículo 3.1.4?",
+    "options": [
+      "A. Limitar el acceso a la información solo a usuarios con credenciales de alto nivel de seguridad, sin necesidad de contexto adicional.",
+      "B. Posibilitar la producción, registro, clasificación, acceso, conservación y valoración de los documentos a lo largo del tiempo, identificando su contexto, estructura y contenido permanentemente.",
+      "C. Reemplazar la necesidad de la Tabla de Retención Documental, ya que los metadatos deben contener los tiempos de disposición final.",
+      "D. Servir únicamente como herramienta de búsqueda superficial, sin necesidad de vincular el contenido con su contexto histórico o administrativo."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 2 del Artículo 3.1.4 establece que la estructura de metadatos debe posibilitar la producción, registro, clasificación, acceso, conservación y valoración de los documentos a lo largo del tiempo, identificando el contexto, estructura y contenido, asociados permanentemente al documento."
+  },
+  {
+    "question": "En el contexto de los repositorios digitales, ¿cómo debe articularse el acceso a los documentos electrónicos de archivo, según el Artículo 3.1.4?",
+    "options": [
+      "A. Debe articularse únicamente con los lineamientos de seguridad física de la entidad, sin considerar las políticas de acceso digital.",
+      "B. Debe estar subordinado a la aprobación de la alta dirección, sin necesidad de seguir políticas de datos abiertos.",
+      "C. Debe articularse con las políticas de acceso y seguridad de la información, así como los lineamientos para su publicación en el portal de datos abiertos.",
+      "D. Debe realizarse mediante un sistema de solicitud manual que requiere la intervención de un funcionario para cada consulta de información."
+    ],
+    "correct": 2,
+    "explanation": "El numeral 3 del Artículo 3.1.4 exige que el acceso a los documentos electrónicos de archivo debe articularse con las políticas de acceso y seguridad de la información, así como los lineamientos que se han dado para su publicación en el portal de datos abiertos."
+  },
+  {
+    "question": "¿Qué elementos deben incorporar las herramientas o metodologías de seguimiento, control y monitoreo de un repositorio digital, según el Artículo 3.1.4?",
+    "options": [
+      "A. Únicamente la capacidad de generar reportes de uso y frecuencia de consulta de los documentos almacenados.",
+      "B. La implementación de mecanismos que permitan realizar auditorías, además de asegurar el mantenimiento y la estrategia de preservación digital a largo plazo.",
+      "C. La obligación de realizar una revisión física periódica de los soportes de almacenamiento para verificar su estado de conservación.",
+      "D. La limitación del control a la verificación de la integridad de los metadatos, sin evaluar la funcionalidad del sistema de acceso."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 4 del Artículo 3.1.4 establece que el seguimiento, control y monitoreo del repositorio debe incorporar herramientas o metodologías que permitan realizar auditorías. Además, el mantenimiento y la estrategia de preservación digital deben seguir políticas documentadas."
+  },
+  {
+    "question": "Respecto a la implementación del plan de preservación digital a largo plazo, ¿qué debe asegurar el repositorio digital, según el Artículo 3.1.4?",
+    "options": [
+      "A. Que la información sea preservada únicamente mediante copias de seguridad en la nube, sin necesidad de procedimientos documentados.",
+      "B. Que la información sea preservada contra toda contingencia, siguiendo políticas y procedimientos documentados y conforme a normas técnicas y estándares de preservación, migración o actualización.",
+      "C. Que el acceso a la información sea gratuito y sin restricciones, sin importar el valor histórico o la sensibilidad del contenido.",
+      "D. Que la responsabilidad de la preservación recaiga exclusivamente en el proveedor de servicios de almacenamiento externo."
+    ],
+    "correct": 1,
+    "explanation": "El numeral 4 del Artículo 3.1.4 exige que el mantenimiento y la estrategia para la implementación del plan de preservación digital a largo plazo deben seguir políticas y procedimientos documentados para asegurar que la información sea preservada contra toda contingencia, y conforme a normas técnicas y estándares para la preservación, migración o actualización."
+  },
+  {
+    "question": "Según el Parágrafo 1, ¿qué debe garantizar la naturaleza de las especificaciones técnicas y requisitos para la custodia y almacenamiento de documentos electrónicos de archivo en repositorios digitales?",
+    "options": [
+      "A. Deben estar basadas exclusivamente en las directrices del Archivo General de la Nación, sin considerar el entorno operativo de la entidad.",
+      "B. Deben ser flexibles y adaptarse a cualquier tecnología disponible en el mercado, sin necesidad de estandarización.",
+      "C. Deben estar acorde con el entorno propio de la entidad y en concordancia con las normas técnicas colombianas, estándares internacionales y lineamientos del Archivo General de la Nación.",
+      "D. Deben limitarse a los estándares de seguridad de la información, ignorando los requisitos de preservación digital a largo plazo."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 establece que las especificaciones técnicas y requisitos deben estar acorde con el entorno propio de la entidad y en concordancia con las normas técnicas colombianas, estándares internacionales y demás lineamientos que establezca el Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "¿Cuál es el requisito fundamental que deben garantizar los sujetos obligados en relación con los diferentes sistemas de información, según el Parágrafo 2?",
+    "options": [
+      "A. La creación de un único sistema de información centralizado que absorba todos los datos de las entidades relacionadas.",
+      "B. La obligación de mantener los sistemas de información en formatos de papel físico para garantizar la trazabilidad histórica.",
+      "C. Garantizar la interoperabilidad de los diferentes sistemas de información para permitir la recuperación, conservación y preservación de los documentos electrónicos a lo largo de su ciclo de vida.",
+      "D. La transferencia de la responsabilidad de la gestión documental a un único proveedor tecnológico externo para asegurar la continuidad operativa."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 exige que los sujetos obligados deben garantizar la interoperabilidad de los diferentes sistemas de información para permitir la recuperación, conservación y preservación de los documentos electrónicos a lo largo de su ciclo de vida."
+  },
+  {
+    "question": "En el escenario de contratación de servicios de almacenamiento y custodia de documentos electrónicos de archivo con terceros, ¿quién mantiene la responsabilidad final de la preservación, según el Parágrafo 3?",
+    "options": [
+      "A. El proveedor de servicios (personas naturales o jurídicas), dado que son los custodios físicos y técnicos de la información.",
+      "B. El ente regulador del sector, ya que es el responsable de auditar y garantizar la continuidad de la información.",
+      "C. El sujeto obligado, quien debe garantizar que se cumplan los estándares de calidad y seguridad de la información en todo momento.",
+      "D. El titular de la información, quien debe supervisar directamente las operaciones de los terceros contratados."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 establece que, aunque se contrate a terceros, el sujeto obligado es quien debe garantizar la continuidad y la calidad de la información, asumiendo la responsabilidad final."
   }
 ]
