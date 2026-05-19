@@ -1637,5 +1637,38 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo especifica que el uso de firmas digitales o electrónicas debe atender las disposiciones que regulan la materia para garantizar el uso de mecanismos de protección y autenticidad de los documentos electrónicos de archivo, lo cual es fundamental para su fiabilidad y validez."
+  },
+  {
+    "question": "De acuerdo con el Artículo 4.1.4, ¿qué acción específica deben realizar los sujetos obligados que opten por la producción documental a través de medios electrónicos, en relación con la gestión de los formatos electrónicos?",
+    "options": [
+      "Deben implementar un sistema integral para la conversión de todos los documentos físicos a formatos electrónicos antes de su inclusión en cualquier registro.",
+      "Deben asegurar que todos los documentos electrónicos sean transferidos inmediatamente a un repositorio central para su preservación a largo plazo, sin necesidad de registro en las TRD.",
+      "Deben registrar los formatos electrónicos de los tipos documentales en las Tablas de Retención Documental (TRD) para la correcta conformación de expedientes, series o subseries documentales.",
+      "Deben desarrollar una estrategia de preservación digital independiente que opere en paralelo a las TRD, exclusivamente para documentos electrónicos, sin integración directa."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.1.4 establece que los sujetos obligados que produzcan documentos electrónicos deben registrar los formatos electrónicos de los tipos documentales en las Tablas de Retención Documental (TRD) para la conformación de los expedientes, series o subseries documentales."
+  },
+  {
+    "question": "Según el Artículo 4.1.4, ¿cuáles son los requisitos fundamentales para el tratamiento y almacenamiento de los documentos electrónicos de archivo a lo largo de su ciclo de vida?",
+    "options": [
+      "Deben ser convertidos a formato físico para su almacenamiento permanente y gestionados bajo directrices administrativas generales, sin importar los principios archivísticos.",
+      "Deben ser tratados exclusivamente bajo protocolos de seguridad informática y almacenados en cualquier medio electrónico disponible, con revisiones periódicas de integridad de datos.",
+      "Deben ser tratados conforme a los principios y procesos archivísticos y permanecer almacenados electrónicamente durante todo su ciclo de vida, de conformidad con el Plan de Preservación Digital a largo plazo.",
+      "Su ubicación de almacenamiento puede ser elegida libremente por la entidad productora, siempre que sean accesibles, y su tratamiento está sujeto únicamente a las necesidades operacionales inmediatas de la organización."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.1.4 especifica que los documentos electrónicos de archivo deben ser tratados conforme a los principios y procesos archivísticos y permanecer almacenados electrónicamente durante todo su ciclo de vida, de conformidad con el Plan de Preservación Digital a largo plazo."
+  },
+  {
+    "question": "Desde las etapas iniciales de planeación y producción de los documentos electrónicos de archivo, ¿qué mecanismos específicos deben incorporarse y cuál es su propósito principal a lo largo del ciclo vital del documento, según el Parágrafo del Artículo 4.1.4?",
+    "options": [
+      "Mecanismos enfocados principalmente en la optimización del espacio de almacenamiento y la garantía de una recuperación rápida, con una consideración secundaria para la integridad de los datos.",
+      "Mecanismos diseñados para garantizar la fiabilidad, autenticidad, integridad, veracidad e inalterabilidad, con el fin específico de impedir la utilización no autorizada, la modificación, el traslado, el ocultamiento o la destrucción de los documentos.",
+      "Mecanismos para convertir los documentos electrónicos en múltiples formatos propietarios para mejorar la seguridad, limitando así su accesibilidad solo al personal autorizado.",
+      "Mecanismos que permitan la modificación flexible y las actualizaciones periódicas del contenido del documento para reflejar las necesidades organizacionales cambiantes, manteniendo un registro de auditoría básico."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 4.1.4 establece que desde la planeación y producción de los documentos electrónicos de archivo se deben incorporar mecanismos que garanticen la fiabilidad, autenticidad, integridad, veracidad e inalterabilidad, durante todo el ciclo vital de los documentos, con el fin de impedir la utilización no autorizada, la modificación, el traslado, el ocultamiento o la destrucción de estos."
   }
 ]
