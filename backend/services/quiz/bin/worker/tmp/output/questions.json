@@ -1670,5 +1670,49 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo del Artículo 4.1.4 establece que desde la planeación y producción de los documentos electrónicos de archivo se deben incorporar mecanismos que garanticen la fiabilidad, autenticidad, integridad, veracidad e inalterabilidad, durante todo el ciclo vital de los documentos, con el fin de impedir la utilización no autorizada, la modificación, el traslado, el ocultamiento o la destrucción de estos."
+  },
+  {
+    "question": "Según el Artículo 4.2.1, ¿cuál es la función principal de las oficinas de gestión documental en relación con los documentos que se producen o ingresan a la entidad?",
+    "options": [
+      "Establecer únicamente los controles para la eliminación de documentos al final de su ciclo vital.",
+      "Definir los criterios y controles para el seguimiento de la gestión y trámite, asegurando su disponibilidad y acceso.",
+      "Realizar exclusivamente la descripción de metadatos para documentos de valor histórico.",
+      "Limitarse a la recepción y distribución física de los documentos sin considerar su vinculación a trámites."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.1 establece que las oficinas de gestión documental deben 'establecer los criterios y controles para el seguimiento de la gestión y trámite de los documentos que se producen o ingresan a la entidad', con el fin de garantizar su disponibilidad, recuperación y acceso."
+  },
+  {
+    "question": "En el contexto del Artículo 4.2.1, ¿cuál es la relevancia de la descripción de metadatos en el proceso de gestión y trámite de los documentos?",
+    "options": [
+      "Los metadatos son un requisito opcional para la clasificación inicial de los documentos.",
+      "La descripción con metadatos es fundamental para garantizar la disponibilidad, recuperación y acceso a los documentos durante todo su ciclo vital.",
+      "Los metadatos se utilizan principalmente para determinar la disposición final de los documentos, como la eliminación.",
+      "La función principal de los metadatos es vincular los documentos a un trámite específico, sin afectar su recuperación posterior."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.1 subraya que la descripción de los documentos mediante metadatos es esencial para 'garantizar la disponibilidad, recuperación y acceso para la consulta de los documentos durante todo el ciclo vital', conectando directamente los metadatos con la funcionalidad a largo plazo del sistema."
+  },
+  {
+    "question": "El Artículo 4.2.1 enfatiza que la gestión y trámite de los documentos debe garantizar su disponibilidad, recuperación y acceso para la consulta. ¿Qué período abarca esta garantía según la normativa?",
+    "options": [
+      "Únicamente durante la fase inicial de recepción y registro.",
+      "Exclusivamente mientras el documento esté activo en un trámite específico.",
+      "Durante todo el ciclo vital del documento, en relación con el sistema de gestión.",
+      "Solamente para documentos que han sido clasificados como de valor histórico permanente."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.2.1 especifica claramente que las acciones de gestión y trámite, incluyendo la descripción con metadatos, deben garantizar la disponibilidad, recuperación y acceso 'durante todo el ciclo vital' del documento."
+  },
+  {
+    "question": "¿Cuáles son las acciones específicas que las oficinas de gestión documental deben adoptar para la adecuada administración de los documentos, según el Artículo 4.2.1?",
+    "options": [
+      "Recepción, registro, vinculación a un trámite, distribución y descripción mediante metadatos.",
+      "Clasificación, valoración, selección y eliminación de documentos.",
+      "Digitalización, almacenamiento en la nube y cifrado de la información.",
+      "Auditoría interna, capacitación del personal y elaboración de informes de gestión."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.2.1 detalla las acciones que deben adoptar las oficinas de gestión documental: 'adecuada recepción, registro, vinculación a un trámite, distribución, con su respectiva descripción (metadatos)'."
   }
 ]
