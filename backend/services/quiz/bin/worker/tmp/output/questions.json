@@ -1505,5 +1505,38 @@
     ],
     "correct": 1,
     "explanation": "El texto indica que las visitas se realizan 'para llevar a cabo las visitas de inspección y vigilancia que se programen en el seguimiento y control al contrato estatal', lo que define su propósito principal."
+  },
+  {
+    "question": "Según el Artículo 4.1, ¿cuál es el propósito fundamental de establecer los lineamientos para la formulación del Programa de Gestión Documental (PGD) por parte de los sujetos obligados?",
+    "options": [
+      "Garantizar únicamente la planeación y la disposición final de los documentos en soporte físico, sin abordar formatos electrónicos.",
+      "Asegurar la gestión documental de los documentos producidos o gestionados, incluyendo la valoración y el trámite, en armonía con las políticas de desempeño institucional.",
+      "Limitar la gestión documental a la organización y las transferencias de documentos, siguiendo estrictamente la estructura definida por el Archivo General de la Nación Jorge Palacios Preciados.",
+      "Establecer únicamente la conservación a largo plazo de los documentos de archivo, sin requerir la consideración de la producción o gestión de documentos en desarrollo de funciones institucionales."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.1 establece que el objetivo es garantizar la planeación, producción, gestión y trámite, organización, transferencias, disposición, preservación a largo plazo y valoración, de los documentos en cualquier soporte (físico o electrónico), en desarrollo de las funciones de los sujetos obligados, y en armonía con las políticas de gestión y desempeño institucional."
+  },
+  {
+    "question": "¿Qué elementos o procesos deben cubrir los lineamientos de gestión documental, según el Artículo 4.1, para los documentos producidos o gestionados por los sujetos obligados?",
+    "options": [
+      "Solo la planeación y la disposición final, centrándose en la estructura definida por el Archivo General de la Nación.",
+      "La producción, gestión, trámite, organización, transferencias, disposición, preservación a largo plazo y valoración, independientemente del soporte.",
+      "Únicamente la conservación de documentos en formato físico, excluyendo cualquier mención a formatos electrónicos o gestión funcional.",
+      "La identificación documental y la sistematización de categorías administrativas, sin necesidad de vincularlo con las políticas de desempeño institucional."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.1 enumera explícitamente los procesos que deben ser cubiertos: planeación, producción, gestión, trámite, organización, transferencias, disposición, preservación a largo plazo y valoración, aplicables a cualquier soporte (físico o electrónico)."
+  },
+  {
+    "question": "En el contexto de la gestión documental, ¿qué papel juega la estructura definida por el Archivo General de la Nación Jorge Palacios Preciados, según lo estipulado en el Artículo 4.1?",
+    "options": [
+      "Es un requisito opcional que los sujetos obligados deben considerar al momento de formular su Programa de Gestión Documental.",
+      "Sirve como el marco de referencia obligatorio para la formulación del Programa de Gestión Documental (PGD) y los programas específicos.",
+      "Determina exclusivamente los lineamientos de valoración y disposición final, sin afectar la planeación o la gestión de documentos en soporte electrónico.",
+      "Solo es relevante para la transferencia de documentos, sin tener implicaciones en la producción o el trámite de documentos en desarrollo de funciones."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.1 indica que los lineamientos deben implementarse 'en el marco de su política institucional de gestión documental, para la formulación del Programa de Gestión Documental - PGD y los programas específicos atendiendo la estructura definida por el Archivo General de la Nación Jorge Palacios Preciados'."
   }
 ]
