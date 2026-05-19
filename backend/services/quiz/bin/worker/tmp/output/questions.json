@@ -1538,5 +1538,38 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.1 indica que los lineamientos deben implementarse 'en el marco de su política institucional de gestión documental, para la formulación del Programa de Gestión Documental - PGD y los programas específicos atendiendo la estructura definida por el Archivo General de la Nación Jorge Palacios Preciados'."
+  },
+  {
+    "question": "Según el Artículo 4.2, ¿cuál es el referente principal y la fuente de información que debe utilizarse para la formulación del Programa de Gestión Documental (PGD)?",
+    "options": [
+      "El Manual de implementación de un Programa de Gestión Documental (PGD) publicado por el Archivo General de la Nación, complementado con estándares internacionales.",
+      "Las normas técnicas colombianas y los lineamientos del Decreto 1080 de 2015, que rigen la gestión documental en el sector cultural.",
+      "Los criterios establecidos en el Sistema Integrado de Gestión (SIG) y las disposiciones del Decreto Único del Sector Cultura.",
+      "Los procedimientos internos del sujeto obligado, siempre que garanticen el cumplimiento de los principios archivísticos nacionales."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.2 establece explícitamente que el referente para la formulación del PGD es el Manual de implementación de un Programa de Gestión Documental, publicado por el Archivo General de la Nación Jorge Palacios Preciado, en articulación con las normas técnicas colombianas o estándares internacionales."
+  },
+  {
+    "question": "En el contexto de la gestión documental, ¿qué función cumplen las normas técnicas colombianas o los estándares internacionales al ser considerados en la formulación del Programa de Gestión Documental (PGD)?",
+    "options": [
+      "Sirven como requisitos de cumplimiento obligatorio que deben ser incorporados directamente en el cuerpo normativo del PGD.",
+      "Aportan un marco de referencia complementario al Manual de implementación del Archivo General de la Nación, asegurando la calidad y el desarrollo de los procesos.",
+      "Determinan la estructura jerárquica de los fondos documentales, priorizando la aplicación de criterios internacionales sobre los nacionales.",
+      "Reemplazan la autoridad del Manual del Archivo General de la Nación cuando existen discrepancias en la aplicación de los procesos."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2 indica que el Manual de implementación del PGD debe ser utilizado 'en articulación con las normas técnicas colombianas o estándares internacionales', lo que implica un rol de complementariedad y desarrollo de los procesos, no de reemplazo o de obligación directa."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo, ¿qué requisito debe cumplir obligatoriamente el sujeto obligado respecto a los procedimientos de gestión documental que establezca para su implementación?",
+    "options": [
+      "Deben estar alineados exclusivamente con los artículos 2.8.2.5.1 al 2.8.2.7.13 del Decreto 1080 de 2015, sin necesidad de revisión posterior.",
+      "Deben garantizar el cumplimiento de los principios, requisitos y características dispuestos para la gestión de documentos, sin importar la norma de origen.",
+      "Deben ser aprobados por el Archivo General de la Nación y deben incorporar necesariamente la Declaratoria de Bienes de Interés Público.",
+      "Deben estar aprobados en el Sistema Integrado de Gestión (SIG) y asegurar la observancia de la normativa vigente, incluyendo modificaciones o derogaciones."
+    ],
+    "correct": 3,
+    "explanation": "El Parágrafo exige que los procedimientos establecidos por el sujeto obligado 'deben garantizar el cumplimiento de los principios, requisitos, características y demás aspectos dispuestos... y deben estar aprobados en el Sistema Integrado de Gestión - SIG', además de considerar la norma que lo modifique, sustituya o derogue."
   }
 ]
