@@ -1604,5 +1604,38 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 4.1.2 establece que los sujetos obligados deben generar documentos a partir de procedimientos planificados y documentados, determinando el soporte o formato electrónico, el diseño del documento, y los medios y técnicas de producción. El objetivo es garantizar la conformación de expedientes, series y subseries documentales conforme a los Cuadros de Clasificación Documental (CCD) y las Tablas de Retención Documental (TRD), y asegurar su conservación y preservación según las estrategias del Sistema Integrado de Conservación (SIC). La opción 0 es la única que abarca todos estos elementos de manera integral y precisa."
+  },
+  {
+    "question": "Conforme al Artículo 4.1.3 del Acuerdo, ¿cuál de las siguientes responsabilidades es ineludible para todos los sujetos obligados en relación con la gestión de firmas en comunicaciones oficiales?",
+    "options": [
+      "Establecer en sus procedimientos los tipos de firma (autógrafa, digital o electrónica) y los cargos de los funcionarios autorizados para firmar comunicaciones internas y externas.",
+      "Implementar exclusivamente firmas digitales para todas las comunicaciones, asegurando así la máxima seguridad y eficiencia en los procesos.",
+      "Designar un único funcionario de alto nivel para la validación y firma de todas las comunicaciones oficiales, independientemente de su destino.",
+      "Desarrollar un sistema de verificación de firmas autógrafas para comunicaciones externas, dejando la gestión de firmas internas a discreción de cada dependencia."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.1.3 establece claramente que los sujetos obligados deben definir en sus procedimientos los tipos de firma (autógrafa, digital o electrónica) y los cargos de los funcionarios autorizados para la firma de las comunicaciones oficiales, tanto con destino interno como externo."
+  },
+  {
+    "question": "Según lo estipulado en el Artículo 4.1.3, ¿cuál es la obligación específica de las ventanillas únicas en el proceso de radicación de documentos oficiales?",
+    "options": [
+      "Asegurar que todos los documentos recibidos sean digitalizados antes de su procesamiento, independientemente de su formato original.",
+      "Velar por el cumplimiento de las disposiciones sobre tipos de firma y cargos autorizados, radicando únicamente aquellos documentos que satisfagan dichos requisitos.",
+      "Establecer los protocolos para la creación y uso de firmas electrónicas en las comunicaciones internas de la entidad.",
+      "Proporcionar asesoramiento técnico a los funcionarios sobre la correcta aplicación de las firmas autógrafas en documentos de archivo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.1.3 indica que las ventanillas únicas tienen la responsabilidad de velar por el cumplimiento de las disposiciones sobre firmas y solo radicar los documentos que cumplan con lo establecido, asegurando así la conformidad de las comunicaciones oficiales."
+  },
+  {
+    "question": "El Parágrafo del Artículo 4.1.3 subraya la necesidad de que el uso de firmas digitales o electrónicas se ajuste a las disposiciones regulatorias pertinentes. ¿Cuál es la finalidad primordial de esta observancia normativa en el contexto de los documentos electrónicos de archivo?",
+    "options": [
+      "Optimizar la velocidad de procesamiento y la eficiencia en la transferencia de documentos entre diferentes entidades gubernamentales.",
+      "Garantizar la interoperabilidad de los sistemas de gestión documental a nivel nacional, facilitando el intercambio de información.",
+      "Asegurar la aplicación de mecanismos de protección y autenticidad que resguarden la integridad y fiabilidad de los documentos electrónicos de archivo.",
+      "Reducir significativamente la carga administrativa asociada a la verificación manual de firmas en grandes volúmenes de documentación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo especifica que el uso de firmas digitales o electrónicas debe atender las disposiciones que regulan la materia para garantizar el uso de mecanismos de protección y autenticidad de los documentos electrónicos de archivo, lo cual es fundamental para su fiabilidad y validez."
   }
 ]
