@@ -1593,5 +1593,16 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo del Artículo 4.1.1 indica que para la creación y diseño de formas, formularios y documentos electrónicos, los sujetos obligados deben establecer en el programa específico de normalización de formas y formularios electrónicos del Programa de Gestión Documental y en articulación con las áreas de tecnología, las acciones y directrices encaminadas al cumplimiento de los requisitos y características para la gestión de documentos electrónicos."
+  },
+  {
+    "question": "Según el Artículo 4.1.2 del Acuerdo, que regula el Proceso de Producción documental, ¿cuál es el conjunto integral de responsabilidades que los sujetos obligados deben cumplir mediante procedimientos planificados y documentados?",
+    "options": [
+      "La definición del soporte o formato electrónico, el diseño estructural del documento, y los medios y técnicas de producción, con el fin de asegurar la conformación precisa de expedientes, series y subseries documentales, en estricta conformidad con los Cuadros de Clasificación Documental (CCD) y las Tablas de Retención Documental (TRD), y garantizando su conservación y preservación conforme a las estrategias del Sistema Integrado de Conservación (SIC).",
+      "La implementación exclusiva de formatos electrónicos para todos los documentos, la automatización de los procesos de producción, y la aplicación de criterios de eliminación temprana para optimizar el espacio de almacenamiento, sin una referencia directa a los sistemas de clasificación archivística.",
+      "El establecimiento de un diseño estético para los documentos, la elección de materiales de alta durabilidad para su soporte físico, y la capacitación del personal en técnicas de producción manual, priorizando la accesibilidad inmediata sobre la clasificación archivística formal.",
+      "La determinación de los plazos de retención para cada tipo documental y la asignación de responsabilidades para la transferencia de documentos a archivos históricos, basándose principalmente en el valor cultural intrínseco de la información, sin especificar los métodos de su creación inicial."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.1.2 establece que los sujetos obligados deben generar documentos a partir de procedimientos planificados y documentados, determinando el soporte o formato electrónico, el diseño del documento, y los medios y técnicas de producción. El objetivo es garantizar la conformación de expedientes, series y subseries documentales conforme a los Cuadros de Clasificación Documental (CCD) y las Tablas de Retención Documental (TRD), y asegurar su conservación y preservación según las estrategias del Sistema Integrado de Conservación (SIC). La opción 0 es la única que abarca todos estos elementos de manera integral y precisa."
   }
 ]
