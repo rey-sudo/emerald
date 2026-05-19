@@ -1571,5 +1571,27 @@
     ],
     "correct": 3,
     "explanation": "El Parágrafo exige que los procedimientos establecidos por el sujeto obligado 'deben garantizar el cumplimiento de los principios, requisitos, características y demás aspectos dispuestos... y deben estar aprobados en el Sistema Integrado de Gestión - SIG', además de considerar la norma que lo modifique, sustituya o derogue."
+  },
+  {
+    "question": "Según el Artículo 4.1.1, ¿cuál es la función primordial de las oficinas de gestión documental, en articulación con el área de Planeación, en el proceso de planeación técnica de los documentos de archivo?",
+    "options": [
+      "Determinar los criterios de eliminación de documentos basándose exclusivamente en su antigüedad y volumen.",
+      "Establecer las directrices para la creación y el diseño de los documentos de archivo, fundamentadas en el análisis de sus funciones, uso, finalidad y análisis diplomático, y asegurar su registro en el sistema de gestión documental.",
+      "Realizar la valoración secundaria de los documentos para identificar su potencial valor histórico, sin intervenir en su fase de producción inicial.",
+      "Gestionar la adquisición de software especializado para la digitalización de documentos físicos, sin considerar los procesos de diseño."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.1.1 establece claramente que las oficinas de gestión documental, en articulación con el área de Planeación, deben establecer las directrices para la creación y diseño de los documentos de archivo a partir del análisis de las funciones, uso y finalidad de los documentos, análisis diplomático y su registro en el sistema de gestión documental."
+  },
+  {
+    "question": "En el contexto de la creación y diseño de formas, formularios y documentos electrónicos, ¿qué disposición específica deben cumplir los sujetos obligados conforme al Parágrafo del Artículo 4.1.1?",
+    "options": [
+      "Deben priorizar la implementación de sistemas de almacenamiento en la nube para todos los documentos electrónicos, sin necesidad de un programa de normalización interno.",
+      "Deben establecer, en el programa específico de normalización de formas y formularios electrónicos del Programa de Gestión Documental y en articulación con las áreas de tecnología, las acciones y directrices para el cumplimiento de los requisitos y características de la gestión de documentos electrónicos.",
+      "Tienen la obligación de convertir todos los documentos físicos existentes a formato electrónico, independientemente de su valor o finalidad.",
+      "Deben asegurar que la creación de documentos electrónicos se realice únicamente por personal certificado en seguridad informática, sin considerar su diseño archivístico."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 4.1.1 indica que para la creación y diseño de formas, formularios y documentos electrónicos, los sujetos obligados deben establecer en el programa específico de normalización de formas y formularios electrónicos del Programa de Gestión Documental y en articulación con las áreas de tecnología, las acciones y directrices encaminadas al cumplimiento de los requisitos y características para la gestión de documentos electrónicos."
   }
 ]
