@@ -1890,5 +1890,60 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo indica que las comunicaciones deben ser incluidas en el expediente 'de acuerdo con lo establecido en la Tabla de Retención Documental de la oficina o dependencia competente para resolver el trámite'."
+  },
+  {
+    "question": "Según el Artículo 4.2.6, ¿cuál es el procedimiento mandatorio para todas las comunicaciones oficiales que ingresan a una entidad, incluyendo aquellas recibidas a través de correos electrónicos institucionales de servidores públicos o contratistas?",
+    "options": [
+      "Deben ser directamente archivadas por el servidor público o contratista que las recibe, previa verificación de su contenido y relevancia para la entidad.",
+      "Es imperativo que sean remitidas a la Ventanilla Única o sede electrónica para su radicación, incluyendo sus anexos y la verificación de los datos de contacto para respuesta o notificación.",
+      "Solo las comunicaciones físicas requieren ser procesadas por la Ventanilla Única, mientras que los correos electrónicos institucionales se gestionan internamente bajo la supervisión del área de TI.",
+      "Su radicación es opcional si la comunicación no contiene información sensible o clasificada, priorizando la agilidad en la respuesta y la eficiencia operativa."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.6 establece claramente que todas las comunicaciones, sin importar el canal, deben ser remitidas a la Ventanilla Única o sede electrónica para ser radicadas junto con sus anexos, y se debe verificar que contengan los datos de contacto para dar respuesta o notificación."
+  },
+  {
+    "question": "El Artículo 4.2.6 especifica que las comunicaciones oficiales deben ser remitidas a la Ventanilla Única o sede electrónica 'conforme a las series y subseries registradas en las Tablas de Retención Documental'. ¿Qué implicación fundamental tiene esta directriz para la gestión documental de las comunicaciones recibidas?",
+    "options": [
+      "Indica que solo las comunicaciones que ya han sido clasificadas previamente en las Tablas de Retención Documental son susceptibles de radicación oficial, excluyendo aquellas sin clasificación preexistente.",
+      "Subraya la necesidad de que el proceso de radicación se realice siguiendo la estructura de clasificación archivística preestablecida en las Tablas de Retención Documental, asegurando la correcta organización y disposición documental.",
+      "Permite que la entidad decida si una comunicación se registra o no, basándose en su relevancia para una serie o subserie específica, otorgando flexibilidad en la aplicación de la norma.",
+      "Exige que todas las comunicaciones recibidas sean primero evaluadas por el Comité de Archivo para determinar su serie o subserie antes de ser radicadas, lo cual puede generar demoras en el proceso."
+    ],
+    "correct": 1,
+    "explanation": "La frase 'conforme a las series y subseries registradas en las Tablas de Retención Documental' implica que la radicación debe adherirse a la clasificación archivística ya definida, lo cual es crucial para la organización y futura disposición de los documentos."
+  },
+  {
+    "question": "En el contexto del Artículo 4.2.6 sobre comunicaciones oficiales recibidas, ¿cuál es el propósito esencial de la verificación de que la comunicación 'cuente con los datos de contacto para dar respuesta o notificación'?",
+    "options": [
+      "Asegurar que la comunicación cumpla con los requisitos de formato y estructura definidos por la entidad para su procesamiento interno y compatibilidad con los sistemas.",
+      "Confirmar la autenticidad del remitente y la validez de la información contenida en los anexos adjuntos, como medida de seguridad y prevención de fraudes.",
+      "Garantizar que la entidad tenga la capacidad de establecer una comunicación oficial de retorno con el remitente, ya sea para responder a su solicitud o para notificarle alguna decisión.",
+      "Determinar la prioridad de la comunicación para su atención, basándose en la urgencia o el tipo de solicitud, optimizando así los tiempos de respuesta de la entidad."
+    ],
+    "correct": 2,
+    "explanation": "El texto especifica que la verificación de los datos de contacto es 'para dar respuesta o notificación', lo que directamente se relaciona con la capacidad de la entidad para comunicarse oficialmente con el remitente."
+  },
+  {
+    "question": "Según el Parágrafo 1 del Artículo 4.2.6, ¿qué acción debe emprender una entidad cuando se presentan fallas en el sistema de información utilizado para la radicación de las comunicaciones oficiales?",
+    "options": [
+      "Suspender temporalmente la recepción de comunicaciones oficiales hasta que el sistema sea completamente restaurado y operativo, informando al público sobre la interrupción del servicio.",
+      "Priorizar la radicación manual de las comunicaciones más urgentes, dejando las demás en espera hasta la solución definitiva del problema técnico.",
+      "Activar de inmediato estrategias de continuidad o planes de contingencia preestablecidos para asegurar la radicación ininterrumpida de las comunicaciones, minimizando el impacto de la falla.",
+      "Notificar a los remitentes sobre la falla del sistema y solicitarles que reenvíen sus comunicaciones una vez que el servicio se haya restablecido, para evitar la pérdida de información."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 establece que 'la entidad deberá activar estrategias de continuidad o planes de contingencia para la radicación' en caso de fallas en el sistema de información, garantizando la continuidad del proceso."
+  },
+  {
+    "question": "Conforme al Parágrafo 2 del Artículo 4.2.6, ¿cómo debe proceder una entidad ante la recepción de un derecho de petición que no está firmado ni presenta el nombre del responsable o responsables de su contenido?",
+    "options": [
+      "La entidad debe abstenerse de radicarlo y atenderlo, dado que no cumple con los requisitos formales mínimos para ser considerado una comunicación oficial válida.",
+      "Se debe clasificar como anónimo, pero es obligatorio radicarlo y atenderlo siguiendo las directrices de la Ley 1755 de 2015 o la normativa que la modifique, complemente, sustituya o derogue.",
+      "Se procederá a su radicación únicamente si el contenido del derecho de petición es de interés público o social, dejando a discreción de la entidad su atención posterior.",
+      "La entidad debe intentar identificar al remitente a través de otros medios antes de decidir si lo radica o lo atiende, para evitar comunicaciones fraudulentas o malintencionadas."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 indica que, aunque un derecho de petición no esté firmado o no tenga el nombre del responsable, 'se considerará anónimo, deberá ser radicado y atendido conforme la ley 1755 de 2015 o la norma que la modifique, complemente, sustituya o derogue'."
   }
 ]
