@@ -1835,5 +1835,16 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 4 establece que cuando existan errores y se anulen los números, se debe dejar constancia en un acta o documento equivalente, con la respectiva justificación y firma del jefe de la unidad o área responsable de la función de archivo o gestión documental."
+  },
+  {
+    "question": "Según el Artículo 4.2.4 del Acuerdo, ¿cuáles son los requisitos esenciales que deben implementarse para la gestión de las comunicaciones internas de carácter oficial en una entidad?",
+    "options": [
+      "Establecer controles, ya sean manuales o automatizados, para asegurar el seguimiento adecuado, utilizando códigos de dependencias, numeración consecutiva y sistemas de consulta oportuna, además de documentar el procedimiento.",
+      "Implementar únicamente sistemas automatizados para el seguimiento, priorizando la numeración consecutiva y la consulta en línea, sin necesidad de documentar los procedimientos si son intuitivos.",
+      "Realizar un seguimiento manual exhaustivo de todas las comunicaciones, asignando códigos de identificación únicos a cada documento y manteniendo registros físicos, sin requerir sistemas de consulta digital.",
+      "Limitar el control a la asignación de numeración consecutiva y el uso de códigos de dependencias, dejando la consulta oportuna a discreción de cada área y sin una obligación explícita de documentar el procedimiento."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.2.4 establece claramente que para las comunicaciones internas de carácter oficial se deben establecer controles manuales o automatizados que permitan un seguimiento adecuado, utilizando códigos de dependencias, numeración consecutiva y sistemas que faciliten la consulta oportuna, y es imperativo dejar documentado el procedimiento. La opción correcta integra todos estos elementos."
   }
 ]
