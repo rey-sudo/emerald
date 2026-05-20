@@ -1846,5 +1846,49 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 4.2.4 establece claramente que para las comunicaciones internas de carácter oficial se deben establecer controles manuales o automatizados que permitan un seguimiento adecuado, utilizando códigos de dependencias, numeración consecutiva y sistemas que faciliten la consulta oportuna, y es imperativo dejar documentado el procedimiento. La opción correcta integra todos estos elementos."
+  },
+  {
+    "question": "Según el Artículo 4.2.5 del Acuerdo, ¿cuál es la obligación primordial de los sujetos obligados en relación con el control y la distribución de las comunicaciones oficiales?",
+    "options": [
+      "Implementar un sistema de archivo físico centralizado que garantice la inalterabilidad de todos los documentos recibidos y enviados.",
+      "Establecer sistemas, ya sean manuales o automatizados, que permitan verificar la recepción de documentos por el personal competente y monitorear los tiempos de respuesta.",
+      "Desarrollar un protocolo estricto para la digitalización de todas las comunicaciones, priorizando la reducción del uso de formatos físicos.",
+      "Asegurar que todas las comunicaciones oficiales sean procesadas y respondidas dentro de un plazo máximo de 24 horas, independientemente de su complejidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.5 establece que los sujetos obligados deben disponer de sistemas manuales o automatizados que permitan constatar la recepción de los documentos por las personas competentes y disponer de servicios de alerta para el seguimiento a los tiempos de respuesta."
+  },
+  {
+    "question": "De acuerdo con el Artículo 4.2.5, ¿qué funcionalidades específicas deben proporcionar los sistemas de control de comunicaciones oficiales para los sujetos obligados?",
+    "options": [
+      "Capacidades para generar informes estadísticos detallados sobre el volumen de comunicaciones y para la asignación automática de tareas a los empleados.",
+      "Herramientas para la autenticación biométrica de los remitentes y para la encriptación de todas las comunicaciones salientes.",
+      "Mecanismos que permitan verificar la recepción de documentos por parte del personal competente a través de los canales habilitados y servicios de alerta para el seguimiento de los tiempos de respuesta.",
+      "Funciones para la eliminación automática de comunicaciones con valor temporal una vez cumplido su ciclo de vida y para la indexación semántica de contenidos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.2.5 especifica que los sistemas deben permitir 'constatar la recepción de los documentos por los canales habilitados... por parte de las personas competentes de su gestión y trámite, y disponer de servicios de alerta para el seguimiento a los tiempos de respuesta'."
+  },
+  {
+    "question": "Conforme al Parágrafo del Artículo 4.2.5, ¿qué tipo de comunicaciones deben ser obligatoriamente incluidas en el expediente de la serie o subserie documental correspondiente?",
+    "options": [
+      "Únicamente las comunicaciones oficiales que se gestionan a través de sistemas automatizados, excluyendo aquellas de manejo manual.",
+      "Exclusivamente las peticiones presentadas por ciudadanos que requieren una respuesta formal y que están sujetas a plazos legales.",
+      "Todas las comunicaciones oficiales, tanto las enviadas como las recibidas, y las peticiones ciudadanas, sin importar si su registro es manual o automatizado.",
+      "Solamente los documentos clasificados como de carácter reservado o confidencial, para asegurar su trazabilidad y protección."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo establece claramente que 'Todas las comunicaciones oficiales enviadas o recibidas, así como las peticiones presentadas por ciudadanos, sin importar que se encuentren registradas en sistemas manuales o automatizados, deben ser incluidas en el expediente de la serie o subserie'."
+  },
+  {
+    "question": "Según el Parágrafo del Artículo 4.2.5, ¿cuál es el instrumento archivístico que determina la inclusión de las comunicaciones oficiales y peticiones ciudadanas en el expediente de la serie o subserie?",
+    "options": [
+      "El manual de funciones y procedimientos de la entidad, aprobado por la dirección administrativa.",
+      "Las directrices generales emitidas por el Archivo General de la Nación para la organización de fondos documentales.",
+      "La Tabla de Retención Documental (TRD) específica de la oficina o dependencia competente para la resolución del trámite.",
+      "El inventario documental único de la institución, actualizado anualmente por el área de gestión documental."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo indica que las comunicaciones deben ser incluidas en el expediente 'de acuerdo con lo establecido en la Tabla de Retención Documental de la oficina o dependencia competente para resolver el trámite'."
   }
 ]
