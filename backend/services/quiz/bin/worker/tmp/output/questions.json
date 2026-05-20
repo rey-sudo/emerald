@@ -2011,5 +2011,38 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.2.8 especifica que 'Para las sedes electrónicas, se debe garantizar la atención conforme a las disposiciones normativas que regulan sobre la materia', lo cual indica que la atención debe seguir las regulaciones específicas aplicables a los servicios electrónicos, como se describe en la opción B."
+  },
+  {
+    "question": "Según el Artículo 4.2.9, ¿cuál es el requisito fundamental que deben cumplir los sujetos obligados en relación con la numeración de los actos administrativos?",
+    "options": [
+      "Deben utilizar exclusivamente sistemas automatizados para asegurar la trazabilidad y la integridad de la información generada.",
+      "Deben garantizar que la numeración de los actos administrativos sea de forma consecutiva, sin excepción alguna.",
+      "Deben realizar la numeración de los actos administrativos únicamente al finalizar el periodo fiscal, para fines de auditoría.",
+      "Deben establecer un sistema de numeración que incorpore la fecha de emisión y la dependencia emisora para una mejor clasificación."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece claramente que los sujetos obligados deben efectuar la numeración de los actos administrativos de forma consecutiva. Las otras opciones presentan requisitos que no están especificados en el artículo."
+  },
+  {
+    "question": "¿Cuándo debe reiniciarse el proceso de numeración de los actos administrativos, y qué tipo de sistemas se permiten utilizar según el Artículo 4.2.9?",
+    "options": [
+      "Debe reiniciarse el 1 de enero de cada año, siendo obligatorio el uso de sistemas exclusivamente mecánicos o automatizados.",
+      "Debe reiniciarse el primer día hábil del año, utilizando únicamente sistemas manuales para mantener la autenticidad histórica.",
+      "Debe reiniciarse a partir del primero (1) de enero de cada año, pudiendo utilizar sistemas manuales, mecánicos o automatizados.",
+      "La numeración debe ser continua sin reinicio anual, utilizando un sistema integrado que combine lo manual y lo automatizado."
+    ],
+    "correct": 2,
+    "explanation": "El artículo especifica que la numeración se reiniciará a partir del primero (1) de enero de cada año, y que se pueden utilizar sistemas manuales, mecánicos o automatizados."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo del Artículo 4.2.9, ¿cuáles son las responsabilidades clave de la oficina encargada de la numeración de los actos administrativos?",
+    "options": [
+      "Solo la de llevar la descripción en la hoja de control y archivar los reportes de manera física para consulta futura.",
+      "Garantizar la disponibilidad de los actos administrativos, atendiendo las consultas y realizando la valoración de los documentos.",
+      "Llevar la descripción en la hoja de control, generar los reportes necesarios, atender las consultas y asegurar que no se reserven, tachen o enmienden números.",
+      "Establecer un protocolo de seguridad física para los números y reportes, limitando el acceso solo al personal de la oficina."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo detalla que la oficina responsable debe hacer la descripción en la hoja de control, llevar los controles para generar los reportes necesarios, atender las consultas y garantizar que no se reserven, tachen o enmienden números."
   }
 ]
