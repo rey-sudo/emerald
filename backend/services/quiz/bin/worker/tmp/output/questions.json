@@ -1714,5 +1714,49 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 4.2.1 detalla las acciones que deben adoptar las oficinas de gestión documental: 'adecuada recepción, registro, vinculación a un trámite, distribución, con su respectiva descripción (metadatos)'."
+  },
+  {
+    "question": "Según el Artículo 4.2.2 del Acuerdo, ¿cuál es la característica operativa fundamental y el objetivo estratégico principal para el establecimiento de una Ventanilla Única por parte de los sujetos obligados?",
+    "options": [
+      "Su característica principal es centralizar el almacenamiento físico de documentos, con el objetivo de optimizar el espacio de archivo.",
+      "Debe ser exclusivamente automatizada e integrada a la sede electrónica para asegurar la plena conformidad con los estándares de la transformación digital.",
+      "Está diseñada para gestionar de manera centralizada y normalizada la recepción, radicación y distribución de documentos, independientemente de su naturaleza manual o automatizada, contribuyendo al control de los procesos durante el ciclo de vida documental.",
+      "Su propósito primordial es funcionar como un punto de contacto físico para los ciudadanos, priorizando la recepción manual sobre los canales electrónicos para garantizar la accesibilidad universal."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.2.2 establece que la Ventanilla Única debe gestionar de manera centralizada y normalizada la recepción, radicación y distribución de documentos, sin importar si es manual o automatizada, presencial o integrada a la sede electrónica, y que estos procedimientos deben contribuir al desarrollo y control de los procesos de producción, gestión y trámite durante el ciclo de vida del documento."
+  },
+  {
+    "question": "Conforme al Parágrafo 1 del Artículo 4.2.2, ¿qué requisitos específicos se imponen a los sujetos obligados en relación con la formulación de los procedimientos para la recepción, radicación y distribución de documentos?",
+    "options": [
+      "Deben desarrollar estos procedimientos de forma autónoma, garantizando la coherencia interna con su estructura organizacional, sin sujeción a mandatos externos.",
+      "Los procedimientos deben formularse en estricta concordancia con los lineamientos establecidos en la normatividad vigente y los documentos técnicos desarrollados por el Ministerio de las Tecnologías y las Comunicaciones, en el marco de la Transformación Digital Pública.",
+      "La formulación de los procedimientos es opcional, dependiendo del nivel de madurez digital de la entidad y sus capacidades de infraestructura tecnológica.",
+      "Se les exige adoptar una plantilla de procedimiento nacional estandarizada proporcionada por el Archivo General de la Nación, sin posibilidad de adaptaciones locales."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 indica que los sujetos obligados deben formular los procedimientos para la recepción, radicación y distribución de documentos 'en concordancia con los lineamientos establecidos en la normatividad vigente y demás documentos técnicos desarrollados por el Ministerio de las Tecnologías y las Comunicaciones, en el marco de los lineamientos y estándares aplicables a la Transformación Digital Pública'."
+  },
+  {
+    "question": "Más allá de los aspectos técnicos del manejo documental, ¿cuáles son los requisitos esenciales de recursos humanos e infraestructura operativa para la Ventanilla Única, y qué principios administrativos más amplios busca salvaguardar su funcionamiento eficaz, según el Parágrafo 2?",
+    "options": [
+      "Debe priorizar la infraestructura tecnológica avanzada, minimizando la necesidad de intervención humana, para asegurar la eficiencia y reducir los costos operativos.",
+      "Se le exige contar con personal suficiente y debidamente capacitado, así como con los medios necesarios, para asegurar la recepción, radicación y distribución oportuna y ágil, controlar el trámite de comunicaciones oficiales, facilitar las solicitudes ciudadanas y contribuir a la observancia de los principios de la administración pública.",
+      "La Ventanilla Única funciona primordialmente como un punto de control para las comunicaciones internas, siendo la interacción externa con los ciudadanos una función secundaria y no obligatoria.",
+      "La capacitación del personal debe enfocarse exclusivamente en la clasificación y archivo de documentos, sin un énfasis específico en el servicio al ciudadano o los principios administrativos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que la Ventanilla Única 'deberá contar con personal suficiente y debidamente capacitado y de los medios necesarios, que permitan de manera oportuna y ágil la recepción, radicación y distribución, así como controlar el trámite de las comunicaciones de carácter oficial, mediante servicios de mensajería interna y externa y sistemas de información, que faciliten la atención de las solicitudes presentadas por los ciudadanos y que contribuyan a la observancia plena de los principios que rigen la administración pública'."
+  },
+  {
+    "question": "En el contexto de la recepción de documentos, ¿cuáles son los canales obligatorios que la Ventanilla Única debe habilitar, qué información específica debe registrarse para cada transacción, y qué acción procedimental se requiere si la entidad receptora altera el formato o soporte del documento?",
+    "options": [
+      "Solo los canales de recepción física son obligatorios, y únicamente el número de radicado debe registrarse; los cambios de formato quedan a discreción de la entidad.",
+      "La Ventanilla Única debe habilitar canales básicos para documentos físicos y electrónicos, registrando el número de radicado, fecha y hora de recepción y envío; si se cambia el formato o soporte, la entidad debe aplicar lo dispuesto en el Capítulo 3, Título 6, sobre reproducción de documentos.",
+      "Los canales electrónicos son preferentes, y solo la fecha de recepción es crítica para el registro; los cambios de formato están prohibidos bajo cualquier circunstancia.",
+      "La entidad puede elegir cualquier canal para la recepción, pero solo para documentos oficiales; los documentos privados no requieren un registro específico ni la adhesión a las reglas de reproducción."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 indica que la Ventanilla Única debe habilitar 'canales básicos de recepción de documentos físicos o electrónicos, en cualquier soporte, medio o formato', y que debe dejar 'constancia del número de radicado, la fecha y hora de recepción y envío'. Además, especifica que 'Sí al momento de la recepción de documentos, la Entidad receptora cambia el formato o el soporte, deberá dar aplicación a lo dispuesto en el Capítulo 3 “reproducción de documentos por otros medios técnicos”, del Título 6 del presente Acuerdo'."
   }
 ]
