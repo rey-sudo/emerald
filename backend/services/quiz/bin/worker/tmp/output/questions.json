@@ -1989,5 +1989,27 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 2 del Artículo 4.2.7 indica que las comunicaciones no entregadas 'deben ser direccionadas de forma inmediata al área competente para que verifique lo correspondiente y se reinicie el trámite, con el fin de garantizar la entrega efectiva de las comunicaciones'."
+  },
+  {
+    "question": "Según el Artículo 4.2.8 del Acuerdo, ¿cuál es la obligación específica de las Ventanillas Únicas en relación con la información sobre sus horarios de atención al público?",
+    "options": [
+      "Deben publicar los horarios exclusivamente en sus portales web institucionales para consulta remota, sin necesidad de exhibición física.",
+      "Es imperativo que los horarios de atención sean exhibidos en un lugar físicamente visible y de fácil acceso para todos los ciudadanos.",
+      "Tienen la facultad de establecer los horarios de atención sin necesidad de divulgación pública, siempre que se cumpla con la jornada laboral estándar.",
+      "La información sobre horarios debe ser comunicada únicamente a través de canales oficiales de correspondencia interna a los usuarios registrados."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.8 establece claramente que 'Las Ventanillas Únicas presentarán el horario de atención al público en un lugar visible y de fácil acceso para los ciudadanos', lo que corresponde a la opción B."
+  },
+  {
+    "question": "En el contexto del Artículo 4.2.8, ¿qué principio rige la garantía de atención al público para las sedes electrónicas en lo que respecta a sus horarios?",
+    "options": [
+      "La atención debe ser ininterrumpida las 24 horas del día, los 7 días de la semana, para maximizar la accesibilidad digital sin restricciones.",
+      "Se debe asegurar la atención siguiendo estrictamente las directrices y regulaciones normativas específicas que rigen la prestación de servicios electrónicos.",
+      "Las sedes electrónicas tienen autonomía para definir sus horarios de atención sin sujeción a normativas externas, priorizando la eficiencia operativa interna.",
+      "La atención al público en sedes electrónicas se limita a los horarios de oficina de las entidades físicas, replicando el modelo presencial para uniformidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.8 especifica que 'Para las sedes electrónicas, se debe garantizar la atención conforme a las disposiciones normativas que regulan sobre la materia', lo cual indica que la atención debe seguir las regulaciones específicas aplicables a los servicios electrónicos, como se describe en la opción B."
   }
 ]
