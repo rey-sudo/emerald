@@ -1758,5 +1758,82 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 3 indica que la Ventanilla Única debe habilitar 'canales básicos de recepción de documentos físicos o electrónicos, en cualquier soporte, medio o formato', y que debe dejar 'constancia del número de radicado, la fecha y hora de recepción y envío'. Además, especifica que 'Sí al momento de la recepción de documentos, la Entidad receptora cambia el formato o el soporte, deberá dar aplicación a lo dispuesto en el Capítulo 3 “reproducción de documentos por otros medios técnicos”, del Título 6 del presente Acuerdo'."
+  },
+  {
+    "question": "Según el Artículo 4.2.3, ¿cuál es el propósito fundamental de los procedimientos de radicación de comunicaciones oficiales, y qué implicación técnica tiene esto en la asignación de números de radicación?",
+    "options": [
+      "Garantizar la eficiencia operativa mediante la automatización total del proceso, lo que permite la reserva de números para trámites futuros.",
+      "Asegurar la transparencia de la actuación administrativa, lo que prohíbe la reserva, repetición, enmendación, corrección o tachado de números de radicación.",
+      "Simplificar el proceso de registro al permitir la asignación de números secuenciales sin necesidad de dejar constancia de la fecha y hora.",
+      "Facilitar la gestión documental al permitir que diferentes unidades asignen números de radicación de manera autónoma, sin un orden estricto."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece que los procedimientos de radicación velarán por la transparencia de la actuación administrativa, razón por la cual, no se podrán reservar números de radicación, ni habrá números repetidos, enmendados, corregidos o tachados. Esta es la función principal y la implicación técnica."
+  },
+  {
+    "question": "¿Cómo debe realizarse la numeración de radicación de comunicaciones oficiales, y qué información debe registrarse obligatoriamente en el momento de la radicación, según el Artículo 4.2.3?",
+    "options": [
+      "La numeración debe ser asignada por la dependencia más alta, iniciando el 1 de enero, y se debe registrar solo el nombre del remitente y el tipo de comunicación.",
+      "Debe asignarse en estricto orden consecutivo, comenzando el 1 de enero de cada año con el número uno (1), y se debe dejar constancia de la fecha, hora y el número único de radicado de entrada o salida.",
+      "Se puede utilizar cualquier sistema de numeración que sea más práctico para la entidad, siempre que se registre el nombre de la persona responsable del trámite y los anexos.",
+      "La numeración debe ser asignada por la unidad que recibe el documento, sin un inicio anual fijo, y solo se requiere registrar el número de radicado de salida."
+    ],
+    "correct": 1,
+    "explanation": "El artículo exige que la numeración sea en estricto orden consecutivo, iniciando el 1 de enero con el número uno (1), y que se deje constancia de la fecha, hora de recibo o envío y el número único del radicado de entrada o de salida."
+  },
+  {
+    "question": "¿Qué capacidades debe tener el sistema de radicación de comunicaciones oficiales para cumplir con los requisitos de reporte y seguimiento de la gestión documental, según lo estipulado en el Artículo 4.2.3?",
+    "options": [
+      "Solo debe permitir generar reportes que contengan el nombre de la dependencia competente y el número de radicado de entrada y salida.",
+      "Debe ser capaz de generar reportes que incluyan el nombre de la persona o entidad remitente, la dependencia competente, los números de radicado de entrada y salida, el responsable del trámite, los anexos y los tiempos de respuesta.",
+      "Debe limitarse a generar reportes de cumplimiento de plazos, sin necesidad de registrar detalles sobre el remitente o el responsable del trámite.",
+      "Su función principal es solo el registro de la fecha y hora de recepción, sin requerir la inclusión de datos sobre el responsable del trámite o los anexos."
+    ],
+    "correct": 1,
+    "explanation": "El artículo especifica que el sistema debe permitir generar reportes que contengan el nombre de la persona o entidad remitente, nombre o código de la dependencia competente, número de radicado de entrada y de salida, nombre de la persona responsable del trámite, anexos y tiempos de respuesta."
+  },
+  {
+    "question": "En el contexto de la modernización de la gestión documental, ¿qué implicación tiene la existencia de un Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA) en la radicación de comunicaciones oficiales, según el Parágrafo 1?",
+    "options": [
+      "Permite que la entidad centralice la recepción de comunicaciones solo en la sede principal, ignorando las necesidades de las demás unidades.",
+      "Exige que el módulo de radicación centralice la administración del servicio de la Ventanilla Única, permitiendo la recepción de comunicaciones desde cualquier sede o medio de atención, en concordancia con la normatividad vigente.",
+      "Disminuye la necesidad de la Ventanilla Única, ya que el SGDEA permite la radicación directa entre las unidades internas sin pasar por un punto central.",
+      "Solo afecta a las comunicaciones electrónicas, y no regula la recepción de peticiones o documentos físicos que lleguen a la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 establece que si la entidad cuenta con un SGDEA, el módulo de radicación debe centralizar la administración del servicio de la Ventanilla Única para que desde cualquier sede o medio de atención se recepcionen las comunicaciones oficiales o peticiones."
+  },
+  {
+    "question": "Respecto a la estructura física de una entidad con múltiples sedes, ¿cuál es el criterio que debe seguir la institución al determinar el procedimiento de radicación de comunicaciones oficiales, según el Parágrafo 2?",
+    "options": [
+      "Debe establecerse que todas las sedes deben centralizar la recepción de comunicaciones en una única ubicación, sin excepción.",
+      "La decisión debe basarse en las necesidades específicas de la entidad, determinando si centralizan la recepción en una sede o si cada regional, sucursal o sede debe tener su propia oficina o Ventanilla Única.",
+      "Solo las sedes con mayor volumen de trámites deben contar con una Ventanilla Única, mientras que las demás pueden operar con procedimientos internos simplificados.",
+      "El procedimiento debe ser uniforme en todas las sedes, obligando a la creación de una Ventanilla Única centralizada sin importar la necesidad operativa local."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 indica que la entidad determinará conforme a sus necesidades, si centralizan en una de ellas la recepción o si en cada regional, sucursal o sede, habrá oficina o Ventanilla Única."
+  },
+  {
+    "question": "¿Qué procedimiento debe seguir un sujeto obligado cuando un usuario realiza peticiones de manera presencial, electrónica o verbal, y cuál es el objetivo de este procedimiento, según el Parágrafo 3?",
+    "options": [
+      "Debe solicitar al usuario que utilice únicamente canales electrónicos, y debe registrar la petición sin asignar un número de radicado formal.",
+      "Debe asignar un número de radicado a su derecho de petición, siguiendo los procedimientos internos de la entidad y en concordancia con las normas y políticas vigentes para la atención al ciudadano.",
+      "Debe canalizar la petición directamente a la unidad responsable, sin necesidad de radicarla, para agilizar el trámite y evitar demoras.",
+      "Solo debe asignar un número de radicado si la petición es escrita y física, ignorando los canales electrónicos o verbales."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 exige que, independientemente del canal (presencial, electrónico o verbal), el sujeto obligado debe asignar un número de radicado a su derecho de petición."
+  },
+  {
+    "question": "¿Cuál es el procedimiento formal que debe aplicarse cuando se detectan errores en la radicación y es necesario anular números de radicado, y qué elementos deben acompañar este proceso, según el Parágrafo 4?",
+    "options": [
+      "Se debe realizar una corrección en el sistema informático y notificar al usuario afectado, sin necesidad de dejar constancia física de la anulación.",
+      "Se debe dejar constancia en un acta o documento equivalente, incluyendo la respectiva justificación y la firma del jefe de la unidad o área responsable de la función de archivo o gestión documental.",
+      "Basta con enviar un memorando interno al personal de archivo, indicando los números anulados y la razón del error, sin requerir firma de jefatura.",
+      "El proceso de anulación debe ser gestionado únicamente por la oficina jurídica, y no requiere la intervención de la unidad de archivo o gestión documental."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 4 establece que cuando existan errores y se anulen los números, se debe dejar constancia en un acta o documento equivalente, con la respectiva justificación y firma del jefe de la unidad o área responsable de la función de archivo o gestión documental."
   }
 ]
