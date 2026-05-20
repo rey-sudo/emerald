@@ -1945,5 +1945,49 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 indica que, aunque un derecho de petición no esté firmado o no tenga el nombre del responsable, 'se considerará anónimo, deberá ser radicado y atendido conforme la ley 1755 de 2015 o la norma que la modifique, complemente, sustituya o derogue'."
+  },
+  {
+    "question": "Según el Artículo 4.2.7 del Acuerdo, ¿cuáles son los requisitos fundamentales que deben cumplir las comunicaciones oficiales enviadas por los sujetos obligados para su adecuada gestión y control?",
+    "options": [
+      "Incluir un número consecutivo único de radicado de salida y registrar la fecha y hora de envío, gestionado por la Ventanilla Única o una herramienta tecnológica.",
+      "Contener un número de identificación interno, la firma del remitente y ser archivadas en formato físico para su posterior consulta y verificación.",
+      "Ser redactadas en un formato estandarizado, incluir el nombre completo del destinatario y ser aprobadas por el comité de gestión documental antes de su expedición.",
+      "Disponer de un sello de confidencialidad, un código de barras para seguimiento logístico y ser enviadas exclusivamente por correo certificado para asegurar su trazabilidad."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.2.7 establece que las comunicaciones oficiales enviadas deben contener un número consecutivo único de radicado de salida y dejar constancia de la fecha y hora de envío, siendo controladas por la Ventanilla Única o una herramienta tecnológica."
+  },
+  {
+    "question": "El control de las comunicaciones oficiales enviadas, gestionado por la Ventanilla Única o una herramienta tecnológica según el Artículo 4.2.7, tiene un propósito específico. ¿Cuál es la finalidad primordial de este mecanismo de control?",
+    "options": [
+      "Facilitar la auditoría interna de los procesos administrativos y asegurar la transparencia en la toma de decisiones institucionales y operativas.",
+      "Oficializar el trámite de las comunicaciones y garantizar el cumplimiento estricto de los términos de vencimiento establecidos por la Ley aplicable.",
+      "Reducir la carga de trabajo del personal administrativo y optimizar los recursos financieros y humanos destinados a la gestión documental.",
+      "Establecer un registro histórico detallado de todas las interacciones de la entidad con terceros y prevenir posibles litigios o reclamaciones futuras."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.7 indica que el control de las comunicaciones oficiales enviadas tiene como propósito 'oficializar su trámite y cumplir con los términos de vencimiento establecidos por la Ley'."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 1 del Artículo 4.2.7, ¿qué factores determinan el número de copias de las comunicaciones oficiales enviadas por una entidad sujeta a la normativa?",
+    "options": [
+      "La disponibilidad de recursos tecnológicos para la reproducción masiva y la capacidad de almacenamiento físico de la entidad para los documentos.",
+      "Los lineamientos y políticas internas establecidos por la entidad, fundamentados en las necesidades operativas y los principios de economía, eficiencia y eficacia.",
+      "La naturaleza confidencial de la información contenida en la comunicación y la jerarquía del destinatario dentro de la estructura organizacional.",
+      "Las regulaciones específicas de cada sector industrial al que pertenezca la entidad y las recomendaciones emitidas por el Archivo General de la Nación."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 del Artículo 4.2.7 establece que el número de copias obedece a los lineamientos y políticas de la entidad, con base en las necesidades y bajo los principios de economía, eficiencia y eficacia."
+  },
+  {
+    "question": "Según el Parágrafo 2 del Artículo 4.2.7, ¿cuál es el procedimiento establecido para las comunicaciones oficiales enviadas que, por alguna razón, no logran ser entregadas a su destinatario original?",
+    "options": [
+      "Deben ser archivadas inmediatamente como 'no entregadas' y se debe generar un informe detallado para la dirección de la entidad sobre el incidente.",
+      "Se debe intentar un segundo envío por un medio diferente, como correo electrónico o mensajería instantánea, antes de considerar cualquier otra acción correctiva.",
+      "Deben ser direccionadas de forma inmediata al área competente para su verificación y el reinicio del trámite, con el fin de asegurar su entrega efectiva.",
+      "Se procede a su destrucción controlada, dejando constancia del intento fallido de entrega y la razón documentada de la imposibilidad de completarla."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 del Artículo 4.2.7 indica que las comunicaciones no entregadas 'deben ser direccionadas de forma inmediata al área competente para que verifique lo correspondiente y se reinicie el trámite, con el fin de garantizar la entrega efectiva de las comunicaciones'."
   }
 ]
