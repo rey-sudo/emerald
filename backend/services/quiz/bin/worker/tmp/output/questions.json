@@ -2088,5 +2088,38 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 4.3.1.3 establece explícitamente que el respeto al principio de orden original tiene como objetivo garantizar la integridad y conformación de las unidades documentales, manteniendo la secuencia y el orden en que fueron gestionadas y tramitadas."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.4, ¿cuál es el principio rector fundamental que deben observar los sujetos obligados al desarrollar actividades de clasificación documental, y qué elementos jerárquicos deben ser representados en la codificación de las agrupaciones documentales?",
+    "options": [
+      "El principio de procedencia, reflejando únicamente series y subseries documentales, conforme a la secuencia cronológica de producción.",
+      "La estructura orgánico-funcional de la entidad, incluyendo subfondos (si aplica), secciones, subsecciones, series y subseries documentales.",
+      "El valor histórico y cultural de los documentos, priorizando la identificación de fondos y secciones para su preservación a largo plazo.",
+      "La secuencia cronológica de producción de los documentos, organizando por tipos documentales y unidades administrativas responsables de su creación."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.1.4 establece que la clasificación documental debe realizarse 'conforme a la estructura orgánico-funcional' y que las agrupaciones deben codificarse representando la jerarquía que incluye 'subfondos (de ser el caso), secciones, subsecciones, series y subseries documentales'."
+  },
+  {
+    "question": "En el contexto de la clasificación documental, ¿cuál es la finalidad esencial de la codificación de las agrupaciones documentales y qué instrumento normativo es el referente principal para su estructuración, según lo indicado en el Artículo 4.3.1.4?",
+    "options": [
+      "Facilitar la eliminación de documentos de bajo valor administrativo mediante la aplicación de las Tablas de Retención Documental, asegurando la disposición final.",
+      "Representar la jerarquía archivística en la cual se subdivide el fondo documental, siguiendo las directrices establecidas en el Cuadro de Clasificación Documental.",
+      "Establecer la valoración documental para determinar los tiempos de retención y la disposición final, basándose en el Inventario Documental.",
+      "Garantizar la interoperabilidad de los sistemas de gestión documental electrónico, conforme a los lineamientos del Plan Institucional de Archivos."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.1.4 indica que 'Las agrupaciones documentales deben ser codificadas representando la jerarquía en la cual se subdivide el fondo' y que esto se hace 'conforme al Cuadro de Clasificación Documental'."
+  },
+  {
+    "question": "El Parágrafo del Artículo 4.3.1.4 establece una referencia específica para el diligenciamiento del Cuadro de Clasificación Documental (CCD). ¿Cuál es esta referencia y qué tipo de contenido se espera encontrar en ella para asistir a los sujetos obligados en esta tarea?",
+    "options": [
+      "El Artículo 4.3.1.3 sobre valoración documental, que detalla los criterios para la disposición final y eliminación de series documentales.",
+      "El Anexo 5, denominado 'Instructivo y Formato del Cuadro de Clasificación Documental - CCD', que proporciona la guía metodológica y la estructura formal requerida.",
+      "La Guía de Descripción Archivística, que especifica los metadatos esenciales para la identificación y descripción de series y subseries documentales.",
+      "El Manual de Procesos y Procedimientos Archivísticos, que describe las fases del ciclo vital del documento y las responsabilidades institucionales."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo especifica claramente: 'Para el diligenciamiento del Cuadro de Clasificación Documental (Ver anexo 5 “Instructivo y Formato del Cuadro de Clasificación Documental - CCD”)'. Este anexo es el recurso directo para la instrucción y el formato."
   }
 ]
