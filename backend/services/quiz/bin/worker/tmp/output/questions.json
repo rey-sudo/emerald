@@ -2121,5 +2121,38 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo especifica claramente: 'Para el diligenciamiento del Cuadro de Clasificación Documental (Ver anexo 5 “Instructivo y Formato del Cuadro de Clasificación Documental - CCD”)'. Este anexo es el recurso directo para la instrucción y el formato."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.5, ¿cuál es el propósito principal de que los sujetos obligados desarrollen actividades de ordenación documental?",
+    "options": [
+      "Asegurar que la disposición final de los documentos se realice sin considerar su valor histórico o legal.",
+      "Garantizar la adecuada disposición y el control de los documentos mediante el establecimiento de una secuencia de tipos documentales dentro de los expedientes.",
+      "Limitar el acceso a los documentos solo a personal especializado, basándose únicamente en su clasificación administrativa.",
+      "Sustituir el Cuadro de Clasificación Documental por un sistema de ordenación basado exclusivamente en la fecha de creación del expediente."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece que la ordenación documental debe establecer la secuencia de los tipos documentales al interior de los expedientes con el fin de 'garantizar la adecuada disposición y control de los documentos', lo cual es el objetivo central de esta actividad."
+  },
+  {
+    "question": "¿Qué elemento debe servir de base para que los sujetos obligados desarrollen las actividades de ordenación documental, según el Artículo 4.3.1.5?",
+    "options": [
+      "La mera voluntad administrativa de la entidad, sin necesidad de un marco técnico preexistente.",
+      "Los registros de las unidades de archivo físico, independientemente de su clasificación documental.",
+      "Las series y subseries documentales que han sido registradas previamente en el Cuadro de Clasificación Documental.",
+      "El criterio de la autoridad superior, que debe dictar la secuencia de los tipos documentales a utilizar."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.3.1.5 especifica que las actividades de ordenación documental deben realizarse 'a partir de las series y subseries documentales registradas en el Cuadro de Clasificación Documental'."
+  },
+  {
+    "question": "En el contexto del Programa de Gestión Documental, ¿qué aspecto específico debe definirse respecto al sistema de ordenación de las series documentales, según el Parágrafo del Artículo 4.3.1.5?",
+    "options": [
+      "Se debe definir un sistema de ordenación único que aplique de manera uniforme a todas las series documentales de la entidad.",
+      "La definición del sistema de ordenación debe considerar exclusivamente el soporte físico en el que están registradas las series documentales.",
+      "Es imperativo que la definición del sistema de ordenación se ajuste a las características propias de cada serie documental, reconociendo su especificidad.",
+      "La definición debe ser realizada por un comité externo de expertos, sin considerar las características internas de las series documentales."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo indica que, en el Programa de Gestión Documental – Proceso de Organización, se debe definir el sistema de ordenación 'teniendo en cuenta las características propias de cada una de ellas', lo que exige un enfoque diferenciado y contextualizado."
   }
 ]
