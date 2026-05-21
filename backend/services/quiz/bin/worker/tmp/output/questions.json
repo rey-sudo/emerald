@@ -2066,5 +2066,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.3.1.1 establece claramente que las oficinas de gestión documental deben establecer en el Programa de Gestión Documental (PGD) los criterios para la organización de los documentos y archivos, basándose en los procesos de clasificación, ordenación y descripción, y considerando los principios de procedencia y orden original, el ciclo vital de los documentos y la normatividad archivística. La opción correcta integra todos estos elementos."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.2, ¿cuál es la obligación fundamental que deben cumplir los sujetos obligados durante el proceso de organización documental en relación con el principio de procedencia?",
+    "options": [
+      "Establecer la clasificación de los documentos basándose únicamente en su soporte físico y formato digital, sin considerar su origen institucional.",
+      "Determinar las unidades administrativas u oficinas que generaron los documentos, basándose en su estructura orgánicofuncional, para respetar el principio de procedencia.",
+      "Realizar una valoración exhaustiva del contenido de los documentos para determinar su valor histórico, independientemente de la unidad que los haya producido.",
+      "Garantizar la disposición final de los documentos mediante la creación de un inventario que ignore la estructura funcional de las oficinas productoras."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.1.2 establece que, en el marco de la organización documental, los sujetos obligados deben respetar el principio de procedencia para determinar las unidades administrativas u oficinas que producen los documentos, utilizando como base su estructura orgánicofuncional."
   }
 ]
