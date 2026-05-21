@@ -2055,5 +2055,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.2.10 establece claramente que los sujetos obligados deben 'establecer los procedimientos y controles sobre los sistemas de confirmación, o sobre los documentos que dan cuenta de la notificación, así como garantizar su archivo o vinculación con el expediente de la serie o subserie documental conforme al trámite'. La opción correcta sintetiza estos requisitos de manera precisa, abarcando tanto los procedimientos y controles como la garantía de archivo o vinculación con el expediente, sin excluir ningún medio de notificación."
+  },
+  {
+    "question": "Conforme al Artículo 4.3.1.1 del Capítulo 3, ¿cuál es la obligación fundamental de las oficinas de gestión documental o sus equivalentes en relación con la organización de los documentos de archivo y los archivos institucionales?",
+    "options": [
+      "Implementar exclusivamente los procesos de clasificación y ordenación definidos por la autoridad archivística nacional para garantizar la integridad física de los expedientes.",
+      "Establecer, dentro del Programa de Gestión Documental (PGD), los criterios técnicos para la clasificación, ordenación y descripción de los documentos y archivos, considerando los principios de procedencia y orden original, el ciclo vital y la normatividad archivística vigente.",
+      "Priorizar la descripción archivística de los fondos documentales históricos para facilitar su acceso público, sin una vinculación directa con el ciclo vital de los documentos administrativos.",
+      "Desarrollar metodologías para la disposición final de los documentos, enfocándose en la eliminación de aquellos que han cumplido su valor administrativo y legal, sin considerar la organización inicial."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.1.1 establece claramente que las oficinas de gestión documental deben establecer en el Programa de Gestión Documental (PGD) los criterios para la organización de los documentos y archivos, basándose en los procesos de clasificación, ordenación y descripción, y considerando los principios de procedencia y orden original, el ciclo vital de los documentos y la normatividad archivística. La opción correcta integra todos estos elementos."
   }
 ]
