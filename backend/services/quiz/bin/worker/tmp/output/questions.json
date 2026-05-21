@@ -2044,5 +2044,16 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo detalla que la oficina responsable debe hacer la descripción en la hoja de control, llevar los controles para generar los reportes necesarios, atender las consultas y garantizar que no se reserven, tachen o enmienden números."
+  },
+  {
+    "question": "Según el Artículo 4.2.10, ¿cuál es la obligación fundamental de los sujetos obligados en relación con los documentos de notificación de envío de actos administrativos, considerando tanto medios electrónicos como servicios postales?",
+    "options": [
+      "Implementar exclusivamente sistemas de confirmación digital para todas las notificaciones, priorizando la interoperabilidad con plataformas gubernamentales y la eliminación de soportes físicos.",
+      "Establecer procedimientos y controles rigurosos sobre los sistemas de confirmación o los documentos que acreditan la notificación, asegurando su archivo o vinculación con el expediente de la serie o subserie documental conforme al trámite correspondiente.",
+      "Realizar únicamente la conservación física de los acuses de recibo postales, desestimando la necesidad de archivar las confirmaciones de notificaciones electrónicas o su vinculación con expedientes.",
+      "Desarrollar una política de eliminación periódica de los documentos de notificación una vez que el acto administrativo haya adquirido firmeza, para optimizar el espacio de almacenamiento y reducir la carga archivística."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.2.10 establece claramente que los sujetos obligados deben 'establecer los procedimientos y controles sobre los sistemas de confirmación, o sobre los documentos que dan cuenta de la notificación, así como garantizar su archivo o vinculación con el expediente de la serie o subserie documental conforme al trámite'. La opción correcta sintetiza estos requisitos de manera precisa, abarcando tanto los procedimientos y controles como la garantía de archivo o vinculación con el expediente, sin excluir ningún medio de notificación."
   }
 ]
