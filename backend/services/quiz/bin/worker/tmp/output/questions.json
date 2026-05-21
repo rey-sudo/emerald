@@ -2077,5 +2077,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.3.1.2 establece que, en el marco de la organización documental, los sujetos obligados deben respetar el principio de procedencia para determinar las unidades administrativas u oficinas que producen los documentos, utilizando como base su estructura orgánicofuncional."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.3, ¿cuál es el propósito fundamental que los sujetos obligados deben garantizar al respetar el principio de orden original durante el proceso de organización documental?",
+    "options": [
+      "Asegurar que la disposición final de los documentos se realice de manera eficiente, optimizando los recursos de almacenamiento y gestión.",
+      "Garantizar la correcta identificación de las series documentales, permitiendo su clasificación inmediata en el sistema nacional de archivos.",
+      "Mantener la secuencia y el orden en que las unidades documentales fueron gestionadas y tramitadas hasta su resolución definitiva, preservando su integridad y conformación.",
+      "Facilitar la transferencia de archivos a las generaciones futuras, asegurando que el acceso sea posible mediante la digitalización completa del fondo documental."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.3.1.3 establece explícitamente que el respeto al principio de orden original tiene como objetivo garantizar la integridad y conformación de las unidades documentales, manteniendo la secuencia y el orden en que fueron gestionadas y tramitadas."
   }
 ]
