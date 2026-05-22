@@ -2330,5 +2330,49 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 4.3.1.9 indica explícitamente que 'Una vez cerrada la unidad documental se empezarán a contar los tiempos de retención teniendo en cuenta lo estipulado en las Tablas de Retención Documental – TRD'. Por lo tanto, la consecuencia directa del cierre es el inicio del conteo de los tiempos de retención."
+  },
+  {
+    "question": "Según el Artículo 4.3.2.1, ¿cuáles son los tres instrumentos normativos fundamentales que los sujetos obligados deben utilizar para conformar los expedientes electrónicos de archivo y dónde deben incorporarlos?",
+    "options": [
+      "La Declaratoria de Bienes de Interés Público, las Tablas de Retención Documental y el Sistema de Gestión de Documentos Electrónicos, en la fase de valoración.",
+      "El Cuadro de Clasificación Documental, las Tablas de Retención Documental y el Sistema de Gestión de Documentos Electrónicos, desde el inicio hasta la disposición final del trámite.",
+      "El Manual de Procedimientos Administrativos, el Código de Archivo y el Sistema de Gestión de Documentos Electrónicos, durante la fase de conservación.",
+      "Los lineamientos del Archivo General de la Nación y el Modelo de Requisitos, en conjunto con el Sistema de Gestión de Documentos Electrónicos, al finalizar el procedimiento."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.2.1 establece que los sujetos obligados deben conformar los expedientes electrónicos utilizando el Cuadro de Clasificación Documental (CCD) y las Tablas de Retención Documental (TRD), e incorporarlos al Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA), cubriendo el periodo desde el inicio hasta la disposición final."
+  },
+  {
+    "question": "¿Qué garantía debe asegurarse durante la conformación y gestión de los expedientes electrónicos, en relación con el ciclo vital del documento, según el Parágrafo 1?",
+    "options": [
+      "La autenticidad legal de los documentos mediante la firma electrónica avanzada y su almacenamiento en repositorios físicos certificados.",
+      "La interoperabilidad con otros sistemas de información gubernamental y su respaldo en múltiples formatos de soporte digital.",
+      "El almacenamiento en repositorios digitales de confianza, aplicando criterios rigurosos de seguridad de la información.",
+      "La trazabilidad completa de cada acto administrativo, garantizando su acceso público inmediato sin restricciones de tiempo."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 exige que, durante la conformación y gestión de los expedientes, se debe garantizar el almacenamiento en repositorios digitales de confianza, basándose en criterios de seguridad de la información."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 2, ¿cuál es el principio rector que debe respetarse al conformar los expedientes electrónicos de archivo, y cómo deben agruparse los documentos generados en un mismo procedimiento?",
+    "options": [
+      "El principio de unicidad de la información, agrupando los documentos por su tipo de contenido y formato digital.",
+      "El principio de orden original, agrupando los documentos de manera que refleje la estructura de las series y subseries documentales.",
+      "El principio de jerarquía administrativa, agrupando los documentos según la unidad organizacional que los generó.",
+      "El principio de temporalidad, agrupando los documentos en función de su fecha de creación y la secuencia cronológica."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que los expedientes deben respetar el principio de orden original y deben agruparse conforme a las series y subseries documentales, independientemente del tipo de información o formato."
+  },
+  {
+    "question": "¿Cuál es el requisito previo y el propósito de la elaboración del Modelo de Requisitos de Documentos Electrónicos de Archivo por parte de las entidades, según el Parágrafo 3?",
+    "options": [
+      "Establecer los criterios de valoración histórica y determinar la disposición final de las series documentales antes de la implementación del SGDEA.",
+      "Definir la estructura de los repositorios digitales de confianza y asegurar el cumplimiento de los estándares de seguridad de la información.",
+      "Permitir la implementación del Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA), siguiendo los lineamientos del Archivo General de la Nación Jorge Palacios Preciado.",
+      "Garantizar la interoperabilidad legal entre los sistemas de gestión documental de diferentes entidades públicas y privadas."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 indica que, para implementar el SGDEA, las entidades deben elaborar previamente el Modelo de Requisitos de Documentos Electrónicos de Archivo, atendiendo a los lineamientos del Archivo General de la Nación Jorge Palacios Preciado."
   }
 ]
