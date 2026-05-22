@@ -2374,5 +2374,49 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 3 indica que, para implementar el SGDEA, las entidades deben elaborar previamente el Modelo de Requisitos de Documentos Electrónicos de Archivo, atendiendo a los lineamientos del Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "Según el Artículo 4.3.2.2, ¿cuáles son los elementos mínimos obligatorios que deben conformar un expediente electrónico de archivo, además de los documentos electrónicos de archivo?",
+    "options": [
+      "Un índice electrónico, la firma del índice electrónico y los metadatos de contenido, estructura y contexto.",
+      "La declaración de valor histórico, el avalúo y la transferencia de la custodia física del expediente.",
+      "El registro de la cadena de custodia, la aprobación de la autoridad competente y el formato físico original.",
+      "El plan de retención documental, la clasificación administrativa y la disposición final formalizada."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.3.2.2 establece explícitamente que el expediente electrónico debe tener, como mínimo, los documentos electrónicos de archivo, el índice electrónico, la firma del índice electrónico y los metadatos de contenido, estructura y contexto."
+  },
+  {
+    "question": "Respecto a los metadatos en el contexto de los documentos y expedientes electrónicos, ¿cuál es su función principal, según lo estipulado en el Artículo 4.3.2.2?",
+    "options": [
+      "Determinar el valor legal y la fecha de disposición final del documento electrónico.",
+      "Describir de manera exhaustiva tanto los documentos como los expedientes electrónicos, asegurando su conservación y actualización.",
+      "Reemplazar la necesidad de la firma física y garantizar la autenticidad del contenido digital.",
+      "Establecer la jerarquía administrativa y la unidad de clasificación archivística del fondo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.2.2 especifica que los metadatos describen los documentos y los expedientes electrónicos, y que su propósito es garantizar que se conserven y se actualicen durante el ciclo de vida de los documentos."
+  },
+  {
+    "question": "En relación con la definición y la aplicación de los estándares técnicos para los elementos electrónicos del expediente, ¿qué entidad tiene la responsabilidad de establecer dichos estándares, y con qué apoyo debe hacerlo?",
+    "options": [
+      "El Archivo General de la Nación Jorge Palacios Preciado, en coordinación con el Ministerio de Tecnologías de la Información y las Comunicaciones, basándose en estándares internacionales.",
+      "El Ministerio de Tecnologías de la Información y las Comunicaciones, en consulta con el Archivo General de la Nación, priorizando la legislación nacional.",
+      "La entidad creadora del expediente, en colaboración con la autoridad competente, siguiendo únicamente las directrices internas de gestión documental.",
+      "Un comité interinstitucional de expertos, sin necesidad de coordinación ministerial, para asegurar la adaptación al contexto colombiano."
+    ],
+    "correct": 0,
+    "explanation": "El Parágrafo establece que los estándares técnicos de documentos electrónicos, expediente electrónico, índice electrónico y metadatos serán establecidos por el Archivo General de la Nación Jorge Palacios Preciado en articulación con el Ministerio de Tecnologías de la Información y las Comunicaciones, a partir de los estándares internacionales."
+  },
+  {
+    "question": "Según el Parágrafo del Artículo 4.3.2.2, ¿qué tipo de estándares son los que debe señalar el Archivo General de la Nación Jorge Palacios Preciado específicamente para la gestión documental de los documentos electrónicos?",
+    "options": [
+      "Estándares de interoperabilidad y transferencia de datos entre diferentes sistemas de información gubernamental.",
+      "Estándares de seguridad física y manejo de soportes magnéticos y ópticos.",
+      "Estándares de gestión documental que rigen el ciclo de vida y el manejo de los documentos electrónicos.",
+      "Estándares de valoración histórica y la determinación del valor cultural de los documentos."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo indica que los estándares de gestión documental de los documentos electrónicos serán los que señale el Archivo General de la Nación Jorge Palacios Preciado, refiriéndose al manejo y ciclo de vida de dichos documentos."
   }
 ]

@@ -5,11 +5,11 @@ from litellm.router import Router
 class QuestionItem(BaseModel):
     question: str = Field(..., description="Verbose question statement based on the <QuizContent></QuizContent> tag")
     options: List[str] = Field(..., min_length=4, max_length=4, description="""
-    Generate exactly 4 high-quality multiple-choice answer options.
-    All options should have a similar level of detail, specificity, and wording length.
-    Do not make the correct answer noticeably longer, more precise, or better written than the distractors.
-    Keep every option plausible and natural.
-    """)
+        Generate exactly 4 high-quality multiple-choice answer options.
+        CRITICAL: All 4 options must be mutually exclusive and conceptually distinct. 
+        Do NOT generate options that are just minor wording variations or synonyms of each other.
+        All options should have a similar level of detail and length, while presenting distinctly different logical or technical paths.
+        """)
     correct: int = Field(..., ge=0, le=3, description="Index of the correct option (0-3)")
     explanation: str = Field(..., description="Full explanation of why the answer is correct")
     
