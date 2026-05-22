@@ -2154,5 +2154,49 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo indica que, en el Programa de Gestión Documental – Proceso de Organización, se debe definir el sistema de ordenación 'teniendo en cuenta las características propias de cada una de ellas', lo que exige un enfoque diferenciado y contextualizado."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.6, ¿cuál es la obligación principal de los sujetos obligados en relación con la descripción documental y los metadatos?",
+    "options": [
+      "Elaborar únicamente instrumentos de descripción basados en el formato físico, sin necesidad de definir metadatos para la búsqueda.",
+      "Definir los metadatos de manera autónoma, sin necesidad de ajustarse a las normas técnicas de descripción establecidas.",
+      "Elaborar instrumentos de descripción conforme a las normas técnicas y definir metadatos para asegurar la búsqueda, recuperación, acceso y control de los documentos.",
+      "Limitar la descripción documental a las unidades de conservación, ignorando las series y subseries documentales registradas."
+    ],
+    "correct": 2,
+    "explanation": "El texto establece claramente que los sujetos obligados deben elaborar instrumentos de descripción conforme a las normas técnicas y definir metadatos con el propósito específico de garantizar la búsqueda, recuperación, acceso y control de los documentos."
+  },
+  {
+    "question": "En el contexto de la gestión documental, ¿qué mecanismo deben implementar las oficinas productoras, según el Parágrafo 1, para garantizar la integridad de las unidades documentales a lo largo de todo su ciclo vital?",
+    "options": [
+      "Realizar únicamente la transferencia física de documentos al archivo central, sin documentación de control previa.",
+      "Elaborar Inventarios Documentales, Hojas de Control o Índice electrónico desde la fase de gestión, asegurando la integridad de las unidades documentales.",
+      "Limitar la documentación de control solo a la fase de disposición final, sin seguimiento durante la gestión activa.",
+      "Depender exclusivamente de los registros manuales de las unidades productoras, sin necesidad de índices electrónicos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 exige que las oficinas productoras, desde la fase de gestión, elaboren Inventarios Documentales, Hojas de Control o Índice electrónico para asegurar la integridad de las unidades documentales durante todo el ciclo vital."
+  },
+  {
+    "question": "Respecto al procedimiento de elaboración de inventarios documentales, ¿qué formato específico deben adoptar los sujetos obligados, según el Parágrafo 2, y qué implicación tiene esto para su cumplimiento?",
+    "options": [
+      "Deben utilizar formatos internos no estandarizados, siempre y cuando sean aprobados por la unidad de gestión documental.",
+      "Deben adoptar el Formato Único de Inventario Documental (FUID) junto con su instructivo de diligenciamiento, siguiendo el anexo correspondiente.",
+      "Pueden elegir entre varios formatos de inventario, siempre que describan el contenido físico de las unidades documentales.",
+      "El uso del FUID es opcional y solo aplica a archivos de carácter histórico, no a la gestión diaria."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 es explícito al indicar que los sujetos obligados deben adoptar el Formato Único de Inventario Documental (FUID) junto con su instructivo de diligenciamiento."
+  },
+  {
+    "question": "Según el Parágrafo 3, ¿cuál es el requisito de articulación que deben cumplir los metadatos destinados a la descripción documental de las unidades de conservación o almacenamiento?",
+    "options": [
+      "Deben estar en articulación únicamente con los registros de la autoridad competente, sin considerar las series documentales.",
+      "Deben estar en articulación con las series y subseries documentales que están registradas en los Cuadros de Clasificación Documental y Tablas de Retención Documental (TRD).",
+      "Solo deben estar en articulación con los inventarios físicos, sin requerir la referencia a las Tablas de Retención Documental.",
+      "Su articulación debe limitarse a la descripción de las unidades de almacenamiento, sin necesidad de vincularse con la clasificación documental."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 establece que los metadatos deben estar en articulación con las series y subseries documentales registradas en los Cuadros de Clasificación Documental y Tablas de Retención Documental (TRD)."
   }
 ]
