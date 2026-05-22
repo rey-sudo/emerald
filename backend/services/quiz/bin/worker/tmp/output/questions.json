@@ -2209,5 +2209,104 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.3.1.7 establece que los sujetos obligados deben crear y conformar unidades documentales (simples o complejas/expedientes) con la totalidad de los documentos agrupados en desarrollo de un mismo trámite, actuación o procedimiento, independientemente del tipo de información, soporte físico o formato electrónico. Posteriormente, estas unidades deben agruparse conformando series o subseries documentales."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.8, ¿cuál es el fundamento principal de la responsabilidad de las oficinas productoras respecto a las unidades documentales?",
+    "options": [
+      "Garantizar que la clasificación se realice exclusivamente mediante la consulta de los registros históricos de la nación.",
+      "Asegurar que la conformación de las unidades documentales se ajuste a los lineamientos del Programa de Gestión Documental y a los criterios técnicos establecidos.",
+      "Limitar la organización de los documentos únicamente a los soportes físicos, dejando los formatos electrónicos fuera del alcance de su responsabilidad.",
+      "Establecer que la clasificación debe basarse en la autoridad que generó el documento, independientemente del Cuadro de Clasificación Documental (CCD)."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece que las oficinas productoras son responsables de garantizar la conformación de las unidades documentales, conforme a los lineamientos del Programa de Gestión Documental y atendiendo a los criterios mencionados."
+  },
+  {
+    "question": "Al clasificar las unidades documentales, ¿cuál es el criterio fundamental que debe guiar su organización, según el Artículo 4.3.1.8?",
+    "options": [
+      "La fecha de creación del documento, priorizando la secuencia cronológica sobre cualquier otro criterio.",
+      "El Cuadro de Clasificación Documental (CCD), el cual debe servir como base para la clasificación de todas las unidades.",
+      "El tipo de soporte (físico o electrónico), determinando el orden de clasificación según el medio.",
+      "La relevancia legal del contenido, priorizando los documentos que sustentan procedimientos judiciales activos."
+    ],
+    "correct": 1,
+    "explanation": "El punto 1 del artículo especifica claramente que la clasificación de las unidades documentales debe basarse en el Cuadro de Clasificación Documental – CCD."
+  },
+  {
+    "question": "Cuando se trata de unidades documentales que son simples y presentan una secuencia numérica o cronológica, ¿cuál es el método de ordenación recomendado, y qué criterio se debe aplicar en su caso?",
+    "options": [
+      "Deben ordenarse por su contenido temático, independientemente de la secuencia numérica o cronológica.",
+      "Deben seguir el principio de orden original, agrupando por tipo documental y función.",
+      "Deben ordenarse siguiendo la secuencia numérica o cronológica que evidencian en su producción, sin desviaciones.",
+      "Se debe aplicar la foliación manual, y el orden debe basarse en el criterio de la unidad de conservación."
+    ],
+    "correct": 2,
+    "explanation": "El punto 3 establece que en el caso de unidades documentales simples que presentan una secuencia numérica o cronológica, se ordenarán siguiendo dicha secuencia."
+  },
+  {
+    "question": "En relación con la foliación de documentos, ¿cuál es el procedimiento correcto para garantizar el control y la consulta, diferenciando entre soportes físicos y electrónicos?",
+    "options": [
+      "Para soportes físicos, se debe foliar obligatoriamente; para electrónicos, basta con un índice de contenido sin necesidad de asociación funcional.",
+      "La foliación es necesaria solo para unidades complejas; para documentos electrónicos, se debe mantener la estructura lógica de carpetas.",
+      "Los documentos físicos deben estar foliados para facilitar su ordenación; para documentos electrónicos, el equivalente funcional es su asociación a un índice electrónico.",
+      "Tanto los soportes físicos como los electrónicos deben ser foliados con números de página consecutivos para asegurar la trazabilidad."
+    ],
+    "correct": 2,
+    "explanation": "El punto 4 establece que los documentos deben estar debidamente foliados para los físicos, y para los electrónicos, el equivalente funcional de la foliación será su asociación a un índice electrónico."
+  },
+  {
+    "question": "¿Qué procedimiento debe seguirse para la gestión de la información en unidades documentales complejas, y cuál es el equivalente funcional de este proceso en el ámbito electrónico?",
+    "options": [
+      "Se debe diligenciar una hoja de control que debe ser foliada, y para electrónicos, se debe generar un índice de metadatos detallado.",
+      "Se debe crear un índice electrónico que sustituye a la hoja de control, la cual debe ser ubicada al inicio de la unidad de conservación.",
+      "Se debe utilizar la hoja de control, la cual debe consignar la información por tipo documental y no debe ser foliada; para electrónicos, el índice electrónico cumple esta función.",
+      "La hoja de control debe ser ubicada al final de la unidad de conservación, y para electrónicos, se debe generar un acta de cierre del expediente."
+    ],
+    "correct": 2,
+    "explanation": "El punto 5 indica que la hoja de control se diligencia para unidades complejas, debe consignar la información por tipo documental, debe estar al inicio y no debe foliar. Además, para expedientes electrónicos, el índice electrónico es el equivalente funcional de la hoja de control."
+  },
+  {
+    "question": "Respecto a la identificación de las unidades de conservación, ¿cuáles son los elementos de información que deben ser consignados para permitir su correcta ubicación y recuperación?",
+    "options": [
+      "Solo el fondo, la sección y el código, siendo suficientes para cualquier tipo de recuperación de información.",
+      "Fondo, sección, subsección, código, nombre de la serie y subserie, nombre del expediente, número del expediente, número de folios, fechas extremas, número de caja y número de carpeta.",
+      "Únicamente el nombre del expediente y el número de folios, ya que estos son los identificadores primarios de la unidad documental.",
+      "El nombre de la serie y subserie, junto con las fechas extremas, ya que estos elementos definen el ciclo de vida del documento."
+    ],
+    "correct": 1,
+    "explanation": "El punto 6 lista exhaustivamente los elementos que deben conformar la identificación general de las unidades de conservación: fondo, sección, subsección, código, nombre de la serie y subserie, nombre del expediente, número del expediente, número de folios, fechas extremas, número de caja y número de carpeta."
+  },
+  {
+    "question": "¿Cómo debe estructurarse la organización de los expedientes electrónicos, y qué elementos técnicos son cruciales para asegurar su recuperación y consulta?",
+    "options": [
+      "Deben seguir la estructura física de fondo, sección, subsección, serie, subserie, y solo se requiere el registro de la fecha de creación.",
+      "Deben organizarse manteniendo la estructura lógica: fondo, sección, subsección, serie, subserie, y es obligatorio establecer metadatos tanto del documento como del expediente.",
+      "La estructura lógica es irrelevante; basta con que se mantenga el orden cronológico de los archivos electrónicos para su correcta consulta.",
+      "Se debe utilizar un sistema de carpetas jerárquicas que simule la estructura física, sin necesidad de establecer metadatos adicionales."
+    ],
+    "correct": 1,
+    "explanation": "El punto 7 establece que los expedientes electrónicos deben estar organizados manteniendo la estructura lógica: fondo, sección, subsección, serie, subserie, y que se deben establecer los metadatos tanto del documento como del expediente."
+  },
+  {
+    "question": "¿Qué aspectos fundamentales deben garantizar las unidades y sistemas de almacenamiento al organizar archivos públicos, según lo estipulado en el Artículo 4.3.1.8?",
+    "options": [
+      "Garantizar únicamente la disponibilidad física de los documentos, protegiéndolos de daños ambientales y físicos.",
+      "Asegurar la autenticidad, integridad, accesibilidad y disponibilidad de los documentos, considerando tanto los sistemas como las unidades de almacenamiento.",
+      "Priorizar la accesibilidad sobre la integridad, permitiendo el acceso físico inmediato sin importar el estado de conservación.",
+      "Limitar la garantía a la mera conservación de los soportes, sin abordar la integridad o la autenticidad de la información contenida."
+    ],
+    "correct": 1,
+    "explanation": "El punto 8 exige que las unidades de almacenamiento y sistemas de almacenamiento garanticen la autenticidad, integridad, accesibilidad y disponibilidad de los documentos."
+  },
+  {
+    "question": "Según el Parágrafo del Artículo 4.3.1.8, ¿cuál es el procedimiento que debe seguir un sujeto obligado para organizar los documentos de archivo, y qué entidad debe aprobar el marco de clasificación?",
+    "options": [
+      "Debe seguir el orden original y la clasificación por tipo documental, siendo el Comité de Archivo el encargado de aprobar las tablas de retención documental.",
+      "No debe utilizar el Cuadro de Clasificación Documental, y el Comité de Archivo es el encargado de aprobar las tablas de retención documental.",
+      "Debe organizar los documentos conforme al Cuadro de Clasificación Documental — CCD, el cual es aprobado por el Comité Institucional de Gestión y Desempeño o quien haga sus veces.",
+      "Quizás organizar los documentos conforme al Cuadro de Clasificación Documental — CCD, bajo la aprobación exclusiva del Comité de Archivo Central."
+    ],
+    "correct": 2,
+    "explanation": "El parágrafo del texto establece explícitamente que el sujeto obligado organizará los documentos de archivo conforme al Cuadro de Clasificación Documental — CCD, y que este debe ser aprobado por el Comité Institucional de Gestión y Desempeño o quien haga sus veces."
   }
 ]
