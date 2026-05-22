@@ -2429,5 +2429,49 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.3.2.3 establece que el índice electrónico debe permitir la identificación de todos los documentos, asegurar su secuencia original, garantizar la integridad del expediente durante todo su ciclo de vida, actualizarse automáticamente cada vez que se incorpore un documento para asegurar autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad, y permitir la recuperación de documentos y metadatos. La opción 2 integra de manera exhaustiva y precisa todos estos requisitos fundamentales, destacando la naturaleza dinámica y protectora del índice."
+  },
+  {
+    "question": "Según el Artículo 4.3.2.4, ¿cuál es la acción específica que debe realizar el funcionario autorizado al finalizar una actuación o procedimiento administrativo que involucra un expediente electrónico?",
+    "options": [
+      "Realizar la transferencia física del expediente a la unidad de archivo correspondiente y sellar el índice manual.",
+      "Generar un informe de cierre de procedimiento que debe ser aprobado por el comité de gestión documental.",
+      "Cerrar el expediente electrónico y proceder a la firma del índice electrónico como evidencia de la finalización.",
+      "Archivar digitalmente el expediente y solicitar la validación de la cadena de custodia ante la autoridad competente."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.3.2.4 establece de manera precisa que, al finalizar la actuación o procedimiento administrativo, el funcionario autorizado debe cerrar el expediente y firmar el índice electrónico."
+  },
+  {
+    "question": "Respecto a los mecanismos electrónicos para la gestión de expedientes electrónicos de archivo, ¿qué características deben garantizarse obligatoriamente durante todo su ciclo vital, según el Parágrafo 1?",
+    "options": [
+      "La accesibilidad física, la seguridad biométrica y la compatibilidad con sistemas de gestión de información geográfica.",
+      "La autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad, protegiéndolos de modificaciones, eliminaciones o reemplazos.",
+      "La interoperabilidad con bases de datos internacionales y la garantía de su formato físico original para su consulta.",
+      "La capacidad de ser impresos en cualquier formato de soporte y la certificación de su valor histórico por un comité externo."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 exige el uso de mecanismos electrónicos seguros e interoperables que garanticen la autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad, previniendo que puedan ser modificados, eliminados o reemplazados."
+  },
+  {
+    "question": "Para asegurar la correcta gestión de los expedientes electrónicos a largo plazo, ¿qué entidades deben establecer los lineamientos tecnológicos y archivísticos que deben seguirse, según el Parágrafo 1?",
+    "options": [
+      "El Ministerio de la Cultura y el Archivo General de la Nación, en coordinación con las universidades nacionales.",
+      "El Ministerio de las Tecnologías de la Información y las Comunicaciones y el Archivo General de la Nación Jorge Palacios Preciado.",
+      "La Superintendencia de Industria y Comercio y la Dirección Nacional de Tecnología de la Información.",
+      "El Consejo Nacional de Archivos y la entidad de registro civil competente."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 especifica que los lineamientos deben ser establecidos por el Ministerio de las Tecnologías de la Información y las Comunicaciones y los lineamientos archivísticos por el Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "Cuando los documentos de un expediente se archivan, ¿qué formato debe garantizarse o convertirse para asegurar su preservación a mediano y largo plazo, y qué elementos deben guiar este proceso, según el Parágrafo 2?",
+    "options": [
+      "Un formato físico estandarizado, guiado por la valoración histórica y la aprobación de la autoridad competente.",
+      "Un formato digital que asegure autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad, utilizando las Tablas de Retención Documental y el Plan de Preservación Digital a largo plazo.",
+      "Un formato electrónico de solo lectura, basado en los criterios de la serie documental y la revisión de los sujetos obligados.",
+      "Un formato de soporte magnético que requiera la intervención de un tercero especializado en conservación de medios digitales."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 exige generar o convertir los documentos a un formato que asegure autenticidad, integridad, inalterabilidad, fiabilidad, disponibilidad y preservación a mediano y largo plazo, basándose en las Tablas de Retención Documental y el Plan de Preservación Digital a largo plazo."
   }
 ]
