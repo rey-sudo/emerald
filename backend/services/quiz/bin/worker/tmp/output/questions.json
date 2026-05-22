@@ -2198,5 +2198,16 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 3 establece que los metadatos deben estar en articulación con las series y subseries documentales registradas en los Cuadros de Clasificación Documental y Tablas de Retención Documental (TRD)."
+  },
+  {
+    "question": "Conforme al Artículo 4.3.1.7, ¿cuál es el principio rector para la conformación de unidades documentales por parte de los sujetos obligados en el sistema de gestión de archivos?",
+    "options": [
+      "La agrupación de documentos de archivo debe priorizar la homogeneidad del soporte físico o formato electrónico para facilitar su conservación especializada.",
+      "Las unidades documentales, sean simples o complejas, deben integrar la totalidad de los documentos generados por un mismo trámite, actuación o procedimiento, sin importar su tipo de información, soporte o formato, y luego organizarse en series o subseries.",
+      "La creación de expedientes se reserva exclusivamente para documentos con valor histórico o cultural, mientras que las unidades simples agrupan el resto de la documentación administrativa.",
+      "Los sujetos obligados tienen la flexibilidad de agrupar documentos según criterios de conveniencia administrativa, siempre que se garantice la accesibilidad futura de la información."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.1.7 establece que los sujetos obligados deben crear y conformar unidades documentales (simples o complejas/expedientes) con la totalidad de los documentos agrupados en desarrollo de un mismo trámite, actuación o procedimiento, independientemente del tipo de información, soporte físico o formato electrónico. Posteriormente, estas unidades deben agruparse conformando series o subseries documentales."
   }
 ]
