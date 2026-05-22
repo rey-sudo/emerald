@@ -2418,5 +2418,16 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo indica que los estándares de gestión documental de los documentos electrónicos serán los que señale el Archivo General de la Nación Jorge Palacios Preciado, refiriéndose al manejo y ciclo de vida de dichos documentos."
+  },
+  {
+    "question": "Conforme al Artículo 4.3.2.3, la implementación de un índice electrónico para expedientes electrónicos en entidades públicas exige una funcionalidad integral que trasciende la mera catalogación. ¿Cuál de las siguientes opciones encapsula de manera más precisa las responsabilidades multifacéticas que este índice debe cumplir para asegurar la fiabilidad y accesibilidad de la información archivada?",
+    "options": [
+      "Permitir la identificación de todos los documentos y sus metadatos para su recuperación, con una actualización periódica que valide la secuencia, sin una implicación directa en la integridad a lo largo del ciclo de vida.",
+      "Garantizar la secuencia original de los documentos dentro del expediente y su integridad durante todo el ciclo de vida, requiriendo una actualización automática que asegure la autenticidad, inalterabilidad, fiabilidad y disponibilidad, además de la recuperación de documentos y metadatos.",
+      "Facilitar la identificación de los documentos electrónicos de archivo y la recuperación de sus metadatos, priorizando la inalterabilidad del expediente mediante un registro manual de incorporaciones para mantener la secuencia definida.",
+      "Asegurar la disponibilidad continua de los expedientes electrónicos y la identificación de sus componentes, delegando la garantía de secuencia y la integridad del ciclo de vida a sistemas de gestión documental externos al índice."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.2.3 establece que el índice electrónico debe permitir la identificación de todos los documentos, asegurar su secuencia original, garantizar la integridad del expediente durante todo su ciclo de vida, actualizarse automáticamente cada vez que se incorpore un documento para asegurar autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad, y permitir la recuperación de documentos y metadatos. La opción 2 integra de manera exhaustiva y precisa todos estos requisitos fundamentales, destacando la naturaleza dinámica y protectora del índice."
   }
 ]
