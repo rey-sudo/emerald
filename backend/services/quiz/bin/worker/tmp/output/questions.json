@@ -2308,5 +2308,27 @@
     ],
     "correct": 2,
     "explanation": "El parágrafo del texto establece explícitamente que el sujeto obligado organizará los documentos de archivo conforme al Cuadro de Clasificación Documental — CCD, y que este debe ser aprobado por el Comité Institucional de Gestión y Desempeño o quien haga sus veces."
+  },
+  {
+    "question": "Según el Artículo 4.3.1.9, ¿cuál es la condición temporal y administrativa indispensable para iniciar el proceso de cierre de una unidad documental?",
+    "options": [
+      "A. La unidad documental debe haber sido digitalizada completamente y su contenido debe estar indexado en el sistema nacional de archivos.",
+      "B. El cierre debe efectuarse inmediatamente después de la finalización del trámite administrativo que generó la unidad documental, sin importar el contenido.",
+      "C. Es requisito que el trámite administrativo que originó la unidad documental haya concluido satisfactoriamente, lo cual marca el inicio del conteo de tiempos de retención.",
+      "D. La unidad documental debe haber sido revisada por un comité de valoración para determinar su valor histórico antes de que se pueda considerar su cierre formal."
+    ],
+    "correct": 2,
+    "explanation": "El texto establece que el cierre de las unidades documentales se debe llevar a cabo 'una vez finalizado el trámite administrativo que le dio origen'. Además, especifica que, una vez cerrada, se empezarán a contar los tiempos de retención, lo cual confirma que la finalización del trámite es el evento desencadenante y la condición necesaria."
+  },
+  {
+    "question": "En el contexto de la gestión archivística, ¿cuál es la consecuencia directa y procedimental de haber cerrado una unidad documental, según lo estipulado en el Artículo 4.3.1.9?",
+    "options": [
+      "A. La unidad documental debe ser transferida automáticamente al fondo histórico para su preservación permanente, sin necesidad de valoración adicional.",
+      "B. Se debe iniciar un nuevo procedimiento de identificación documental para reevaluar las categorías administrativas de la unidad.",
+      "C. Se activa el periodo de tiempo de retención, cuya duración debe ser determinada y respetada conforme a las Tablas de Retención Documental (TRD).",
+      "D. El responsable debe realizar una disposición final inmediata, ya que el cierre implica que el valor administrativo ha expirado por completo."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.3.1.9 indica explícitamente que 'Una vez cerrada la unidad documental se empezarán a contar los tiempos de retención teniendo en cuenta lo estipulado en las Tablas de Retención Documental – TRD'. Por lo tanto, la consecuencia directa del cierre es el inicio del conteo de los tiempos de retención."
   }
 ]
