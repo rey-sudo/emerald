@@ -2484,5 +2484,16 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 4.3.2.5 establece que los documentos y expedientes electrónicos deben eliminarse mediante borrado seguro solo si han cumplido sus tiempos de retención y no son objeto de conservación permanente, siempre de acuerdo con las Tablas de Retención Documental y los lineamientos del Archivo General de la Nación. El parágrafo prohíbe explícitamente que los procesos de digitalización aumenten o disminuyan los tiempos de retención documental o que se eliminen documentos originales con el argumento de haber sido digitalizados. La opción 0 integra correctamente todas estas condiciones y restricciones."
+  },
+  {
+    "question": "Según el Artículo 4.3.2.6 del Acuerdo, ¿cuál es el propósito fundamental y el alcance del Plan de Preservación Digital a largo plazo para el expediente electrónico que deben elaborar los sujetos obligados?",
+    "options": [
+      "Asegurar que los documentos electrónicos de archivo mantengan exclusivamente su disponibilidad y fiabilidad durante la fase de retención activa, facilitando su consulta administrativa inmediata.",
+      "Garantizar que el expediente electrónico de archivo, en cualquier etapa de su ciclo vital, conserve sus características esenciales de autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad, conforme a las directrices del Título 6 del Acuerdo.",
+      "Establecer un sistema de respaldo y recuperación de emergencia para todos los documentos digitales institucionales, priorizando la reducción de riesgos de pérdida de información sin una valoración archivística previa.",
+      "Definir los procedimientos para la digitalización de documentos físicos históricos y su posterior almacenamiento en repositorios digitales, asegurando únicamente su accesibilidad para fines de investigación cultural."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.3.2.6 establece que la preservación a largo plazo aplica al documento electrónico de archivo en cualquier etapa del ciclo vital, manteniendo sus características de autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad. Además, indica que los sujetos obligados deben elaborar el Plan de Preservación Digital a largo plazo atendiendo lo dispuesto en el Título 6 “Conservación y preservación” del Acuerdo. La opción correcta integra todos estos elementos clave."
   }
 ]
