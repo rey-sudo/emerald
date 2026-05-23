@@ -2473,5 +2473,16 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 exige generar o convertir los documentos a un formato que asegure autenticidad, integridad, inalterabilidad, fiabilidad, disponibilidad y preservación a mediano y largo plazo, basándose en las Tablas de Retención Documental y el Plan de Preservación Digital a largo plazo."
+  },
+  {
+    "question": "Conforme al Artículo 4.3.2.5, ¿cuál es la regulación exhaustiva que rige la eliminación de documentos y expedientes electrónicos de archivo, considerando las condiciones de retención y las implicaciones de los procesos de digitalización?",
+    "options": [
+      "La eliminación de documentos y expedientes electrónicos es obligatoria mediante borrado seguro cuando han cumplido sus tiempos de retención y no son de conservación permanente, debiendo seguir las Tablas de Retención Documental y los lineamientos del Archivo General de la Nación, sin que la digitalización modifique los tiempos de retención ni permita la eliminación de los documentos originales.",
+      "Los documentos electrónicos pueden ser eliminados una vez que sus tiempos de retención han expirado, siempre que se apliquen procedimientos de borrado seguro y se haya realizado una digitalización previa, la cual automáticamente valida la eliminación de los originales físicos.",
+      "La decisión de eliminar documentos electrónicos recae principalmente en la autorización del Archivo General de la Nación, quien puede eximir del cumplimiento de los tiempos de retención si se garantiza la disponibilidad de la información mediante su digitalización.",
+      "Los procesos de digitalización tienen la facultad de ajustar los tiempos de retención documental, permitiendo una eliminación más temprana de los documentos electrónicos y sus originales, siempre que se documente adecuadamente el proceso de borrado seguro."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.3.2.5 establece que los documentos y expedientes electrónicos deben eliminarse mediante borrado seguro solo si han cumplido sus tiempos de retención y no son objeto de conservación permanente, siempre de acuerdo con las Tablas de Retención Documental y los lineamientos del Archivo General de la Nación. El parágrafo prohíbe explícitamente que los procesos de digitalización aumenten o disminuyan los tiempos de retención documental o que se eliminen documentos originales con el argumento de haber sido digitalizados. La opción 0 integra correctamente todas estas condiciones y restricciones."
   }
 ]
