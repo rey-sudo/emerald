@@ -2572,5 +2572,16 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo indica que los metadatos deben ser incluidos para facilitar la posterior consulta de las series y subseries objeto de transferencia documental."
+  },
+  {
+    "question": "Según el Artículo 4.4.2 del Acuerdo, ¿cuál de las siguientes afirmaciones describe una restricción fundamental que el archivo central institucional debe observar estrictamente una vez que ha recibido una transferencia documental primaria de los archivos de gestión?",
+    "options": [
+      "Debe abstenerse de realizar cualquier tipo de descripción o control sobre los documentos transferidos para preservar su estado original.",
+      "Tiene la obligación de verificar la correcta aplicación de los instrumentos archivísticos antes de aceptar la transferencia, pero no después.",
+      "No le está permitido incorporar documentos adicionales a los expedientes que ya han sido recibidos como parte de la transferencia documental.",
+      "Debe priorizar la prestación del servicio de consulta de los documentos transferidos sobre cualquier otra actividad de custodia o descripción."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo del Artículo 4.4.2 establece explícitamente que 'Una vez recibida la transferencia documental no se deben incorporar nuevos documentos a los expedientes'. Esta es una restricción crucial para mantener la integridad y la autenticidad de los expedientes transferidos."
   }
 ]
