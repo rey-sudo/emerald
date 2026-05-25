@@ -2528,5 +2528,49 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 establece que la referencia cruzada en la hoja de control y el índice electrónico debe 'relacionar y describir los documentos de naturaleza diferente (físico y electrónico) que conforman el expediente híbrido con el fin de garantizar su integridad y vínculo archivístico'. La opción correcta refleja directamente este propósito de establecer un vínculo descriptivo para asegurar la integridad y la conexión archivística."
+  },
+  {
+    "question": "Según el Artículo 4.4.1, ¿qué elementos debe incluir obligatoriamente el Programa de Gestión Documental (PGD) en relación con el proceso de transferencia documental?",
+    "options": [
+      "La definición de los criterios de disposición final de las series documentales y el inventario de los archivos históricos.",
+      "El Plan de Transferencias Documentales (primarias y secundarias) y los criterios específicos para la entrega y recepción de los archivos.",
+      "La determinación del valor legal y el proceso de expropiación de los bienes documentales transferidos.",
+      "La descripción detallada de las Unidades Documentales, incluyendo su soporte físico y su clasificación administrativa."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.4.1 establece que las oficinas de gestión documental deben establecer en el PGD el Plan de Transferencias Documentales (primarias y secundarias) junto con los criterios para la entrega y recepción de los archivos."
+  },
+  {
+    "question": "¿Bajo qué marco normativo deben realizarse las transferencias de Unidades Documentales para garantizar que cumplan con los principios y procesos archivísticos de la organización documental?",
+    "options": [
+      "En estricta concordancia con los lineamientos de la Unidad de Gestión Documental y el reglamento interno de la entidad.",
+      "Siguiendo únicamente las directrices de la autoridad competente en materia de patrimonio cultural.",
+      "En concordancia con las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD).",
+      "Mediante la aprobación de un comité multidisciplinario que evalúe el valor histórico y legal de los documentos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.4.1 exige que las Unidades Documentales objeto de transferencia cumplan con los principios y procesos archivísticos en concordancia con las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD)."
+  },
+  {
+    "question": "Respecto a las transferencias de expedientes electrónicos, ¿qué técnicas y elementos deben contemplar los procedimientos establecidos, según el Parágrafo del Artículo 4.4.1?",
+    "options": [
+      "La verificación de la autenticidad física de los soportes, la firma digital y la fecha de creación de los documentos.",
+      "La implementación de sistemas de clasificación administrativa y la realización de un inventario físico detallado.",
+      "Técnicas que aseguren la integridad, autenticidad, fiabilidad, inalterabilidad, disponibilidad y preservación a largo plazo, además de los metadatos.",
+      "La realización de un avalúo técnico para determinar el valor de la información y su potencial uso en litigios legales."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo especifica que los procedimientos para transferencias electrónicas deben contemplar técnicas que aseguren la integridad, autenticidad, fiabilidad, inalterabilidad, disponibilidad y preservación a largo plazo, así como los metadatos."
+  },
+  {
+    "question": "¿Cuál es el propósito funcional de los metadatos en el contexto de las transferencias de expedientes electrónicos, según lo estipulado en el Parágrafo del Artículo 4.4.1?",
+    "options": [
+      "Garantizar la interoperabilidad legal entre diferentes sistemas de gestión documental de distintas entidades.",
+      "Facilitar la posterior consulta de las series y subseries que son objeto de la transferencia documental.",
+      "Determinar el valor de retención legal de los documentos y su disposición final en el destino receptor.",
+      "Sustentar la cadena de custodia de los documentos, registrando quién accedió a ellos y cuándo."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo indica que los metadatos deben ser incluidos para facilitar la posterior consulta de las series y subseries objeto de transferencia documental."
   }
 ]
