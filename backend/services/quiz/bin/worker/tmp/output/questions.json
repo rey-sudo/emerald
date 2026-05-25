@@ -2495,5 +2495,38 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.3.2.6 establece que la preservación a largo plazo aplica al documento electrónico de archivo en cualquier etapa del ciclo vital, manteniendo sus características de autenticidad, integridad, inalterabilidad, fiabilidad y disponibilidad. Además, indica que los sujetos obligados deben elaborar el Plan de Preservación Digital a largo plazo atendiendo lo dispuesto en el Título 6 “Conservación y preservación” del Acuerdo. La opción correcta integra todos estos elementos clave."
+  },
+  {
+    "question": "Según el Artículo 4.3.3.1, ¿cuál es el principio fundamental que asegura que un expediente híbrido constituya una única unidad documental, a pesar de que sus componentes físicos y electrónicos se conserven por separado en sus formatos nativos?",
+    "options": [
+      "La estricta adhesión a una ubicación de almacenamiento físico unificada para todos los componentes del expediente.",
+      "La naturaleza intrínseca de los documentos que se originan de la misma autoridad administrativa, independientemente de su formato.",
+      "El contexto procesal o la actuación compartida a la que pertenecen todos los documentos, reforzado por el uso de herramientas tecnológicas para mantener el vínculo archivístico.",
+      "La conversión automática de todos los documentos físicos a formatos electrónicos para lograr una uniformidad en el soporte."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.3.3.1 establece que los expedientes híbridos, aunque separados por ser conservados en sus formatos nativos, deben formar una sola unidad documental 'en razón al trámite o actuación y mantener el vínculo archivístico apoyado por el uso de herramientas tecnológicas'. Esto subraya que la unidad se basa en el contexto procesal y el vínculo tecnológico, no en la unificación física o la conversión de formatos."
+  },
+  {
+    "question": "En relación con la gestión de expedientes híbridos, el Parágrafo 1 del Artículo 4.3.3.1 impone a los sujetos obligados la implementación de estrategias para asegurar resultados específicos. ¿Cuál de las siguientes opciones describe con precisión estos requisitos críticos para la gestión de expedientes híbridos?",
+    "options": [
+      "Garantizar el uso exclusivo de formatos electrónicos para los documentos nuevos y la conversión de todos los registros físicos existentes.",
+      "Asegurar la completitud del expediente, respetar el principio de orden original y cumplir con los tiempos de retención y disposición final establecidos en la Tabla de Retención Documental.",
+      "Priorizar la conservación física de los documentos sobre sus contrapartes electrónicas, sin importar su formato original.",
+      "Establecer una Tabla de Retención Documental separada y exclusiva para los componentes electrónicos de los expedientes híbridos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 del Artículo 4.3.3.1 especifica que los sujetos obligados deben implementar estrategias para 'asegurar la completitud del expediente, cuya ordenación debe respetar el principio de orden original; así mismo, el expediente deberá cumplir los tiempos de retención y disposición final establecidos en la Tabla de Retención Documental'. Esta opción abarca todos los requisitos mencionados en el parágrafo."
+  },
+  {
+    "question": "El Parágrafo 2 del Artículo 4.3.3.1 detalla la función de la referencia cruzada en la hoja de control y el índice electrónico para los expedientes híbridos. ¿Cuál es el objetivo preciso de este mecanismo de referencia cruzada dentro del marco archivístico?",
+    "options": [
+      "Facilitar la reubicación física de documentos entre diferentes instalaciones de almacenamiento.",
+      "Establecer un vínculo descriptivo claro entre los documentos físicos y electrónicos que componen el expediente híbrido, salvaguardando así su integridad y conexión archivística.",
+      "Permitir la eliminación selectiva de documentos electrónicos que duplican información presente en los registros físicos.",
+      "Proporcionar un registro de auditoría para todas las solicitudes de acceso realizadas a los componentes físicos o electrónicos del expediente."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que la referencia cruzada en la hoja de control y el índice electrónico debe 'relacionar y describir los documentos de naturaleza diferente (físico y electrónico) que conforman el expediente híbrido con el fin de garantizar su integridad y vínculo archivístico'. La opción correcta refleja directamente este propósito de establecer un vínculo descriptivo para asegurar la integridad y la conexión archivística."
   }
 ]
