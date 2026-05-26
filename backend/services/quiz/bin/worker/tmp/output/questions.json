@@ -2583,5 +2583,71 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo del Artículo 4.4.2 establece explícitamente que 'Una vez recibida la transferencia documental no se deben incorporar nuevos documentos a los expedientes'. Esta es una restricción crucial para mantener la integridad y la autenticidad de los expedientes transferidos."
+  },
+  {
+    "question": "Según el Artículo 4.4.3, ¿cuál es el requisito fundamental que los sujetos obligados deben cumplir anualmente al elaborar el Plan de Transferencias Documentales?",
+    "options": [
+      "A. Determinar el valor histórico y cultural de las series y subseries para justificar su movimiento al archivo central.",
+      "B. Asegurar que la transferencia se realice exclusivamente en soporte físico, manteniendo la integridad del formato original.",
+      "C. Garantizar la entrega de las series y subseries desde el archivo de gestión al archivo central, independientemente de su soporte físico o formato electrónico, y en función de los tiempos de retención establecidos en las Tablas de Retención Documental.",
+      "D. Solicitar la aprobación de un comité interinstitucional antes de iniciar cualquier proceso de transferencia, independientemente del soporte documental utilizado."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.4.3 establece que el Plan de Transferencias Documentales debe garantizar la entrega de series y subseries desde el archivo de gestión al archivo central, y especifica que esto debe hacerse independientemente de si el soporte es físico o electrónico, y siempre de conformidad con los tiempos de retención de las TRD."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo 1, ¿cuáles son los dos requisitos concurrentes y esenciales que deben cumplirse para que la transferencia documental primaria de series y subseries sea legalmente fundamentada?",
+    "options": [
+      "A. La existencia de un avalúo económico y la Declaratoria de Bienes de Interés Público o Social.",
+      "B. La presentación de un acta de entrega firmada y la identificación de la oficina productora.",
+      "C. Que la Tabla de Retención Documental (TRD) esté vigente al momento del cierre del expediente y que hayan transcurrido los tiempos de retención en el archivo de gestión.",
+      "D. La utilización de un sistema de información centralizado y la aprobación de la unidad administrativa receptora."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 exige que la transferencia documental primaria se realice con fundamento en la TRD vigente al momento del cierre del expediente Y una vez cumplidos los tiempos de retención en el archivo de gestión."
+  },
+  {
+    "question": "Si se lleva a cabo una transferencia documental, ¿qué acompañamiento obligatorio deben tener las unidades documentales, según lo estipulado en el Parágrafo 2?",
+    "options": [
+      "A. Un informe técnico de valoración que justifique la permanencia de los documentos en el archivo central.",
+      "B. La respectiva hoja de control o índice electrónico debidamente firmado por las partes intervinientes.",
+      "C. Un acta de entrega que detalle el número de cajas y el nombre de la unidad administrativa productora.",
+      "D. Un certificado de autenticidad que valide la integridad de los documentos en soporte físico o electrónico."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 especifica que las unidades documentales deben ir acompañadas de la respectiva hoja de control o índice electrónico firmado."
+  },
+  {
+    "question": "Según el Parágrafo 3, ¿qué elementos de identificación deben incluir obligatoriamente las unidades de conservación o almacenamiento utilizadas para el proceso de transferencias documentales?",
+    "options": [
+      "A. Solo el nombre del expediente, el número de caja y la fecha de recepción en el archivo central.",
+      "B. Fondo, sección (unidad administrativa), subsección (oficina productora), código y nombre de la serie y subserie, nombre del expediente, número de unidades de conservación, número de caja y fechas extremas.",
+      "C. Únicamente el código de la unidad administrativa y el nombre del responsable de la transferencia, sin necesidad de especificar las fechas extremas.",
+      "D. El nombre de la unidad de conservación, el número de unidades de almacenamiento y la referencia al sistema de información donde se encuentran los documentos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 establece una lista detallada de elementos de identificación que deben incluirse en las unidades de conservación o almacenamiento: fondo, sección, subsección, código y nombre de la serie y subserie, nombre del expediente, número de unidades de conservación, número de caja y fechas extremas."
+  },
+  {
+    "question": "Para que la entrega de series o subseries documentales desde los archivos de gestión al archivo central sea válida, ¿qué documentación de soporte es indispensable y qué acción formal debe realizarse?",
+    "options": [
+      "A. Presentar un inventario documental y obtener la aprobación de la autoridad competente mediante un decreto formal.",
+      "B. Adjuntar un informe de viabilidad técnica y suscribir un convenio de colaboración entre las entidades.",
+      "C. Estar soportada con los inventarios documentales y debe ser suscrita un acta de entrega firmada por las partes intervinientes.",
+      "D. Documentar la transferencia mediante un registro electrónico y notificar a las generaciones futuras sobre la ubicación de los documentos."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 4 establece que la entrega debe estar soportada con los inventarios documentales y que se debe suscribir un acta de entrega firmada por las partes intervinientes."
+  },
+  {
+    "question": "Respecto al contenido mínimo que debe contener el acta de entrega, ¿cuál de las siguientes opciones es una exigencia específica relacionada con la gestión de documentos electrónicos?",
+    "options": [
+      "A. Indicar el nombre de la oficina productora y el número de unidades de conservación o almacenamiento.",
+      "B. Referenciar la Tabla de Retención Documental (TRD) utilizada y la ubicación del servidor o repositorio donde se conservarán los documentos electrónicos.",
+      "C. Especificar el tamaño (en megas o gigas bytes) de los documentos electrónicos y la estructura lógica bajo la cual fueron almacenados los expedientes.",
+      "D. Detallar los nombres de las series y subseries transferidas y la fecha de inicio y fin del proceso de transferencia."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 5 exige que el acta de entrega contenga, entre otros puntos, la ubicación del servidor/repositorio, la explicación de la estructura lógica de almacenamiento y el tamaño (en megas o gigas bytes) de los documentos electrónicos."
   }
 ]
