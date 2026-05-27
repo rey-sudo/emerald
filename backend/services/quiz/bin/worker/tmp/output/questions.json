@@ -2660,5 +2660,49 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 4.4.4 establece que el Plan de Transferencias Documentales tiene como objetivo efectuar las transferencias documentales secundarias, que consisten en la entrega de series y subseries documentales, en soportes físicos o formatos electrónicos, desde el archivo central de la entidad al Archivo Histórico (Archivo General de la Nación Jorge Palacios Preciado o Archivos Generales Territoriales). Esta entrega se realiza de conformidad con la disposición final (conservación total y selección) establecida en las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD)."
+  },
+  {
+    "question": "¿Cuál es el propósito fundamental de elaborar inventarios documentales, catálogos e índices para la transferencia documental secundaria, según lo estipulado en el Artículo 4.4.5?",
+    "options": [
+      "Garantizar que la documentación sea transferida exclusivamente en soportes físicos, manteniendo la integridad de los formatos originales.",
+      "Permitir la disposición final inmediata de los documentos, sin necesidad de valoración previa, acelerando el proceso de eliminación.",
+      "Facilitar el acceso a la documentación una vez que ha sido valorada, seleccionada y organizada para su conservación permanente.",
+      "Sustituir la necesidad de seguir los Cuadros de Clasificación Documental y las Tablas de Retención en el proceso de transferencia."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 4.4.5 establece que el propósito de elaborar estos instrumentos es 'facilitar el acceso a la documentación una vez ha sido valorada, seleccionada y organizada para su conservación permanente'."
+  },
+  {
+    "question": "¿Qué elementos normativos deben considerarse obligatoriamente al elaborar los instrumentos de descripción (inventarios, catálogos e índices) para la transferencia documental secundaria?",
+    "options": [
+      "Únicamente los Cuadros de Clasificación Documental y las Tablas de Retención, ignorando los formatos electrónicos.",
+      "Los lineamientos establecidos por el Archivo General de la Nación Jorge Palacios Preciado, sin requerir la aplicación de Tablas de Valoración Documental.",
+      "Los Cuadros de Clasificación Documental, las Tablas de Retención o Tablas de Valoración Documental, y las normas técnicas de descripción.",
+      "La mera identificación de los soportes físicos y electrónicos, sin necesidad de vincularlo con cualquier tabla de retención o clasificación."
+    ],
+    "correct": 2,
+    "explanation": "El artículo exige que la elaboración de los instrumentos de descripción se realice 'en concordancia con los Cuadros de Clasificación Documental, las Tablas de Retención o Tablas de Valoración Documental, [...] y conforme a las normas técnicas de descripción y los lineamientos establecidos por el Archivo General de la Nación Jorge Palacios Preciado'."
+  },
+  {
+    "question": "¿Cuál es el alcance de la aplicación de los instrumentos de descripción (inventario, catálogos e índices) en el contexto de la transferencia documental secundaria?",
+    "options": [
+      "Se limita únicamente a los documentos que están en soportes físicos, excluyendo cualquier formato electrónico o digital.",
+      "Debe aplicarse de manera uniforme, independientemente de si los tipos documentales se encuentran en soportes físicos o formatos electrónicos.",
+      "Solo es aplicable cuando la documentación ha sido clasificada y valorada bajo los lineamientos del Archivo General de la Nación.",
+      "Solo se requiere cuando la documentación está destinada a la eliminación, y no a la conservación permanente."
+    ],
+    "correct": 1,
+    "explanation": "El texto especifica que la elaboración de estos instrumentos debe realizarse 'independientemente de los tipos documentales en soportes físicos o formatos electrónicos', indicando un alcance amplio."
+  },
+  {
+    "question": "¿Qué entidad es la responsable de establecer los lineamientos que deben seguirse al elaborar los instrumentos de descripción para la transferencia documental secundaria?",
+    "options": [
+      "Los sujetos obligados, quienes deben aplicar los lineamientos según su propia interpretación técnica.",
+      "El Archivo General de la Nación Jorge Palacios Preciado, cuyos lineamientos deben ser observados.",
+      "Un comité técnico multidisciplinario que evalúe la naturaleza física y electrónica de los documentos.",
+      "La autoridad competente en materia de patrimonio cultural, sin necesidad de consultar lineamientos archivísticos específicos."
+    ],
+    "correct": 1,
+    "explanation": "El artículo concluye señalando que los instrumentos deben ser elaborados 'conforme a [...] los lineamientos establecidos por el Archivo General de la Nación Jorge Palacios Preciado'."
   }
 ]
