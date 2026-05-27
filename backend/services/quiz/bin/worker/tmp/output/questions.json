@@ -2649,5 +2649,16 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 5 exige que el acta de entrega contenga, entre otros puntos, la ubicación del servidor/repositorio, la explicación de la estructura lógica de almacenamiento y el tamaño (en megas o gigas bytes) de los documentos electrónicos."
+  },
+  {
+    "question": "De acuerdo con el Artículo 4.4.4, ¿cuál es el propósito fundamental del Plan de Transferencias Documentales Secundarias y qué instrumentos rigen la disposición final de los documentos transferidos?",
+    "options": [
+      "Establecer la metodología para la eliminación de documentos de bajo valor histórico, basándose exclusivamente en las Tablas de Retención Documental para series físicas.",
+      "Facilitar la entrega de series y subseries documentales, tanto físicas como electrónicas, desde el archivo central de una entidad hacia el Archivo General de la Nación o Archivos Generales Territoriales, conforme a la conservación total y selección definida en las TRD o TVD.",
+      "Regular la adquisición de archivos privados de interés público o social, utilizando las Tablas de Valoración Documental para determinar su precio máximo de compra.",
+      "Organizar la reproducción y restauración de documentos históricos en el archivo central de la entidad, siguiendo los lineamientos de las Tablas de Retención Documental para garantizar su accesibilidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.4.4 establece que el Plan de Transferencias Documentales tiene como objetivo efectuar las transferencias documentales secundarias, que consisten en la entrega de series y subseries documentales, en soportes físicos o formatos electrónicos, desde el archivo central de la entidad al Archivo Histórico (Archivo General de la Nación Jorge Palacios Preciado o Archivos Generales Territoriales). Esta entrega se realiza de conformidad con la disposición final (conservación total y selección) establecida en las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD)."
   }
 ]
