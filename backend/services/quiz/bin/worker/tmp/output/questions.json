@@ -2737,5 +2737,16 @@
     ],
     "correct": 1,
     "explanation": "El artículo establece que la aplicación debe ser para la totalidad de las series y subseries documentales, 'sin importar el soporte físico o formatos electrónicos que las conformen', lo que implica una cobertura sin distinción de soporte o formato."
+  },
+  {
+    "question": "El Artículo 4.5.2 establece la obligatoriedad de la conservación total para series o subseries documentales. Desde una perspectiva archivística integral, ¿qué elementos deben ser evaluados para fundamentar esta decisión de conservación total y cuál es la finalidad última que persigue esta medida?",
+    "options": [
+      "La identificación de valores históricos, socioculturales, científicos o estéticos inherentes a los documentos, con el propósito de salvaguardar su capacidad como evidencia y testimonio de las funciones institucionales, decisiones trascendentales, hechos relevantes, acciones significativas, modos de vida, costumbres, tradiciones e ideologías de entidades colectivas e individuales.",
+      "La determinación de su valor administrativo y legal primario, garantizando la trazabilidad de los procedimientos institucionales y el cumplimiento normativo, lo cual se registra en el campo de disposición final de las Tablas de Retención Documental.",
+      "La evaluación de su potencial para la digitalización y difusión pública, priorizando la accesibilidad universal y la reducción de costos de almacenamiento físico, sin una consideración profunda de su contenido testimonial.",
+      "El análisis de su relevancia para la investigación académica contemporánea y su utilidad para la toma de decisiones gerenciales futuras, estableciendo su permanencia en los archivos centrales hasta su obsolescencia."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.5.2 especifica que la conservación total se fundamenta en los valores históricos, socioculturales, científicos o estéticos de los documentos. Su finalidad es servir como evidencia y testimonio de las funciones, decisiones, hechos, acciones, modos de vida, costumbres, tradiciones e ideologías de instituciones, comunidades, pueblos, grupos sociales e individuos. La opción correcta integra todos estos elementos explícitamente mencionados en el artículo."
   }
 ]
