@@ -2825,5 +2825,49 @@
     ],
     "correct": 1,
     "explanation": "De acuerdo con el Artículo 4.5.4 del Acuerdo 001 de 2024, si un Consejo Territorial de Archivos o el Archivo General de la Nación (AGN) lo solicita tras evaluar las observaciones ciudadanas, el sujeto obligado debe ejecutar las siguientes acciones: Suspender el proceso de eliminación: La entidad debe detener inmediatamente el procedimiento de eliminación de los documentos en cuestión. Modificar la disposición final: Debe proceder a ajustar la disposición final registrada originalmente en las Tablas de Retención Documental (TRD) o en las Tablas de Valoración Documental (TVD) para las series, subseries o asuntos que se proponía eliminar. Ampliar el plazo de retención: En algunos casos, la solicitud de la instancia competente puede requerir específicamente que se extienda el tiempo de permanencia de los documentos antes de su disposición final."
+  },
+  {
+    "question": "Según el Artículo 5.1, ¿cuál es el propósito fundamental de establecer los lineamientos de valoración documental para los sujetos obligados dentro del Programa de Gestión Documental?",
+    "options": [
+      "Definir exclusivamente los procedimientos de disposición final para documentos en soportes físicos, ignorando los formatos electrónicos.",
+      "Establecer las pautas para valorar los documentos de archivo, independientemente de si son producidos, ingresados o gestionados, en soportes físicos o electrónicos.",
+      "Limitar la valoración documental únicamente a los documentos que se encuentran en el proceso de transferencia de archivos, excluyendo los que están en gestión activa.",
+      "Determinar la responsabilidad exclusiva de los sujetos obligados en la conservación de documentos, sin abordar la necesidad de sistematizar su valor."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1 establece que el objetivo es implementar lineamientos para la valoración de los documentos de archivo que se producen, ingresan o gestionan, en diferentes soportes físicos o formatos electrónicos, lo cual abarca la totalidad del ciclo de vida documental."
+  },
+  {
+    "question": "De acuerdo con el Artículo 5.2, ¿qué proceso debe llevar a cabo el sujeto obligado para determinar los criterios de valoración documental y establecer los tiempos de retención y disposición final?",
+    "options": [
+      "Realizar un análisis exhaustivo de la estructura organizacional, centrándose únicamente en los procedimientos de archivo y gestión de expedientes.",
+      "Elaborar Tablas de Retención Documental (TRD) mediante la planificación de la producción documental, determinando los criterios de valoración para las series y subseries.",
+      "Consultar exclusivamente las normas jurídicas vigentes para establecer los tiempos de retención, sin considerar el contexto funcional de la entidad.",
+      "Limitar la valoración a los documentos de carácter legal, omitiendo el análisis de los valores administrativo, contable o técnico."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2 exige que los sujetos obligados elaboren Tablas de Retención Documental (TRD) a partir de la planificación de la producción de los documentos, con el fin de definir los criterios de valoración, los tiempos de retención y la disposición final."
+  },
+  {
+    "question": "Según el Parágrafo 1 del Artículo 5.2, ¿cuáles son los valores que deben sustentarse en normas jurídicas para definir los tiempos de retención de las series y subseries documentales?",
+    "options": [
+      "El valor estético, el valor histórico y el valor sociocultural, ya que estos determinan la permanencia de los documentos en el tiempo.",
+      "El valor administrativo, legal, jurídico, contable o técnico, los cuales deben estar sustentados en normas jurídicas específicas.",
+      "Únicamente el valor legal y el valor jurídico, ya que son los únicos que tienen un sustento directo en el marco normativo nacional.",
+      "El valor científico y el valor patrimonial, ya que estos son los criterios más aceptados en la gestión de archivos públicos."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 especifica que los criterios para definir los tiempos de retención se establecen a partir del estudio y análisis del valor administrativo, legal, jurídico, contable o técnico, y deben estar sustentados en normas jurídicas."
+  },
+  {
+    "question": "En relación con la disposición final de las series o subseries documentales, ¿qué tipo de valor debe ser analizado, según el Parágrafo 2 del Artículo 5.2, y qué lineamiento debe considerarse?",
+    "options": [
+      "Debe analizarse el valor administrativo y el valor legal, siguiendo los lineamientos del Capítulo 5 sobre retención de documentos.",
+      "Debe analizarse el valor estético, histórico, científico o sociocultural, teniendo en cuenta los lineamientos establecidos en el Capítulo 5 'Disposición final de los documentos'.",
+      "Debe analizarse el valor contable y el valor técnico, siguiendo los lineamientos del Capítulo 5 sobre la transferencia de archivos.",
+      "Debe analizarse el valor jurídico y el valor institucional, sin necesidad de considerar lineamientos previos sobre disposición final."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que los criterios para definir la disposición final se basan en el valor estético, histórico, científico o sociocultural, y deben tener en cuenta los lineamientos del Capítulo 5 'Disposición final de los documentos'."
   }
 ]
