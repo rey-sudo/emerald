@@ -2759,5 +2759,71 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 4.5.3 establece que la selección se aplica a series y subseries de gran volumen o con contenido repetido, debe estar consignada en las TRD o TVD en el campo “disposición final – Selección (S)”, y sustentarse en tamaños de muestra y métodos de selección. El parágrafo añade que las series de conservación permanente deben recibir un tratamiento preferente en técnicas de conservación y preservación, dado que constituyen el patrimonio documental, diferenciándolas claramente del proceso de selección."
+  },
+  {
+    "question": "Según el Artículo 4.5.4, ¿cuál es el requisito fundamental para que la eliminación de documentos de archivo, ya sean físicos o electrónicos, sea considerada legalmente válida?",
+    "options": [
+      "Debe estar fundamentada únicamente en la clasificación administrativa de los documentos, sin considerar su valor histórico.",
+      "Debe ser aprobada por la Dirección de Gestión Documental y registrada en el Sistema Integrado de Gestión (SIG).",
+      "Debe estar ampliamente sustentada conforme al proceso de valoración documental y aprobada por el Comité Institucional de Gestión y Desempeño o su equivalente.",
+      "Solo es necesario que conste en las Tablas de Retención Documental (TRD) y que se haya completado el plazo de retención legal."
+    ],
+    "correct": 2,
+    "explanation": "El texto establece que la decisión de eliminación debe estar ampliamente sustentada conforme al proceso de valoración documental y debe ser aprobada por el Comité Institucional de Gestión y Desempeño o quien haga sus veces."
+  },
+  {
+    "question": "¿Cuál es el primer paso obligatorio que deben seguir los sujetos obligados antes de iniciar cualquier proceso de eliminación de documentos de archivo, según el procedimiento establecido?",
+    "options": [
+      "Publicar el inventario de documentos en el sitio web de la entidad por un periodo de sesenta días hábiles para recibir observaciones ciudadanas.",
+      "Solicitar la aprobación formal del Archivo General de la Nación (AGN) antes de cualquier acción física o electrónica.",
+      "Acreditar la inscripción de las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) en el Registro Único de Series Documentales (RUSD).",
+      "Realizar un estudio exhaustivo de las observaciones ciudadanas recibidas para determinar la pertinencia de la suspensión del proceso."
+    ],
+    "correct": 2,
+    "explanation": "El procedimiento establece claramente que, previo a adelantar el proceso de eliminación, los sujetos obligados deben acreditar la inscripción de las TRD o TVD en el RUSD."
+  },
+  {
+    "question": "¿Cuál es el propósito y el procedimiento que deben seguir los sujetos obligados al publicar el inventario de documentos potencialmente eliminables en su sitio web?",
+    "options": [
+      "Informar a los Consejos Territoriales de Archivos sobre la eliminación, limitando la participación ciudadana a la revisión técnica.",
+      "Permitir que los ciudadanos envíen observaciones sobre el proceso a la entidad, a los Consejos Territoriales de Archivos o al Archivo General de la Nación.",
+      "Servir como un acto administrativo de convalidación, reemplazando la necesidad de un acta de eliminación formal.",
+      "Establecer el plazo máximo de retención, lo cual anula la necesidad de contar con las Tablas de Valoración Documental (TVD)."
+    ],
+    "correct": 1,
+    "explanation": "El procedimiento requiere publicar el inventario por sesenta días hábiles con el fin de que los ciudadanos puedan enviar sus observaciones sobre el proceso a las instancias mencionadas."
+  },
+  {
+    "question": "Si un sujeto obligado recibe observaciones ciudadanas directamente, ¿cuál es el plazo y el requisito procedimental que debe cumplir para solicitar un concepto técnico sobre la suspensión del proceso de eliminación?",
+    "options": [
+      "Treinta (30) días calendario, adjuntando únicamente las observaciones ciudadanas sin necesidad de una propuesta de eliminación.",
+      "Sesenta (60) días hábiles, presentando un informe técnico que demuestre la inutilidad de los documentos.",
+      "Treinta (30) días hábiles, remitiendo copia de las observaciones ciudadanas junto con la propuesta de eliminación documental.",
+      "Cincuenta (50) días hábiles, solicitando directamente al Comité Institucional de Gestión y Desempeño la suspensión del proceso."
+    ],
+    "correct": 2,
+    "explanation": "El punto 3 establece que, a partir de la radicación de las observaciones, el sujeto obligado tiene treinta (30) días hábiles para solicitar el concepto técnico, lo cual requiere remitir copia de las observaciones y la propuesta de eliminación."
+  },
+  {
+    "question": "¿Cuál es el plazo que tienen los Consejos Territoriales de Archivos o el Archivo General de la Nación para estudiar las observaciones ciudadanas y emitir un concepto técnico?",
+    "options": [
+      "Treinta (30) días hábiles, siempre que las observaciones sean consideradas de bajo impacto legal.",
+      "Sesenta (60) días hábiles, contados a partir de la radicación de las observaciones, y este concepto puede llevar a solicitar la suspensión o modificación de la disposición final.",
+      "Indefinido, ya que la emisión del concepto técnico depende exclusivamente de la disponibilidad de recursos del sujeto obligado.",
+      "Diez (10) días hábiles, limitando su alcance solo a la revisión de la legalidad de la eliminación."
+    ],
+    "correct": 1,
+    "explanation": "El punto 4 establece que estas instancias contarán con sesenta (60) días hábiles contados a partir de su radicación para estudiar las observaciones y emitir el concepto técnico, con las facultades de suspender o modificar la disposición final."
+  },
+  {
+    "question": "¿Qué acción debe ejecutar el sujeto obligado después de recibir una solicitud de un Consejo Territorial de Archivos o del Archivo General de la Nación, al actuar como última instancia para decidir sobre las solicitudes ciudadanas de suspensión de procesos de eliminación de documentos?",
+    "options": [
+      "Proceder inmediatamente con la eliminación, pero dejando constancia de la solicitud en el acta de eliminación.",
+      "Suspender el proceso de eliminación y modificar la disposición final registrada en las TRD o TVD para las series, subseries o asuntos propuestos.",
+      "Solicitar una nueva Declaratoria de Bienes de Interés Público o Social para justificar la modificación de la disposición final.",
+      "Remitir el expediente completo de las series afectadas al Archivo General de la Nación para que este tome la decisión final sin más intervención."
+    ],
+    "correct": 1,
+    "explanation": "De acuerdo con el Artículo 4.5.4 del Acuerdo 001 de 2024, si un Consejo Territorial de Archivos o el Archivo General de la Nación (AGN) lo solicita tras evaluar las observaciones ciudadanas, el sujeto obligado debe ejecutar las siguientes acciones: Suspender el proceso de eliminación: La entidad debe detener inmediatamente el procedimiento de eliminación de los documentos en cuestión. Modificar la disposición final: Debe proceder a ajustar la disposición final registrada originalmente en las Tablas de Retención Documental (TRD) o en las Tablas de Valoración Documental (TVD) para las series, subseries o asuntos que se proponía eliminar. Ampliar el plazo de retención: En algunos casos, la solicitud de la instancia competente puede requerir específicamente que se extienda el tiempo de permanencia de los documentos antes de su disposición final."
   }
 ]
