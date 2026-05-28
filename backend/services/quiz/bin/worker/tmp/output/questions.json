@@ -2869,5 +2869,82 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 establece que los criterios para definir la disposición final se basan en el valor estético, histórico, científico o sociocultural, y deben tener en cuenta los lineamientos del Capítulo 5 'Disposición final de los documentos'."
+  },
+  {
+    "question": "Según los requisitos técnicos generales establecidos, ¿cuál es el propósito fundamental de elaborar las Tablas de Retención Documental (TRD) en relación con la producción documental de una entidad?",
+    "options": [
+      "Determinar el valor legal y la disposición final de documentos ya inactivos, basándose en su ciclo vital avanzado.",
+      "Establecer la estructura jerárquica de las unidades administrativas y sus funciones atribuidas, independientemente del soporte físico o electrónico.",
+      "Valorar los documentos que la entidad debe producir en el desarrollo de las funciones asignadas a cada unidad administrativa u oficina productora, sin importar el soporte.",
+      "Sistematizar las categorías administrativas y archivísticas que sustentan la estructura de un fondo, mediante la identificación documental."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.1.1, numeral 1, establece que las TRD se elaboran para valorar los documentos de archivo que debe producir la entidad, en desarrollo de las funciones asignadas a cada unidad administrativa u oficina productora, tanto en soportes físicos como electrónicos. La opción 2 es la más precisa al reflejar el propósito de valoración de la producción documental activa."
+  },
+  {
+    "question": "¿Bajo qué condición o etapa del ciclo vital de los documentos se deben elaborar las Tablas de Valoración Documental (TVD), y qué tipo de documentación abordan?",
+    "options": [
+      "Para documentos en su fase activa, cuando aún se utilizan con fines legales o administrativos inmediatos, requiriendo clasificación inmediata.",
+      "Para documentos que han pasado a su segunda o tercera etapa del ciclo vital, siendo documentación semiactiva o inactiva que ya no se emplea con fines legales o administrativos.",
+      "Exclusivamente para documentos electrónicos de alta complejidad, que requieren una valoración técnica especializada y un proceso de digitalización previa.",
+      "Para la totalidad de la producción documental de la entidad, sin distinción de soporte, con el objetivo de establecer un inventario completo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.1, numeral 2, define que las TVD se elaboran para documentos ya producidos que han pasado a su segunda o tercera etapa del ciclo vital, es decir, documentación semiactiva o inactiva que ha dejado de emplearse con fines legales o administrativos."
+  },
+  {
+    "question": "De acuerdo con la normativa, ¿en qué circunstancias se deben utilizar las Tablas de Valoración Documental (TVD) en relación con la historia de una entidad?",
+    "options": [
+      "Cuando la entidad realiza una reestructuración administrativa mayor que afecta la totalidad de sus unidades productoras.",
+      "Cuando se requiere valorar documentos producidos en periodos de la historia de la entidad que no cuentan con Tablas de Retención Documental (TRD) preexistentes.",
+      "Únicamente cuando la entidad ha pasado por un proceso de expropiación de archivos privados y necesita establecer su valor documental.",
+      "Cuando el soporte físico de los documentos es de un valor histórico excepcional y requiere una valoración especializada por parte de un comité externo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.1, numeral 2, especifica que las TVD se elaboran para los documentos producidos en los periodos de la historia de la entidad que no cuentan con Tablas de Retención Documental (TRD)."
+  },
+  {
+    "question": "¿Qué elementos estructurales deben guiar la elaboración de las TRD y TVD, y qué tipo de soporte legal debe respaldar esta relación estructural?",
+    "options": [
+      "La clasificación por soporte (físico o electrónico) y el acuerdo de la alta dirección, sin necesidad de un acto administrativo formal.",
+      "La estructura orgánico-funcional de la entidad, debiendo estar en relación con las unidades administrativas productoras o dependencias creadas y las funciones atribuidas mediante acto administrativo o documento equivalente.",
+      "El criterio de la unidad de gestión documental, basándose únicamente en el inventario de bienes de interés público o social, sin considerar la estructura interna.",
+      "El tipo de tecnología de información utilizada por la entidad, garantizando la interoperabilidad entre los diferentes sistemas de gestión documental."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.1, numeral 3, exige que las TRD y TVD sigan la estructura orgánico-funcional de la entidad, y que esta relación esté respaldada por un acto administrativo o documento equivalente de la autoridad competente."
+  },
+  {
+    "question": "¿Qué principios archivísticos deben respetar obligatoriamente tanto las TRD como las TVD, y qué aspecto del documento deben contemplar?",
+    "options": [
+      "El principio de economía de escala y la clasificación por soporte, garantizando la eficiencia en la disposición final de los documentos.",
+      "El principio de procedencia y el ciclo vital de los documentos, asegurando que el origen y la evolución documental sean considerados en la valoración.",
+      "El principio de legalidad y la jerarquía de las unidades administrativas, limitando la valoración a las funciones definidas por ley.",
+      "El principio de digitalización y la interoperabilidad de los formatos, priorizando el soporte electrónico sobre el físico en la valoración."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.1, numeral 4, establece que las TRD y TVD deben respetar el principio archivístico de procedencia y contemplar el ciclo vital de los documentos."
+  },
+  {
+    "question": "¿Cuál es el punto de partida obligatorio para la elaboración de las Tablas de Retención Documental (TRD), y qué función debe cumplir este elemento en la estructura del fondo documental?",
+    "options": [
+      "El Cuadro de Clasificación Documental (CCD), el cual debe representar de forma unificada, codificada y jerarquizada las agrupaciones documentales que conforman el fondo.",
+      "El inventario físico de la entidad, que debe listar todas las series y subseries existentes, independientemente de su función productora.",
+      "El registro de las unidades administrativas, que debe detallar las funciones asignadas y el soporte físico o electrónico de la documentación generada.",
+      "El listado de los bienes de interés público o social, para determinar el valor patrimonial de los documentos a conservar."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 5.1.1.1, numeral 5, exige que las TRD deben partir del Cuadro de Clasificación Documental (CCD), el cual debe representar de forma unificada y debidamente codificadas y jerarquizadas las agrupaciones documentales."
+  },
+  {
+    "question": "¿Qué elementos deben reflejar las TRD en cuanto a la producción documental de la entidad, y qué diferencia conceptual debe considerarse al pasar a las TVD?",
+    "options": [
+      "Las TRD deben reflejar la totalidad de la producción documental mediante la identificación de las unidades administrativas; las TVD, solo las series de carácter legal.",
+      "Las TRD deben reflejar la totalidad de la producción documental a través de la identificación de las series, subseries o asuntos; las TVD, deben hacerlo mediante la identificación de las tipologías documentales.",
+      "Las TRD deben reflejar la totalidad de la producción documental mediante la identificación de las series, subseries o asuntos; las TVD, deben hacerlo también mediante la identificación de las series, subseries o asuntos.",
+      "Las TRD deben reflejar la totalidad de la producción documental identificando las funciones asignadas; las TVD, deben hacerlo mediante la descripción de los soportes físicos y electrónicos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.1.6 establece que tanto para las series como para las subseries se debe identificar la serie, y que tanto para las series como para las subseries se debe identificar la serie. La clave es que ambas deben identificar la serie."
   }
 ]
