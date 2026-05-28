@@ -2748,5 +2748,16 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 4.5.2 especifica que la conservación total se fundamenta en los valores históricos, socioculturales, científicos o estéticos de los documentos. Su finalidad es servir como evidencia y testimonio de las funciones, decisiones, hechos, acciones, modos de vida, costumbres, tradiciones e ideologías de instituciones, comunidades, pueblos, grupos sociales e individuos. La opción correcta integra todos estos elementos explícitamente mencionados en el artículo."
+  },
+  {
+    "question": "Conforme al Artículo 4.5.3 del Acuerdo, ¿cuáles son los fundamentos técnicos y procedimentales que rigen la selección de series o subseries documentales, y cómo se distingue este proceso del tratamiento aplicable a aquellas de conservación permanente?",
+    "options": [
+      "La selección se aplica a series y subseries de gran volumen o cuyo contenido informativo se repite, estableciéndose en las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) bajo la disposición final “Selección (S)”, y debe sustentarse en tamaños de muestra y métodos específicos, mientras que las series de conservación permanente reciben un tratamiento preferente en técnicas de preservación por su valor patrimonial.",
+      "La selección documental se basa primordialmente en la antigüedad de los documentos y su relevancia para investigaciones futuras, siendo un proceso independiente de las TRD o TVD, y se aplica de manera uniforme a todas las series, incluyendo aquellas destinadas a conservación permanente.",
+      "El proceso de selección implica la eliminación automática de cualquier serie o subserie que no posea un valor jurídico explícito, sin necesidad de justificación metodológica, y es indistinguible de la disposición final de conservación permanente, ya que ambos buscan optimizar el espacio de almacenamiento.",
+      "La selección se enfoca en la identificación de documentos susceptibles de digitalización para acceso público inmediato, sin considerar su volumen o redundancia, y las series de conservación permanente son excluidas de cualquier proceso de selección o digitalización debido a su fragilidad inherente."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 4.5.3 establece que la selección se aplica a series y subseries de gran volumen o con contenido repetido, debe estar consignada en las TRD o TVD en el campo “disposición final – Selección (S)”, y sustentarse en tamaños de muestra y métodos de selección. El parágrafo añade que las series de conservación permanente deben recibir un tratamiento preferente en técnicas de conservación y preservación, dado que constituyen el patrimonio documental, diferenciándolas claramente del proceso de selección."
   }
 ]
