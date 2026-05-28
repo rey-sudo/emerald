@@ -2704,5 +2704,38 @@
     ],
     "correct": 1,
     "explanation": "El artículo concluye señalando que los instrumentos deben ser elaborados 'conforme a [...] los lineamientos establecidos por el Archivo General de la Nación Jorge Palacios Preciado'."
+  },
+  {
+    "question": "Según el Artículo 4.5.1, ¿cuál es la responsabilidad principal de los sujetos obligados en relación con la disposición final de las series o subseries documentales?",
+    "options": [
+      "Diseñar un sistema de transferencia de documentos que priorice el soporte físico sobre el formato electrónico para su conservación.",
+      "Establecer, dentro del Programa de Gestión Documental (PGD), la metodología precisa para aplicar los criterios de disposición final.",
+      "Limitar la aplicación de criterios de disposición final únicamente a los documentos que contengan valor histórico o cultural evidente.",
+      "Realizar la valoración documental de las series y subseries únicamente mediante la revisión de las Tablas de Valoración Documental (TVD) sin considerar las TRD."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.5.1 establece explícitamente que los sujetos obligados deben establecer en el Programa de Gestión Documental (PGD) la metodología para aplicar los criterios de disposición final (conservación total, selección o eliminación)."
+  },
+  {
+    "question": "Al determinar la metodología de disposición final de las series o subseries documentales, ¿qué fuentes documentales deben guiar los sujetos obligados, según el Artículo 4.5.1?",
+    "options": [
+      "Únicamente las Tablas de Retención Documental (TRD) y los lineamientos internos de la entidad para asegurar la coherencia procedimental.",
+      "La combinación de la valoración registrada en las Tablas de Retención Documental (TRD) o en las Tablas de Valoración Documental (TVD).",
+      "Exclusivamente la Declaratoria de Bienes de Interés Público o Social, ya que esto define el valor intrínseco del fondo documental.",
+      "Los criterios de valoración histórica y sociocultural, independientemente de si están registrados en la TRD o TVD."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 4.5.1 indica que la metodología debe aplicarse de acuerdo con la valoración registrada en las Tablas de Retención Documental (TRD) o en las Tablas de Valoración Documental (TVD)."
+  },
+  {
+    "question": "El Artículo 4.5.1 especifica que la aplicación de los criterios de disposición final debe cubrir la totalidad de las series y subseries documentales. ¿Qué implicación tiene esta cobertura total?",
+    "options": [
+      "Que la disposición final solo aplica a los documentos que han sido objeto de transferencia de un área a otra dentro de la misma institución.",
+      "Que no se debe hacer distinción en la aplicación de criterios, independientemente de si el soporte es físico o si el formato es electrónico.",
+      "Que la valoración debe centrarse primariamente en el valor administrativo y legal, dejando el valor histórico para una revisión posterior.",
+      "Que la metodología debe ser flexible y permitir la exclusión de aquellas subseries que no presenten un valor evidente."
+    ],
+    "correct": 1,
+    "explanation": "El artículo establece que la aplicación debe ser para la totalidad de las series y subseries documentales, 'sin importar el soporte físico o formatos electrónicos que las conformen', lo que implica una cobertura sin distinción de soporte o formato."
   }
 ]
