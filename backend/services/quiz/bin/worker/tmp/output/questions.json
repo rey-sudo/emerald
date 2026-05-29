@@ -2946,5 +2946,38 @@
     ],
     "correct": 2,
     "explanation": "El Artículo 5.1.1.6 establece que tanto para las series como para las subseries se debe identificar la serie, y que tanto para las series como para las subseries se debe identificar la serie. La clave es que ambas deben identificar la serie."
+  },
+  {
+    "question": "De acuerdo con el Artículo 5.1.1.2, ¿cuál es el requisito fundamental para la elaboración de las Tablas de Retención Documental (TRD) en cuanto a su procedimiento?",
+    "options": [
+      "La elaboración de las TRD debe seguir una metodología interna desarrollada por cada entidad, adaptada a sus necesidades específicas.",
+      "Es imperativo que las TRD se elaboren conforme a la metodología establecida y publicada por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "Las TRD deben basarse en las mejores prácticas internacionales de gestión documental, sin una metodología nacional obligatoria.",
+      "El formato e instructivo del Anexo 6 son obligatorios, pero las etapas del procedimiento pueden ser ajustadas por la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.2 establece explícitamente que las Tablas de Retención Documental deben elaborarse 'teniendo en cuenta la metodología establecida por el Archivo General de la Nación Jorge Palacios Preciado', lo que indica un requisito de cumplimiento obligatorio para el procedimiento."
+  },
+  {
+    "question": "Si una entidad decide no adoptar las denominaciones, los tiempos de retención documental o la disposición final para series y subseries propuestos en el Banco Terminológico del Archivo General de la Nación, ¿qué acción específica debe emprender según el Parágrafo del Artículo 5.1.1.3?",
+    "options": [
+      "La entidad debe solicitar una exención formal al Archivo General de la Nación, justificando la inaplicabilidad de los criterios propuestos.",
+      "Debe sustentar su decisión mediante un proceso de valoración documental que demuestre la pertinencia de los criterios alternativos adoptados.",
+      "La entidad está obligada a crear su propio Banco Terminológico interno, el cual prevalecerá sobre el del Archivo General de la Nación.",
+      "No se requiere ninguna acción adicional, ya que la adopción de los elementos del Banco Terminológico es meramente facultativa y no vinculante."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 5.1.1.3 indica claramente que 'En los casos en que no se adopten las denominaciones, tiempos de retención documental o disposición final para series y subseries, la entidad que elabora las Tablas de Retención Documental — TRD deberá sustentar su decisión a partir del proceso de valoración documental.'"
+  },
+  {
+    "question": "¿Cuál es la diferencia fundamental en la aplicación de la 'metodología establecida' para la elaboración de las TRD (Artículo 5.1.1.2) y el uso del 'Banco Terminológico de Series y Subseries' (Artículo 5.1.1.3) según la normativa?",
+    "options": [
+      "La metodología es una guía de buenas prácticas, mientras que el Banco Terminológico impone requisitos obligatorios para la clasificación y retención de documentos.",
+      "La metodología define el marco procedimental obligatorio para la creación de las TRD, en tanto que el Banco Terminológico ofrece una referencia facultativa para elementos específicos como denominaciones y tiempos de retención, con requisito de justificación en caso de no adopción.",
+      "Ambos instrumentos son de carácter obligatorio, pero la metodología se enfoca en el proceso general y el Banco Terminológico en el contenido específico de las series documentales.",
+      "El Banco Terminológico es una herramienta de consulta obligatoria para todas las series documentales, mientras que la metodología es un lineamiento general que puede ser adaptado libremente por cada entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.2 establece la obligatoriedad de seguir la metodología del AGN para la elaboración de las TRD. Por otro lado, el Artículo 5.1.1.3 indica que el Banco Terminológico 'se podrá tomar como referencia', lo que denota su carácter facultativo, aunque el Parágrafo añade la condición de sustentar la decisión si no se adoptan sus propuestas. Esta distinción es clave: uno es un procedimiento obligatorio y el otro una referencia opcional con una condición."
   }
 ]
