@@ -2979,5 +2979,93 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.1.1.2 establece la obligatoriedad de seguir la metodología del AGN para la elaboración de las TRD. Por otro lado, el Artículo 5.1.1.3 indica que el Banco Terminológico 'se podrá tomar como referencia', lo que denota su carácter facultativo, aunque el Parágrafo añade la condición de sustentar la decisión si no se adoptan sus propuestas. Esta distinción es clave: uno es un procedimiento obligatorio y el otro una referencia opcional con una condición."
+  },
+  {
+    "question": "Según el Artículo 5.1.1.4 del Acuerdo, ¿cuál es el procedimiento específico que debe seguirse para la correcta elaboración de las Tablas de Valoración Documental (TVD)?",
+    "options": [
+      "Las TVD deben elaborarse conforme a las directrices generales de gestión documental emitidas por el Archivo General de la Nación para todas las entidades.",
+      "Las TVD deben elaborarse siguiendo las etapas establecidas en el Capítulo 2, denominado “Valoración de fondos documentales acumulados”, del presente título del Acuerdo.",
+      "Las TVD deben ser desarrolladas mediante un proceso de consulta pública y aprobación por parte de un comité interinstitucional de expertos en patrimonio documental.",
+      "Las TVD deben basarse en los criterios de retención documental previamente definidos en las Tablas de Retención Documental (TRD) de la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.4 establece claramente que las Tablas de Valoración Documental (TVD) deben elaborarse teniendo en cuenta las etapas establecidas en el Capítulo 2 “Valoración de fondos documentales acumulados” del presente título del Acuerdo."
+  },
+  {
+    "question": "De acuerdo con el Artículo 5.1.1.5, ¿cuál es la entidad o área principal responsable de la elaboración de las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD), y con qué otras áreas debe articularse?",
+    "options": [
+      "El comité de archivo de la entidad, en coordinación con la alta dirección para la aprobación final de los instrumentos.",
+      "La oficina de gestión documental o quien haga sus veces, en articulación con las áreas responsables de la producción documental de la entidad.",
+      "El departamento jurídico de la entidad, en colaboración con consultores externos especializados en legislación archivística.",
+      "La unidad de planeación institucional, que debe integrar los requisitos de gestión documental en los planes estratégicos de la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.5 indica que las TRD o TVD deben ser elaboradas por la oficina de gestión documental o quien haga sus veces, en articulación con las áreas responsables de la producción documental de la entidad."
+  },
+  {
+    "question": "Cuando se requiere conformar un equipo interdisciplinario para la elaboración de las TRD o TVD, según el Artículo 5.1.1.5, ¿quién debe liderar este equipo y cuál es el propósito fundamental de su constitución?",
+    "options": [
+      "Un representante de la dirección administrativa de la entidad, con el fin de asegurar la eficiencia en el uso de los recursos asignados al proceso.",
+      "El jefe de la oficina de gestión documental, con el objetivo de garantizar los procesos de valoración documental.",
+      "Un abogado especializado en derecho administrativo, para asegurar la estricta observancia de la normativa legal vigente en materia de archivos.",
+      "Un historiador o investigador externo, para aportar una perspectiva académica sobre el valor patrimonial de los documentos."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.5 establece que, de requerirse, el equipo interdisciplinario debe ser liderado por el jefe de la oficina de gestión documental, y su propósito es garantizar los procesos de valoración documental."
+  },
+  {
+    "question": "Además de los perfiles profesionales generales mencionados para el equipo interdisciplinario, ¿qué consideración adicional específica se debe tener en cuenta respecto a los perfiles y competencias de los miembros del equipo, según el Parágrafo del Artículo 5.1.1.5?",
+    "options": [
+      "Se debe priorizar la experiencia previa en la implementación de sistemas de gestión documental electrónicos en entidades de similar naturaleza.",
+      "Se deben tener en cuenta los perfiles y competencias señaladas en el artículo 3.1.3 del presente Acuerdo.",
+      "Es indispensable que todos los miembros del equipo posean certificaciones internacionales en archivística o gestión de la información.",
+      "La selección de los miembros debe basarse en su capacidad para manejar software especializado en clasificación y descripción documental."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 5.1.1.5 especifica que se deben tener en cuenta los perfiles y competencias señaladas en el artículo 3.1.3 del presente Acuerdo para la conformación del equipo."
+  },
+  {
+    "question": "Según el Artículo 5.1.1.6 del Acuerdo, referente a las Firmas Responsables, ¿cuáles son las instancias o individuos que deben refrendar obligatoriamente las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD) para su debida validez institucional?",
+    "options": [
+      "La secretaría general o la oficina administrativa de igual o superior jerarquía, los jefes de las oficinas productoras de documentos y el responsable del área de gestión documental de la entidad.",
+      "Únicamente la secretaría general o la oficina administrativa de mayor jerarquía y los jefes de las oficinas productoras, sin requerir la firma del responsable de gestión documental.",
+      "El director o gerente de la entidad, el comité de archivos institucional y el jefe de la secretaría general.",
+      "Los jefes de las oficinas productoras de documentos y el responsable del área de gestión documental, siempre que cuenten con la aprobación del Archivo General de la Nación."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 5.1.1.6 establece explícitamente que las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD) deben ser firmadas por tres partes: la secretaría general u oficina administrativa de igual o superior jerarquía, los jefes de las oficinas productoras, y la persona responsable del área de gestión documental de la entidad. La opción correcta integra precisamente estos tres requisitos."
+  },
+  {
+    "question": "Según el Artículo 5.1.1.7, ¿qué órgano es el responsable de aprobar las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) para las entidades que cumplen con el Modelo Integrado de Planeación y Gestión (MIPG)?",
+    "options": [
+      "El Comité Interno de Archivo, siempre que la estructura administrativa lo permita.",
+      "El representante legal de la entidad, mediante un acto administrativo motivado.",
+      "El Comité Institucional de Gestión y Desempeño o su equivalente, quedando constancia en el acta correspondiente.",
+      "La autoridad archivística nacional competente, mediante un decreto de aprobación formal."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.1.7 establece que las TRD o TVD deben ser aprobadas por el Comité Institucional de Gestión y Desempeño o quien haga sus veces, y esta aprobación debe quedar consignada en el acta del respectivo comité."
+  },
+  {
+    "question": "¿Cuál es el procedimiento de aprobación de las Tablas de Retención Documental o Tablas de Valoración Documental (TRD/TVD) para aquellas entidades que, si bien no están obligadas al cumplimiento del MIPG, sí cuentan con una estructura administrativa que lo permite?",
+    "options": [
+      "Debe ser aprobada por el Comité Institucional de Gestión y Desempeño, siguiendo el procedimiento estándar.",
+      "Se requiere la aprobación mediante un acto administrativo proferido por el representante legal de la entidad.",
+      "Debe ser aprobada por el Comité Interno de Archivo, y dicha decisión debe quedar registrada en un acta.",
+      "La aprobación debe ser realizada por la Secretaría de Gestión Documental, sin necesidad de un comité interno."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 especifica que las entidades que no están obligadas al MIPG deben aprobar las TRD o TVD a través del Comité Interno de Archivo."
+  },
+  {
+    "question": "En el contexto de la aprobación de las Tablas de Retención Documental o Tablas de Valoración Documental, ¿bajo qué condición específica se faculta a la aprobación mediante un acto administrativo motivado y proferido por el representante legal?",
+    "options": [
+      "Cuando la entidad no está obligada al MIPG y no cuenta con un Comité Interno de Archivo operativo.",
+      "Cuando el Comité Institucional de Gestión y Desempeño no se reúne por motivos de fuerza mayor.",
+      "Cuando la estructura administrativa del sujeto obligado impide la conformación del Comité Interno de Archivo.",
+      "Cuando la aprobación debe realizarse de manera urgente y sin la participación de ningún comité colegiado."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 establece que los sujetos obligados cuya estructura administrativa no permita la conformación del Comité Interno de Archivo deben aprobar las TRD o TVD mediante acto administrativo, motivado y proferido por el representante legal."
   }
 ]
