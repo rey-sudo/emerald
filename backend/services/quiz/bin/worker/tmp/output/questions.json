@@ -3067,5 +3067,16 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 2 establece que los sujetos obligados cuya estructura administrativa no permita la conformación del Comité Interno de Archivo deben aprobar las TRD o TVD mediante acto administrativo, motivado y proferido por el representante legal."
+  },
+  {
+    "question": "De acuerdo con la normativa establecida, ¿cuál es el plazo máximo para que una entidad elabore y obtenga la aprobación de sus Tablas de Retención Documental (TRD) por parte del Comité Institucional de Gestión y Desempeño o su equivalente?",
+    "options": [
+      "Un (1) año contado a partir de la fecha de inicio de sus operaciones, sin necesidad de aprobación por un comité específico.",
+      "Dos (2) años siguientes a la expedición del acto administrativo o documento equivalente que fija la estructura y establece las funciones de la Entidad, con la aprobación del Comité Institucional de Gestión y Desempeño o quien haga sus veces.",
+      "Tres (3) años desde la constitución legal de la entidad, requiriendo la validación del Archivo General de la Nación.",
+      "Seis (6) meses posteriores a la definición de sus procesos misionales, con la ratificación de la alta dirección de la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.1.8 establece claramente que la elaboración y aprobación de las Tablas de Retención Documental (TRD) debe realizarse dentro de los dos (2) años siguientes a la expedición del acto administrativo o documento equivalente que fija la estructura y establece las funciones de la Entidad, y debe ser aprobada por el Comité Institucional de Gestión y Desempeño o quien haga sus veces."
   }
 ]
