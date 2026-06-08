@@ -3122,5 +3122,93 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 2 establece que 'Los Consejos Territoriales de Archivos, para las entidades del orden territorial (departamento, distrito y municipio) de su respectiva jurisdicción' son las instancias competentes."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.2, ¿cuál es el propósito fundamental de la verificación de los requisitos de las Tablas de Retención Documental (TRD) por parte de las instancias competentes?",
+    "options": [
+      "Asegurar que las TRD reflejen únicamente la estructura funcional actual de la entidad, sin considerar su desarrollo histórico.",
+      "Verificar que las TRD demuestren el cumplimiento de un conjunto específico de requisitos técnicos y normativos para su validez operativa.",
+      "Determinar la viabilidad económica de la implementación de las TRD, evaluando los costos de conservación y disposición final.",
+      "Garantizar que las TRD estén alineadas exclusivamente con los lineamientos del Sistema Integrado de Gestión (SIG) sin requerir documentación adicional."
+    ],
+    "correct": 1,
+    "explanation": "El artículo establece que las instancias competentes deben verificar que las TRD acrediten el cumplimiento de una serie de requisitos específicos (enumerados del 1 al 8), lo que implica una verificación técnica y normativa de su validez."
+  },
+  {
+    "question": "En el contexto de la evaluación técnica de las TRD, ¿qué tipo de documentación es indispensable para demostrar la estructura orgánica y las funciones de las unidades productoras, según lo requerido por el Artículo 5.1.2.2?",
+    "options": [
+      "Un organigrama actualizado que solo debe estar sustentado por la declaración de la autoridad máxima de la entidad.",
+      "Actos administrativos que establezcan la estructura orgánica de la Entidad y las funciones de las Unidades Administrativas u oficinas productoras.",
+      "Un memorando interno que describa las funciones de las unidades, sin necesidad de un soporte legal formal.",
+      "Un informe de gestión que detalle las responsabilidades de cada unidad, sin requerir la aprobación de órganos de dirección."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 2 especifica que deben presentarse los 'Actos administrativos que establecen la estructura orgánica de la Entidad y las funciones de las Unidades Administrativas u oficinas productoras', lo cual es un requisito legal y formal."
+  },
+  {
+    "question": "Respecto a los procedimientos operativos dentro del marco de las TRD, ¿qué tipo de aprobación es necesaria para que sean considerados válidos y parte de la documentación de soporte?",
+    "options": [
+      "La aprobación de la Dirección de Archivo, siempre que se adjunte un acta de reunión de coordinación.",
+      "La validación por parte de la Unidad de Tecnología de la Información, garantizando la interoperabilidad del sistema.",
+      "Los procedimientos deben estar aprobados por el Sistema Integrado de Gestión (SIG), como se establece en el requisito 3.",
+      "La ratificación del representante legal, sin necesidad de pasar por un proceso formal de aprobación de procedimientos."
+    ],
+    "correct": 2,
+    "explanation": "El requisito 3 establece de manera explícita que deben presentarse 'Procedimientos aprobados por el Sistema Integrado de Gestión - SIG'."
+  },
+  {
+    "question": "Para la documentación relativa a Órganos Consultores dentro de la entidad, ¿quién es la autoridad competente para expedir los documentos de creación, según lo estipula el Artículo 5.1.2.2?",
+    "options": [
+      "Únicamente el representante legal de la entidad, sin intervención de otros órganos directivos.",
+      "Los órganos de dirección o administración competentes, o el representante legal o quien haga sus veces.",
+      "El Comité Institucional de Gestión y Desempeño, que debe emitir la resolución de creación.",
+      "La unidad administrativa responsable de la gestión documental, mediante un acuerdo interno."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 4 indica que los documentos de creación deben ser expedidos por 'los órganos de dirección o administración competentes, el representante legal o quien haga sus veces'."
+  },
+  {
+    "question": "El Organigrama de la entidad, al ser evaluado para la validez de las TRD, debe cumplir con un soporte documental específico. ¿Cuál es el requisito de sustentación de este organigrama?",
+    "options": [
+      "Debe estar sustentado por el Plan Estratégico Institucional, demostrando la jerarquía de las unidades.",
+      "Debe estar sustentado en los documentos que establecen la estructura orgánica, y ser expedido por los órganos de dirección o administración competentes, o el representante legal o quien haga sus veces.",
+      "Es suficiente que sea un documento digitalizado y firmado por el jefe de la unidad de archivo, sin requerir soporte legal adicional.",
+      "Debe ser un documento de carácter histórico, proveniente de los archivos centrales de la nación."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 5 exige que el organigrama esté 'sustentado en los documentos que establecen la estructura orgánica, expedido por los órganos de dirección o administración competentes, el representante legal o quien haga sus veces'."
+  },
+  {
+    "question": "En el proceso de evaluación de las TRD, ¿qué herramienta archivística debe ser presentada para representar las agrupaciones documentales en las que se subdivide el fondo, según el Artículo 5.1.2.2?",
+    "options": [
+      "El Cuadro de Clasificación Documental (CCD), que debe representar las agrupaciones documentales en las cuales se subdivide el fondo.",
+      "El Inventario General de Documentos, que detalla la procedencia y el volumen de los archivos.",
+      "La Tabla de Gestión Documental (TGD), que establece los plazos de retención y disposición final.",
+      "El Mapa de Procesos Administrativos, que ilustra el flujo de trabajo de las unidades productoras."
+    ],
+    "correct": 0,
+    "explanation": "El requisito 6 exige la presentación del 'Cuadro de Clasificación Documental – CCD, que represente las agrupaciones documentales en las cuales se subdivide el fondo'."
+  },
+  {
+    "question": "Respecto a la aplicación de las TRD, ¿qué consideración geográfica y estructural debe tener en cuenta la documentación requerida para la evaluación técnica?",
+    "options": [
+      "Las TRD deben ser presentadas de manera única para toda la entidad, independientemente de su estructura interna.",
+      "Se requiere una TRD por cada unidad administrativa u oficina productora, en concordancia con la estructura orgánica de la entidad.",
+      "Solo se requiere una TRD general que cubra todas las unidades, siempre que esté aprobada por el Comité Institucional de Gestión.",
+      "La documentación debe ser presentada en formato digital, sin requerir la diferenciación por unidades productoras."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 7 especifica que se deben presentar 'Tablas de Retención Documental, por cada unas de las unidades administrativas u oficinas productoras, según estructura orgánica de la entidad'."
+  },
+  {
+    "question": "Finalmente, ¿qué órgano o documento es responsable de emitir el acto de aprobación de las Tablas de Retención Documental (TRD), y qué alternativas se consideran equivalentes?",
+    "options": [
+      "Debe ser emitido por la Dirección de Archivo, o por el representante legal, sin necesidad de un comité formal.",
+      "Debe ser emitido por el Comité Institucional de Gestión y Desempeño o quien haga sus veces, o un documento equivalente expedido por el representante legal.",
+      "La aprobación recae exclusivamente en el Consejo de Estado, garantizando la validez legal de las normas archivísticas.",
+      "La aprobación debe provenir de la unidad de planificación, mediante un acuerdo de coordinación interinstitucional."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 8 establece que el acta de aprobación debe ser emitido por el 'Comité Institucional de Gestión y Desempeño o quien haga sus veces, o documento equivalente expedido por el representante legal'."
   }
 ]
