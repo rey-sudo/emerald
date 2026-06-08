@@ -3210,5 +3210,71 @@
     ],
     "correct": 1,
     "explanation": "El requisito 8 establece que el acta de aprobación debe ser emitido por el 'Comité Institucional de Gestión y Desempeño o quien haga sus veces, o documento equivalente expedido por el representante legal'."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.3, ¿qué tipo de documentación es esencial que las instancias competentes verifiquen en las Tablas de Valoración Documental (TVD) respecto a la estructura de la Entidad?",
+    "options": [
+      "Documentos que demuestren la evolución financiera y presupuestaria de la Entidad a lo largo de su historia.",
+      "Documentos que acrediten la participación de actores externos en la formación de las unidades administrativas.",
+      "Documentos que contribuyeron a establecer o reconstruir las estructuras orgánicas de cada periodo de la Historia Institucional de la Entidad.",
+      "Informes de auditoría externa que validen la legalidad de la creación de las unidades administrativas."
+    ],
+    "correct": 2,
+    "explanation": "El requisito 3 establece específicamente que deben presentarse documentos que contribuyeron a establecer o reconstruir las estructuras orgánicas de cada periodo de la Historia Institucional de la Entidad."
+  },
+  {
+    "question": "En el contexto de la evaluación técnica de las TVD, ¿cuál es el propósito de incluir los Cuadros de Clasificación Documental (CCD) según el Artículo 5.1.2.3?",
+    "options": [
+      "Garantizar que el fondo documental esté dividido únicamente por criterios geográficos y departamentales.",
+      "Representar las agrupaciones documentales de manera unificada, debidamente codificada y jerarquizada, por periodo orgánicofuncional.",
+      "Permitir la transferencia de documentos entre diferentes entidades sin necesidad de reestructuración archivística.",
+      "Servir como un índice de contenido que solo se aplica a documentos electrónicos y no físicos."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 5 exige que los CCD representen las agrupaciones documentales en las cuales se subdivide el fondo, de forma unificada y debidamente codificadas y jerarquizadas, y deben estar asociados a un periodo orgánicofuncional."
+  },
+  {
+    "question": "Para la correcta elaboración de los Inventarios documentales requeridos en la evaluación de las TVD, ¿qué formato específico debe utilizarse, según el Artículo 5.1.2.3?",
+    "options": [
+      "El Formato Único de Inventario Documental (FUID) aprobado por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "Un formato interno de la Entidad, siempre que esté firmado por el representante legal.",
+      "Un formato de inventario que solo contemple documentos de soporte electrónico y no físico.",
+      "Un formato de registro general de documentos que no requiere de aprobación de ninguna instancia externa."
+    ],
+    "correct": 0,
+    "explanation": "El requisito 6 establece de manera precisa que los inventarios documentales deben realizarse por cada periodo orgánico-funcional utilizando el Formato Único de Inventario Documental (FUID), aprobado por el Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.3, ¿qué tipo de documentación debe estar disponible para establecer las funciones de las unidades administrativas que conformaron las estructuras orgánicas de la Entidad?",
+    "options": [
+      "Documentos que describan únicamente las funciones de las unidades administrativas en el momento actual.",
+      "Documentos que contribuyeron a establecer las funciones de las unidades administrativas que conformaron las estructuras orgánicas de la Entidad.",
+      "Manuales de procedimiento actualizados que detallen las funciones de las unidades administrativas en su totalidad.",
+      "Actas de reunión de los directivos que mencionen las funciones de las unidades administrativas de forma general."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 4 especifica que deben presentarse documentos que contribuyeron a establecer las funciones de las unidades administrativas que conformaron las estructuras orgánicas de la Entidad, haciendo énfasis en la historia."
+  },
+  {
+    "question": "En relación con la aprobación de las Tablas de Valoración Documental (TVD), ¿quién o qué debe emitir el acta de aprobación, según el Artículo 5.1.2.3?",
+    "options": [
+      "El Archivo General de la Nación Jorge Palacios Preciado, mediante un decreto de reconocimiento.",
+      "El Comité Institucional de Gestión y Desempeño o la persona que haga sus veces, o un documento equivalente expedido por el representante legal.",
+      "La unidad administrativa productora de los documentos, mediante un acta de compromiso de conservación.",
+      "El sujeto obligado de mayor jerarquía, mediante una resolución de cumplimiento obligatorio."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 7 establece que el acta de aprobación debe ser emitida por el Comité Institucional de Gestión y Desempeño o quien haga sus veces, o un documento equivalente expedido por el representante legal."
+  },
+  {
+    "question": "¿Cuál es el criterio de aplicación de las Tablas de Valoración Documental (TVD) en términos de unidades productoras, según el Artículo 5.1.2.3?",
+    "options": [
+      "Deben registrarse solo para la unidad administrativa de mayor nivel jerárquico de la Entidad.",
+      "Deben registrarse para cada unidad administrativa u oficina productora que registre producción documental en los inventarios, conforme a los periodos orgánicofuncionales.",
+      "Solo deben aplicarse a los documentos de carácter electrónico y no a los documentos físicos.",
+      "Deben ser un documento único que cubra toda la producción documental de la Entidad sin distinción de unidades."
+    ],
+    "correct": 1,
+    "explanation": "El requisito 9 especifica que las TVD deben registrarse por cada unidad administrativa u oficina productora que registre producción documental en los inventarios, y deben estar vinculadas a los periodos orgánicofuncionales."
   }
 ]
