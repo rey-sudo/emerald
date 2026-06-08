@@ -3078,5 +3078,49 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.1.1.8 establece claramente que la elaboración y aprobación de las Tablas de Retención Documental (TRD) debe realizarse dentro de los dos (2) años siguientes a la expedición del acto administrativo o documento equivalente que fija la estructura y establece las funciones de la Entidad, y debe ser aprobada por el Comité Institucional de Gestión y Desempeño o quien haga sus veces."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.1., ¿qué entidad o persona tiene la responsabilidad de presentar las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) para su evaluación técnica y convalidación?",
+    "options": [
+      "El titular de la entidad, en coordinación con la unidad de gestión documental, es quien debe presentar las tablas.",
+      "La persona responsable de la secretaría general de la entidad, o quien haga sus veces, debe realizar la presentación ante la instancia competente.",
+      "El Comité Institucional de Desempeño es el encargado de iniciar el proceso de evaluación y presentación de las tablas.",
+      "La unidad de archivos de la entidad debe presentar las tablas directamente al Archivo General de la Nación sin intermediarios."
+    ],
+    "correct": 1,
+    "explanation": "El texto establece explícitamente que 'La persona responsable de la secretaría general de la entidad, o quien haga sus veces, presentará a la instancia competente las Tablas de Retención Documental – TRD o Tablas de Valoración Documental – TVD'."
+  },
+  {
+    "question": "De acuerdo con el Artículo 5.1.2.1., ¿cuál es el plazo perentorio que debe observarse para la presentación de las TRD o TVD a la instancia competente, contados a partir de su aprobación interna?",
+    "options": [
+      "Dentro de los sesenta (60) días calendario siguientes a la aprobación por el Comité Institucional de Desempeño.",
+      "En un plazo máximo de treinta (30) días hábiles siguientes a su aprobación por parte del Comité Institucional de Desempeño o quien haga sus veces.",
+      "Inmediatamente después de la aprobación, sin exceder los cinco (5) días hábiles, para asegurar la continuidad del proceso.",
+      "El plazo es indefinido, pero debe realizarse antes de que la entidad cambie de nivel administrativo o jurisdicción."
+    ],
+    "correct": 1,
+    "explanation": "El artículo especifica que la presentación debe realizarse 'dentro de los treinta (30) días hábiles siguientes a su aprobación por parte del Comité Institucional de Desempeño o quien haga sus veces'."
+  },
+  {
+    "question": "En el contexto de la evaluación técnica y convalidación de las TRD o TVD, ¿qué instancia es la competente para recibir y evaluar las tablas de las entidades del orden nacional, las Alcaldías Distritales y las Gobernaciones?",
+    "options": [
+      "Los Consejos Territoriales de Archivos, debido a su carácter de coordinación interjurisdiccional.",
+      "El Comité Institucional de Desempeño, ya que es el órgano que aprueba las tablas inicialmente.",
+      "El Archivo General de la Nación Jorge Palacios Preciado, a través de su Comité Evaluador de Documentos.",
+      "La unidad de gestión documental de la entidad, que actúa como filtro técnico antes de la presentación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 establece que 'El Comité Evaluador de Documentos del Archivo General de la Nación Jorge Palacios Preciado' es la instancia competente para las entidades del orden nacional, las Alcaldías Distritales y las Gobernaciones."
+  },
+  {
+    "question": "Para las entidades que pertenecen al orden territorial (departamento, distrito y municipio), ¿cuál es el organismo designado como la instancia competente para la evaluación técnica y convalidación de las Tablas de Retención Documental o Tablas de Valoración Documental?",
+    "options": [
+      "El Comité Evaluador de Documentos del Archivo General de la Nación, por su carácter de autoridad central.",
+      "El Comité Institucional de Desempeño, ya que su ámbito de acción cubre todas las jurisdicciones territoriales.",
+      "Los Consejos Territoriales de Archivos, siempre que se encuentren dentro de su respectiva jurisdicción.",
+      "La Secretaría General de la entidad, la cual debe coordinar la evaluación con el Archivo General de la Nación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 establece que 'Los Consejos Territoriales de Archivos, para las entidades del orden territorial (departamento, distrito y municipio) de su respectiva jurisdicción' son las instancias competentes."
   }
 ]
