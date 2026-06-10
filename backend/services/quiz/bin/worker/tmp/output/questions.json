@@ -3419,5 +3419,49 @@
     ],
     "correct": 2,
     "explanation": "El texto indica que la decisión debe ser adoptada 'conforme al Decreto 1080 de 2015, “Decreto Único del Sector Cultura”, o por las normas que lo modifiquen, deroguen o sustituyan', lo que implica una referencia normativa amplia y actualizada."
+  },
+  {
+    "question": "¿Cuál es el plazo específico que deben observar los Consejos Territoriales de Archivos para solicitar la inscripción de las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) en el Registro Único de Series Documentales (RUSD)?",
+    "options": [
+      "Inmediatamente después de la toma de la decisión de convalidación, sin importar el tiempo transcurrido.",
+      "Dentro de los quince (15) días hábiles siguientes a la suscripción del acta que formaliza la decisión de convalidación.",
+      "En un plazo no mayor a quince (15) días calendario, contados a partir de la notificación de la devolución de la solicitud.",
+      "Tras la emisión del Certificado de Inscripción, para iniciar el proceso de actualización de los registros."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.3.1 establece claramente que los Consejos Territoriales de Archivos deben solicitar la inscripción dentro de los quince (15) días hábiles siguientes a la suscripción del acta por medio del cual se toma la decisión de la convalidación."
+  },
+  {
+    "question": "¿Bajo qué condición específica el Archivo General de la Nación Jorge Palacios Preciado llevará a cabo el proceso de inscripción de las TRD y TVD en el RUSD?",
+    "options": [
+      "Cuando la solicitud provenga de un acuerdo interinstitucional que garantice la interoperabilidad de los datos archivísticos.",
+      "Solo si las Tablas han sido validadas y convalidadas por el Comité Evaluador de Documentos.",
+      "Cuando el Consejo Territorial de Archivos presente un informe de cumplimiento de la normatividad archivística.",
+      "Siempre que el proceso sea solicitado por un sujeto obligado que demuestre la necesidad de actualización documental."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 especifica que el Archivo General de la Nación realizará el proceso de inscripción solo para aquellas TRD y TVD que hayan sido convalidadas por el Comité Evaluador de Documentos."
+  },
+  {
+    "question": "¿Qué acción debe ejecutar el Archivo General de la Nación Jorge Palacios Preciado cuando las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) no cumplen con los criterios de valoración documental?",
+    "options": [
+      "Rechazar la solicitud de manera definitiva y notificar al Consejo Territorial de Archivos la causa del incumplimiento.",
+      "Solicitar al Comité Evaluador de Documentos que realice una revisión adicional y complementaria de las tablas.",
+      "Devolver las Tablas al Consejo Territorial de Archivos mediante oficio, exigiendo el inicio de acciones de cumplimiento normativo.",
+      "Suspender el proceso de inscripción hasta que el Consejo Territorial de Archivos presente un plan de mejora documental."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 establece que, si las tablas no cumplen con los criterios de valoración documental, el Archivo General de la Nación se abstendrá de la inscripción y las devolverá al Consejo Territorial de Archivos mediante oficio, para que este inicie las acciones a que haya lugar."
+  },
+  {
+    "question": "¿Cuál es la obligación procesal del Consejo Territorial de Archivos después de recibir la devolución de su solicitud de inscripción en el RUSD por parte del Archivo General de la Nación?",
+    "options": [
+      "Presentar inmediatamente una nueva solicitud de inscripción sin necesidad de realizar acciones correctivas previas.",
+      "Esperar un periodo de seis meses para reevaluar las tablas y luego iniciar el proceso de solicitud nuevamente.",
+      "Informar al Archivo General de la Nación sobre las acciones que iniciará para el cumplimiento de la normatividad archivística en un plazo no mayor a 15 días.",
+      "Convocar a una reunión extraordinaria con el Comité Evaluador de Documentos para subsanar las deficiencias señaladas."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 establece que, como consecuencia de la devolución, el Consejo Territorial de Archivos debe informar al Archivo General de la Nación en un término no mayor a 15 días las acciones que iniciará para el cumplimiento de la normatividad archivística, y posteriormente efectuar una nueva solicitud."
   }
 ]
