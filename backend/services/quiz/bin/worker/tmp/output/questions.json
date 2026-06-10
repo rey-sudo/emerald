@@ -3386,5 +3386,38 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo indica que, una vez convalidadas las TRD, el sujeto obligado 'deberá realizar los ajustes a los procesos de organización documental, a fin de que estos coincidan con el instrumento archivístico convalidado'."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.7, ¿cuál es el requisito fundamental que debe cumplir el proceso de evaluación para que la instancia competente pueda determinar la convalidación de las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD)?",
+    "options": [
+      "La presentación de un informe técnico que demuestre la concordancia de las tablas con los lineamientos de gestión documental vigentes.",
+      "La aprobación unánime de todos los miembros del Comité Evaluador de Documentos o Consejo Territorial de Archivos.",
+      "La verificación de que las tablas hayan sido diseñadas considerando únicamente el valor histórico y no el valor administrativo.",
+      "La realización de un proceso de auditoría financiera que respalde la necesidad de la conservación de los documentos."
+    ],
+    "correct": 0,
+    "explanation": "El texto establece que, 'Surtido el proceso de evaluación, la instancia competente determinará, con base en el informe técnico de evaluación, si las Tablas de Retención Documental — TRD o Tablas de Valoración Documental TVD cumplen los requisitos técnicos exigidos para su convalidación.' Por lo tanto, el informe técnico de evaluación es la base para la determinación."
+  },
+  {
+    "question": "¿Qué entidad es responsable de dejar constancia de la decisión sobre la convalidación de las TRD o TVD, y bajo qué condiciones debe hacerlo?",
+    "options": [
+      "La instancia competente, siempre que exista un consenso mayoritario entre los miembros del comité evaluador.",
+      "El Comité Evaluador de Documentos o el Consejo Territorial de Archivos, siempre que se cumpla el mínimo quórum establecido.",
+      "La autoridad administrativa superior, mediante la emisión de un decreto que modifique las normas archivísticas.",
+      "La entidad propietaria del fondo documental, mediante la firma de un acta de compromiso de conservación."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.2.7 especifica que 'El Comité Evaluador de Documentos o Consejo Territorial de Archivos dejará constancia de la decisión en la respectiva acta, adoptada por el mínimo quorum establecido para tal efecto'."
+  },
+  {
+    "question": "¿Cuál es el marco normativo de referencia que rige la adopción de la decisión de convalidación por parte del Comité Evaluador o Consejo Territorial de Archivos, según el Artículo 5.1.2.7?",
+    "options": [
+      "Únicamente el Decreto 1080 de 2015, 'Decreto Único del Sector Cultura', sin considerar modificaciones posteriores.",
+      "Las normas de gestión documental emitidas por la Superintendencia de Notariado y Registro.",
+      "El Decreto 1080 de 2015, 'Decreto Único del Sector Cultura', o por las normas que lo modifiquen, deroguen o sustituyan.",
+      "Los lineamientos técnicos establecidos por la Dirección Nacional de Archivos, sin necesidad de citar decretos específicos."
+    ],
+    "correct": 2,
+    "explanation": "El texto indica que la decisión debe ser adoptada 'conforme al Decreto 1080 de 2015, “Decreto Único del Sector Cultura”, o por las normas que lo modifiquen, deroguen o sustituyan', lo que implica una referencia normativa amplia y actualizada."
   }
 ]
