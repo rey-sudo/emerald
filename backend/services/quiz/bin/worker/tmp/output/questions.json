@@ -3353,5 +3353,38 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 3 indica que si el sujeto obligado no efectúa los ajustes solicitados dentro del término, el secretario técnico del Comité Evaluador de Documentos o del Consejo Territorial de Archivos deberá dar traslado inmediato a la Subdirección de Inspección, Vigilancia y Control del Archivo General de la Nación Jorge Palacios Preciado a través de oficio y con los respectivos soportes."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.6, ¿cuál es el requisito previo indispensable para que un sujeto obligado pueda organizar los documentos de archivo generados en el cumplimiento de sus funciones?",
+    "options": [
+      "La aprobación de un inventario detallado de todos los documentos históricos generados por la entidad.",
+      "La implementación de un sistema de clasificación documental basado únicamente en el soporte físico del documento.",
+      "La aprobación de las Tablas de Retención Documental (TRD) por parte del Comité Institucional de Gestión y Desempeño o su equivalente.",
+      "La realización de una transferencia de archivos de manera digitalizada y sistematizada al archivo nacional."
+    ],
+    "correct": 2,
+    "explanation": "El texto establece explícitamente que la organización de los documentos de archivo solo puede llevarse a cabo 'A partir de la aprobación de las Tablas de Retención Documental – TRD por parte del Comité Institucional de Gestión y Desempeño, o quien haga sus veces'."
+  },
+  {
+    "question": "Al organizar los documentos de archivo, ¿qué principios debe seguir el sujeto obligado, según el Artículo 5.1.2.6, en relación con la clasificación y el ordenamiento interno de los expedientes?",
+    "options": [
+      "Debe seguir el principio de clasificación temática y el principio de orden cronológico para garantizar la accesibilidad.",
+      "Debe adherirse al principio de procedencia para la clasificación y al principio de orden original para el ordenamiento interno de los expedientes.",
+      "Debe utilizar el Cuadro de Clasificación Documental (CCD) como único criterio de organización, sin considerar el orden original.",
+      "Debe organizar los documentos basándose en el tipo de soporte (físico o electrónico) y el área funcional que los generó."
+    ],
+    "correct": 1,
+    "explanation": "El artículo especifica que la organización debe seguir el principio de procedencia (para la clasificación) y ordenar los documentos al interior de los expedientes siguiendo el principio de orden original."
+  },
+  {
+    "question": "De acuerdo con el Parágrafo del Artículo 5.1.2.6, ¿cuál es la acción obligatoria que debe ejecutar el sujeto obligado una vez que las Tablas de Retención Documental (TRD) han sido convalidadas?",
+    "options": [
+      "Actualizar inmediatamente el Cuadro de Clasificación Documental (CCD) para reflejar las nuevas disposiciones archivísticas.",
+      "Suspender la producción de documentos hasta que se haya completado la digitalización de todos los fondos documentales.",
+      "Realizar los ajustes necesarios a los procesos de organización documental para que estos coincidan con el instrumento archivístico convalidado.",
+      "Solicitar una nueva aprobación del Comité Institucional de Gestión y Desempeño para validar los procedimientos de disposición final."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo indica que, una vez convalidadas las TRD, el sujeto obligado 'deberá realizar los ajustes a los procesos de organización documental, a fin de que estos coincidan con el instrumento archivístico convalidado'."
   }
 ]
