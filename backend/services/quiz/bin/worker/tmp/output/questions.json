@@ -3309,5 +3309,49 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo 2 del Artículo 5.1.2.4 establece que si pasado el término establecido, el sujeto obligado no ha recibido el informe técnico de evaluación, deberá informar de manera inmediata a la Subdirección de Inspección, Vigilancia y Control del Archivo General de la Nación Jorge Palacios Preciado, a través de oficio y con los soportes que evidencien la solicitud de evaluación."
+  },
+  {
+    "question": "Según el Artículo 5.1.2.5, ¿cuál es el fundamento principal para la evaluación y convalidación de los instrumentos archivísticos y qué flexibilidad se otorga a las instancias competentes en este proceso?",
+    "options": [
+      "Se basa exclusivamente en la “Guía Metodológica” del Archivo General de la Nación, sin permitir solicitudes de documentación adicional bajo ninguna circunstancia.",
+      "Requiere el cumplimiento de la “Guía Metodológica” expedida por el Archivo General de la Nación y permite a las instancias competentes solicitar documentación o requisitos técnicos adicionales si estos contribuyen a aclarar aspectos técnico-archivísticos para el proceso de evaluación.",
+      "Prioriza la solicitud de requisitos técnicos adicionales sobre la “Guía Metodológica” para asegurar una evaluación exhaustiva, relegando la guía a un papel secundario.",
+      "La evaluación se realiza únicamente con base en la documentación presentada inicialmente por el sujeto obligado, sin posibilidad de requerimientos posteriores para evitar dilaciones."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.2.5 establece que el proceso de evaluación y convalidación se efectúa cumpliendo los requisitos técnicos de la “Guía Metodológica” y, adicionalmente, permite a las instancias competentes solicitar documentación o requisitos técnicos adicionales si estos contribuyen a aclarar aspectos técnico-archivísticos para el proceso de evaluación."
+  },
+  {
+    "question": "Conforme al Parágrafo 1 del Artículo 5.1.2.5, ¿qué procedimiento debe seguir una instancia competente al verificar que un sujeto obligado no cumple con los requisitos iniciales para una solicitud de evaluación, y cuál es la implicación de no subsanar esta situación?",
+    "options": [
+      "La instancia competente debe rechazar inmediatamente la solicitud si no se acreditan los requisitos, sin otorgar un plazo para subsanar.",
+      "Se devuelve la solicitud para que el sujeto obligado aporte los documentos faltantes en un plazo de 10 días hábiles, bajo advertencia explícita de rechazo de la solicitud si no se cumple.",
+      "Se concede un plazo indefinido al sujeto obligado para completar la documentación, priorizando la exhaustividad sobre la celeridad del proceso.",
+      "La instancia competente asume la responsabilidad de completar los documentos faltantes o de buscar la información necesaria para evitar el rechazo de la solicitud."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 1 indica que si la instancia competente verifica el incumplimiento de requisitos, devolverá la solicitud para que en un plazo de 10 días hábiles se aporten los documentos faltantes, so pena de rechazo de la solicitud."
+  },
+  {
+    "question": "Una vez radicado el informe técnico de evaluación, ¿cuál es el plazo inicial otorgado al sujeto obligado para realizar los ajustes al instrumento archivístico y bajo qué condiciones específicas puede solicitar una prórroga?",
+    "options": [
+      "El sujeto obligado dispone de 10 días hábiles para realizar los ajustes, sin posibilidad de prórroga bajo ninguna circunstancia.",
+      "Se otorgan 30 días hábiles, prorrogables hasta por otros 30 días hábiles adicionales, siempre que la solicitud de prórroga se presente por escrito antes del vencimiento del plazo inicial y se motive con argumentos técnicos, jurídicos y administrativos.",
+      "El plazo es de 30 días calendario, prorrogable automáticamente por el mismo término si los ajustes son considerados complejos por el sujeto obligado.",
+      "El sujeto obligado tiene un plazo máximo de 60 días hábiles para los ajustes, sin necesidad de justificación para una extensión, siempre que se informe a la instancia competente."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 establece que el sujeto obligado cuenta con un plazo máximo de hasta treinta (30) días hábiles para realizar los ajustes y radicarlos nuevamente. Este plazo puede ser prorrogable hasta por otros treinta (30) días hábiles, siempre que se solicite por escrito, antes del vencimiento del plazo otorgado y se motive con argumentos técnicos, jurídicos y administrativos."
+  },
+  {
+    "question": "Si un sujeto obligado no realiza los ajustes solicitados a las Tablas de Retención Documental (TRD) o Tablas de Valoración Documental (TVD) dentro del término establecido, ¿qué acción debe emprender el secretario técnico del Comité Evaluador de Documentos o del Consejo Territorial de Archivos?",
+    "options": [
+      "Debe otorgar una nueva prórroga automática de 30 días hábiles para la realización de los ajustes, considerando la complejidad de los instrumentos archivísticos.",
+      "Debe rechazar definitivamente la solicitud y archivar el expediente sin más trámite, notificando al sujeto obligado de la decisión final.",
+      "Debe dar traslado inmediato a la Subdirección de Inspección, Vigilancia y Control del Archivo General de la Nación Jorge Palacios Preciado, mediante oficio y con los soportes correspondientes que justifiquen el incumplimiento.",
+      "Debe iniciar un proceso de sanción administrativa directamente contra el sujeto obligado, sin necesidad de consultar a otras instancias, basándose en el incumplimiento."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 indica que si el sujeto obligado no efectúa los ajustes solicitados dentro del término, el secretario técnico del Comité Evaluador de Documentos o del Consejo Territorial de Archivos deberá dar traslado inmediato a la Subdirección de Inspección, Vigilancia y Control del Archivo General de la Nación Jorge Palacios Preciado a través de oficio y con los respectivos soportes."
   }
 ]
