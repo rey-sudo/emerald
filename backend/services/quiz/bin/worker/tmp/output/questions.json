@@ -3463,5 +3463,27 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 3 establece que, como consecuencia de la devolución, el Consejo Territorial de Archivos debe informar al Archivo General de la Nación en un término no mayor a 15 días las acciones que iniciará para el cumplimiento de la normatividad archivística, y posteriormente efectuar una nueva solicitud."
+  },
+  {
+    "question": "Según el Artículo 5.1.3.2, ¿cuáles son los tres documentos clave que los sujetos obligados están legalmente requeridos de publicar en la sección de transparencia y acceso a la información pública de su sitio web?",
+    "options": [
+      "El Cuadro de Clasificación Documental, las Tablas de Retención Documental y los Lineamientos de Valoración Documental.",
+      "Las Tablas de Valoración Documental, el Inventario General de Archivos y el Programa de Gestión Documental.",
+      "El Cuadro de Clasificación Documental, las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD).",
+      "El Manual de Procedimientos Archivísticos, el Catálogo de Series Documentales y el Reglamento de Acceso a la Información."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.3.2 especifica que los sujetos obligados deben publicar el Cuadro de Clasificación Documental, las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD)."
+  },
+  {
+    "question": "¿Cuál es el requisito de cumplimiento normativo que debe seguir la publicación de los documentos mencionados en el Artículo 5.1.3.2?",
+    "options": [
+      "Deben seguir las disposiciones del Plan Nacional de Gestión Documental y la normativa de transparencia vigente.",
+      "La publicación debe estar alineada con los lineamientos del Sistema Nacional de Archivos y el Comité de Archivística.",
+      "La publicación debe realizarse conforme a las disposiciones normativas específicas del esquema de publicación de información.",
+      "Es obligatorio que la publicación sea revisada por la autoridad competente antes de ser cargada en la sección de transparencia."
+    ],
+    "correct": 2,
+    "explanation": "El artículo establece que la publicación de estos documentos debe hacerse 'conforme a las disposiciones normativas del esquema de publicación de información', lo cual es un requisito de cumplimiento específico."
   }
 ]
