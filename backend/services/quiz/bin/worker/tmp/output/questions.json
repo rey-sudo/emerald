@@ -3276,5 +3276,38 @@
     ],
     "correct": 1,
     "explanation": "El requisito 9 especifica que las TVD deben registrarse por cada unidad administrativa u oficina productora que registre producción documental en los inventarios, y deben estar vinculadas a los periodos orgánicofuncionales."
+  },
+  {
+    "question": "De acuerdo con el Artículo 5.1.2.4, ¿cuál es el plazo máximo establecido para que las instancias competentes evalúen y emitan un Informe Técnico de Evaluación sobre las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD) presentadas para convalidación, y cuándo comienza este plazo?",
+    "options": [
+      "Un plazo máximo de sesenta (60) días calendario, iniciando desde la fecha de radicación de la solicitud de convalidación de los instrumentos archivísticos.",
+      "Un plazo máximo de sesenta (60) días hábiles, iniciando desde el día siguiente a la radicación de la solicitud de convalidación de los instrumentos archivísticos.",
+      "Un plazo máximo de treinta (30) días hábiles, iniciando desde la aprobación interna de la solicitud por parte de la instancia competente.",
+      "Un plazo máximo de noventa (90) días calendario, iniciando desde la recepción física de los documentos por parte de la instancia evaluadora."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.2.4 establece claramente que las instancias competentes tienen un plazo máximo de hasta sesenta (60) días hábiles para evaluar y emitir el Informe Técnico de Evaluación. Además, especifica que este término inicia desde el día siguiente a la radicación de la solicitud de convalidación de los instrumentos archivísticos."
+  },
+  {
+    "question": "Según el Parágrafo 1 del Artículo 5.1.2.4, ¿qué implicación tiene para los sujetos obligados si, una vez transcurrido el término establecido de sesenta (60) días hábiles, no se ha emitido un Informe Técnico de Evaluación para sus Tablas de Retención Documental (TRD) y Tablas de Valoración Documental (TVD)?",
+    "options": [
+      "Los sujetos obligados pueden implementar provisionalmente las TRD y TVD, siempre y cuando documenten la falta de respuesta de la instancia competente.",
+      "Los sujetos obligados deben considerar sus TRD y TVD como convalidadas por silencio administrativo positivo y proceder con su implementación.",
+      "Los sujetos obligados no podrán implementar las TRD y TVD hasta que reciban el Informe Técnico de Evaluación correspondiente.",
+      "Los sujetos obligados están autorizados a implementar las TRD y TVD, pero deben informar de inmediato a la Subdirección de Inspección, Vigilancia y Control sobre la situación."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 del Artículo 5.1.2.4 prohíbe explícitamente a los sujetos obligados implementar las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD) si, una vez surtido el término de sesenta (60) días hábiles, no se les ha emitido el Informe Técnico de Evaluación."
+  },
+  {
+    "question": "Conforme al Parágrafo 2 del Artículo 5.1.2.4, ¿qué acción específica debe emprender un sujeto obligado si, transcurrido el término establecido para la evaluación, no ha recibido el informe técnico de evaluación de su instrumento archivístico?",
+    "options": [
+      "Debe presentar una nueva solicitud de convalidación ante la misma instancia competente, adjuntando una copia de la solicitud original.",
+      "Debe informar de manera inmediata a la Subdirección de Inspección, Vigilancia y Control del Archivo General de la Nación Jorge Palacios Preciado, a través de oficio y con los soportes que evidencien la solicitud de evaluación.",
+      "Debe contactar directamente a los evaluadores asignados para solicitar una actualización sobre el estado de su informe técnico.",
+      "Debe esperar un plazo adicional de treinta (30) días hábiles antes de tomar cualquier otra medida, asumiendo una posible demora administrativa."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 del Artículo 5.1.2.4 establece que si pasado el término establecido, el sujeto obligado no ha recibido el informe técnico de evaluación, deberá informar de manera inmediata a la Subdirección de Inspección, Vigilancia y Control del Archivo General de la Nación Jorge Palacios Preciado, a través de oficio y con los soportes que evidencien la solicitud de evaluación."
   }
 ]
