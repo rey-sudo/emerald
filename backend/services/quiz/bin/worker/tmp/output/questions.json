@@ -3540,5 +3540,27 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo establece que los sujetos obligados deben llevar un 'registro documentado con los cambios que se hayan realizado, de tal forma que permita mantener el control y la trazabilidad de las Tablas de Retención Documental – TRD'."
+  },
+  {
+    "question": "Según el Artículo 5.1.4.2, ¿cuál es el plazo establecido para la actualización y aprobación de las Tablas de Retención Documental (TRD) una vez que se configura la causal que la origina, y qué órgano es el responsable de esta acción?",
+    "options": [
+      "El plazo es de tres (3) meses, y la responsabilidad recae en la Oficina Asesora Jurídica de la entidad.",
+      "El plazo es de seis (6) meses, y la actualización y aprobación deben ser efectuadas por el Comité Institucional de Gestión y Desempeño o quien haga sus veces.",
+      "El plazo es de doce (12) meses, y la aprobación corresponde al Archivo General de la Nación.",
+      "No existe un plazo fijo, pero la actualización debe ser avalada por la dirección de la unidad administrativa correspondiente."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.4.2 establece claramente que la actualización y aprobación de las Tablas de Retención Documental (TRD) deben efectuarse dentro de los seis (6) meses siguientes a la configuración de la causal, siendo el Comité Institucional de Gestión y Desempeño o quien haga sus veces el órgano responsable."
+  },
+  {
+    "question": "Conforme al Artículo 5.1.4.3, ¿cuál es el procedimiento mandatorio para la aprobación de todas las actualizaciones de las Tablas de Retención Documental (TRD) y cómo debe quedar formalmente consignado su sustento?",
+    "options": [
+      "Las actualizaciones deben ser revisadas por la secretaría general de la entidad y su sustento registrado en un informe técnico de la oficina de planeación.",
+      "Todas las actualizaciones deben ser estudiadas y aprobadas por el Comité Institucional de Gestión y Desempeño o quien haga sus veces, y su sustento debe quedar consignado en el acta del respectivo comité.",
+      "La aprobación de las actualizaciones de las TRD es competencia exclusiva del director del archivo de la entidad, y su justificación se documenta en una resolución interna.",
+      "Las actualizaciones requieren la validación de una auditoría externa y la publicación de un extracto en el diario oficial para su formalización."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.4.3 estipula que todas las actualizaciones de las TRD deben ser estudiadas y aprobadas por el Comité Institucional de Gestión y Desempeño o quien haga sus veces, y es imperativo que el sustento de dicha aprobación quede consignado en el acta del comité correspondiente."
   }
 ]
