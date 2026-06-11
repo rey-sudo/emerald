@@ -3804,5 +3804,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.2.2 exige la consideración de las fechas extremas (desde la más antigua hasta la más reciente) y el volumen de la documentación, el cual debe darse en metros lineales."
+  },
+  {
+    "question": "Según el Artículo 5.2.3, ¿cuáles son los componentes esenciales que debe contemplar un Plan de Trabajo Archivístico Integral y qué entidad es la responsable de su aprobación final?",
+    "options": [
+      "El plan debe detallar el tiempo y los recursos necesarios para la organización, conservación, depósito, migración tecnológica, reproducción de documentos y elaboración de instrumentos archivísticos, y debe ser aprobado por el Comité Institucional de Gestión y Desempeño.",
+      "El plan debe enfocarse exclusivamente en la digitalización y el acceso remoto a los documentos históricos, y su aprobación recae en el Archivo General de la Nación como máxima autoridad archivística.",
+      "El plan debe cubrir únicamente los gastos de personal y la adquisición de software para la gestión documental, siendo aprobado por la dirección administrativa de la entidad.",
+      "El plan se limita a la valoración documental y la disposición final de las series, y su validación final corresponde al Comité de Evaluación de Documentos."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 5.2.3 establece claramente que el Plan de Trabajo Archivístico Integral debe contemplar el tiempo y los recursos para la organización, conservación, depósito o almacenamiento, migración a nuevas tecnologías o reproducción de los documentos y elaboración de instrumentos archivísticos. Además, especifica que este plan debe ser aprobado por el Comité Institucional de Gestión y Desempeño."
   }
 ]
