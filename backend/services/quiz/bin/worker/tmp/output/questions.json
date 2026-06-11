@@ -3617,5 +3617,16 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.1.4.4, numeral 3, establece que 'Cuando la entidad sea sometida a procesos de fusión o escisión' es una de las situaciones que motiva la evaluación y convalidación de la actualización de las Tablas de Retención Documental por la instancia competente. Por lo tanto, un proceso de escisión requiere este procedimiento."
+  },
+  {
+    "question": "Según el Artículo 5.1.4.5, ¿cuál es el alcance de los documentos relacionados con las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD) que los sujetos obligados deben conservar de manera permanente?",
+    "options": [
+      "Únicamente las versiones finales aprobadas de las TRD y TVD, excluyendo los soportes de su proceso de elaboración o evaluación.",
+      "Todos los documentos que sustentan la elaboración, actualización, aprobación, evaluación, convalidación e inscripción de las TRD y TVD en el Registro Único de Series Documentales (RUSD).",
+      "Solamente los registros de la aprobación y convalidación formal de las TRD y TVD, junto con el certificado de su inscripción en el RUSD.",
+      "Los documentos que evidencian la aplicación de los criterios de disposición final de las series o subseries documentales, una vez implementadas las TRD y TVD."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.4.5 establece explícitamente que los sujetos obligados deben conservar de manera permanente todos los documentos referentes a la elaboración, actualización, aprobación, evaluación, convalidación e inscripción de las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD) en el Registro Único de Series Documentales (RUSD). Esto abarca un espectro completo de la gestión de estos instrumentos archivísticos, no solo sus versiones finales o aspectos parciales."
   }
 ]
