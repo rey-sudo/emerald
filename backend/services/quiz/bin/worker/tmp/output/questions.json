@@ -3628,5 +3628,126 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.1.4.5 establece explícitamente que los sujetos obligados deben conservar de manera permanente todos los documentos referentes a la elaboración, actualización, aprobación, evaluación, convalidación e inscripción de las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD) en el Registro Único de Series Documentales (RUSD). Esto abarca un espectro completo de la gestión de estos instrumentos archivísticos, no solo sus versiones finales o aspectos parciales."
+  },
+  {
+    "question": "Según el Artículo 5.1.5.1, ¿cuál es el requisito previo indispensable que deben cumplir los sujetos obligados antes de poder efectuar las transferencias documentales y la disposición final de unidades documentales cerradas?",
+    "options": [
+      "A. Haber obtenido la Declaratoria de Bienes de Interés Público o Social para el fondo documental.",
+      "B. Haber completado la identificación documental y la sistematización de categorías administrativas.",
+      "C. Haber recibido el Certificado de Inscripción en el Registro Único de Series Documentales – RUSD.",
+      "D. Haber negociado la expropiación administrativa de los archivos privados involucrados en la transferencia."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.5.1 establece claramente que, una vez emitido el Certificado de Inscripción en el Registro Único de Series Documentales – RUSD, los sujetos obligados deben efectuar las transferencias documentales y la disposición final."
+  },
+  {
+    "question": "¿Bajo qué condición específica, según el Parágrafo 1, comienza la aplicación de las Tablas de Retención Documental (TRD) una vez que estas han sido convalidadas?",
+    "options": [
+      "A. Desde la fecha en que se realiza la transferencia física de las unidades documentales cerradas.",
+      "B. Desde el momento en que se inicia el proceso de valoración histórica y cultural de los documentos.",
+      "C. Desde el momento en que se configura alguna de las causales que dieron lugar a la elaboración o actualización de las TRD.",
+      "D. Desde la aprobación de un nuevo Programa de Gestión Documental que incluya las series documentales concernidas."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 especifica que, convalidadas las TRD, la implementación aplica desde el momento en el cual se configuró alguna de las causales que dio lugar a la elaboración o actualización de dichas tablas."
+  },
+  {
+    "question": "¿Qué fuente normativa deben seguir los sujetos obligados al implementar las Tablas de Retención Documental (TRD) y Tablas de Valoración Documental (TVD), según el Parágrafo 2?",
+    "options": [
+      "A. Los lineamientos establecidos en el Título 4 'Gestión Documental – Capítulo Transferencias Documentales' y el Título 5 'Disposición final de documentos' del Acuerdo.",
+      "B. Los criterios técnicos definidos en el Registro Único de Series Documentales (RUSD) y la normativa de la Ley 594 de 2000.",
+      "C. Los lineamientos establecidos en el Título 4 'Gestión Documental – Capítulo Transferencias Documentales' y el Capítulo 5 'Disposición final de documentos' del Acuerdo.",
+      "D. Los lineamientos establecidos en el Título 4 'Gestión Documental – Capítulo Transferencias Documentales' y el Capítulo 5 'Disposición final de documentos' del presente Acuerdo."
+    ],
+    "correct": 3,
+    "explanation": "El Parágrafo 2 indica que la implementación debe realizarse conforme a los lineamientos establecidos en el Título 4 'Gestión Documental – Capítulo Transferencias Documentales' y el Capítulo 5 'Disposición final de documentos' del presente Acuerdo."
+  },
+  {
+    "question": "¿Cuál es la obligación específica que deben asumir los sujetos obligados al cumplimiento de la Ley 594 de 2000, cuyas TRD fueron aprobadas o convalidadas, pero que corresponden a estructuras orgánicas no vigentes?",
+    "options": [
+      "A. Deben elaborar inmediatamente las Tablas de Valoración Documental (TVD) para el periodo orgánico-funcional correspondiente.",
+      "B. Deben actualizar sus instrumentos archivísticos y suspender la implementación de las TRD hasta que la estructura sea reactivada.",
+      "C. Deben implementarlas de manera inmediata y están exentos de elaborar TVD para ese periodo orgánico-funcional.",
+      "D. Deben someterse a un nuevo proceso de evaluación y convalidación antes de poder iniciar cualquier tipo de transferencia documental."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 establece que los sujetos obligados con TRD para estructuras orgánicas no vigentes deben implementarlas de manera inmediata y no deben elaborar TVD para el mismo periodo orgánico-funcional."
+  },
+  {
+    "question": "¿Qué acción debe tomar un sujeto obligado si detecta que las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD) no cumplen con criterios técnicos para su implementación, según el Parágrafo 4?",
+    "options": [
+      "A. Debe suspender la implementación y solicitar una revisión de la instancia competente para su ajuste.",
+      "B. Debe proceder a la implementación provisionalmente y reportar las inconsistencias en el siguiente ciclo de gestión documental.",
+      "C. Debe abstenerse de implementarlas y proceder de forma inmediata a la actualización o ajustes correspondientes.",
+      "D. Debe modificar el procedimiento de evaluación y convalidación para que las tablas puedan ser implementadas sin ajustes técnicos."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 4 indica que, ante la detección de que las tablas no cumplen con criterios técnicos, el sujeto obligado se abstendrá de implementarlas y procederá de forma inmediata a la actualización o ajustes, siguiendo el mismo procedimiento de evaluación y convalidación."
+  },
+  {
+    "question": "Según el Artículo 5.1.5.1, ¿cuál es el requisito previo indispensable que deben cumplir los sujetos obligados antes de efectuar las transferencias documentales y la disposición final de unidades documentales cerradas?",
+    "options": [
+      "A. Haber completado la Declaratoria de Bienes de Interés Público o Social para todas las unidades documentales.",
+      "B. Haber recibido la aprobación de un Comité Interinstitucional de Archivos para la gestión de las series.",
+      "C. Haber obtenido el Certificado de Inscripción en el Registro Único de Series Documentales – RUSD.",
+      "D. Haber realizado el avalúo económico de todas las unidades documentales que serán transferidas o dispuestas finalmente."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.5.1 establece explícitamente que, una vez emitido el Certificado de Inscripción en el Registro Único de Series Documentales – RUSD, los sujetos obligados deben efectuar las transferencias y la disposición final."
+  },
+  {
+    "question": "¿Bajo qué condición específica, según el Parágrafo 1, se considera que las Tablas de Retención Documental (TRD) están convalidadas y, por lo tanto, se activa su proceso de implementación?",
+    "options": [
+      "A. Cuando la entidad realiza una transferencia documental de carácter histórico a un archivo nacional.",
+      "B. Cuando se ha realizado una auditoría externa que certifica la correcta aplicación de los tiempos de retención.",
+      "C. Desde el momento en que se configura alguna de las causales que dieron lugar a la elaboración o actualización de las TRD.",
+      "D. Tras la aprobación de un nuevo Programa de Gestión Documental que incluya las series documentales."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 1 indica que la implementación de las TRD aplica desde el momento en el cual se configuró alguna de las causales que dio lugar a la elaboración o actualización de las Tablas de Retención Documental."
+  },
+  {
+    "question": "¿Cuál es el marco normativo o temático que rige la realización de la implementación de las Tablas de Retención Documental (TRD) y las Tablas de Valoración Documental (TVD), según lo estipulado en el Parágrafo 2?",
+    "options": [
+      "A. El Título 4 'Gestión Documental' y el Capítulo 5 'Disposición final de documentos' del Acuerdo.",
+      "B. El Título 4 'Gestión Documental' y el Capítulo 'Transferencias Documentales' del Acuerdo.",
+      "C. El Título 4 'Gestión Documental' y el Capítulo 'Disposición final de documentos' del Acuerdo.",
+      "D. El Capítulo 'Transferencias Documentales' y el Capítulo 5 'Disposición final de documentos' del Acuerdo."
+    ],
+    "correct": 0,
+    "explanation": "El Parágrafo 2 especifica que la implementación debe realizarse conforme a los lineamientos establecidos en el Título 4 “Gestión Documental – Capítulo Transferencias Documentales y Capítulo 5 Disposición final de documentos” del Acuerdo."
+  },
+  {
+    "question": "¿Qué obligación específica debe cumplir un sujeto obligado que, al estar bajo la Ley 594 de 2000 y tener TRD aprobadas para estructuras orgánicas no vigentes, según el Parágrafo 3?",
+    "options": [
+      "A. Elaborar inmediatamente las Tablas de Valoración Documental (TVD) para el periodo orgánico-funcional correspondiente.",
+      "B. Suspender la implementación de las TRD hasta que se revise la vigencia de la estructura orgánica.",
+      "C. Implementar las TRD de manera inmediata y abstenerse de elaborar TVD para ese periodo.",
+      "D. Solicitar una prórroga de tiempo para la implementación, justificando la antigüedad de las estructuras orgánicas."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 3 establece que estos sujetos deben implementarlas de manera inmediata y no deben elaborar Tablas de Valoración Documental – TVD para el mismo periodo orgánico-funcional que ya cuenta con instrumentos archivísticos."
+  },
+  {
+    "question": "¿Cuál es la acción inmediata que debe ejecutar un sujeto obligado cuando detecta que las Tablas de Retención Documental (TRD) o las Tablas de Valoración Documental (TVD) no cumplen con los criterios técnicos para su implementación, según el Parágrafo 4?",
+    "options": [
+      "A. Proceder a la disposición final de las unidades documentales hasta que se realicen los ajustes necesarios.",
+      "B. Suspender la gestión documental y esperar una nueva directriz de la instancia competente.",
+      "C. Abstenerse de implementarlas y proceder, de forma inmediata, a su actualización o ajuste.",
+      "D. Solicitar una revisión de los criterios técnicos ante el Registro Único de Series Documentales (RUSD)."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 4 indica que, ante la detección de incumplimiento de criterios técnicos, el sujeto obligado se abstendrá de implementarlas y procederá, de forma inmediata, a la actualización o ajustes."
+  },
+  {
+    "question": "¿Qué procedimiento debe seguir un sujeto obligado después de abstenerse de implementar las TRD o TVD por incumplimiento técnico, según el Parágrafo 4?",
+    "options": [
+      "A. Realizar una nueva Declaratoria de Bienes de Interés Público o Social para justificar la suspensión.",
+      "B. Dejar de lado el proceso de gestión documental y enfocarse únicamente en la conservación física.",
+      "C. Seguir el mismo procedimiento de evaluación y convalidación para su posterior implementación.",
+      "D. Notificar a la instancia competente para que realice los ajustes técnicos en las Tablas."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 4 concluye que, tras la actualización o ajuste, el sujeto obligado deberá seguir el mismo procedimiento de evaluación y convalidación para su posterior implementación."
   }
 ]
