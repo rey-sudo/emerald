@@ -3760,5 +3760,49 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.2.1 establece que los fondos documentales acumulados deben ser organizados conforme a los principios y procesos archivísticos y valorados a partir de la metodología de elaboración de las Tablas de Valoración Documental (TVD), lo cual es el propósito de la valoración."
+  },
+  {
+    "question": "Según el Artículo 5.2.2, ¿cuál es el alcance fundamental del diagnóstico de un fondo documental?",
+    "options": [
+      "Evaluar únicamente el estado físico de los documentos y la organización de los soportes tradicionales como papel y audiovisuales.",
+      "Determinar la antigüedad y el volumen de la documentación, limitándose a las fechas extremas y la medición en metros lineales.",
+      "Comprender la identificación de todos los documentos y unidades documentales que integran el fondo, independientemente de su soporte físico o formato electrónico.",
+      "Analizar exclusivamente los instrumentos de recuperación de la información, como inventarios y libros de registro, para establecer su funcionalidad."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.2.2 establece que el diagnóstico debe comprender la identificación de todos los documentos y unidades documentales que integran el fondo, conforme a sus funciones, independientemente del soporte físico o formatos electrónicos, lo cual es un alcance amplio y funcional."
+  },
+  {
+    "question": "Al realizar el diagnóstico de un fondo documental, ¿qué elementos deben ser incluidos para reflejar la situación real del fondo acumulado, según el Artículo 5.2.2?",
+    "options": [
+      "Solo el estado de conservación y la organización documental, sin necesidad de incluir el volumen o los tipos de soporte.",
+      "La descripción detallada de los instrumentos de recuperación, como inventarios y relaciones, y la identificación de las fechas extremas.",
+      "Todas las circunstancias observadas, incluyendo el estado de conservación, la organización, los instrumentos de recuperación, los tipos de soporte, las fechas extremas y el volumen.",
+      "Únicamente el análisis de los soportes informáticos y audiovisuales, omitiendo los soportes tradicionales como el papel y los fotográficos."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.2.2 requiere que el diagnóstico refleje todas las circunstancias observadas, lo cual incluye el estado de conservación, la organización, los instrumentos de recuperación, los tipos de soporte (mencionando varios ejemplos), las fechas extremas y el volumen de la documentación."
+  },
+  {
+    "question": "Respecto a los tipos de soporte que deben considerarse en el diagnóstico de un fondo documental, ¿cuál de las siguientes opciones es correcta según el Artículo 5.2.2?",
+    "options": [
+      "Se deben considerar únicamente los soportes físicos tradicionales, como papel y audiovisuales, para garantizar la precisión del diagnóstico.",
+      "El diagnóstico debe limitar su análisis a los soportes fotográficos, fílmicos e informáticos, excluyendo los formatos de papel.",
+      "Se deben incluir diversos tipos de soporte, tales como papel, audiovisuales, fotográficos, fílmicos e informáticos, sin distinción de su naturaleza.",
+      "La consideración de soportes se restringe a aquellos que permitan la recuperación de la información mediante libros de control y registro."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.2.2 especifica que el diagnóstico debe considerar diversos tipos de soporte, incluyendo papel, audiovisuales, fotográficos, fílmicos e informáticos."
+  },
+  {
+    "question": "Cuando se documenta el diagnóstico de un fondo documental, ¿qué información debe proporcionarse respecto a la temporalidad y la extensión del material, según el Artículo 5.2.2?",
+    "options": [
+      "Solo se deben registrar las fechas de creación de los instrumentos de recuperación de la información, sin considerar las fechas extremas del fondo.",
+      "Es necesario especificar el volumen de la documentación en metros lineales y establecer las fechas extremas, desde la más antigua hasta la más reciente.",
+      "La documentación debe limitarse a la descripción de las fechas de inicio y fin de la gestión documental, sin necesidad de medir el volumen físico.",
+      "Solo se requiere mencionar la fecha más antigua y la más reciente, sin la obligación de cuantificar el volumen total de la documentación en metros lineales."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.2 exige la consideración de las fechas extremas (desde la más antigua hasta la más reciente) y el volumen de la documentación, el cual debe darse en metros lineales."
   }
 ]
