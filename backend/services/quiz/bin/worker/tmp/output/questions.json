@@ -3485,5 +3485,60 @@
     ],
     "correct": 2,
     "explanation": "El artículo establece que la publicación de estos documentos debe hacerse 'conforme a las disposiciones normativas del esquema de publicación de información', lo cual es un requisito de cumplimiento específico."
+  },
+  {
+    "question": "Según el Artículo 5.1.4.1., ¿cuáles son los motivos estructurales o funcionales primarios que obligan a una entidad a actualizar sus Tablas de Retención Documental (TRD)?",
+    "options": [
+      "A. La creación o supresión de grupos internos de trabajo y la asignación o supresión de funciones a la entidad.",
+      "B. La fusión o escisión de la entidad y la transformación de tipos documentales físicos en formatos electrónicos.",
+      "C. Los cambios en la estructura orgánica de la entidad y la redistribución de funciones entre sus unidades administrativas.",
+      "D. La emisión de nuevas normas que impacten la producción documental y la generación de nuevos tipos documentales."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.1.4.1. lista explícitamente que los cambios en la estructura orgánica (1) y la redistribución de funciones (4) son motivos de actualización, junto con otros cambios funcionales y estructurales."
+  },
+  {
+    "question": "De acuerdo con el Artículo 5.1.4.1., ¿qué eventos relacionados con la naturaleza o el alcance de la producción documental de una entidad requieren la actualización de las Tablas de Retención Documental (TRD)?",
+    "options": [
+      "A. La generación de nuevas series y subseries documentales o la modificación de los criterios de valoración de los documentos.",
+      "B. La transformación de tipos documentales físicos a electrónicos o la asignación de funciones a la entidad.",
+      "C. La supresión de grupos internos de trabajo o la realización de procesos de fusión o escisión.",
+      "D. La emisión de normas que impacten la producción documental o la identificación de nuevas unidades administrativas."
+    ],
+    "correct": 0,
+    "explanation": "Los puntos 8 y 10 del Artículo 5.1.4.1. establecen que la generación de nuevas series/subseries y los cambios en los criterios de valoración (incluyendo la identificación de DDHH/DIH) son causas directas de actualización de las TRD."
+  },
+  {
+    "question": "En el contexto de la gestión documental, ¿cuál es la implicación de que los cambios en los criterios de valoración (mencionado en el Artículo 5.1.4.1.) puedan requerir la actualización de las TRD?",
+    "options": [
+      "A. Solo afecta la disposición final de las series y subseries documentales, sin modificar los tiempos de retención documental.",
+      "B. Implica la modificación tanto de los tiempos de retención documental como de la disposición final de las series y subseries documentales.",
+      "C. Limita la actualización únicamente a los documentos de valor histórico, sin afectar el valor sociocultural o científico.",
+      "D. Requiere la reevaluación total de la estructura orgánica de la entidad, independientemente del cambio de criterios."
+    ],
+    "correct": 1,
+    "explanation": "El punto 10 del Artículo 5.1.4.1. establece claramente que los cambios en los criterios de valoración modifican 'los tiempos de retención documental y disposición final de las series y subseries documentales'."
+  },
+  {
+    "question": "Según el Artículo 5.1.4.1., ¿qué tipo de cambio documental específico, además de la generación de nuevas series, debe motivar la actualización de las TRD?",
+    "options": [
+      "A. La modificación de los procedimientos de transferencia de documentos entre unidades administrativas.",
+      "B. La transformación de tipos documentales físicos a formatos electrónicos o viceversa.",
+      "C. La redefinición de las funciones de las unidades administrativas sin afectar su estructura orgánica.",
+      "D. La asignación de nuevos responsables de la gestión documental en la entidad."
+    ],
+    "correct": 1,
+    "explanation": "El punto 7 del Artículo 5.1.4.1. especifica que la transformación de tipos documentales físicos en electrónicos es una causa de actualización de las TRD."
+  },
+  {
+    "question": "Desde la perspectiva de la trazabilidad y el control archivístico, ¿qué obligación impone el Parágrafo del Artículo 5.1.4.1. a los sujetos obligados respecto a las Tablas de Retención Documental (TRD)?",
+    "options": [
+      "A. Mantener un inventario físico de las TRD y someterlo a auditorías anuales de cumplimiento.",
+      "B. Llevar un registro documentado de todos los cambios realizados para garantizar el control y la trazabilidad de las TRD.",
+      "C. Notificar a la autoridad competente cada vez que se realice una modificación, adjuntando el soporte legal del cambio.",
+      "D. Publicar las versiones actualizadas de las TRD en un repositorio digital de acceso público general."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo establece que los sujetos obligados deben llevar un 'registro documentado con los cambios que se hayan realizado, de tal forma que permita mantener el control y la trazabilidad de las Tablas de Retención Documental – TRD'."
   }
 ]
