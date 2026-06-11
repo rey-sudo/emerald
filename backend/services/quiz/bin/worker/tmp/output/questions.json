@@ -3562,5 +3562,60 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.1.4.3 estipula que todas las actualizaciones de las TRD deben ser estudiadas y aprobadas por el Comité Institucional de Gestión y Desempeño o quien haga sus veces, y es imperativo que el sustento de dicha aprobación quede consignado en el acta del comité correspondiente."
+  },
+  {
+    "question": "Según el Artículo 5.1.4.4, ¿cuál de las siguientes situaciones motiva la evaluación y convalidación de la actualización de las Tablas de Retención Documental (TRD) por parte de la instancia competente?",
+    "options": [
+      "La aprobación rutinaria de la actualización de la TRD por el Comité Institucional de Gestión y Desempeño.",
+      "La generación de nuevas series y subseries documentales como resultado de la evolución de los procesos de la entidad.",
+      "Una revisión periódica de la TRD establecida en el plan anual de gestión documental de la entidad.",
+      "La necesidad de ajustar los plazos de retención de documentos debido a cambios en la legislación general no archivística."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.4.4, numeral 4, establece explícitamente que 'Cuando se generen nuevas series y subseries documentales' es una de las situaciones que motiva la evaluación y convalidación de la actualización de las Tablas de Retención Documental por la instancia competente."
+  },
+  {
+    "question": "Conforme al Parágrafo 2 del Artículo 5.1.4.4, ¿cuál es el procedimiento que debe seguir un sujeto obligado para las actualizaciones de las Tablas de Retención Documental (TRD) que no requieren evaluación y convalidación completa?",
+    "options": [
+      "Deben ser implementadas inmediatamente después de su aprobación por el Comité Institucional de Gestión y Desempeño, sin necesidad de remisión a una instancia externa.",
+      "Deben ser remitidas al Consejo Territorial de Archivos o al Archivo General de la Nación Jorge Palacios Preciado dentro de los treinta (30) días hábiles siguientes a su aprobación, para validar que no se modificaron los criterios de valoración.",
+      "Requieren una autorización previa del Archivo General de la Nación Jorge Palacios Preciado antes de su aprobación por el Comité Institucional de Gestión y Desempeño.",
+      "Son objeto únicamente de una auditoría interna por parte de la unidad de archivo de la entidad para asegurar la coherencia con los principios archivísticos generales."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 2 del Artículo 5.1.4.4 indica que las actualizaciones de las TRD que no requieren evaluación y convalidación deben ser remitidas por el sujeto obligado al Consejo Territorial de Archivos o al Archivo General de la Nación, según el caso, dentro de los treinta (30) días hábiles siguientes a su aprobación, con el fin de validar que no se hayan modificado los criterios de valoración que permitieron la inscripción en el RUSD."
+  },
+  {
+    "question": "Cuando las actualizaciones de las Tablas de Retención Documental (TRD) no requieren una evaluación y convalidación completa, ¿cuál es el objetivo específico de la validación que realiza la instancia competente al recibir estos documentos?",
+    "options": [
+      "Verificar la alineación exhaustiva de la TRD actualizada con todas las políticas y directrices archivísticas nacionales vigentes.",
+      "Asegurar que la TRD actualizada refleje con precisión la estructura orgánica y las asignaciones funcionales actuales de la entidad.",
+      "Confirmar que los criterios de valoración que fundamentaron la inscripción de la entidad en el Registro Único de Series Documentales (RUSD) no han sido alterados.",
+      "Evaluar la viabilidad técnica y la eficiencia operativa de la implementación de los períodos de retención revisados para todas las series documentales."
+    ],
+    "correct": 2,
+    "explanation": "El Parágrafo 2 del Artículo 5.1.4.4 establece que la remisión de las TRD actualizadas que no requieren evaluación y convalidación es 'para que la instancia competente valide que no se hayan modificado los criterios de valoración que permitieron la inscripción en el Registro Único de Series Documentales – RUSD'. Este es el objetivo preciso de la validación."
+  },
+  {
+    "question": "Según el Parágrafo 3 del Artículo 5.1.4.4, ¿cuál es la responsabilidad del Consejo Territorial de Archivos en relación con las entidades que actualizaron sus Tablas de Retención Documental (TRD) sin requerir evaluación y convalidación?",
+    "options": [
+      "Presentar una notificación inmediata al Archivo General de la Nación Jorge Palacios Preciado por cada entidad que realice dicha actualización.",
+      "Incluir la información de estas entidades en su informe de gestión semestral dirigido al Archivo General de la Nación Jorge Palacios Preciado.",
+      "Solicitar la aprobación previa del Archivo General de la Nación para cada actualización de TRD antes de su implementación por la entidad respectiva.",
+      "Realizar una evaluación exhaustiva de los cambios en los criterios de valoración de cada entidad antes de remitir la información al Archivo General de la Nación."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo 3 del Artículo 5.1.4.4 establece que 'el Consejo Territorial de Archivos presentará al Archivo General de la Nación Jorge Palacios Preciado dentro del informe de gestión semestral, la información de las entidades que actualizaron las Tablas de Retención Documental que no requirieron evaluación y convalidación'."
+  },
+  {
+    "question": "Si una entidad experimenta un proceso de escisión, lo que implica una reestructuración fundamental de sus operaciones y responsabilidades, ¿qué implicación tiene este evento para la actualización de sus Tablas de Retención Documental (TRD) según el Artículo 5.1.4.4?",
+    "options": [
+      "La entidad solo necesita actualizar internamente su TRD y remitirla para la validación de no modificación de criterios de valoración, ya que es un ajuste estructural.",
+      "La actualización de la TRD motivada por el proceso de escisión debe someterse a evaluación y convalidación por parte de la instancia competente.",
+      "La entidad está obligada a crear una TRD completamente nueva, dado que la escisión representa la creación de una nueva persona jurídica con funciones distintas.",
+      "El proceso de escisión únicamente requiere una notificación al Archivo General de la Nación, sin que ello implique un proceso específico de actualización o convalidación de la TRD."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.1.4.4, numeral 3, establece que 'Cuando la entidad sea sometida a procesos de fusión o escisión' es una de las situaciones que motiva la evaluación y convalidación de la actualización de las Tablas de Retención Documental por la instancia competente. Por lo tanto, un proceso de escisión requiere este procedimiento."
   }
 ]
