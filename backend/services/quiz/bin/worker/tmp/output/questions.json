@@ -3749,5 +3749,16 @@
     ],
     "correct": 2,
     "explanation": "El Parágrafo 4 concluye que, tras la actualización o ajuste, el sujeto obligado deberá seguir el mismo procedimiento de evaluación y convalidación para su posterior implementación."
+  },
+  {
+    "question": "Según el Artículo 5.2.1, ¿cuál es el requisito metodológico fundamental que debe seguirse para la valoración de fondos documentales acumulados, y con qué propósito?",
+    "options": [
+      "La organización debe basarse en la clasificación administrativa de las unidades productoras, utilizando exclusivamente las Tablas de Retención Documental (TRD) para determinar su valor legal.",
+      "La valoración debe realizarse siguiendo los principios y procesos archivísticos, utilizando la metodología de las Tablas de Valoración Documental (TVD) para asegurar una correcta disposición final.",
+      "Es imperativo que la valoración se limite al análisis del valor histórico-cultural, por lo que la metodología debe enfocarse únicamente en la revisión de los soportes físicos originales.",
+      "Los fondos deben ser valorados únicamente por la autoridad competente, sin necesidad de seguir una metodología estructurada, sino basándose en el criterio de la unidad productora."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.1 establece que los fondos documentales acumulados deben ser organizados conforme a los principios y procesos archivísticos y valorados a partir de la metodología de elaboración de las Tablas de Valoración Documental (TVD), lo cual es el propósito de la valoración."
   }
 ]
