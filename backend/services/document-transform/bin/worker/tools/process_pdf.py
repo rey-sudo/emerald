@@ -35,7 +35,7 @@ async def upload_to_s3(s3_client, s3_bucket, s3_key, local_path):
     return s3_key 
 
 async def _html_to_y(html_path: Path, y_path: Path) -> Path:
-    url = "http://document-processor-tiptap:7001/html-to-y"
+    url = "http://document-transform-tiptap:7001/html-to-y"
 
     async with aiofiles.open(html_path, mode='r', encoding='utf-8') as f:
         html_content = await f.read()
