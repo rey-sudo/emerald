@@ -1,7 +1,4 @@
-FROM node:20-slim AS deps
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+FROM node:22-slim AS deps
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 make g++ \
@@ -9,20 +6,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package*.json ./
 
-RUN pnpm install --frozen-lockfile
+RUN npm install
 
-RUN cd node_modules/.pnpm/pulsar-client@1.17.0/node_modules/pulsar-client \
+RUN cd node_modules/pulsar-client \
     && npx node-pre-gyp install --fallback-to-build
 
 FROM deps AS builder
 WORKDIR /app
+
 COPY . .
 
-RUN pnpm run build
+RUN npm run build
 
-FROM node:20-slim AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 
 COPY --from=deps /app/package.json ./

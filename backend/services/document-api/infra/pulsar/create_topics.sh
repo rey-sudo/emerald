@@ -15,3 +15,11 @@ docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
 docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
   persistent://public/default/document.created \
   --partitions 1
+
+docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
+  persistent://public/default/document.updated \
+  --partitions 1  
+
+docker exec -it broker bash bin/pulsar-admin topics create-partitioned-topic \
+  persistent://public/default/document.deleted \
+  --partitions 1    

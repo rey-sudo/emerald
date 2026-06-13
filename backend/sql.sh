@@ -9,7 +9,7 @@ for SERVICE in "${SERVICES[@]}"; do
     echo "Applying DATABASE.SQL for service: $SERVICE..."
     echo "----------------------------------------------"
 
-    SQL_PATH="services/$SERVICE/infrastructure/sql"
+    SQL_PATH="services/$SERVICE/infra/sql"
     
     if [ -d "$SQL_PATH" ]; then
         for file in "$SQL_PATH"/database.sql; do
@@ -19,7 +19,7 @@ for SERVICE in "${SERVICES[@]}"; do
         echo "Warning: Directory $SQL_PATH not found. Skipping..."
     fi
 
-    SQL_PATH="services/$SERVICE/src/infrastructure/sql"
+    SQL_PATH="services/$SERVICE/src/infra/sql"
     
     if [ -d "$SQL_PATH" ]; then
         for file in "$SQL_PATH"/database.sql; do
@@ -36,7 +36,7 @@ for SERVICE in "${SERVICES[@]}"; do
     echo "Applying SQL tables for service: $SERVICE..."
     echo "--------------------------------------------"
 
-    SQL_PATH="services/$SERVICE/infrastructure/sql"
+    SQL_PATH="services/$SERVICE/infra/sql"
     
     if [ -d "$SQL_PATH" ]; then
         for file in "$SQL_PATH"/*.sql; do
@@ -46,7 +46,7 @@ for SERVICE in "${SERVICES[@]}"; do
         echo "Warning: Directory $SQL_PATH not found. Skipping..."
     fi
 
-    SQL_PATH="services/$SERVICE/src/infrastructure/sql"
+    SQL_PATH="services/$SERVICE/src/infra/sql"
     
     if [ -d "$SQL_PATH" ]; then
         for file in "$SQL_PATH"/*.sql; do

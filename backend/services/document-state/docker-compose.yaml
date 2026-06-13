@@ -18,29 +18,6 @@ services:
     networks:
       - shared-network
 
-
-#  document-processor-tiptap:
-#    build:
-#      context: ./bin/tiptap
-#      dockerfile: Dockerfile
-#    container_name: document_processor_tiptap 
-#    env_file:
-#      - ./bin/tiptap/.env
-#    ports:
-#      - "7001:7001"      
-#    networks:
-#      - shared-network 
-#
-#  document-processor-publisher:
-#    build:
-#      context: ./bin/publisher
-#      dockerfile: Dockerfile
-#    container_name: document_processor_publisher
-#    env_file:
-#      - ./bin/publisher/.env
-#    networks:
-#      - shared-network
-
 networks:
   shared-network:
     external: true
