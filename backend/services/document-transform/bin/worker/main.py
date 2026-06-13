@@ -32,9 +32,9 @@ from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_excep
 
 PULSAR_URL = "pulsar://broker:6650"
 TOPIC = ["persistent://public/default/document.created"]
-SUBSCRIPTION_NAME = "document-processor-worker-group-shared"
+SUBSCRIPTION_NAME = "document-transform-worker-group-shared"
 
-DATABASE_URL = "postgres://postgres:password@postgres_global:5432/document_processor"
+DATABASE_URL = "postgres://postgres:password@postgres_global:5432/document_transform"
 S3_BUCKET = "documents"
 
 CONCURRENCY = 40
@@ -139,7 +139,7 @@ async def insert_outbox(conn, document, ts, checksum, metadata):
             """,
             0,
             "document.processed",
-            "document-processor-worker",
+            "document-transform-worker",
             uuid7(),
             ts,
             "document",
