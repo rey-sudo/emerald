@@ -3815,5 +3815,82 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 5.2.3 establece claramente que el Plan de Trabajo Archivístico Integral debe contemplar el tiempo y los recursos para la organización, conservación, depósito o almacenamiento, migración a nuevas tecnologías o reproducción de los documentos y elaboración de instrumentos archivísticos. Además, especifica que este plan debe ser aprobado por el Comité Institucional de Gestión y Desempeño."
+  },
+  {
+    "question": "Según el Artículo 5.2.4, ¿cuál es la etapa inicial y fundamental para la ejecución del Plan de Trabajo Archivístico Integral, que sienta las bases para las fases subsiguientes?",
+    "options": [
+      "La identificación de los valores primarios y secundarios de la documentación para establecer su disposición final.",
+      "La elaboración de la Historia Institucional para comprender el contexto y evolución de los organismos productores.",
+      "La implementación de las Tablas de Valoración Documental para iniciar las transferencias y eliminaciones.",
+      "La descripción detallada de las unidades documentales mediante el Formato Único de Inventario Documental."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.4 establece claramente que la primera etapa para la ejecución del Plan de Trabajo Archivístico Integral es la 'Elaboración de la Historia Institucional', lo cual es un paso fundamental para contextualizar el fondo documental."
+  },
+  {
+    "question": "En el marco de la etapa de Clasificación del Plan de Trabajo Archivístico Integral, ¿cuál es el criterio fundamental que rige el desarrollo de este proceso y cuál es su producto principal, según lo estipulado en el Artículo 5.2.4?",
+    "options": [
+      "Se basa en la identificación de valores primarios y secundarios de la documentación, resultando en las Tablas de Valoración Documental.",
+      "Se fundamenta en la estructura orgánica del organismo u organismos productores, culminando en la elaboración de los Cuadros de Clasificación Documental.",
+      "Se desarrolla mediante la agrupación de unidades documentales conforme a las funciones administrativas, produciendo el Formato Único de Inventario Documental.",
+      "Se orienta por los tiempos de retención establecidos, generando los protocolos de transferencia y disposición final."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.4 indica que el proceso de Clasificación se desarrolla 'atendiendo la estructura orgánica del organismo u organismos productores' y su resultado es la 'Elaboración de los Cuadros de Clasificación Documental'."
+  },
+  {
+    "question": "Conforme al Artículo 5.2.4, ¿qué principios deben guiar la etapa de Ordenación dentro del Plan de Trabajo Archivístico Integral para las unidades documentales ya clasificadas?",
+    "options": [
+      "La agrupación debe seguir exclusivamente la cronología de producción de los documentos, sin considerar la estructura funcional de las unidades administrativas.",
+      "Las unidades documentales se agruparán atendiendo a su valor histórico y científico, priorizando su conservación a largo plazo sobre cualquier otro criterio.",
+      "La ordenación se realizará siguiendo un sistema de ordenación preestablecido y en concordancia con las funciones específicas de las unidades administrativas productoras.",
+      "El proceso de ordenación se basará en la identificación de documentos afectados biológicamente para su segregación inmediata y posterior eliminación."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.2.4 especifica que en la etapa de Ordenación, las unidades documentales clasificadas 'se agruparán siguiendo un sistema de ordenación y conforme a las funciones de las unidades administrativas productoras'."
+  },
+  {
+    "question": "En la etapa de Descripción del Plan de Trabajo Archivístico Integral, ¿cuál es el instrumento oficial a utilizar y qué tipo de documentación específica debe ser incluida en su diligenciamiento, además de su relación con otros instrumentos archivísticos?",
+    "options": [
+      "Se utiliza la Tabla de Valoración Documental para registrar únicamente los documentos con valor histórico, desvinculada del Cuadro de Clasificación Documental.",
+      "El Formato Único de Inventario Documental (FUID) adoptado por el Archivo General de la Nación, y debe incluir la documentación afectada biológicamente o inaccesible, articulándose con el Cuadro de Clasificación Documental.",
+      "Se emplea un inventario genérico para describir solo los documentos activos, sin necesidad de correlación con la clasificación documental establecida.",
+      "La descripción se realiza mediante un sistema de gestión documental electrónico que excluye cualquier soporte físico o dañado para evitar la propagación de deterioros."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.4 establece que en la Descripción se diligenciará el 'Formato Único de Inventario Documental – FUID adoptado por el Archivo General de la Nación Jorge Palacios Preciado', incluyendo 'la documentación afectada biológicamente o los medios que contienen información a la cual no se puede acceder', y que debe estar 'articulado con el Cuadro de Clasificación Documental'."
+  },
+  {
+    "question": "Según el Artículo 5.2.4, ¿cuál es el objetivo primordial de la etapa de Valoración Documental y qué elementos clave resultan de este proceso, incluyendo su armonización con otros instrumentos archivísticos?",
+    "options": [
+      "Establecer la estructura orgánica de la entidad y producir los Cuadros de Clasificación Documental para la organización física de los archivos.",
+      "Identificar los valores primarios (administrativos, contables, fiscales, legales y técnicos) y secundarios (históricos, científicos y socioculturales) de la documentación para determinar los tiempos de retención y la disposición final, plasmados en la Tabla de Valoración Documental armonizada.",
+      "Agrupar las unidades documentales conforme a las funciones administrativas y diligenciar el Formato Único de Inventario Documental para su control y seguimiento.",
+      "Implementar las transferencias documentales y la disposición final de los documentos, siguiendo los lineamientos de gestión documental establecidos en el Acuerdo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.4 define la Valoración Documental como el estudio e identificación de valores primarios y secundarios, cuyo resultado es el 'establecimiento de los tiempos de retención y su disposición final', plasmados en la 'Tabla de Valoración Documental, de manera armonizada con los Cuadros de Clasificación Documental e inventarios documentales'."
+  },
+  {
+    "question": "Una vez establecidas las Tablas de Valoración Documental, ¿cuál es la acción inmediata que se debe ejecutar y bajo qué marco normativo específico, según el Artículo 5.2.4?",
+    "options": [
+      "La elaboración de la Historia Institucional y la clasificación de los fondos documentales para asegurar la coherencia del sistema archivístico.",
+      "La descripción detallada de los documentos afectados biológicamente y la creación de nuevos inventarios para su control y preservación.",
+      "Proceder con las transferencias documentales y la disposición final de los documentos, siguiendo los lineamientos establecidos en el Título 4 del Acuerdo sobre Gestión Documental.",
+      "La reordenación de las unidades documentales conforme a nuevos criterios funcionales y la actualización de los Cuadros de Clasificación Documental."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 5.2.4 indica que la 'Implementación de las Tablas de Valoración Documental' implica 'Proceder con las transferencias documentales y disposición final de los documentos, conforme a los lineamientos establecidos en el Título 4 “Gestión Documental – Capítulo Transferencias Documentales y Capítulo 5 Disposición final de documentos” del presente Acuerdo'."
+  },
+  {
+    "question": "En el contexto del Plan de Trabajo Archivístico Integral, si se requiere el traslado o la centralización de archivos para la intervención del fondo documental, ¿cuál es la medida preventiva fundamental que debe implementarse y con qué propósito principal, según el Parágrafo del Artículo 5.2.4?",
+    "options": [
+      "Se debe priorizar la eliminación de documentos de bajo valor para reducir el volumen de traslado, sin necesidad de protocolos específicos de seguridad.",
+      "Es imperativo establecer protocolos detallados para garantizar medidas de control y seguridad, con el fin de prevenir la pérdida de información durante el proceso.",
+      "La única acción necesaria es la elaboración de un nuevo inventario documental que refleje la ubicación final de los archivos trasladados, sin requerir medidas de seguridad adicionales.",
+      "Se debe solicitar una autorización general del Archivo General de la Nación para el traslado, sin especificar los procedimientos de seguridad a implementar."
+    ],
+    "correct": 1,
+    "explanation": "El Parágrafo del Artículo 5.2.4 establece que 'De requerirse el traslado de archivos o centralización de documentos para la intervención del fondo documental en el Plan de Trabajo Archivístico Integral se deben establecer los protocolos para garantizar las medidas de control y seguridad para que no exista pérdida de información'."
   }
 ]

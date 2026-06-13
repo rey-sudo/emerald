@@ -83,7 +83,10 @@ const HtmlToJsonSchema = z.object({
 
 //==============================================================================================
 
-const app = Fastify({ logger: false });
+const app = Fastify({
+  logger: false,
+  bodyLimit: 100 * 1024 * 1024, // 100 MB
+});
 
 app.get("/", async (_request, reply) => {
   return reply.send({
