@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { pool } from "../infrastructure/postgres/db.js";
+import { pool } from "../infra/postgres/db.js";
 
 interface Document {
   id: string;

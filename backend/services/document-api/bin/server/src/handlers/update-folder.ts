@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { pool } from "../infrastructure/postgres/db.js";
+import { pool } from "../infra/postgres/db.js";
 import { v7 as uuid7 } from "uuid";
 import z from "zod";
 

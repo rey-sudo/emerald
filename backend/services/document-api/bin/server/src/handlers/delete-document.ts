@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { v7 as uuidv7 } from "uuid";
-import { pool } from "../infrastructure/postgres/db.js";
+import { pool } from "../infra/postgres/db.js";
 import z from "zod";
 
 const SQL_SOFT_DELETE = `

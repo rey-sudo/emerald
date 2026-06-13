@@ -1,7 +1,7 @@
 import path from "path";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { v7 as uuidv7 } from "uuid";
-import { pool } from "../infrastructure/postgres/db.js";
+import { pool } from "../infra/postgres/db.js";
 import z from "zod";
 
 const SQL_GET_EXTENSION = `
