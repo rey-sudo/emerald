@@ -3925,5 +3925,27 @@
     ],
     "correct": 1,
     "explanation": "El Artículo 5.2.7 establece explícitamente que para los procesos de elaboración, aprobación, convalidación, inscripción e implementación de las Tablas de Valoración Documental (TVD), se deben atender todos los requisitos establecidos en el Capítulo 1 del Título 5, denominado “Valoración Documental”. Las otras opciones son generalizaciones, referencias externas o políticas internas que no constituyen el marco normativo específico indicado en el artículo."
+  },
+  {
+    "question": "Según el Artículo 6.1 del Título 6, ¿cuál es el objetivo primordial de los lineamientos que deben implementar los sujetos obligados en el marco del Programa de Gestión Documental para su conservación y preservación?",
+    "options": [
+      "Establecer los criterios exclusivos para la eliminación de documentos con valor histórico en soportes físicos, una vez cumplido su plazo de retención.",
+      "Definir las responsabilidades únicas de las áreas de archivo en la gestión de documentos electrónicos, sin considerar los soportes físicos.",
+      "Establecer directrices para la conservación y preservación de documentos, abarcando tanto soportes físicos como formatos electrónicos, a lo largo de todo su ciclo vital.",
+      "Garantizar el acceso público irrestricto a toda la información producida por la entidad, independientemente de su clasificación o formato original."
+    ],
+    "correct": 2,
+    "explanation": "El Artículo 6.1 establece claramente que el objetivo es 'Establecer los lineamientos que deben implementar los sujetos obligados en el marco del Programa de Gestión Documental, durante el ciclo vital de los documentos para su conservación y preservación en soportes físicos o formatos electrónicos'. Esta opción captura todos los elementos clave: lineamientos, sujetos obligados, Programa de Gestión Documental, ciclo vital, conservación y preservación, y ambos tipos de soportes."
+  },
+  {
+    "question": "El propósito fundamental del Sistema Integrado de Conservación (SIC), según el Artículo 6.1.1.1, es garantizar la conservación y preservación de cualquier tipo de información. ¿Qué conjunto específico de atributos esenciales debe mantener el SIC para toda la documentación de una entidad, desde su producción hasta su disposición final, independientemente del medio o tecnología de elaboración?",
+    "options": [
+      "Confidencialidad, disponibilidad, integridad y legalidad, priorizando la documentación que posee un valor administrativo primario.",
+      "Integridad, autenticidad, fiabilidad y accesibilidad, asegurando su mantenimiento sin importar el soporte o la tecnología con la que fue creada.",
+      "Exclusividad, originalidad, temporalidad y pertinencia, enfocándose en la fase inicial de valoración documental para su clasificación.",
+      "Seguridad, eficiencia, economía y transparencia, aplicables únicamente a los documentos que han sido declarados de interés cultural o histórico."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 6.1.1.1 especifica que el SIC debe mantener 'atributos tales como: integridad, autenticidad, fiabilidad y accesibilidad de toda la documentación de una entidad, desde el momento de la producción, durante su período de vigencia, hasta su disposición final, de acuerdo con la valoración documental', y que esto es 'independientemente del medio o tecnología con la cual se haya elaborado'. La opción 1 reproduce fielmente estos atributos y condiciones."
   }
 ]
