@@ -3914,5 +3914,16 @@
     ],
     "correct": 0,
     "explanation": "El Artículo 5.2.6. establece que 'Las entidades de la Administración Pública adoptarán el formato de Tabla de Valoración Documental para la valoración de los fondos documentales acumulados', indicando una obligación y un propósito específico."
+  },
+  {
+    "question": "Conforme al Artículo 5.2.7, ¿cuál es el marco normativo específico que debe observarse para la elaboración, aprobación, convalidación, inscripción e implementación de las Tablas de Valoración Documental (TVD)?",
+    "options": [
+      "Los lineamientos generales de gestión documental emitidos por la autoridad archivística nacional, sin especificar un capítulo particular.",
+      "Los requisitos detallados en el Capítulo 1 del Título 5, específicamente denominado “Valoración Documental”.",
+      "Las directrices técnicas establecidas por el Comité Internacional de Archivos para la valoración y disposición documental.",
+      "Las políticas internas de cada entidad productora de documentos, siempre que estén avaladas por su respectivo comité de archivo."
+    ],
+    "correct": 1,
+    "explanation": "El Artículo 5.2.7 establece explícitamente que para los procesos de elaboración, aprobación, convalidación, inscripción e implementación de las Tablas de Valoración Documental (TVD), se deben atender todos los requisitos establecidos en el Capítulo 1 del Título 5, denominado “Valoración Documental”. Las otras opciones son generalizaciones, referencias externas o políticas internas que no constituyen el marco normativo específico indicado en el artículo."
   }
 ]
