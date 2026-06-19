@@ -3892,5 +3892,27 @@
     ],
     "correct": 1,
     "explanation": "El Parágrafo del Artículo 5.2.4 establece que 'De requerirse el traslado de archivos o centralización de documentos para la intervención del fondo documental en el Plan de Trabajo Archivístico Integral se deben establecer los protocolos para garantizar las medidas de control y seguridad para que no exista pérdida de información'."
+  },
+  {
+    "question": "Conforme al Artículo 5.2.5. del Acuerdo, ¿qué elementos deben ser integrados en la etapa de 'Historia Institucional' y cuál es la autoridad normativa que establece los lineamientos específicos para su desarrollo?",
+    "options": [
+      "La etapa de 'Historia Institucional' debe incorporar los aspectos detallados en el Artículo 1.2.2. 'Investigación institucional' del presente Acuerdo, y sus lineamientos específicos son dictados por el Archivo General de la Nación Jorge Palacios Preciado.",
+      "Los componentes de la 'Historia Institucional' son definidos por cada entidad según sus necesidades, aunque se recomienda consultar el Artículo 1.2.2. para una referencia general, sin una autoridad normativa externa obligatoria.",
+      "Esta etapa debe enfocarse en la cronología de eventos relevantes de la entidad, siguiendo las directrices generales de gestión documental emitidas por el Ministerio de Cultura, sin referencia a artículos específicos.",
+      "La 'Historia Institucional' se basa en la recopilación de documentos históricos y su clasificación, con lineamientos establecidos por un comité interno de archivo, sin intervención del Archivo General de la Nación."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 5.2.5. establece claramente que la etapa de 'Historia Institucional' debe comprender los aspectos citados en el Artículo 1.2.2. 'Investigación institucional' del mismo Acuerdo y que debe conformarse a los lineamientos establecidos por el Archivo General de la Nación Jorge Palacios Preciado."
+  },
+  {
+    "question": "Según el Artículo 5.2.6., ¿cuál es la obligación específica de las entidades de la Administración Pública en relación con el formato de la Tabla de Valoración Documental, y cuál es el propósito fundamental de su adopción?",
+    "options": [
+      "Las entidades de la Administración Pública tienen la obligación de adoptar el formato de Tabla de Valoración Documental con la finalidad exclusiva de realizar la valoración de los fondos documentales acumulados.",
+      "Las entidades deben desarrollar un formato personalizado de Tabla de Valoración Documental para la gestión de documentos activos, siendo opcional su aplicación a fondos documentales históricos.",
+      "La adopción del formato de Tabla de Valoración Documental es una recomendación para optimizar la descripción archivística, pero no es un requisito obligatorio para la valoración de fondos documentales acumulados.",
+      "Es imperativo que las entidades implementen la Tabla de Valoración Documental para la clasificación de todos los documentos, priorizando la identificación de aquellos con valor administrativo inmediato, no histórico."
+    ],
+    "correct": 0,
+    "explanation": "El Artículo 5.2.6. establece que 'Las entidades de la Administración Pública adoptarán el formato de Tabla de Valoración Documental para la valoración de los fondos documentales acumulados', indicando una obligación y un propósito específico."
   }
 ]
